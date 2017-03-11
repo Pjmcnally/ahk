@@ -1,2 +1,2 @@
-# ahk_playground
-A place for me to keep my experimental AutoHotkey stuff.
+# ahk
+A place for me to keep my general AutoHotkey stuff.
