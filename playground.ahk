@@ -4,18 +4,60 @@
 
 
 ^!t::
-file := FileOpen("rand_array.txt", "w")
-array := [1, 2, 3, 4, 5, 6]
-
-
-i := 0, num := 1000000
-while (i < num) {
-    rand_array := genRandomArray(array)
-    file.Write(arrayAsStr(rand_array))
-    i += 1
-}
-file.Close()
+file := generateRandArrayFile(3, 1000000)
+res_file := readRandArrayFile(file)
+Run, % res_file
 return
+
+
+generateRandArrayFile(len, num) {
+    ; Function generates num random arrays of lenght len (1 to len) and writes 
+    ; them to an output file named rand_array_<len>.txt
+    array := []
+    for x in range(1, len + 1) {
+        array.push(x)
+    }
+
+    file_name := "rand_array_" . len . ".txt"
+    file := FileOpen(file_name, "w")
+
+    i := 0
+    while (i < num) {
+        rand_array := genRandomArray(array)
+        file.Write(arrayAsStr(rand_array))
+        i += 1
+    }
+    file.Close()
+
+    return file_name
+}
+
+
+readRandArrayFile(name) {
+    ; Function to read my files of random arrays and count the number of time 
+    ; each array appears.
+    array := {}
+    Loop, Read, % name 
+    {
+        if not array.HasKey(A_LoopReadLine) {
+            array[A_LoopReadLine] := 0
+        }
+        array[A_LoopReadLine] += 1
+    }
+
+    StringTrimRight, base_name, name, 4
+    res_name := name . "_res.txt"
+    
+    file := FileOpen(res_name, "w")
+    file.Write("Array: Count`r`n")
+    for key, val in array {
+        str := key . ": " . val . "`r`n"
+        file.Write(str)
+    }
+    file.close()
+
+    return res_name
+}
 
 
 arrayAsStr(array) {
@@ -49,3 +91,34 @@ shuffle(a) {
     }
     return a
 }
+
+
+; Function to port over Range from Python to AutoHotkey.
+; Copied from https://autohotkey.com/boards/viewtopic.php?t=4303
+range(start, stop:="", step:=1) {
+    static range := { _NewEnum: Func("_RangeNewEnum") }
+    if !step
+        throw "range(): Parameter 'step' must not be 0 or blank"
+    if (stop == "")
+        stop := start, start := 0
+    ; Formula: r[i] := start + step*i ; r = range object, i = 0-based index
+    ; For a postive 'step', the constraints are i >= 0 and r[i] < stop
+    ; For a negative 'step', the constraints are i >= 0 and r[i] > stop
+    ; No result is returned if r[0] does not meet the value constraint
+    if (step > 0 ? start < stop : start > stop) ;// start == start + step*0
+        return { base: range, start: start, stop: stop, step: step }
+}
+
+_RangeNewEnum(r) {
+    static enum := { "Next": Func("_RangeEnumNext") }
+    return { base: enum, r: r, i: 0 }
+}
+
+_RangeEnumNext(enum, ByRef k, ByRef v:="") {
+    stop := enum.r.stop, step := enum.r.step
+    , k := enum.r.start + step*enum.i
+    if (ret := step > 0 ? k < stop : k > stop)
+        enum.i += 1
+    return ret
+}
+
