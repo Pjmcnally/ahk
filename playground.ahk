@@ -4,7 +4,7 @@
 
 
 ^!t::
-file := generateRandArrayFile(3, 1000000)
+file := generateRandArrayFile(5, 1000000)
 res_file := readRandArrayFile(file)
 Run, % res_file
 return
