@@ -32,7 +32,13 @@ arrayAsStr(array) {
 
 genRandomArray(array) {
     ; This function preserves the original array and returns a new one.
-    a := array.clone()  ; Copy of array so original is not changed
+
+    ; I could rebuild this using the inside out implementation of Fischer-Yates
+    ; but that depends on frequent calls to the length of an array.
+    ; I am pretty sure that those calls in AutoHotkey are linear time.
+    ; I believe this implementation is faster.
+
+    a := [array.clone()]  ; Copy of array so original is not changed
     shuffle(a)
     return a
 }
