@@ -7,38 +7,47 @@
 
 ~$w::  ; Start running.  
 varint = 0
-SendInput {shift up}
-SendInput {shift down}
-SendInput {shift up}
+Send {shift up}
+Send {shift down}
+Send {shift up}
+Return
+
 
 ~$s::  ; Stop running.
-if varint
-{ varint = 0
-SendInput {w up}
-SendInput {shift up}
-} return
+if varint { 
+    varint = 0
+    Send {w up}
+    Send {shift up}
+} 
+return
 
-;~$a::
-;if varint
-;{ varint = 0
-;SendInput {w up}
-;SendInput {shift up}
-;} return
 
-;~$d::
-;if varint
-;{ varint = 0
-;SendInput {w up}
-;SendInput {shift up}
-;} return
+; ~$a::
+; if varint { 
+;     varint = 0
+;     Send {w up}
+;     Send {shift up}
+; } 
+; return
+
+
+; ~$d::
+; if varint { 
+;     varint = 0
+;     Send {w up}
+;     Send {shift up}
+; } 
+; return
+
 
 t::  ; Stop running.
-if varint
-{ varint = 0
-SendInput {w up}
-SendInput {shift up}
-} else
-{ varint = 1
-SendInput {w down}
-SendInput {shift down}
-} return
+if varint { 
+    varint = 0
+    Send {w up}
+    Send {shift up}
+} else { 
+    varint = 1
+    Send {w down}
+    Send {shift down}
+} 
+return
