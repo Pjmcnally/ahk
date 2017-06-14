@@ -10,3 +10,6 @@ setWorkingDir, ahk  ; Ensures a consistent starting directory.
 ; #Include %A_ScriptDir%/ahk/diablo3.ahk  ; No longer needed.
 ; #Include %A_ScriptDir%/ahk/kings_bounty.ahk  ; Not currently playing.
 ; #Include %A_ScriptDir%/ahk/lol_chars.ahk  ; Needs more development.
+
+; Include for programming related hotkeys
+#Include %A_ScriptDir%/bhip/ahk/bhip_hotkeys.ahk
