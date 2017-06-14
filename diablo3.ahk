@@ -54,3 +54,6 @@ Click 1739, 483, up
 send, {space}
 BlockInput, Off
 return
+
+; This should always be at the bottom
+#IfWinActive ; End #IfWinActive for Diablo 3

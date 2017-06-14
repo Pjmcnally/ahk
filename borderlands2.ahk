@@ -51,3 +51,6 @@ if varint {
     Send {shift down}
 } 
 return
+
+; This should always be at the bottom
+#IfWinActive ; End #IfWinActive for Borderlands

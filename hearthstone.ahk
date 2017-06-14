@@ -51,3 +51,6 @@ openPack() {
     }
     Sleep, % 2000  ; wait of OK to appear
 }
+
+; This should always be at the bottom
+#IfWinActive ; End #IfWinActive for Hearthstone

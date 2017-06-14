@@ -155,3 +155,6 @@ return
    Clipboard = ^Janna$|^Blitzcrank$|^Nautilus$|^Soraka$|^Sona$|^Leona$|^Brand$|^Braum$|^Thresh$|^Nami$|^Taric$|^Alistar$|^Lulu$|^Morgana$|^Zyra$|^Vel'Koz$|^Shen$|^Bard$|^Annie$|^Lux$|^Karma$|^Xerath$
    send ^v
 return
+
+; This should always be at the bottom
+#IfWinActive ; End #IfWinActive for LoL

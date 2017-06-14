@@ -1,8 +1,5 @@
 ; This file is where I do experimental or fun stuff in Autohotkey.
 
-#IfWinActive  ; Clears #IfWinActive for preceeding scripts.
-
-
 ^!t::
 file := generateRandArrayFile(5, 1000000)
 res_file := readRandArrayFile(file)
