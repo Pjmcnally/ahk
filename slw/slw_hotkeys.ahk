@@ -6,11 +6,7 @@
     SendInput United States of America{Tab}{Enter}
 Return
 
-
-; ------------------------------------------------------------------------------
-; ------------------------------------------------------------------------------
-; Functions used in hotstrings
-
+; Hotstrings that autofill dates
 f_date(date:="", format:="MM-dd-yyyy") {
     /* Function to return formatted date.
      * ARGS:
@@ -22,101 +18,21 @@ f_date(date:="", format:="MM-dd-yyyy") {
     return res
 }
 
-; navigates through workdox save UI and fills in blanks
-worldoxSave(desc, doc_type) {
-    num := splitMatterNum(clipboard)
-    SendInput % num["raw"] " " desc
-    SendInput {Tab}{Tab}
-    SendInput % doc_type
-    SendInput {Tab}
-    SendInput % num["client_num"]
-    SendInput {Tab}
-    SendInput % num["family_num"]
-    SendInput {Tab}
-    SendInput % num["c_code"]
-    SendInput {Tab}
-    SendInput % num["cont_num"]
-    SendInput {Tab}{Tab}{Tab}{Enter}
-}
-
-; Splits matter number and returns parts.
-splitMatterNum(str) {
-    ; Matter numbers exist is a format of CCCC.FFFIIN or CCC.FFFIIN
-    ; They infrequently appear as CCCC.FFFINN, CCC.FFFINN
-    ; where CCCC or CCC = client number, FFF = family number, I or II = country code
-    ; and N or NN = continuation number.
-
-    ; test to ensure string has 11 digits cancel if not.
-    len := StrLen(str)
-    if (len != 11 and len != 10) {
-        MsgBox Invalid Matter Number
-        Exit
-    }
-
-    ; break string into client number and remainder.
-    num_array := StrSplit(str, ".")
-    client_num := num_array[1]
-
-    remainder := num_array[2]
-    family_num := SubStr(remainder, 1, 3)
-
-    ; extract c_temp and check for char "U"
-    ; for this purpose US should always be the right answer
-    c_temp := SubStr(remainder, 4, 2)
-    if InStr(c_temp, "U") {
-        c_code := "US"
-    } else {
-        MsgBox Invald country
-        Exit
-    }
-
-    ; check if c_temp contains digits.  If no grab 1 digit.  If yes grab both
-    if c_temp is alpha
-        cont_num := SubStr(remainder, 6, 1)
-    if c_temp is not alpha
-        cont_num := SubStr(remainder, 5, 2)
-
-    num := {"raw": str, "client_num": client_num, "family_num": family_num, "c_code": c_code, "cont_num": cont_num}
-    return num
-}
-
-
-; ------------------------------------------------------------------------------
-; ------------------------------------------------------------------------------
-; Hotstrings
-
-; Worldox save hotstrings
-:co:wcomm::
-    worldoxSave("IDS Comm", "ids")
+; Text replace for date 
+:co:td::
+    sendInput % f_date(,"MM-dd-yy")
 return
-
-:co:wccca::
-    worldoxSave("IDS CCCA", "comm")
+:co:td\::
+    sendInput % f_date(,"MM/dd/yyyy")
 return
-
-:co:wxmit::
-    worldoxSave("IDS Xmit", "xmit")
-return
-
-:co:w1449::
-    worldoxSave("IDS 1449", "ids")
-return
-
-:co:wnum::
-    num := splitMatterNum(clipboard)
-    Send, {Tab}
-    SendInput % num["client_num"]
-    SendInput {Tab}
-    SendInput % num["family_num"]
-    SendInput {Tab}
-    SendInput % num["c_code"]
-    SendInput {Tab}
-    SendInput % num["cont_num"]
-    SendInput {Enter}
+:co:tda::  ; To insert arbitrary date
+    arb_date := 20170417
+    sendInput % f_date(arb_date, "MM/dd/yyyy")
+    send {Tab}internal{Tab}
 return
 
 
-; Document types
+; Hotstrings for document type 
 :co:aarf::Response to Final Office Action
 :co:aarn::Response to Non Final Office Action
 :co:adaf::Response to Advisory Action
@@ -138,7 +54,7 @@ return
 :co:rrr1mo::Response to Restriction Requirement
 
 
-; misc text replace
+; Hotstring for misc text replace
 :co:asaps::If possible, please sign ASAP.
 :co:asap3mo::If possible, please sign ASAP.  This must be filed soon for us to avoid paying a filing fee.
 :co:asapaarn::If possible, please sign ASAP.  We recently filed a response to non-final office action and we could recieve an office action shortly.
@@ -157,41 +73,9 @@ return
 :co:w/et::w/English Translation
 :co:[on::[Online].  Retrieved from the Internet: <URL: ^v>
 :co:[onar::[Online].  [Archived YYYY-MM-DD].  Retrieved from the Internet: <URL: ^v>
-:c*:isbef::   ; This function is a bit of a mess since I can't just add months.  It is a bit hacky but works.
-    Input, months, , {space}{enter}{tab},]  ; As hiddne part of hotstring wait for user to input months to deadline
-    if (months) {                           ; If Nonths exist 
-        deadline := A_Now                     ; Store Today
-        days_to_add := months * 30          ; Calc days by Months * 30. This is crude but close enough.
-        deadline += %days_to_add%, days       ; Add days to date.
-        deadline := f_date(deadline, "MMM yyyy")
-    } else {                                ; If no month entered set ??? as output.
-        deadline := "???"
-    }
-    SendInput % "IDS/SIDS before first OA (Estimated " . deadline . ")"
-return
-:c:esearch::  ; Quick little hacky hostring to help with email seach
-    day := 22
-    while (day <= 31) {
-        SendInput % """May{space}" . day . ","" OR{space}"
-        day += 1
-    }
-    SendInput {backspace 3}
-return
 
-; Text replace for date 
-:co:td::
-    sendInput % f_date(,"MM-dd-yy")
-return
-:co:td\::
-    sendInput % f_date(,"MM/dd/yyyy")
-return
-:co:tda::  ; To insert arbitrary date
-    arb_date := 20170417
-    sendInput % f_date(arb_date, "MM/dd/yyyy")
-    send {Tab}internal{Tab}
-return
 
-; Prosecution documents hotstrings
+; Hotstrings for prosecution
 :co:m312::Application Serial No. ^v, Amendment after allowance under 37 CFR 1.312 mailed `
 :co:mr312::Application Serial No. ^v, Response filed  to Amendment after Final or under 37 CFR 1.312 mailed{Left 54}
 :co:maarf::Application Serial No. ^v, Response filed  to Final Office Action mailed{Left 30}
@@ -231,7 +115,7 @@ Return
 Return
 
 
-; Full email shortcuts
+; Hosttrings to generate Emails
 ; -----------------------------------------------
 ; basic IDS email
 :co:eids::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  I examined the specification, disclosure, and file.  I found no additional references.  I prepared the IDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
@@ -262,72 +146,3 @@ Return
 
 ; basic foreign reference SIDS email
 :co:esidsfor::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared a SIDS for ^v in response to a foreign office action received in a related matter. I prepared the SIDS to cite the received document and all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
-
-
-^!d::
-    ; this is a hacky test script
-    temp := clipboard
-    Sleep, 100
-    clipboard =  
-    (
-        // function to select all references to be downloaded for submission with IDS/SIDS
-        (function checkDownload(){
-            function checkAttach() {
-                var results = []
-
-                // Select all matching lines in the patent section
-                var patent_rows = document.querySelectorAll("input.patent_checkRow");
-                for (var i=0; i < patent_rows.length; i++) {
-                    var parent = patent_rows[i].parentNode.parentNode;
-                    if (parent.children[2].childElementCount < 2) {
-                        results.push(parent.children[1].firstChild.firstChild.textContent);
-                    }
-                }
-
-                // Select all matching lines in the NPL section 
-                var pub_rows = document.querySelectorAll("input.pub_checkRow")
-                for (var j=0; j < pub_rows.length; j++) {
-                    var parent = pub_rows[j].parentNode.parentNode;
-                    if (parent.children[2].childElementCount < 2) {
-                        results.push(parent.children[1].firstChild.firstChild.textContent);
-                    }
-                }
-                return results
-            }
-
-            function checkForeignPat() {
-                var count = 0;
-                var rows = document.querySelectorAll("input.patent_checkRow");
-                for (var i=0; i < rows.length; i++) {
-                    var parent = rows[i].parentNode.parentNode;
-                    if (parent.children[6].textContent != "US") {
-                        parent.firstChild.click();
-                        count += 1;
-                    }
-                }
-                return count;
-            }
-
-            function checkNPL() {
-                var count = 0;
-                var rows = document.querySelectorAll("input.pub_checkRow");
-                for (var i=0; i < rows.length; i++) {
-                    var parent = rows[i].parentNode.parentNode;
-                    parent.firstChild.click();
-                    count += 1;
-                    }
-                return count;
-            }
-            var noFile = checkAttach()
-            if (noFile.length == 0) {
-                noFile = 0
-            }
-            var forCount = checkForeignPat()
-            var nplCount = checkNPL()
-            console.log("Refs missing attachments: " + noFile + ".\n" + forCount + " Foreign and " + nplCount + " NPL refs checked and ready to download.")    
-        }())
-    )
-    SendInput ^v
-    Sleep, 100
-    clipboard := temp
-return
