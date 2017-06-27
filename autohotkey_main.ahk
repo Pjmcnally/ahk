@@ -9,7 +9,7 @@ SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; This is the authohtokey_main file I use on my gigabyte laptop.
 
 #Include core.ahk           	; Always load this one first
-#Include fun/playground.ahk 	; Place to experiment 
+#Include fun/playground.ahk 	; Place to experiment
 #Include fun/hearthstone.ahk 	; Hearthstone Scripts
 ; #Include borderlands2.ahk  	; Borderlands Scripts
 ; #Include diablo3.ahk  		; Diablo 3 scripts (Now obsolete)
