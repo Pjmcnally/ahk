@@ -1,0 +1,22 @@
+; This is my remote setup (working from home)
+SECTION: Monitors=2,MonitorPrimary=1; Desktop size:0,-1050,1920,2130
+Title="bulk print",x=840,y=-525,width=840,height=525
+Title="Projects",x=840,y=-1050,width=840,height=525
+Title="Downloads",x=0,y=-1050,width=840,height=525
+Title="bulk downloads",x=0,y=-525,width=840,height=525
+
+
+; This is my setup at work (SLW)
+SECTION: Monitors=2,MonitorPrimary=2; Desktop size:0,0,2560,1024
+Title="Downloads",x=1280,y=0,width=640,height=513
+Title="bulk downloads",x=1280,y=512,width=640,height=513
+Title="bulk print",x=1920,y=512,width=640,height=513
+Title="Projects",x=1920,y=0,width=640,height=513
+
+; Using remote desktop from work (SLW)
+SECTION: Monitors=2,MonitorPrimary=1; Desktop size:0,0,2560,1024
+Title="Downloads",x=1280,y=0,width=640,height=513
+Title="bulk downloads",x=1280,y=512,width=640,height=513
+Title="bulk print",x=1920,y=512,width=640,height=513
+Title="Projects",x=1920,y=0,width=640,height=513
+
