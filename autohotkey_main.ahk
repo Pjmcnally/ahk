@@ -5,8 +5,8 @@ SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 
 #Include core.ahk           	; Always load this one first
-#Include playground.ahk 		; Place to experiment 
-#Include hearthstone.ahk 		; Hearthstone Scripts
+#Include fun/playground.ahk 	; Place to experiment 
+#Include fun/hearthstone.ahk 	; Hearthstone Scripts
 ; #Include borderlands2.ahk  	; Borderlands Scripts
 ; #Include diablo3.ahk  		; Diablo 3 scripts (Now obsolete)
 ; #Include kings_bounty.ahk  	; Kings bounty scripts

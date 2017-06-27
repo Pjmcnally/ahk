@@ -1,7 +1,7 @@
 ; This file is where I do experimental or fun stuff in Autohotkey.
 
 ^!t::
-file := generateRandArrayFile(5, 1000000)
+file := generateRandArrayFile(5, 1000)
 res_file := readRandArrayFile(file)
 Run, % res_file
 return
@@ -12,11 +12,17 @@ generateRandArrayFile(len, num) {
     ; them to an output file named rand_array_<len>.txt
     array := []
     for x in range(1, len + 1) {
-        array.push(x)
+        array.Push(x)
     }
 
     file_name := "rand_array_" . len . ".txt"
     file := FileOpen(file_name, "w")
+
+    t := 1
+    while (t <= array.Length()) {
+        msgbox % array[t]
+        t += 1
+    }
 
     i := 0
     while (i < num) {
