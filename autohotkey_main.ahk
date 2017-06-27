@@ -4,6 +4,10 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 
+; Below this line at imports to include ahk modules in this file
+; ==============================================================================
+; This is the authohtokey_main file I use on my gigabyte laptop.
+
 #Include core.ahk           	; Always load this one first
 #Include fun/playground.ahk 	; Place to experiment 
 #Include fun/hearthstone.ahk 	; Hearthstone Scripts
