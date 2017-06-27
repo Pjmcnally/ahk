@@ -3,5 +3,7 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
 
-; Edit this file to add includes
+
+; Below this line at imports to include ahk modules in this file
+; ==============================================================================
 
