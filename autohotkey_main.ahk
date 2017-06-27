@@ -6,4 +6,3 @@ SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ; Below this line at imports to include ahk modules in this file
 ; ==============================================================================
-
