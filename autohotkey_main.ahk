@@ -4,10 +4,10 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 
-#Include core.ahk ; Always load this one first
-#Include playground.ahk
-#Include hearthstone.ahk
-; #Include borderlands2.ahk  ; Not currently playing.
-; #Include diablo3.ahk  ; No longer needed.
-; #Include kings_bounty.ahk  ; Not currently playing.
-; #Include lol_chars.ahk  ; Needs more development.
+#Include core.ahk           	; Always load this one first
+#Include playground.ahk 		; Place to experiment 
+#Include hearthstone.ahk 		; Hearthstone Scripts
+; #Include borderlands2.ahk  	; Borderlands Scripts
+; #Include diablo3.ahk  		; Diablo 3 scripts (Now obsolete)
+; #Include kings_bounty.ahk  	; Kings bounty scripts
+; #Include lol_chars.ahk  		; LoL champ screeen scripts (Needs more development)
