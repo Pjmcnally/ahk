@@ -1,32 +1,35 @@
 ; This file is where I do experimental or fun stuff in Autohotkey.
 
 ^!t::
-file := generateRandArrayFile(5, 1000)
+file := generateRandArrayFile(3, 1000000)
 res_file := readRandArrayFile(file)
 Run, % res_file
 return
 
 
+genArray(len, start := 1, step := 1) {
+    array := []
+    for x in range(start, len + 1, step) {
+        array.Push(x)
+    }
+
+    return array
+}
+
+
+
+
 generateRandArrayFile(len, num) {
     ; Function generates num random arrays of lenght len (1 to len) and writes 
     ; them to an output file named rand_array_<len>.txt
-    array := []
-    for x in range(1, len + 1) {
-        array.Push(x)
-    }
+    array := genArray(len)
 
     file_name := "rand_array_" . len . ".txt"
     file := FileOpen(file_name, "w")
 
-    t := 1
-    while (t <= array.Length()) {
-        msgbox % array[t]
-        t += 1
-    }
-
     i := 0
     while (i < num) {
-        rand_array := genRandomArray(array)
+        rand_array := shuffle(array)
         file.Write(arrayAsStr(rand_array))
         i += 1
     }
