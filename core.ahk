@@ -1,5 +1,4 @@
-; This file is for general hotstrings
-
+; This file is for core hotstrings
 
 ; The line below this one is literal (the ; does not count as a comment indicator). I have removed /\[] as end chars
 #Hotstring EndChars -(){}:;'",.?!`n `t
