@@ -19,4 +19,3 @@ Title="Downloads",x=1280,y=0,width=640,height=513
 Title="bulk downloads",x=1280,y=512,width=640,height=513
 Title="bulk print",x=1920,y=512,width=640,height=513
 Title="Projects",x=1920,y=0,width=640,height=513
-

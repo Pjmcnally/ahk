@@ -17,8 +17,6 @@ genArray(len, start := 1, step := 1) {
 }
 
 
-
-
 generateRandArrayFile(len, num) {
     ; Function generates num random arrays of lenght len (1 to len) and writes 
     ; them to an output file named rand_array_<len>.txt
@@ -133,4 +131,3 @@ _RangeEnumNext(enum, ByRef k, ByRef v:="") {
         enum.i += 1
     return ret
 }
-
