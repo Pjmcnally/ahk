@@ -18,9 +18,10 @@ Return
 ^F11::
     ifWinNotExist, Pandora                ; Run Pandora if not running
         Run, pandora.exe, C:\Program Files (x86)\Pandora\
-    IfWinActive, Pandora                  ; If Active
-        WinMinimize, Pandora              ; Minimize
-    else                                  ; If not active
-        WinActivate, Pandora              ; Activate
+    Else
+        IfWinActive, Pandora              ; If Active
+            WinMinimize, Pandora          ; Minimize
+        else                              ; If not active
+            WinActivate, Pandora          ; Activate
 Return
 
