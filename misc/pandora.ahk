@@ -6,6 +6,8 @@ Media_Play_Pause:: ; Fn-F11 (The media play button on my bhip keyboard)
         ControlSend, , {Space}, Pandora   ; Send Spacebar (Play/Pause)
     Else
         Run, pandora.exe, C:\Program Files (x86)\Pandora\
+        Sleep, 10000
+        WinMinimize, Pandora
 Return
 
 ; This hotkey skips to the next sone on the Windows Pandora Client
@@ -14,12 +16,16 @@ Media_Next::  ; Fn-F12 (The media next button on my bhip keyboard)
         ControlSend, , {Right}, Pandora   ; Send Right (Next Song)
     Else
         Run, pandora.exe, C:\Program Files (x86)\Pandora\
+        Sleep, 10000
+        WinMinimize, Pandora
 Return
 
 ; This hotkey Runs/Maximizes/Minimize the Windows Pandora Client
 ^F11::  ; CTRL-F11 (The media play button on my bhip keyboard)
     ifWinNotExist, Pandora                ; Run Pandora if not running
         Run, pandora.exe, C:\Program Files (x86)\Pandora\
+        Sleep, 10000
+        WinMinimize, Pandora
     Else
         IfWinActive, Pandora              ; If Active
             WinMinimize, Pandora          ; Minimize
