@@ -6,6 +6,7 @@ SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ; Add Includes Below this line to add functionality from other ahk modules
 ; ==============================================================================
+; This is the default autohotkey_main file.
 
 ; Example
 ; #Include the_thing_I_want  
