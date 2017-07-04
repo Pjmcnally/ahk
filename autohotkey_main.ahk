@@ -4,12 +4,10 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 
+; This is the default autohotkey_main file.
+
 ; Add Includes Below this line to add functionality from other ahk modules
 ; ==============================================================================
-; This is the authohtokey_main file I use on my gigabyte laptop.
-
-#Include core.ahk               ; Always load this one first
-#Include misc/git.ahk           ; Git scripts
-#Include misc/playground.ahk    ; Place to experiment
-#Include game/hearthstone.ahk   ; Hearthstone Scripts
-#Include misc/pandora.ahk       ; Pandora Scripts
+; Example
+; #Include the_thing_I_want
+; #Include the_other_thing_I_want
