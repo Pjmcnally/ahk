@@ -4,10 +4,10 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 
-; Add Includes Below this line to add functionality from other ahk modules
-; ==============================================================================
-; This is the authohtokey_main file I use on my gigabyte laptop.
+; This is the authohtokey_main file I use on my Gigabyte laptop.
 
+; Add Includes Below this line to add other ahk modules
+; ==============================================================================
 #Include core.ahk               ; Always load this one first
 #Include misc/git.ahk           ; Git scripts
 #Include misc/playground.ahk    ; Place to experiment
