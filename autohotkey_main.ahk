@@ -4,10 +4,10 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 
-; Add Includes Below this line to add functionality from other ahk modules
-; ==============================================================================
 ; This is the default autohotkey_main file.
 
+; Add Includes Below this line to add functionality from other ahk modules
+; ==============================================================================
 ; Example
 ; #Include the_thing_I_want
 ; #Include the_other_thing_I_want
