@@ -9,5 +9,5 @@ SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; This is the default autohotkey_main file.
 
 ; Example
-; #Include the_thing_I_want  
+; #Include the_thing_I_want
 ; #Include the_other_thing_I_want
