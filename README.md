@@ -2,7 +2,8 @@
 
 This is the main hub for all of my AutoHotkey files.
 
-This repo has different branche for each of my autohotkey setups.
+To use create a file "autohotkey_main.ahk" (Based off of 
+autohotkey_main_default.ahk) to include desired modules.  
 
-For each setup create a branch off of master and edit the autohotkey_main.ahk file
-to include any desired modules.  
+That file will not be tracked by git as it is a local config file.
+
