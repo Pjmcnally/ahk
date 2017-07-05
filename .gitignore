@@ -1,0 +1,4 @@
+# gitignore file
+
+# Ignore main config file for each system
+autohotkey_main.ahk
