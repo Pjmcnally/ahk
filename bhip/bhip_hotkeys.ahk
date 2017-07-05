@@ -22,3 +22,6 @@ Return
 
 ; Hostrings for various hosts
 :co:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@slwip.com{Tab}{Down}{Tab}{Tab}{Space}
+
+; Misc Text Hotstrings
+:co:b1::BACKLOG 001!o
