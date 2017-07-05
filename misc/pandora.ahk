@@ -1,7 +1,5 @@
 ; This ahk file contains my scripts that interact with the Windows Pandora Client.
 
-; For these scripts to work with the Pandora Client minimized to the taskbar add "DetectHiddenWindows, On" to top of autohotkey_main.ahk.
-
 ; This hotkey plays/pauses the Windows Pandora client
 F11::                                       ; For laptop compatibility (No media keys)
 Media_Play_Pause::                          ; Fn-F11 (The media play button on my bhip keyboard)
