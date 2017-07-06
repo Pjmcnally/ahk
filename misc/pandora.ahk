@@ -1,5 +1,18 @@
 ; This ahk file contains my scripts that interact with the Windows Pandora Client.
 
+; ------------------------------------------------------------------------------
+; Functions used in this module
+
+runPandoraMin() {
+    Run, pandora.exe, C:\Program Files (x86)\Pandora\
+    Sleep, 1000
+    WinMinimize, Pandora
+}
+
+
+; ------------------------------------------------------------------------------
+; Hotstrings in this module
+
 ; This hotkey plays/pauses the Windows Pandora client
 F11::                                       ; For laptop compatibility (No media keys)
 Media_Play_Pause::                          ; Fn-F11 (The media play button on my bhip keyboard)
@@ -38,8 +51,4 @@ Return
         WinClose, Pandora
 Return
 
-runPandoraMin() {
-    Run, pandora.exe, C:\Program Files (x86)\Pandora\
-    Sleep, 1000
-    WinMinimize, Pandora
-}
+
