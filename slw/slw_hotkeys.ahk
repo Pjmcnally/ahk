@@ -1,12 +1,6 @@
-; Script to enter "United States of America
-^!u::
-    ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
-    KeyWait Control
-    KeyWait Alt
-    SendInput United States of America{Tab}{Enter}
-Return
+; ------------------------------------------------------------------------------
+; Functions used in this module
 
-; Hotstrings that autofill dates
 f_date(date:="", format:="MM-dd-yyyy") {
     /* Function to return formatted date.
      * ARGS:
@@ -18,13 +12,27 @@ f_date(date:="", format:="MM-dd-yyyy") {
     return res
 }
 
-; Text replace for date 
+
+; ------------------------------------------------------------------------------
+; Hotstrings in this module
+
+; Script to enter "United States of America
+^!u::
+    ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
+    KeyWait Control
+    KeyWait Alt
+    SendInput United States of America{Tab}{Enter}
+Return
+
+; Hotstrings that autofill dates
 :co:td::
     sendInput % f_date(,"MM-dd-yy")
 return
+
 :co:td\::
     sendInput % f_date(,"MM/dd/yyyy")
 return
+
 :co:tda::  ; To insert arbitrary date
     arb_date := 20170417
     sendInput % f_date(arb_date, "MM/dd/yyyy")
