@@ -1,3 +1,6 @@
+; ------------------------------------------------------------------------------
+; Functions used in this module
+
 ; navigates through workdox save UI and fills in blanks
 worldoxSave(desc, doc_type) {
     num := splitMatterNum(clipboard)
@@ -58,8 +61,7 @@ splitMatterNum(str) {
 
 
 ; ------------------------------------------------------------------------------
-; ------------------------------------------------------------------------------
-; Hotstrings
+; Hotstrings in this module
 
 ; Worldox save hotstrings
 :co:wcomm::
