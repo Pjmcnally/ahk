@@ -35,7 +35,7 @@ main() {
     ; Check with user that all is correct then upload File
     my_upload.verifyContinue()
 
-    ; upload files to USPTO
+    ; Upload files to USPTO
     my_upload.submitLoop()
 }
 
