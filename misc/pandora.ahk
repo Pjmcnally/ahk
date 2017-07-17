@@ -26,7 +26,7 @@ Media_Play_Pause::                          ; Fn-F11 (The media play button on m
     pandoraCmd("{Space}")                   ; Send {Space} to Pandora (Pause/Play)
 Return
 
-; This hotkey skips to the next sone on the Windows Pandora Client
+; This hotkey skips to the next song on the Windows Pandora Client
 F12::                                       ; For laptop compatibility (No media keys)
 Media_Next::                                ; Fn-F12 (The media next button on my bhip keyboard)
     pandoraCmd("{Right}")                   ; Send {Right} to Pandora (Next track)
