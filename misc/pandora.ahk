@@ -4,12 +4,14 @@
 ; Functions used in this module
 
 runPandoraMin() {
+    ; Function to run then minimize Pandora.
     Run, pandora.exe, C:\Program Files (x86)\Pandora\
     Sleep, 1000
     WinMinimize, Pandora
 }
 
 pandoraCmd(command) {
+    ; Function to pass command (param as string) to Pandora.
     IfWinExist, Pandora                     ; Check if Pandora Exists
         ControlSend, , %command%, Pandora   ; Send command
     Else
