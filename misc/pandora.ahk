@@ -9,6 +9,13 @@ runPandoraMin() {
     WinMinimize, Pandora
 }
 
+pandoraCmd(command) {
+    IfWinExist, Pandora                     ; Check if Pandora Exists
+        ControlSend, , %command%, Pandora   ; Send command
+    Else
+        runPandoraMin()                     ; Run and minimize Pandora
+}
+
 
 ; ------------------------------------------------------------------------------
 ; Hotstrings in this module
@@ -16,21 +23,13 @@ runPandoraMin() {
 ; This hotkey plays/pauses the Windows Pandora client
 F11::                                       ; For laptop compatibility (No media keys)
 Media_Play_Pause::                          ; Fn-F11 (The media play button on my bhip keyboard)
-    IfWinExist, Pandora                     ; Check if Pandora Exists
-        ControlSend, , {Space}, Pandora     ; Send Spacebar (Play/Pause)
-    Else
-        runPandoraMin()
-
+    pandoraCmd("{Space}")                   ; Send {Space} to Pandora (Pause/Play)
 Return
 
 ; This hotkey skips to the next sone on the Windows Pandora Client
 F12::                                       ; For laptop compatibility (No media keys)
 Media_Next::                                ; Fn-F12 (The media next button on my bhip keyboard)
-    ifWinExist, Pandora                     ; Check if Pandora Exists
-        ControlSend, , {Right}, Pandora     ; Send Right (Next Song)
-    Else
-        runPandoraMin()
-
+    pandoraCmd("{Right}")                   ; Send {Right} to Pandora (Next track)
 Return
 
 ; This hotkey Runs/Maximizes/Minimize the Windows Pandora Client
