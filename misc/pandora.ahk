@@ -39,6 +39,7 @@ Return
 ; This hotkey resolves the "Connect" issue.
 !F11::                                      ; ALT-F11
     pandoraCmd("{Tab}{Space}")              ; Send {Tab}{Space} to Pandora
+Return
 
 
 ; This hotkey Runs/Maximizes/Minimize the Windows Pandora Client
