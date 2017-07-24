@@ -37,9 +37,11 @@ Return
 
 
 ; This hotkey resolves the "Connect" issue.
+#IfWinNotActive ahk_exe OUTLOOK.EXE         ; Resolve conflict with hotkey to open developer pane in Outlook
 !F11::                                      ; ALT-F11
     pandoraCmd("{Tab}{Space}")              ; Send {Tab}{Space} to Pandora
 Return
+#IfWinNotActive                             ; Clear previous #IfWinNotActive
 
 
 ; This hotkey Runs/Maximizes/Minimize the Windows Pandora Client
