@@ -18,38 +18,24 @@ stringLower(string){
 }
 
 clip_func(func){
-    a := %func%("TEst")
-    MsgBox % a
-}
-
-^!t::
-    clip_func("stringLower")
-return
-
-
-^!u::
     ClipSaved := ClipboardAll           ; Save the entire clipboard to a variable of your choice.
     Clipboard =                         ; Empty clipboard
 
     Send ^c                             ; Copy highlight text to clipboard
     ClipWait                            ; Wait for clipboard to contain text
-    up_clip := stringUpper(Clipboard)   ; StringUpper contents of clipboard
-    Send, %up_clip%                     ; Send upper case string 
 
+    res := %func%(Clipboard)            ; Run passed in func on contents of clipboard
+
+    Send, %res%                         ; Send upper case string 
     Clipboard := ClipSaved              ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
     ClipSaved =                         ; Free the memory in case the clipboard was very large.
+}
+
+^!u::
+    clip_func("stringUpper")
 Return
 
 ^!l::
-    ClipSaved := ClipboardAll           ; Save the entire clipboard to a variable of your choice.
-    Clipboard =                         ; Empty clipboard
-
-    Send ^c                             ; Copy highlight text to clipboard
-    ClipWait                            ; Wait for clipboard to contain text
-    StringLower, low_clip, Clipboard     ; StringUpper contents of clipboard
-    Send, %low_clip%                     ; Send upper case string 
-
-    Clipboard := ClipSaved              ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-    ClipSaved =                         ; Free the memory in case the clipboard was very large.
+    clip_func("stringLower")
 Return
 
