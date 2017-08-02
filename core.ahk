@@ -8,34 +8,37 @@
 
 
 stringUpper(string){
+    ; Allow me to call stringUpper as a function (not command)
     StringUpper, res, string
     return res
 }
 
 stringLower(string){
+     ; Allow me to call stringLower as a function (not command)
     StringLower, res, string
     return res
 }
 
 clip_func(func){
+    ; This function takes in a func name and runs it on whatever text is currently higlighted and "Sends" the result
     ClipSaved := ClipboardAll           ; Save the entire clipboard to a variable of your choice.
     Clipboard =                         ; Empty clipboard
 
     Send ^c                             ; Copy highlight text to clipboard
     ClipWait                            ; Wait for clipboard to contain text
-
     res := %func%(Clipboard)            ; Run passed in func on contents of clipboard
+    Send, %res%                         ; Send results string
 
-    Send, %res%                         ; Send upper case string 
-    Clipboard := ClipSaved              ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+    Clipboard := ClipSaved              ; Restore the original clipboard.
     ClipSaved =                         ; Free the memory in case the clipboard was very large.
 }
 
 ^!u::
+    ; Hotkey to uppercase all highlighted text
     clip_func("stringUpper")
 Return
 
 ^!l::
+    ; Hotkey to lowercase all hightlighted text
     clip_func("stringLower")
 Return
-
