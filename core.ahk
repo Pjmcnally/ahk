@@ -19,6 +19,18 @@ stringLower(string){
     return res
 }
 
+clip_swap(str){
+    ; This function allows me to paste a string but not disrupt the clipboard
+    ClipSaved := ClipboardAll           ; Save the entire clipboard to a variable of your choice.
+    Clipboard := str                    ; Assign text to clipboard
+    ClipWait
+
+    Send, ^v
+
+    Clipboard := ClipSaved              ; Restore the original clipboard.
+    ClipSaved =                         ; Free the memory in case the clipboard was very large.
+}
+
 clip_func(func){
     ; This function takes in a func name and runs it on whatever text is currently higlighted and "Sends" the result
     ClipSaved := ClipboardAll           ; Save the entire clipboard to a variable of your choice.
