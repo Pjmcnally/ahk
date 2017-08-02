@@ -17,6 +17,15 @@ stringLower(string){
     return res
 }
 
+clip_func(func){
+    a := %func%("TEst")
+    MsgBox % a
+}
+
+^!t::
+    clip_func("stringLower")
+return
+
 
 ^!u::
     ClipSaved := ClipboardAll           ; Save the entire clipboard to a variable of your choice.
