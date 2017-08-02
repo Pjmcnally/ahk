@@ -12,6 +12,11 @@ stringUpper(string){
     return res
 }
 
+stringLower(string){
+    StringLower, res, string
+    return res
+}
+
 
 ^!u::
     ClipSaved := ClipboardAll           ; Save the entire clipboard to a variable of your choice.
