@@ -131,7 +131,6 @@ Return
         WinMove, A,,%Win_x%,%Win_y%,%Win_width%,%Win_height%
       }
     }
-
   }
 
   ; If no matching section found display error and instructions.
