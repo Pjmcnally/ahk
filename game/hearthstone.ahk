@@ -5,7 +5,6 @@
 
 ^!h::
 ; wait for hotkey keys to be released
-
 KeyWait Control
 KeyWait Alt
 KeyWait h
@@ -19,7 +18,7 @@ Return
 
 main() {
     num_packs := getNumPacks()
-    sleep, % 500  ; wait for dialog to fully close.
+    sleep, % 1000  ; wait for dialog to fully close.
     while num_packs > 0 {
         openPack()
         num_packs -= 1
@@ -43,13 +42,13 @@ openPack() {
     shuffle(card_list)
 
     SendEvent {Space}  ; Open Pack
-    sleep, % 4000  ; wait for pack to open
+    sleep, % 5000  ; wait for pack to open
     for key, value in card_list {  ; Click all cards in random order
         x := cards[value]["x"]
         y := cards[value]["y"]
         SendEvent {Click, %x%, %y%}
     }
-    Sleep, % 2000  ; wait of OK to appear
+    Sleep, % 2500  ; wait of OK to appear
 }
 
 ; This should always be at the bottom
