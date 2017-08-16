@@ -4,6 +4,7 @@
 #IfWinActive, Hearthstone
 
 ^!h::
+; With these updated timings this script takes longer but is much more consistent (<.5% failure rate)
 ; wait for hotkey keys to be released
 KeyWait Control
 KeyWait Alt
