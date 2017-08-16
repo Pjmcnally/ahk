@@ -1,12 +1,18 @@
 ;DockWin v0.3 - Save and Restore window positions when docking/undocking (using hotkeys)
 ; Paul Troiano, 6/2014
 
-; This has been Extreamly modified by Patrick McNally 08/2017
+; This has been heavily modified by Patrick McNally 03/2017
 
 ;
 ; Hotkeys: ^ = Control; ! = Alt; + = Shift; # = Windows key; * = Wildcard;
 ;          & = Combo keys; Others include ~, $, UP (see "Hotkeys" in Help)
 
+;#InstallKeybdHook
+#SingleInstance, Force
+SetTitleMatchMode, 2          ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
+SetTitleMatchMode, Fast       ; Fast is default
+DetectHiddenWindows, off      ; Off is default
+SetWorkingDir %A_ScriptDir%   ; Ensures a consistent starting directory.
 CrLf=`r`n
 FileName:="WinPos.txt"
 
@@ -131,6 +137,7 @@ Return
         WinMove, A,,%Win_x%,%Win_y%,%Win_width%,%Win_height%
       }
     }
+
   }
 
   ; If no matching section found display error and instructions.
