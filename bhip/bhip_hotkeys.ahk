@@ -1,7 +1,7 @@
 ; Misc Hotstrings
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 :o:{c::{{}code{}}^v{{}code{}}
-:o:-p::-- Patrick
+:o:-p::Patrick McNally{Enter}DevOps Support{Enter}pmcnally@blackhillsip.com
 :co:b1::BACKLOG 001!o
 
 ; Ticket Response Strings
