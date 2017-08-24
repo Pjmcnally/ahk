@@ -11,3 +11,24 @@
 
 ; SQL Hostrings
 :o:bt::{/}{*}{ENTER}BEGIN TRAN{Enter 2}--commit{ENTER}ROLLBACK{ENTER}{*}{/}
+
+^!t::
+    e_count := 0
+    Loop, parse, clipboard, `n, `r
+    {
+        string := RegExReplace(A_LoopField, "U){color.*}")
+        string := RegExReplace(string, "\xA0+")
+        string := Trim(string)
+
+        if (string) {
+            if (e_count > 1){
+                send {Enter}
+            }
+            Send {Raw}%string%
+            Send {Enter}
+            e_count := 0
+        } else {
+            e_count += 1
+        }
+    }
+return
