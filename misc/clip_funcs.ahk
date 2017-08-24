@@ -1,3 +1,8 @@
+; This ahk file functions to better handle input from the clipboard
+
+; ------------------------------------------------------------------------------
+; Functions used in this module
+
 clip_swap(str){
     ; This function allows me to paste a string but not disrupt the clipboard
     ClipSaved := ClipboardAll           ; Save the entire clipboard to a variable of your choice.
