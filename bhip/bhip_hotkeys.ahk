@@ -11,6 +11,8 @@ format_jira(str){
     {
         string := RegExReplace(A_LoopField, "U){color.*}")  ; Remove all {color} tags
         string := RegExReplace(string, "\xA0+")             ; Remove all Non-breaking spaces
+        string := RegExReplace(string, "\[\s*\*", "[")      ; Removes "*" after [ to solve web address problem
+        string := RegExReplace(string, "\*\|", "|")         ; Removes "*"" before | to solve web address problem
         string := Trim(string)                              ; Trim whitespace
 
         if (string) {                                       ; If there is a sting
@@ -41,9 +43,11 @@ format_jira(str){
 :o:ppdone::This is resolved.{Enter 2}The database was updated to move the documents into "L" status.{Enter 2}The placeholder file was swapped in, xod files were created for each PDF in the JDS and the original file was restored.
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 ^!f::
-    Send ^a                     ; To select all
+    KeyWait Ctrl    ; Wait for control and alt to be released If not released they
+    KeyWait Alt     ; can cause the sent text to issue commands (alt-tab for example)
+
     clip_func("format_jira")    ; Run "format_jira" func on selected text
-return
+Return
 
 ; SQL Hostrings
 :o:bt::{/}{*}{ENTER}BEGIN TRAN{Enter 2}--commit{ENTER}ROLLBACK{ENTER}{*}{/}
