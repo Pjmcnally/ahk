@@ -24,6 +24,7 @@ format_jira(str){
             e_count += 1                                    ; Increment empty line count
         }
     }
+    Return True
 }
 
 ; ------------------------------------------------------------------------------
