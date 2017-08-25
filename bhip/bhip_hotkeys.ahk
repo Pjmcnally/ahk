@@ -11,8 +11,8 @@ format_jira(str){
     {
         string := RegExReplace(A_LoopField, "U){color.*}")  ; Remove all {color} tags
         string := RegExReplace(string, "\xA0+")             ; Remove all Non-breaking spaces
-        string := RegExReplace(string, "\[\s*\*", "[")      ; Removes "*" after [ to solve web address problem
-        string := RegExReplace(string, "\*\|", "|")         ; Removes "*"" before | to solve web address problem
+        string := RegExReplace(string, "U)\[\s*\*", "[")    ; Removes "*" after [ to solve web address problem
+        string := RegExReplace(string, "U)\*\s*\|", "|")    ; Removes "*"" before | to solve web address problem
         string := Trim(string)                              ; Trim whitespace
 
         if (string) {                                       ; If there is a sting
