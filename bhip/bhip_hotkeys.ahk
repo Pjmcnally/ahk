@@ -6,24 +6,23 @@
 format_jira(str){
     ; This function formats text in JIRA recieved through email
     ; It's main purpose is to remove extra lines and {color} tags
-    e_count := 0                                            ; Count of empty lines
-    Loop, parse, str, `n, `r                                ; Loop over lines of str
+    e_count := 0                                                        ; Count of consecutive empty lines
+    Loop, parse, str, `n, `r                                            ; Loop over lines of input str
     {
-        string := RegExReplace(A_LoopField, "U){color.*}")  ; Remove all {color} tags
-        string := RegExReplace(string, "\xA0+")             ; Remove all Non-breaking spaces
-        string := RegExReplace(string, "U)\[\s*\*", "[")    ; Removes "*" after [ to solve web address problem
-        string := RegExReplace(string, "U)\*\s*\|", "|")    ; Removes "*"" before | to solve web address problem
-        string := Trim(string)                              ; Trim whitespace
+        string := RegExReplace(A_LoopField, "[\s_]*{color.*?}[\s_]*")   ; Remove all {color} tags and ajoining spaces and underscores
+        string := RegExReplace(string, "\xA0+")                         ; Remove all Non-breaking spaces
+        string := RegexReplace(string, "\s*\*\s*")                      ; Remove all * and adjoining whitespace
+        string := Trim(string)                                          ; Trim whitespace
 
-        if (string) {                                       ; If there is a sting
-            if (e_count > 1){                               ; That was preceeded by more than 1 empty line
-                send {Enter}                                ; Add an empty line
+        if (string) {                                                   ; If there is a string
+            if (e_count > 1){                                           ; That was preceeded by more than 1 empty line
+                send {Enter}                                            ; Add an empty line
             }
-            Send {Raw}%string%                              ; Send this line
-            Send {Enter}                                    ; Send newline
-            e_count := 0                                    ; Set empty line count to 0
+            Send {Raw}%string%                                          ; Send line (Raw to preserve special chars)
+            Send {Enter}                                                ; Send newline
+            e_count := 0                                                ; Set empty line count to 0
         } else {
-            e_count += 1                                    ; Increment empty line count
+            e_count += 1                                                ; Increment empty line count
         }
     }
     Return True
