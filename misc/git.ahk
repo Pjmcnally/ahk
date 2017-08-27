@@ -6,9 +6,9 @@
 ; ------------------------------------------------------------------------------
 ; Hotstrings in this module
 
-::gp::git push {Enter}
-::gs::git status {Enter}
-::gd::git diff {Enter}
-::gfa::git fetch --all {Enter}
+::gp::git push
+::gs::git status
+::gd::git diff
+::gfa::git fetch --all
 :o:gc::git commit -m "
 :o:gca::git commit -am "
