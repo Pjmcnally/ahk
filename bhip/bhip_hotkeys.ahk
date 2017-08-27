@@ -28,6 +28,28 @@ format_jira(str){
     Return True
 }
 
+format_db_for_jira(){
+    ; This function formats content copied out of MSSMS as a table for JIRA
+    str := Clipboard                        ; Content needs to already be on the clipboard
+    Loop, parse, str, `n, `r                ; Loop over each line on the clipboard
+    {
+        if (A_Index == 1) {                 ; If this is the first line
+                char := "||"                ; use || as divider for header
+            } else {
+                char := "|"                 ; Otherwise use |
+            }
+        Loop, Parse, A_LoopField, `t        ; Loop over each element (tab delineated)
+        {
+            If (A_Index == 1) {
+                Send, % char                ; Send first dividing char if first elem in line
+            }
+            Send, % A_LoopField             ; Send contents of element
+            Send, % char                    ; Send closing dividing char
+        }
+        Send {Enter}                        ; Send newline to end line
+    }
+}
+
 ; ------------------------------------------------------------------------------
 ; Hotstrings in this module
 
@@ -41,6 +63,14 @@ format_jira(str){
 :o:psig::Patrick McNally{Enter}DevOps Support{Enter}pmcnally@blackhillsip.com
 :o:ppdone::This is resolved.{Enter 2}The database was updated to move the documents into "L" status.{Enter 2}The placeholder file was swapped in, xod files were created for each PDF in the JDS and the original file was restored.
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
+
+; Complex Hotstrings
+^!v::
+    KeyWait Ctrl    ; Wait for control and alt to be released If not released they
+    KeyWait Alt     ; can cause the sent text to issue commands (alt-tab for example)
+
+    format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
+Return
 ^!f::
     KeyWait Ctrl    ; Wait for control and alt to be released If not released they
     KeyWait Alt     ; can cause the sent text to issue commands (alt-tab for example)
