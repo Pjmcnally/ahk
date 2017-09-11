@@ -9,7 +9,7 @@ clip_swap(str){
     Clipboard := str                    ; Assign text to clipboard
     ClipWait, 1                         ; Wait 1 second for clipboard to contain text
     if ErrorLevel {
-        MsgBox, % "No text selected.  Please select text and try again"
+        MsgBox, % "No text selected.`r`n`r`nPlease select text and try again."
         Return
     }
 
@@ -27,7 +27,7 @@ clip_func(func, send_res:=False){
     Send ^c                             ; Copy highlight text to clipboard
     ClipWait, 1                         ; Wait 1 second for clipboard to contain text
     if ErrorLevel {
-        MsgBox, % "No text selected.  Please select text and try again"
+        MsgBox, % "No text selected.`r`n`r`nPlease select text and try again."
         Return
     }
     res := %func%(Clipboard)            ; Run passed in func on contents of clipboard
