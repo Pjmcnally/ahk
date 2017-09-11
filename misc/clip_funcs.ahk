@@ -7,7 +7,7 @@ clip_swap(str){
     ; This function allows me to paste a string but not disrupt the clipboard
     ClipSaved := ClipboardAll           ; Save the entire clipboard to a variable of your choice.
     Clipboard := str                    ; Assign text to clipboard
-    ClipWait
+    ClipWait, 1, 0                      ; Wait 1 second for clipboard to contain text
 
     Send, ^v
 
@@ -21,7 +21,7 @@ clip_func(func, send_res:=False){
     Clipboard =                         ; Empty clipboard
 
     Send ^c                             ; Copy highlight text to clipboard
-    ClipWait                            ; Wait for clipboard to contain text
+    ClipWait, 1, 0                      ; Wait 1 second for clipboard to contain text
     res := %func%(Clipboard)            ; Run passed in func on contents of clipboard
 
     if (send_res){                      ; if send_res is True
