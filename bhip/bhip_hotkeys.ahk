@@ -9,7 +9,8 @@ format_jira(str){
     e_count := 0                                                        ; Count of consecutive empty lines
     Loop, parse, str, `n, `r                                            ; Loop over lines of input str
     {
-        string := RegExReplace(A_LoopField, "[\s_]*{color.*?}[\s_]*")   ; Remove all {color} tags and ajoining spaces and underscores
+        string := A_LoopField                                           ; Assign current line to string variable
+        string := RegExReplace(string, "[\s_]*{color.*?}[\s_]*")        ; Remove all {color} tags and ajoining spaces and underscores
         string := RegExReplace(string, "\xA0+")                         ; Remove all Non-breaking spaces
         string := RegexReplace(string, "\s*\*\s*")                      ; Remove all * and adjoining whitespace
         string := Trim(string)                                          ; Trim whitespace
