@@ -58,6 +58,7 @@ format_db_for_jira(){
 :co:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@blackhillsip.com{Tab}{Down}{Tab}{Tab}{Space}
 :o:{c::{{}code{}}^v{{}code{}}
 :co:b1::BACKLOG 001!o
+:co:fd::For documentation please see: ^v
 
 ; Signature/Ticket Hotstrings
 :o:-p::--Patrick
