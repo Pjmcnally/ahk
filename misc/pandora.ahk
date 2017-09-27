@@ -6,7 +6,7 @@
 runPandoraMin() {
     ; Function to run then minimize Pandora.
     Run, pandora.exe, C:\Program Files (x86)\Pandora\
-    Sleep, 1000
+    Sleep, 2000
     WinMinimize, Pandora
 }
 
