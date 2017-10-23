@@ -68,8 +68,8 @@ format_db_for_jira(){
 
 ; Complex Hotstrings
 ^y::
-    Input, OutVar, , {Tab}{Enter}{Space}{Escape}
-    if (ErrorLevel != "EndKey:Escape") {
+    Input, OutVar, L10 , {Tab}{Enter}{Space}
+    if (ErrorLevel = "Max") {
         Send, % "Yes|" . OutVar . "|NA|"
         Send, {Down}
     }
