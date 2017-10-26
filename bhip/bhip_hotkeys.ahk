@@ -67,12 +67,21 @@ format_db_for_jira(){
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
 ; Complex Hotstrings
+^y::
+    Input, OutVar, L10 , {Tab}{Enter}{Space}
+    if (ErrorLevel = "Max") {
+        Send, % "Yes|" . OutVar . "|NA|"
+        Send, {Down}
+    }
+Return
+
 ^!v::
     KeyWait Ctrl    ; Wait for control and alt to be released If not released they
     KeyWait Alt     ; can cause the sent text to issue commands (alt-tab for example)
 
     format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
 Return
+
 ^!f::
     KeyWait Ctrl    ; Wait for control and alt to be released If not released they
     KeyWait Alt     ; can cause the sent text to issue commands (alt-tab for example)
