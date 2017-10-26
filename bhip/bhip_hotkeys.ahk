@@ -68,7 +68,7 @@ format_db_for_jira(){
 
 ; Complex Hotstrings
 ^y::
-    Input, OutVar, L10 , {Tab}{Enter}{Space}
+    Input, OutVar, L10, {Tab}{Enter}{Space}
     if (ErrorLevel = "Max") {
         Send, % "Yes|" . OutVar . "|NA|"
         Send, {Down}
