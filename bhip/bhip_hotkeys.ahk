@@ -56,7 +56,7 @@ format_db_for_jira(){
 
 ; Misc Hotstrings
 :co:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@blackhillsip.com{Tab}{Down}{Tab}{Tab}{Space}
-:o:{c::{{}code{}}^v{{}code{}}
+:o:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
 :co:b1::BACKLOG 001!o
 :co:fd::For documentation please see: ^v
 
@@ -68,7 +68,7 @@ format_db_for_jira(){
 
 ; Complex Hotstrings
 ^y::
-    Input, OutVar, L10 , {Tab}{Enter}{Space}
+    Input, OutVar, L10, {Tab}{Enter}{Space}
     if (ErrorLevel = "Max") {
         Send, % "Yes|" . OutVar . "|NA|"
         Send, {Down}
