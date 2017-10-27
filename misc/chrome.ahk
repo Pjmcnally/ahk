@@ -5,7 +5,13 @@
 ^j::
     ; j is a hotkey in Feedly to open next item
     ; , is my hotkey to open the currently open item in a new background tab.
-    Send, j,j,j,j,j,j,j,j,j,j,
+    Input, OutVar, L2 T5, {Tab}{Enter}{Space}
+    i := 0
+    While (i < OutVar) {
+        Send, j,
+        Sleep, 50
+        i++
+    }
 Return
 
 #IfWinActive ; Clear IfWinActive
