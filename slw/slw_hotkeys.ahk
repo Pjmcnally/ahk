@@ -1,14 +1,6 @@
 ; ------------------------------------------------------------------------------
 ; Hotstrings in this module
 
-; Script to enter "United States of America
-^!u::
-    ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
-    KeyWait Control
-    KeyWait Alt
-    SendInput United States of America{Tab}{Enter}
-Return
-
 ; Hotstrings that autofill dates
 :co:td::
     sendInput % f_date(,"MM-dd-yy")
@@ -110,31 +102,71 @@ Return
 ; Hosttrings to generate Emails
 ; -----------------------------------------------
 ; basic IDS email
-:co:eids::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  I examined the specification, disclosure, and file.  I found no additional references.  I prepared the IDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:eids::
+    subject := "^v - Documents for your signature"
+    body := "{Enter}{Tab}I have prepared an IDS for " . clipboard . ".  I examined the specification, disclosure, and file.  I found no additional references.  I prepared the IDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}"
+    send_outlook_email(subject, body)
+Return
 
 ; Continuation IDS where not all references were cited in parent.
-:co:eidsconn::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  Since it is a continuation/divisional I compared all of the unmarked references to those in its parent.  Some of the references unmarked in ^v have not been cited in the parent (see attached spreadsheet).  Despite this, I have prepared this IDS to cite all unmarked references (this includes those references not cited in the parent).  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:eidsconn::
+    subject := "^v - Documents for your signature"
+    body := "{Enter}{Tab}I have prepared an IDS for ^v.  Since it is a continuation/divisional I compared all of the unmarked references to those in its parent.  Some of the references unmarked in ^v have not been cited in the parent (see attached spreadsheet).  Despite this, I have prepared this IDS to cite all unmarked references (this includes those references not cited in the parent).  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}"
+    send_outlook_email(subject, body)
+Return
 
 ; Continuation IDS where only citing references cited in parent
-:co:eidsconp::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  I have prepared this IDS to cite all references previously cited in the parent.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:eidsconp::
+    subject := "^v - Documents for your signature"
+    body := "{Enter}{Tab}I have prepared an IDS for ^v.  I have prepared this IDS to cite all references previously cited in the parent.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}"
+    send_outlook_email(subject, body)
+Return
 
 ; Continuation IDS where all references were cited in parent
-:co:eidscony::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  Since it is a continuation/divisional I compared all of the unmarked references to those in its parent.  All references currently unmarked in ^v have been cited in its parent matter.  Therefore, I have prepared this IDS to cite all unmarked references.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:eidscony::
+    subject := "^v - Documents for your signature"
+    body := "{Enter}{Tab}I have prepared an IDS for ^v.  Since it is a continuation/divisional I compared all of the unmarked references to those in its parent.  All references currently unmarked in ^v have been cited in its parent matter.  Therefore, I have prepared this IDS to cite all unmarked references.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}"
+    send_outlook_email(subject, body)
+Return
 
 ; memo email for new IDS
-:co:eidsmemo::^v - IDS memo for your review{Tab}{Enter}{Tab}I have prepared an IDS memo for ^v.  Please review the memo and other attached documents.  Let me know which references you would like cited in this matter.^{Home}
+:co:eidsmemo::
+    subject := "^v - IDS memo for your review"
+    body := "{Enter}{Tab}I have prepared an IDS memo for ^v.  Please review the memo and other attached documents.  Let me know which references you would like cited in this matter.^{Home}"
+    send_outlook_email(subject, body)
+Return
 
 ; reminder email
-:co:eout:: Outstanding SIDS - Signature Reminder{Tab}{Enter}{Tab}I have attached all outstanding IDS/SIDS out for your signature.  Please disregard all previous requests for signature.  Please sign all the attached documents and return them to me.  ^{Home}
+:co:eout::
+    subject := "Outstanding SIDS - Signature Reminder"
+    body := "{Enter}{Tab}I have attached all outstanding IDS/SIDS out for your signature.  Please disregard all previous requests for signature.  Please sign all the attached documents and return them to me.  ^{Home}"
+    send_outlook_email(subject, body)
+Return
 
 ; reminder email - Quit
-:co:eoutq:: Outstanding SIDS - Signature Reminder{Tab}{Enter}{Tab}I have attached all outstanding IDS/SIDS out for your signature.  Please disregard all previous requests for signature.  Please sign all the attached documents and return them to me.{Enter 2}{Tab}Please sign and return all documents ASAP as my last day is Friday May 19th.  I am trying to clear out my docket before then.^{Home}
+:co:eoutq::
+    subject := "Outstanding SIDS - Signature Reminder"
+    body := "{Enter}{Tab}I have attached all outstanding IDS/SIDS out for your signature.  Please disregard all previous requests for signature.  Please sign all the attached documents and return them to me.{Enter 2}{Tab}Please sign and return all documents ASAP as my last day is Friday May 19th.  I am trying to clear out my docket before then.^{Home}"
+    send_outlook_email(subject, body)
+Return
 
 ; email for SIDS and RCE
-:co:erce::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an SIDS and RCE for ^v.  I prepared the SIDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:erce::
+    subject := "^v - Documents for your signature"
+    body := "{Enter}{Tab}I have prepared an SIDS and RCE for ^v.  I prepared the SIDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}"
+    send_outlook_email(subject, body)
+Return
 
 ; basic SIDS email
-:co:esids::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared a SIDS for ^v.  I prepared the SIDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:esids::
+    subject := "^v - Documents for your signature"
+    body := "{Enter}{Tab}I have prepared a SIDS for ^v.  I prepared the SIDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}"
+    send_outlook_email(subject, body)
+Return
 
 ; basic foreign reference SIDS email
-:co:esidsfor::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared a SIDS for ^v in response to a foreign office action received in a related matter. I prepared the SIDS to cite the received document and all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:esidsfor::
+    subject := "^v - Documents for your signature"
+    body := "{Enter}{Tab}I have prepared a SIDS for ^v in response to a foreign office action received in a related matter. I prepared the SIDS to cite the received document and all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}"
+    send_outlook_email(subject, body)
+Return
