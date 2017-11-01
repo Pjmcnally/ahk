@@ -65,6 +65,10 @@ format_db_for_jira(){
 :o:psig::Patrick McNally{Enter}DevOps Support{Enter}pmcnally@blackhillsip.com
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
+; Daily auto-docket review Hotstrings
+:co:acmd::Bug with AppColl docketing - Not an issue with Auto-docket{tab}Manual finish docketing
+
+
 ; Complex Hotstrings
 ^y::
     Input, OutVar, L10, {Tab}{Enter}{Space}
