@@ -1,19 +1,4 @@
 ; ------------------------------------------------------------------------------
-; Functions used in this module
-
-f_date(date:="", format:="MM-dd-yyyy") {
-    /* Function to return formatted date.
-     * ARGS:
-     *     date (int): Optional.  If not provided will default to current date & time.  Otherwise, specify all or the leading part of a timestamp in the YYYYMMDDHH24MISS format
-     *     format (str): Optional. If not provided will default to MM-dd-yyyy.  Provide any format (as string)  https://autohotkey.com/docs/commands/FormatTime.html
-    */
-    
-    FormatTime, res, %date%, %format%
-    return res
-}
-
-
-; ------------------------------------------------------------------------------
 ; Hotstrings in this module
 
 ; Script to enter "United States of America
@@ -27,20 +12,19 @@ Return
 ; Hotstrings that autofill dates
 :co:td::
     sendInput % f_date(,"MM-dd-yy")
-return
+Return
 
 :co:td\::
     sendInput % f_date(,"MM/dd/yyyy")
-return
+Return
 
 :co:tda::  ; To insert arbitrary date
     arb_date := 20170417
     sendInput % f_date(arb_date, "MM/dd/yyyy")
     send {Tab}internal{Tab}
-return
+Return
 
-
-; Hotstrings for document type 
+; Hotstrings for document type
 :co:aarf::Response to Final Office Action
 :co:aarn::Response to Non Final Office Action
 :co:adaf::Response to Advisory Action
