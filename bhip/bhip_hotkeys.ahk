@@ -66,7 +66,8 @@ format_db_for_jira(){
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
 ; Daily auto-docket review Hotstrings
-:co:acmd::Bug with AppColl docketing - Not an issue with Auto-docket{tab}Manual finish docketing
+:co:eadr::=AND(A2 <> "", B2 <> "")
+:co:acmd::Bug with AppColl docketing - Not an issue with Auto-docket{tab}Manual finish docketing{tab}
 
 
 ; Complex Hotstrings
