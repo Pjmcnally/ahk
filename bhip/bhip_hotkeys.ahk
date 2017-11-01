@@ -79,14 +79,6 @@ format_db_for_jira(){
 Return
 
 ; Complex Hotstrings
-^y::
-    Input, OutVar, L10, {Tab}{Enter}{Space}
-    if (ErrorLevel = "Max") {
-        Send, % "Yes|" . OutVar . "|NA|"
-        Send, {Down}
-    }
-Return
-
 ^!v::
     KeyWait Ctrl    ; Wait for control and alt to be released If not released they
     KeyWait Alt     ; can cause the sent text to issue commands (alt-tab for example)
