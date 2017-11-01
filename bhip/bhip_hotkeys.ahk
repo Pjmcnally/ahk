@@ -63,7 +63,6 @@ format_db_for_jira(){
 ; Signature/Ticket Hotstrings
 :o:-p::--Patrick
 :o:psig::Patrick McNally{Enter}DevOps Support{Enter}pmcnally@blackhillsip.com
-:o:ppdone::This is resolved.{Enter 2}The database was updated to move the documents into "L" status.{Enter 2}The placeholder file was swapped in, xod files were created for each PDF in the JDS and the original file was restored.
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
 ; Complex Hotstrings
