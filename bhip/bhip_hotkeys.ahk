@@ -66,11 +66,17 @@ format_db_for_jira(){
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
 ; Daily auto-docket review Hotstrings
-:co:eadr::=AND(A2 <> "", B2 <> "")
+:co:crule::=AND(A2 <> "", B2 <> "")
 :co:acmd::Bug with AppColl docketing - Not an issue with Auto-docket{tab}Manual finish docketing{tab}
 :co:noarf::System tried two p-codes (US-22, US-251).  Both had text rules that failed.{tab}Both rules seem over specific for this doc.  I am not sure how to fix this.{tab}
 :co:attrf::Required attributes not extracted from doc and entered into right side of screen{tab}Not sure why this didn't work (I don't understand this part well yet){tab}
 :co:miscf::Misc Doc code.  Several rules tried.  All rules failed.{tab}We probably need to make a rule for this specific doc.{tab}
+:co:eadr::
+    recipients := "Jill{tab}Milena{tab}Leonie{tab}"  ; I don't use full emails here to protect from spam.  Autofill will complete them in my Outlook.
+    subject := "Daily Auto-Docket Report"
+    body := "All,{Enter}{Tab}I have attached the Daily Auto-Docket Report for " . f_date() . ".{Enter 2}{Tab}If there are any questions or there is anything more I can do to help please let me know."
+    send_outlook_email(subject, body, recipients)
+Return
 
 ; Complex Hotstrings
 ^y::
