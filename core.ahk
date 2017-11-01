@@ -100,3 +100,8 @@ clip_func(func, send_res:=False){
     Clipboard := ClipSaved              ; Restore the original clipboard.
     ClipSaved =                         ; Free the memory in case the clipboard was very large.
 }
+
+; Temp Function (for one-offs)
+; ------------------------------------------------------------------------------
+^!t::
+Return
