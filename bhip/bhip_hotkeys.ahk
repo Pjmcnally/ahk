@@ -67,10 +67,11 @@ format_db_for_jira(){
 
 ; Daily auto-docket review Hotstrings
 :co:crule::=AND(A2 <> "", B2 <> "")
+:co:abanf::US-90{tab}Application status does not contain "To Be Abandoned"{tab}There are notes that this is to be abandoned but the status wasn't updated.  Nothing we can do.
 :co:acmd::Bug with AppColl docketing - Not an issue with Auto-docket{tab}Manual finish docketing{tab}
-:co:noarf::System tried two p-codes (US-22, US-251).  Both had text rules that failed.{tab}Both rules seem over specific for this doc.  I am not sure how to fix this.{tab}
+:co:noarf::US-22, US-251{tab}System tried two p-codes (US-22, US-251).  Both had text rules that failed.{tab}Both rules seem overly specific for this doc.  I am not sure how to fix this.{tab}
 :co:attrf::Required attributes not extracted from doc and entered into right side of screen{tab}Not sure why this didn't work (I don't understand this part well yet){tab}
-:co:miscf::Misc Doc code.  Several rules tried.  All rules failed.{tab}We probably need to make a rule for this specific doc.{tab}
+:co:miscf::Many codes{tab}Misc Doc code.  Several rules tried.  All rules failed.{tab}We probably need to make a rule for this specific doc.{tab}
 :co:eadr::
     recipients := "Jill{tab}Milena{tab}Leonie{tab}"  ; I don't use full emails here to protect from spam.  Autofill will complete them in my Outlook.
     subject := "Daily Auto-Docket Report"
