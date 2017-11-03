@@ -1,8 +1,8 @@
 ; This ahk file contains the scripts that I use at BHIP.
 
-; ------------------------------------------------------------------------------
-; Functions used in this module
 
+; Functions used in this module
+; ------------------------------------------------------------------------------
 format_jira(str){
     ; This function formats text in JIRA recieved through email
     ; It's main purpose is to remove extra lines and {color} tags
@@ -51,9 +51,9 @@ format_db_for_jira(){
     }
 }
 
-; ------------------------------------------------------------------------------
-; Hotstrings in this module
 
+; Hotstrings in this module
+; ------------------------------------------------------------------------------
 ; Misc Hotstrings
 :co:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@blackhillsip.com{Tab}{Down}{Tab}{Tab}{Space}
 :o:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
