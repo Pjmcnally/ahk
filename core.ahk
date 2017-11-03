@@ -1,7 +1,30 @@
-; This file is for core hotstrings (Hotstrings used across several modules)
+/*
+core.ahk is my core ahk script.
 
-; The line below this one is literal (the ; does not count as a comment indicator). I have removed /\[] as end chars
-#Hotstring EndChars -(){}:;'",.?!`n `t
+All content in this file should be usable/desired on all systems.
+
+The top part of this file is a continuation of the Auto-Execute section
+
+The next two sections are universal functions and hotstrings
+*/
+
+
+; Auto-Execute Section (All Auto-Execute commands must go here)
+; ==============================================================================
+#SingleInstance, Force          ; Automatically replaces old script with new if the same script file is rune twice
+#NoEnv                          ; Avoids checking empty variables to see if they are environment variables (recommended for all new scripts).
+#Warn                           ; Enable warnings to assist with detecting common errors. (More explicit - like Python Yay!)
+#Hotstring EndChars `n `t       ; Limits Hotstring EndChars to {Enter}{Tab}{Space}
+SendMode Input                  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir, %A_ScriptDir%    ; Ensures a consistent starting directory.
+SetTitleMatchMode, 2            ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
+
+; Create group of consoles for git commands
+GroupAdd, consoles, ahk_exe powershell.exe
+GroupAdd, consoles, ahk_exe powershell_ise.exe
+GroupAdd, consoles, ahk_exe mintty.exe
+
+Return                          ; End of Auto-Execute Section
 
 ; Universal Functions:
 ; ==============================================================================
