@@ -1,14 +1,22 @@
-#SingleInstance, Force
-#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir, %A_ScriptDir%  ; Ensures a consistent starting directory.
+/*
+autohotkey_main.ahk is the only ahk script actually executed on this computer.
+
+It functions as a hub to include other AHK files and runs any system specific
+Auto-Execute commands
+
+System description: <Change as needed>
+*/
 
 
-; This is the default autohotkey_main file.
-
-; Add Includes Below this line to add functionality from other ahk modules
+; Include Section
 ; ==============================================================================
-; Example
+; Include Core Module (Must be included first for the Auto-Execute to work)
+#Include core.ahk
+
+; Include Example
 ; #Include the_thing_I_want
-; #Include the_other_thing_I_want
+; #Include misc\the_other_thing_I_want
+
+
+; Auto-Execute Section (Any system specific Auto-Execute commands go here)
+; ==============================================================================
