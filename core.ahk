@@ -26,11 +26,9 @@ GroupAdd, consoles, ahk_exe mintty.exe
 
 Return                          ; End of Auto-Execute Section
 
+
 ; Universal Functions:
 ; ==============================================================================
-
-; Clipboard Functions
-; ------------------------------------------------------------------------------
 clip_swap(str){
     ; This function allows me to paste a string but not disrupt the clipboard
     ClipSaved := ClipboardAll           ; Save the entire clipboard to a variable of your choice.
@@ -68,8 +66,6 @@ clip_func(func, send_res:=False){
     ClipSaved =                         ; Free the memory in case the clipboard was very large.
 }
 
-; Misc String Functions
-; ------------------------------------------------------------------------------
 stringUpper(string){
     ; Allow me to call stringUpper as a function (not command)
     StringUpper, res, string
@@ -82,8 +78,6 @@ stringLower(string){
     Return res
 }
 
-; Date Functions
-; ------------------------------------------------------------------------------
 f_date(date:="", format:="MM-dd-yyyy") {
     /* Function to return formatted date.
      * ARGS:
@@ -95,9 +89,6 @@ f_date(date:="", format:="MM-dd-yyyy") {
     Return res
 }
 
-
-; Email Functions
-; ------------------------------------------------------------------------------
 send_outlook_email(subject, body, recipients := "") {
     if (recipients) {
         Send, %recipients%{Tab 2}
