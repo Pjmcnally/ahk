@@ -56,7 +56,8 @@ format_db_for_jira(){
 ; ------------------------------------------------------------------------------
 ; Misc Hotstrings
 :co:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@blackhillsip.com{Tab}{Down}{Tab}{Tab}{Space}
-:o:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
+:co:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
+:co:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
 :co:b1::BACKLOG 001!o
 :co:fd::For documentation please see: ^v
 
@@ -66,7 +67,7 @@ format_db_for_jira(){
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
 ; Daily auto-docket review Hotstrings
-:co:crule::=AND(A2 <> "", B2 <> "")
+:co:crule::=AND(A2 <> "", B2 <> "", C2 <> "")
 :co:abanf::US-90{tab}Application status does not contain "To Be Abandoned"{tab}There are notes that this is to be abandoned but the status wasn't updated.  Nothing we can do.
 :co:acmd::Bug with AppColl docketing - Not an issue with Auto-docket{tab}Manual finish docketing{tab}
 :co:noarf::US-22, US-251{tab}System tried two p-codes (US-22, US-251).  Both had text rules that failed.{tab}Both rules seem overly specific for this doc.  I am not sure how to fix this.{tab}
