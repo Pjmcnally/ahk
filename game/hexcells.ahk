@@ -2,7 +2,7 @@
 
 ; Hotkey to make excape do what it should in this otherwise awesome game
 Escape::
-    MouseGetPos,  mouse_x, mouse_y
+
     PixelGetColor, c_val_1, 965, 875
     PixelGetColor, c_val_2, 0, 0
 
@@ -17,11 +17,8 @@ Escape::
         dest_y = 50
     }
 
-    MouseMove, %dest_x%, %dest_y%, 0
-    Click Down
-    Sleep 50
-    Click Up
-    MouseMove, % mouse_x, mouse_y, 0
+    click_and_return(dest_x, dest_y)
+
 Return
 
 #IfWinActive

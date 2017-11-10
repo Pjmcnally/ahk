@@ -83,6 +83,15 @@ send_outlook_email(subject, body, recipients := "") {
     Return
 }
 
+click_and_return(x_dest, y_dest, speed:=0){
+    MouseGetPos,  x_orig, y_orig
+    MouseMove, % x_dest, y_dest, 0
+    Click Down
+    Sleep 10 ; For stabiltiy and consistent results, increase if issues occur.
+    Click Up
+    MouseMove, % x_orig, y_orig, 0
+    Return
+}
 
 ; Universal Hostrings:
 ; ==============================================================================
