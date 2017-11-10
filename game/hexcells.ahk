@@ -2,7 +2,8 @@
 
 ; Hotkey to make excape do what it should in this otherwise awesome game
 Escape::
-
+    ; There are all kinds of magic numbers in here but I am tired and going to bed.
+    ; TO DO: Comment or refactor magic numbers
     PixelGetColor, c_val_1, 965, 875
     PixelGetColor, c_val_2, 0, 0
 
