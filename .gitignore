@@ -2,3 +2,6 @@
 
 # Ignore main config file for each system
 autohotkey_main.ahk
+
+# local files not to be committed
+local/
