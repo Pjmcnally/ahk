@@ -62,6 +62,12 @@ format_db_for_jira(){
 :co:fd::For documentation please see: ^v
 :co:nopr::Notice of Publication
 
+; Meeting hotkeys (for time entry)
+:co:mdad::Task-78{Tab 3}* Meeting with Milena{Enter}Creating and sending daily auto-docket report ; *'s for all items after first are auto-filled by JIRA
+:co:mdev::Task-80{Tab 3}* Weekly DevOps Meeting
+:co:mwad::Task-82{Tab 3}* Weekly Auto-Docket Meeting
+:co:mrel::Task-83{Tab 3}* Weekly Release Meeting
+
 ; Signature/Ticket Hotstrings
 :o:-p::--Patrick
 :o:psig::Patrick McNally{Enter}DevOps Support{Enter}pmcnally@blackhillsip.com
