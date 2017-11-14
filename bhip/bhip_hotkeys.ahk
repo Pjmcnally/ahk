@@ -60,6 +60,7 @@ format_db_for_jira(){
 :co:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
 :co:b1::BACKLOG 001!o
 :co:fd::For documentation please see: ^v
+:co:nopr::Notice of Publication
 
 ; Signature/Ticket Hotstrings
 :o:-p::--Patrick
