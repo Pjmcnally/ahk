@@ -37,7 +37,7 @@ Return  ; End of Auto-Execute Section
 
 ; Universal Functions:
 ; ==============================================================================
-get_highlighted(){
+get_highlighted() {
     /*  Return whatever text is currently highlighted in the active window.
 
         Args:
@@ -65,7 +65,7 @@ get_highlighted(){
     Return res
 }
 
-paste_contents(str){
+paste_contents(str) {
     /*  Paste a string without disuturing contents of clipboard.
 
     Args:
@@ -90,7 +90,7 @@ paste_contents(str){
     Return
 }
 
-clip_func(func){
+clip_func(func) {
     /*  Run func on highlighted text and replace text.
 
         This function takes in a func name. That function is run on whatever
@@ -103,7 +103,7 @@ clip_func(func){
             None
     */
     str := get_highlighted()
-    if (str){
+    if (str) {
         res := %func%(str)
         paste_contents(res)
     }
@@ -111,14 +111,16 @@ clip_func(func){
     Return
 }
 
-string_upper(string){
-    /*  Call stringUpper as a function (not command) */
+string_upper(string) {
+    /*  Call stringUpper as a function (not command)
+    */
     StringUpper, res, string
     Return res
 }
 
-string_lower(string){
-    /*  Call stringLower as a function (not command) */
+string_lower(string) {
+    /*  Call stringLower as a function (not command)
+    */
     StringLower, res, string
     Return res
 }
@@ -137,7 +139,8 @@ f_date(date:="", format:="MM-dd-yyyy") {
 }
 
 send_outlook_email(subject, body, recipients := "") {
-    /*  Fill content into Outlook email. */
+    /*  Fill content into Outlook email.
+    */
     if (recipients) {
         Send, %recipients%{Tab 2}
     }
@@ -147,8 +150,9 @@ send_outlook_email(subject, body, recipients := "") {
     Return
 }
 
-click_and_return(x_dest, y_dest, speed:=0){
-    /*  Click a specified location and returns pointer to original location. */
+click_and_return(x_dest, y_dest, speed:=0) {
+    /*  Click a specified location and returns pointer to original location.
+    */
     MouseGetPos,  x_orig, y_orig
     MouseMove, % x_dest, y_dest, 0
     Click Down
