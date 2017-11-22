@@ -26,11 +26,10 @@ GroupAdd, consoles, ahk_exe mintty.exe
 
 Return                          ; End of Auto-Execute Section
 
-
 ; Universal Functions:
 ; ==============================================================================
 get_highlighted(){
-    ; This function takes in a func name and runs it on whatever text is currently higlighted and "Sends" the result
+    /*  This function returns whatever text is currently highlighted */
 
     ; Save the Clipboard to temp variable and empty Clipboard
     ClipSaved := ClipboardAll
@@ -44,6 +43,7 @@ get_highlighted(){
         Return
     }
 
+    ; Save new Clipboard contents to temp variable
     res := Clipboard
 
     ; Restore original contents and clear Clipsaved variable
@@ -54,9 +54,10 @@ get_highlighted(){
 }
 
 paste_contents(str){
-    ; Save the Clipboard to temp variable and empty Clipboard
-    ClipSaved := ClipboardAll
+    /*  This function pastes a string without disuturing contents of clipboard */
 
+    ; Save the Clipboard to temp variable, Overwrite clipboard, paste command
+    ClipSaved := ClipboardAll
     Clipboard := str
     Send, ^v
 
@@ -73,9 +74,11 @@ paste_contents(str){
 }
 
 clip_func(func){
-    ; This function takes in a func name and runs it on whatever text is currently higlighted and pastes the result
+    /*  This function takes in a func name.  That function is runs on whatever
+        text is currently higlighted.  The results are pasted over the
+        highlighted text
+    */
     str := get_highlighted()
-
     if (str){
         res := %func%(str)
         paste_contents(res)
@@ -85,29 +88,29 @@ clip_func(func){
 }
 
 stringUpper(string){
-    ; Allow me to call stringUpper as a function (not command)
+    /*  Allows me to call stringUpper as a function (not command) */
     StringUpper, res, string
     Return res
 }
 
 stringLower(string){
-     ; Allow me to call stringLower as a function (not command)
+    /*  Allow me to call stringLower as a function (not command) */
     StringLower, res, string
     Return res
 }
 
 f_date(date:="", format:="MM-dd-yyyy") {
-    /* Function to return formatted date.
-     * ARGS:
-     *     date (int): Optional.  If not provided will default to current date & time.  Otherwise, specify all or the leading part of a timestamp in the YYYYMMDDHH24MISS format
-     *     format (str): Optional. If not provided will default to MM-dd-yyyy.  Provide any format (as string)  https://autohotkey.com/docs/commands/FormatTime.html
+    /*  Function to return formatted date.
+        ARGS:
+            date (int): Optional.  If not provided will default to current date & time.  Otherwise, specify all or the leading part of a timestamp in the YYYYMMDDHH24MISS format
+            format (str): Optional. If not provided will default to MM-dd-yyyy.  Provide any format (as string)  https://autohotkey.com/docs/commands/FormatTime.html
     */
-
     FormatTime, res, %date%, %format%
     Return res
 }
 
 send_outlook_email(subject, body, recipients := "") {
+    /*  Function formats outlook email */
     if (recipients) {
         Send, %recipients%{Tab 2}
     }
@@ -118,6 +121,7 @@ send_outlook_email(subject, body, recipients := "") {
 }
 
 click_and_return(x_dest, y_dest, speed:=0){
+    /*  Function clicks a specified location and returns point to original location */
     MouseGetPos,  x_orig, y_orig
     MouseMove, % x_dest, y_dest, 0
     Click Down
