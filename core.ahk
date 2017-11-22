@@ -57,10 +57,8 @@ get_highlighted(){
         Return
     }
 
-    ; Save new Clipboard contents to temp variable
+    ; Save new Clipboard contents, restore original contents and clear Clipsaved
     res := Clipboard
-
-    ; Restore original contents and clear Clipsaved variable
     Clipboard := ClipSaved
     ClipSaved =
 
