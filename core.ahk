@@ -140,6 +140,13 @@ f_date(date:="", format:="MM-dd-yyyy") {
 
 send_outlook_email(subject, body, recipients := "") {
     /*  Fill content into Outlook email.
+
+        Args:
+            subject (str): The subject of the email
+            body (str): The body of the email
+            recipients (str): Optional. Recipients of email.
+        Return:
+            None
     */
     if (recipients) {
         Send, %recipients%{Tab 2}
