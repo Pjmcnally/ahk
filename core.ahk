@@ -1,15 +1,24 @@
-/*
-core.ahk is my core ahk script.
+/*  Core settings, hotstrings, and functions.
 
-All content in this file should be usable/desired on all systems.
+This module contains three parts: Auto-Exectue, Universial Functions, and
+Universial hotstrings.
 
-The top part of this file is a continuation of the Auto-Execute section
+It is key to note that autohotkey_main.ahk is system specific where core.ahk is
+universial. Core.ahk contains settings, hotstrings, and functions that are
+desired across all other modules and used across all systems.
 
-The next two sections are universal functions and hotstrings
+The Auto-Execute section sets global parameters across all other modules
+imported by autohotkey_main. These settings are essentially universal. If
+there are system specific Auto-Execute commands those should be added to
+the Auto-Execute section of autohotkey_main.ahk.
+
+The other sections are Universial Functions and Universial Hotstrings. These are
+core hotstrings and functions that are needed on all systems. These functions
+are sometimes required by other modules/functions. It is assumed by other
+modules that this module is imported.
 */
 
-
-; Auto-Execute Section (All Auto-Execute commands must go here)
+; Auto-Execute Section (All core Auto-Execute commands should go here)
 ; ==============================================================================
 #SingleInstance, Force          ; Automatically replaces old script with new if the same script file is rune twice
 #NoEnv                          ; Avoids checking empty variables to see if they are environment variables (recommended for all new scripts).
