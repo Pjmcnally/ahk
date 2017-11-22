@@ -29,7 +29,7 @@ Return                          ; End of Auto-Execute Section
 
 ; Universal Functions:
 ; ==============================================================================
-clip_func(func){
+get_highlighted(){
     ; This function takes in a func name and runs it on whatever text is currently higlighted and "Sends" the result
 
     ; Save the Clipboard to temp variable and empty Clipboard
@@ -44,8 +44,20 @@ clip_func(func){
         Return
     }
 
-    ; Process contents of Clipboard and overwrite Clipboard with results
-    Clipboard := %func%(Clipboard)
+    res := Clipboard
+
+    ; Restore original contents and clear Clipsaved variable
+    Clipboard := ClipSaved
+    ClipSaved =
+
+    Return res
+}
+
+paste_contents(str){
+    ; Save the Clipboard to temp variable and empty Clipboard
+    ClipSaved := ClipboardAll
+
+    Clipboard := str
     Send, ^v
 
     ; This sleep is a bit weird. Without it, Authotkey will send a paste
@@ -56,6 +68,20 @@ clip_func(func){
     ; Restore original contents and clear Clipsaved variable
     Clipboard := ClipSaved
     ClipSaved =
+
+    Return
+}
+
+clip_func(func){
+    ; This function takes in a func name and runs it on whatever text is currently higlighted and pastes the result
+    str := get_highlighted()
+
+    if (str){
+        res := %func%(str)
+        paste_contents(res)
+    }
+
+    Return
 }
 
 stringUpper(string){
