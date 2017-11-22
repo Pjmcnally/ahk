@@ -33,6 +33,9 @@ format_jira(str){
 
 format_db_for_jira(){
     ; This function formats content copied out of MSSMS as a table for JIRA
+
+    res := ""
+    CrLf := "`r`n"
     str := Clipboard                        ; Content needs to already be on the clipboard
     Loop, parse, str, `n, `r                ; Loop over each line on the clipboard
     {
@@ -44,13 +47,14 @@ format_db_for_jira(){
         Loop, Parse, A_LoopField, `t        ; Loop over each element (tab delineated)
         {
             If (A_Index == 1) {
-                Send, % char                ; Send first dividing char if first elem in line
+                res := res . char           ; Send first dividing char if first elem in line
             }
-            Send, % A_LoopField             ; Send contents of element
-            Send, % char                    ; Send closing dividing char
+            res := res . A_LoopField . char
         }
-        Send {Enter}                        ; Send newline to end line
+        res := res . CrLf
     }
+
+    paste_contents(res)
 }
 
 
