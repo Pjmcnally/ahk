@@ -1,53 +1,72 @@
-; This ahk file contains the scripts that I use at BHIP.
+/*  Hotkeys, Hotstrings, Functions used at BHIP.
+
+This module contains all of the Hotkeys, Hotstrings and functions I use at BHIP.
+*/
 
 
 ; Functions used in this module
-; ------------------------------------------------------------------------------
-format_jira(str){
-    ; This function formats text in JIRA recieved through email
-    ; It's main purpose is to remove extra lines and {color} tags
-    e_count := 0                                                        ; Count of consecutive empty lines
+; ==============================================================================
+format_jira(str) {
+    /*  Reformat text sent into JIRA from Outlook email.
+
+        Outlook add extra line breaks to emails sent to JIRA.  Also, JETI tries
+        to process colors and adds {color} tags around all text (even black).
+        These "features" combine to make text very hard to read.
+
+        This function cleans up the text and makes it much more human readable.
+
+        Args:
+            str (str): The text to be cleaned up.
+        Return:
+            str: The cleaned text.
+    */
+    empty_count := 0
     res := ""
     CrLf := "`r`n"
-    Loop, parse, str, `n, `r                                            ; Loop over lines of input str
-    {
-        string := A_LoopField                                           ; Assign current line to string variable
-        string := RegExReplace(string, "[\s_]*{color.*?}[\s_]*")        ; Remove all {color} tags and ajoining spaces and underscores
-        string := RegExReplace(string, "\xA0+")                         ; Remove all Non-breaking spaces
-        string := RegexReplace(string, "\s*\*\s*")                      ; Remove all * and adjoining whitespace
-        string := Trim(string)                                          ; Trim whitespace
 
-        if (string) {                                                   ; If there is a string
-            if (e_count > 1){                                           ; That was preceeded by more than 1 empty line
-                res := res . CrLf                                       ; Add an empty line
-            }
-            res := res . string . CrLf
-            e_count := 0                                                ; Set empty line count to 0
-        } else {
-            e_count += 1                                                ; Increment empty line count
+    ; Loop over input string. Process and format text.
+    Loop, parse, str, `n, `r
+    {
+        line := A_LoopField
+        line := RegExReplace(line, "[\s_]*{color.*?}[\s_]*")  ; Remove all {color} tags and ajoining spaces and underscores
+        line := RegExReplace(line, "\xA0+")  ; Remove all Non-breaking spaces
+        line := RegexReplace(line, "\s*\*\s*")  ; Remove all * and adjoining whitespace
+        line := Trim(line)  ; Trim whitespace
+
+        if not (line) {  ; Some lines end up empty.  Consecutive emply lines are collapsed to 1.
+            empty_count += 1
+        } else if (line and empty_count > 1 ) {  ; If a line is preceeded by multiple empty lines append it too string with preceeding empty line
+            res := res . CrLf . line . Crlf
+            empty_count := 0
+        } else {  ; Otherwise just add to string.
+            res := res . line . CrLf
+            empty_count := 0
         }
     }
 
-    Return res
+    return res
 }
 
-format_db_for_jira(){
-    ; This function formats content copied out of MSSMS as a table for JIRA
-
+format_db_for_jira() {
+    /*  Format content copied out of MSSMS as a table for JIRA and paste results.
+    */
     res := ""
     CrLf := "`r`n"
-    str := Clipboard                        ; Content needs to already be on the clipboard
-    Loop, parse, str, `n, `r                ; Loop over each line on the clipboard
+    str := Clipboard
+
+    ; Loop over each line of clipboard adding appropriate dividers and content
+    Loop, parse, str, `n, `r
     {
-        if (A_Index == 1) {                 ; If this is the first line
-                char := "||"                ; use || as divider for header
+        if (A_Index == 1) {
+                char := "||"  ; use || as divider for header
             } else {
-                char := "|"                 ; Otherwise use |
+                char := "|"  ; Otherwise use |
             }
-        Loop, Parse, A_LoopField, `t        ; Loop over each element (tab delineated)
+        ; Internal loop over each elem (db row).  Add row + div char to string.
+        Loop, Parse, A_LoopField, `t
         {
-            If (A_Index == 1) {
-                res := res . char           ; Send first dividing char if first elem in line
+            If (A_Index == 1) {  ; If first elem preceed with div char
+                res := res . char
             }
             res := res . A_LoopField . char
         }
@@ -55,11 +74,12 @@ format_db_for_jira(){
     }
 
     paste_contents(res)
+    return
 }
 
 
-; Hotstrings in this module
-; ------------------------------------------------------------------------------
+; Hotstrings & Hotkeys in this module
+; ==============================================================================
 ; Misc Hotstrings
 :co:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@blackhillsip.com{Tab}{Down}{Tab}{Tab}{Space}
 :co:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
@@ -91,22 +111,16 @@ format_db_for_jira(){
     subject := "Daily Auto-Docket Report"
     body := "All,{Enter}{Tab}I have attached the Daily Auto-Docket Report for " . f_date() . ".{Enter 2}{Tab}If there are any questions or there is anything more I can do to help please let me know."
     send_outlook_email(subject, body, recipients)
-Return
-
-; Complex Hotstrings
-^!v::
-    KeyWait Ctrl    ; Wait for control and alt to be released If not released they
-    KeyWait Alt     ; can cause the sent text to issue commands (alt-tab for example)
-
-    format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
-Return
-
-^!f::
-    KeyWait Ctrl    ; Wait for control and alt to be released If not released they
-    KeyWait Alt     ; can cause the sent text to issue commands (alt-tab for example)
-
-    clip_func("format_jira")    ; Run "format_jira" func on selected text
-Return
+return
 
 ; SQL Hostrings
 :o:bt::{/}{*}{ENTER}BEGIN TRAN{Enter 2}--commit{ENTER}ROLLBACK{ENTER}{*}{/}
+
+; Complex Hotkeys
+^!v::
+    format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
+return
+
+^!f::
+    clip_func("format_jira")  ; Run "format_jira" func on selected text
+return
