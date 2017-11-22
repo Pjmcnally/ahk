@@ -7,6 +7,8 @@ format_jira(str){
     ; This function formats text in JIRA recieved through email
     ; It's main purpose is to remove extra lines and {color} tags
     e_count := 0                                                        ; Count of consecutive empty lines
+    res := ""
+    CrLf := "`r`n"
     Loop, parse, str, `n, `r                                            ; Loop over lines of input str
     {
         string := A_LoopField                                           ; Assign current line to string variable
@@ -17,16 +19,16 @@ format_jira(str){
 
         if (string) {                                                   ; If there is a string
             if (e_count > 1){                                           ; That was preceeded by more than 1 empty line
-                send {Enter}                                            ; Add an empty line
+                res := res . CrLf                                       ; Add an empty line
             }
-            Send {Raw}%string%                                          ; Send line (Raw to preserve special chars)
-            Send {Enter}                                                ; Send newline
+            res := res . string . CrLf
             e_count := 0                                                ; Set empty line count to 0
         } else {
             e_count += 1                                                ; Increment empty line count
         }
     }
-    Return True
+
+    Return res
 }
 
 format_db_for_jira(){
