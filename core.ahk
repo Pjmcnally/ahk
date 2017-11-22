@@ -29,25 +29,33 @@ Return                          ; End of Auto-Execute Section
 
 ; Universal Functions:
 ; ==============================================================================
-clip_func(func, send_res:=False){
+clip_func(func){
     ; This function takes in a func name and runs it on whatever text is currently higlighted and "Sends" the result
-    ClipSaved := ClipboardAll           ; Save the entire clipboard to a variable of your choice.
-    Clipboard =                         ; Empty clipboard
 
-    Send ^c                             ; Copy highlight text to clipboard
-    ClipWait, 1                         ; Wait 1 second for clipboard to contain text
+    ; Save the Clipboard to temp variable and empty Clipboard
+    ClipSaved := ClipboardAll
+    Clipboard =
+
+    ; Copy hightlighted text to Clipboard. Wait for clipboard to contain text.
+    Send ^c
+    ClipWait, .5
     if ErrorLevel {
         MsgBox, % "No text selected.`r`n`r`nPlease select text and try again."
         Return
     }
-    res := %func%(Clipboard)            ; Run passed in func on contents of clipboard
 
-    if (send_res){                      ; if send_res is True
-        Send, %res%                     ; Send results string
-    }
+    ; Process contents of Clipboard and overwrite Clipboard with results
+    Clipboard := %func%(Clipboard)
+    Send, ^v
 
-    Clipboard := ClipSaved              ; Restore the original clipboard.
-    ClipSaved =                         ; Free the memory in case the clipboard was very large.
+    ; This sleep is a bit weird. Without it, Authotkey will send a paste
+    ; command to the OS and then immedialy restore the clipboard.
+    ; This happens so fast that the old contents get pasted instead of new.
+    Sleep, 100
+
+    ; Restore original contents and clear Clipsaved variable
+    Clipboard := ClipSaved
+    ClipSaved =
 }
 
 stringUpper(string){
@@ -100,12 +108,12 @@ click_and_return(x_dest, y_dest, speed:=0){
 
 ; Hotkey to uppercase all highlighted text
 ^!u::
-    clip_func("stringUpper", True)
+    clip_func("stringUpper")
 Return
 
 ; Hotkey to lowercase all hightlighted text
 ^!l::
-    clip_func("stringLower", True)
+    clip_func("stringLower")
 Return
 
 ; Temp Function (for one-offs)
