@@ -45,11 +45,9 @@ get_highlighted() {
         Returns:
             str: Higligted text
     */
-    ; Save the Clipboard to temp variable and empty Clipboard
     ClipSaved := ClipboardAll
     Clipboard =
 
-    ; Copy hightlighted text to Clipboard. Wait for clipboard to contain text.
     Send ^c
     ClipWait, .5
     if ErrorLevel {
@@ -57,7 +55,6 @@ get_highlighted() {
         return
     }
 
-    ; Save new Clipboard contents, restore original contents and clear Clipsaved
     res := Clipboard
     Clipboard := ClipSaved
     ClipSaved =
@@ -73,7 +70,6 @@ paste_contents(str) {
     Returns:
         None
     */
-    ; Save the Clipboard to temp variable, Overwrite clipboard, paste command
     ClipSaved := ClipboardAll
     Clipboard := str
     Send, ^v
@@ -83,7 +79,6 @@ paste_contents(str) {
     ; This happens so fast that the old contents get pasted instead of new.
     Sleep, 100
 
-    ; Restore original contents and clear Clipsaved variable
     Clipboard := ClipSaved
     ClipSaved =
 
