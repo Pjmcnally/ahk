@@ -33,7 +33,7 @@ GroupAdd, consoles, ahk_exe powershell.exe
 GroupAdd, consoles, ahk_exe powershell_ise.exe
 GroupAdd, consoles, ahk_exe mintty.exe
 
-Return  ; End of Auto-Execute Section
+return  ; End of Auto-Execute Section
 
 ; Universal Functions:
 ; ==============================================================================
@@ -54,7 +54,7 @@ get_highlighted() {
     ClipWait, .5
     if ErrorLevel {
         MsgBox, % "No text selected.`r`n`r`nPlease select text and try again."
-        Return
+        return
     }
 
     ; Save new Clipboard contents, restore original contents and clear Clipsaved
@@ -62,7 +62,7 @@ get_highlighted() {
     Clipboard := ClipSaved
     ClipSaved =
 
-    Return res
+    return res
 }
 
 paste_contents(str) {
@@ -87,7 +87,7 @@ paste_contents(str) {
     Clipboard := ClipSaved
     ClipSaved =
 
-    Return
+    return
 }
 
 clip_func(func) {
@@ -108,21 +108,21 @@ clip_func(func) {
         paste_contents(res)
     }
 
-    Return
+    return
 }
 
 string_upper(string) {
     /*  Call stringUpper as a function (not command)
     */
     StringUpper, res, string
-    Return res
+    return res
 }
 
 string_lower(string) {
     /*  Call stringLower as a function (not command)
     */
     StringLower, res, string
-    Return res
+    return res
 }
 
 f_date(date:="", format:="MM-dd-yyyy") {
@@ -135,7 +135,7 @@ f_date(date:="", format:="MM-dd-yyyy") {
             str: Date in specified format
     */
     FormatTime, res, %date%, %format%
-    Return res
+    return res
 }
 
 send_outlook_email(subject, body, recipients := "") {
@@ -147,7 +147,7 @@ send_outlook_email(subject, body, recipients := "") {
     Send, %subject%{Tab}
     Send, % body
 
-    Return
+    return
 }
 
 click_and_return(x_dest, y_dest, speed:=0) {
