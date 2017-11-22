@@ -3,7 +3,6 @@
 This module contains all of the Hotkeys, Hotstrings and functions I use at BHIP.
 */
 
-
 ; Functions used in this module
 ; ==============================================================================
 format_jira(str) {
@@ -20,11 +19,10 @@ format_jira(str) {
         Return:
             str: The cleaned text.
     */
-    empty_count := 0
     res := ""
     CrLf := "`r`n"
+    empty_count := 0
 
-    ; Loop over input string. Process and format text.
     Loop, parse, str, `n, `r
     {
         line := A_LoopField
@@ -54,21 +52,15 @@ format_db_for_jira() {
     CrLf := "`r`n"
     str := Clipboard
 
-    ; Loop over each line of clipboard adding appropriate dividers and content
     Loop, parse, str, `n, `r
     {
-        if (A_Index == 1) {
-                char := "||"  ; use || as divider for header
-            } else {
-                char := "|"  ; Otherwise use |
-            }
-        ; Internal loop over each elem (db row).  Add row + div char to string.
+        div_char := (A_Index == 1) ? "||" : "|"  ; || in header. | elsewhere.
         Loop, Parse, A_LoopField, `t
         {
             If (A_Index == 1) {  ; If first elem preceed with div char
-                res := res . char
+                res := res . div_char
             }
-            res := res . A_LoopField . char
+            res := res . A_LoopField . div_char
         }
         res := res . CrLf
     }
