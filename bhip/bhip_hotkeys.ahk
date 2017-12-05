@@ -92,7 +92,6 @@ format_db_for_jira() {
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
 ; Daily auto-docket review Hotstrings
-:co:crule::=AND(A2 <> "", B2 <> "", C2 <> "")
 :co:abanf::US-90{tab}Application status does not contain "To Be Abandoned"{tab}There are notes that this is to be abandoned but the status wasn't updated.  Nothing we can do.
 :co:miscf::Many codes{tab}Misc Doc code. Several rules tried.  All rules failed.{tab}We probably need to make a rule for this specific doc.{tab}
 :co:!val::Procedure passed all rules. Docketing failed because of error validating application.{tab}I searched the client host system.  This matter doesn't exist.{tab}Docketer
