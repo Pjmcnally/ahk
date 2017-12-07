@@ -120,10 +120,10 @@ format_db_for_get_files() {
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
 ; Daily auto-docket review Hotstrings
-:co:abanf::US-90{tab}Application status does not contain "To Be Abandoned"{tab}There are notes that this is to be abandoned but the status wasn't updated.  Nothing we can do.{tab}Docketer{tab}
-:co:miscf::Many codes{tab}Misc Doc code. Several rules tried.  All rules failed.{tab}We probably need to make a rule for this specific doc.{tab}Milena{tab}
-:co:multh::Procedure passed all rules. Docketing failed due to duplicate host activities found error{tab}This means that there are multiple possible activities in the Host system for this activity to be docketed into. This should be reviewed by a docketer{tab}Docketer{tab}
-:co:!val::Procedure passed all rules. Docketing failed because of error validating application.{tab}I searched the client host system.  This matter doesn't exist.{tab}Docketer{tab}
+:co:abanf::US-90{tab}Application status does not contain "To Be Abandoned"{tab}There are notes that this is to be abandoned but the status wasn't updated.  Nothing we can do.{tab}Docketer{tab 5}{Down}^c
+:co:miscf::Many codes{tab}Misc Doc code. Several rules tried.  All rules failed.{tab}We probably need to make a rule for this specific doc.{tab}Milena{tab 5}{Down}^c
+:co:multh::Procedure passed all rules. Docketing failed due to duplicate host activities found error{tab}This means that there are multiple possible activities in the Host system for this activity to be docketed into. This should be reviewed by a docketer{tab}Docketer{tab 5}{Down}^c
+:co:!val::Procedure passed all rules. Docketing failed because of error validating application.{tab}I searched the client host system.  This matter doesn't exist.{tab}Docketer{tab 5}{Down}^c
 :co:ratt::Procedure passed all rules. Required attributes were not extracted so docketing failed.{tab}We need to make/update an annotation to indentify and extract the following:{tab}Milena/Patrick{ShiftDown}{tab}{ShiftUp}{F2}{space}
 :co:eadr::
     recipients := "Jill{tab}Milena{tab}Leonie{tab}"  ; I don't use full emails here to protect from spam.  Autofill will complete them in my Outlook.
