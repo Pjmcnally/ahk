@@ -69,6 +69,34 @@ format_db_for_jira() {
     return
 }
 
+format_db_for_get_files() {
+    /*  Format content copied out of MSSMS as a powershell hash table.
+
+        Search to get data with columns jd & jds (order is important)
+    */
+    CrLf := "`r`n"
+    res := "$files = @{" . CrLf
+    str := Clipboard
+
+    Loop, parse, str, `n, `r
+    {
+        Loop, Parse, A_LoopField, `t
+        {
+            if (A_index = 1) {
+                res := res . "`t'" . A_loopField . "'" . " = '"
+            } else {
+                res := res . A_LoopField . "'"
+            }
+        }
+        res := res . CrLf
+    }
+
+    res := res . "}"
+
+    paste_contents(res)
+    return
+}
+
 
 ; Hotstrings & Hotkeys in this module
 ; ==============================================================================
@@ -92,10 +120,11 @@ format_db_for_jira() {
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
 ; Daily auto-docket review Hotstrings
-:co:abanf::US-90{tab}Application status does not contain "To Be Abandoned"{tab}There are notes that this is to be abandoned but the status wasn't updated.  Nothing we can do.
-:co:miscf::Many codes{tab}Misc Doc code. Several rules tried.  All rules failed.{tab}We probably need to make a rule for this specific doc.{tab}
-:co:!val::Procedure passed all rules. Docketing failed because of error validating application.{tab}I searched the client host system.  This matter doesn't exist.{tab}Docketer
-:co:ratt::Procedure passed all rules. Required attributes were not extracted so docketing failed.{tab}We need to make/update an annotation to indentify and extract the following:{tab}Milena/Patrick
+:co:abanf::US-90{tab}Application status does not contain "To Be Abandoned"{tab}There are notes that this is to be abandoned but the status wasn't updated.  Nothing we can do.{tab}Docketer{tab}
+:co:miscf::Many codes{tab}Misc Doc code. Several rules tried.  All rules failed.{tab}We probably need to make a rule for this specific doc.{tab}Milena{tab}
+:co:multh::Procedure passed all rules. Docketing failed due to duplicate host activities found error{tab}This means that there are multiple possible activities in the Host system for this activity to be docketed into. This should be reviewed by a docketer{tab}Docketer{tab}
+:co:!val::Procedure passed all rules. Docketing failed because of error validating application.{tab}I searched the client host system.  This matter doesn't exist.{tab}Docketer{tab}
+:co:ratt::Procedure passed all rules. Required attributes were not extracted so docketing failed.{tab}We need to make/update an annotation to indentify and extract the following:{tab}Milena/Patrick{ShiftDown}{tab}{ShiftUp}{F2}{space}
 :co:eadr::
     recipients := "Jill{tab}Milena{tab}Leonie{tab}"  ; I don't use full emails here to protect from spam.  Autofill will complete them in my Outlook.
     subject := "Daily Auto-Docket Report"
@@ -109,6 +138,10 @@ return
 ; Complex Hotkeys
 ^!v::
     format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
+return
+
+^!b::
+    format_db_for_get_files()  ; Run format_db_for_jira on contents on clipboard
 return
 
 ^!f::
