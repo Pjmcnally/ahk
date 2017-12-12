@@ -29,6 +29,7 @@ format_jira(str) {
         line := RegExReplace(line, "[\s_]*{color.*?}[\s_]*")  ; Remove all {color} tags and ajoining spaces and underscores
         line := RegExReplace(line, "\xA0+")  ; Remove all Non-breaking spaces
         line := RegexReplace(line, "\s*\*\s*")  ; Remove all * and adjoining whitespace
+        line := RegExReplace(line, "\[\|\]")  ; Remove any empty link tags
         line := Trim(line)  ; Trim whitespace
 
         if not (line) {  ; Some lines end up empty.  Consecutive emply lines are collapsed to 1.
