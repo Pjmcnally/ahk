@@ -98,6 +98,19 @@ format_db_for_get_files() {
     return
 }
 
+daily_auto_docket_review_code(elems, f_step) {
+    for key, value in elems {
+        Send, % value
+        Send {tab}
+    }
+
+    if (f_step = "copy_num") {
+        Send {tab 4}{Down}^c
+    } else if (f_step = "edit_last") {
+        Send {ShiftDown}{tab 2}{ShiftUp}{F2}{space}
+    }
+}
+
 
 ; Hotstrings & Hotkeys in this module
 ; ==============================================================================
@@ -121,17 +134,68 @@ format_db_for_get_files() {
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
 ; Daily auto-docket review Hotstrings
-:co:abanf::US-90{tab}Application status does not contain "To Be Abandoned"{tab}This is not an issue with Auto-Docketing{tab}Docketer{tab 5}{Down}^c
-:co:miscf::Many codes{tab}Misc Doc code. Several rules tried.  All rules failed.{tab}We probably need to make a rule for this specific doc.{tab}Milena{tab 5}{Down}^c
-:co:multh::Procedure passed all rules. Docketing failed due to duplicate host activities found error{tab}This means that there are multiple possible activities in the Host system for this activity to be docketed into. This should be reviewed by a docketer{tab}Docketer{tab 5}{Down}^c
-:co:!val::Procedure passed all rules. Docketing failed because of error validating application.{tab}I searched the client host system.  This matter doesn't exist.{tab}Docketer{tab 5}{Down}^c
-:co:ratt::Procedure passed all rules. Required attributes were not extracted so docketing failed.{tab}We need to make/update an annotation to indentify and extract the following:{tab}Milena/Patrick{ShiftDown}{tab}{ShiftUp}{F2}{space}
-:co:eadr::
-    recipients := "Jill{tab}Milena{tab}Leonie{tab}"  ; I don't use full emails here to protect from spam.  Autofill will complete them in my Outlook.
-    subject := "Daily Auto-Docket Report"
-    body := "All,{Enter}{Tab}I have attached the Daily Auto-Docket Report for " . f_date() . ".{Enter 2}{Tab}If there are any questions or there is anything more I can do to help please let me know."
-    send_outlook_email(subject, body, recipients)
+:co:abanf::
+    elems :=  ["US-90", "Procedure failed rule: Application status does not contain ""To Be Abandoned""", "This is not an issue with Auto-Docketing. This should be reviewed by a docketer.", "Docketer"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
 return
+
+:co:appinf::
+    elems := ["US-10", "Procedure failed rule: Document contains text ""Applicant initiated""", "Document broken into odd pieces. The piece the rule was applied to was only the cover letter. Other pieces contained the text", "Docketer"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
+return
+
+:co:miscf::
+    elems := ["Multiple", "Document failed multiple rules. No correct p-code for this document (misc).", "For this to work we would need to make a p-code for this specific document.", "Milena"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
+return
+
+:co:multh::
+    elems := ["Procedure passed all rules. Docketing failed due to duplicate host activities found error", "This means that there are multiple possible activities in the Host system for this activity to be docketed into.", "Docketer"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
+return
+
+:co:multc::
+    elems := ["Document passed all rules for multiple procedure codes.", "Auto-docketing unable to complete as it can't determing which procedure code to use. We need to make the rules more specific.", "Milena"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
+return
+
+:co:multd::
+    elems := ["Procedure passed all rules. Auto-Docketing failed because multiple documents with the same name were received", "I do not believe this is an issue we can/need to fix in the auto-docket system.", "Docketer"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
+return
+
+:co:valf::
+    elems := ["Procedure passed all rules. Docketing failed due to error validating application.", "I searched the client host system. This matter doesn't exist.", "Docketer"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
+return
+
+:co:ratt::
+    elems := ["Procedure passed all rules. Docketing failed due to empty required attributes.", "We need to make/update an annotation to indentify and extract the following:", "Milena/Patrick"]
+    final_step := "edit_last"
+    daily_auto_docket_review_code(elems, final_step)
+return
+
+:co:finf::
+    elems := ["US-62", "Procedure failed rule: Document contains text ""MADE FINAL""", "This is not an OCR issue. The text ""Made final"" does not appear in the document. The final checkbox is checked.", "Docketer"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
+return
+
+:co:finof::
+    elems := ["US-62", "Procedure failed rule: Document contains text ""MADE FINAL""", "This is an OCR issue. The text ""Made final"" does appear in the document but was not OCR'd correctly.", "Docketer"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
+return
+
+
+
 
 ; SQL Hostrings
 :o:bt::{/}{*}{ENTER}BEGIN TRAN{Enter 2}--commit{ENTER}ROLLBACK{ENTER}{*}{/}
@@ -147,4 +211,10 @@ return
 
 ^!f::
     clip_func("format_jira")  ; Run "format_jira" func on selected text
+return
+
+:co:abant::
+    elems :=  ["US-90", "Application status does not contain ""To Be Abandoned""", "This is not an issue with Auto-Docketing", "Docketer"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
 return
