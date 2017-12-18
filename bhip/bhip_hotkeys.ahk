@@ -140,13 +140,13 @@ daily_auto_docket_review_code(elems, f_step) {
 
 ; Daily auto-docket review Hotstrings
 :co:abanf::
-    elems :=  ["US-90", "Procedure failed rule: Application status does not contain ""To Be Abandoned""", "This is not an issue with Auto-Docketing. This should be reviewed by a docketer.", "Docketer"]
+    elems :=  ["US-90", "Document failed rule: Application status does not contain ""To Be Abandoned""", "This is not an issue with Auto-Docketing. This should be reviewed by a docketer.", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
 
 :co:appinf::
-    elems := ["US-10", "Procedure failed rule: Document contains text ""Applicant initiated""", "Document broken into odd pieces. The piece the rule was applied to was only the cover letter. Other pieces contained the text", "Docketer"]
+    elems := ["US-10", "Document failed rule: Document contains text ""Applicant initiated""", "Document broken into odd pieces. The piece the rule was applied to was only the cover letter. Other pieces contained the text", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
@@ -158,7 +158,7 @@ return
 return
 
 :co:multh::
-    elems := ["Procedure passed all rules. Docketing failed due to duplicate host activities found error", "This means that there are multiple possible activities in the Host system for this activity to be docketed into.", "Docketer"]
+    elems := ["Document passed all rules. Docketing failed due to duplicate host activities found error", "This means that there are multiple possible activities in the Host system for this activity to be docketed into.", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
@@ -170,31 +170,31 @@ return
 return
 
 :co:multd::
-    elems := ["Procedure passed all rules. Auto-Docketing failed because multiple documents with the same name were received", "I do not believe this is an issue we can/need to fix in the auto-docket system.", "Docketer"]
+    elems := ["Document passed all rules. Auto-Docketing failed because multiple documents with the same name were received", "I do not believe this is an issue we can/need to fix in the auto-docket system.", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
 
 :co:valf::
-    elems := ["Procedure passed all rules. Docketing failed due to error validating application.", "I searched the client host system. This matter doesn't exist.", "Docketer"]
+    elems := ["Document passed all rules. Docketing failed due to error validating application.", "I searched the client host system. This matter doesn't exist.", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
 
 :co:ratt::
-    elems := ["Procedure passed all rules. Docketing failed due to empty required attributes.", "We need to make/update an annotation to indentify and extract the following:", "Milena/Patrick"]
+    elems := ["Document passed all rules. Docketing failed due to empty required attributes.", "We need to make/update an annotation to indentify and extract the following:", "Milena/Patrick"]
     final_step := "edit_last"
     daily_auto_docket_review_code(elems, final_step)
 return
 
 :co:finf::
-    elems := ["US-62", "Procedure failed rule: Document contains text ""MADE FINAL""", "This is not an OCR issue. The text ""Made final"" does not appear in the document. The final checkbox is checked.", "Docketer"]
+    elems := ["US-62", "Document failed rule: Document contains text ""MADE FINAL""", "This is not an OCR issue. The text ""Made final"" does not appear in the document. The final checkbox is checked.", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
 
 :co:finof::
-    elems := ["US-62", "Procedure failed rule: Document contains text ""MADE FINAL""", "This is an OCR issue. The text ""Made final"" does appear in the document but was not OCR'd correctly.", "Docketer"]
+    elems := ["US-62", "Document failed rule: Document contains text ""MADE FINAL""", "This is an OCR issue. The text ""Made final"" does appear in the document but was not OCR'd correctly.", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
