@@ -152,7 +152,7 @@ return
 return
 
 :co:miscf::
-    elems := ["Multiple", "Document failed multiple rules. No correct p-code for this document (misc).", "For this to work we would need to make a p-code for this specific document.", "Milena"]
+    elems := ["Misc codes", "Document failed multiple rules. None of the tried p-codes are correct  for this document.", "For this to work we would need to make a p-code for this specific document.", "Milena"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
