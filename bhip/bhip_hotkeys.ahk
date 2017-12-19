@@ -26,10 +26,10 @@ format_jira(str) {
     Loop, parse, str, `n, `r
     {
         line := A_LoopField
-        line := RegExReplace(line, "\s*{color.*?}\s*(.*?)\s*{color}\s*", "$1")  ; Remove all {color} tags and surrounding spaces leaving contained text
-        line := RegexReplace(line, "\s*\*\s*(.*?)\s*\*\s*", "$1")  ; Remove all * tags leaving surrounded text
-        line := RegExReplace(line, "_{2,}(.*?)_{2,}", "_$1_")  ; Remove all _ tags leaving contained text
-        line := RegExReplace(line, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Remove all _ tags leaving contained text
+        line := RegExReplace(line, "{color.*?}\s*(.*?)\s*{color}", "$1")  ; Remove all {color} tags and surrounding spaces leaving contained text
+        line := RegexReplace(line, "\*\s*(.*?)\s*\*", "$1")  ; Remove all * tags leaving surrounded text
+        line := RegExReplace(line, "_{2,}(.*?)_{2,}", "_$1_")  ; Remove all _ double underscores.
+        line := RegExReplace(line, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Remove all double brackets.
         line := RegExReplace(line, "\[(.*?)\|\]", "$1")  ; Remove any link tags with no link content
         line := RegExReplace(line, "\xA0+")  ; Remove all Non-breaking spaces
         ;
