@@ -39,6 +39,7 @@ write_output(file, content) {
     f.close()
 }
 
+
 review_files() {
     InputBox, in_dir, "Directory", "Enter directory..."
     if ErrorLevel
@@ -47,17 +48,26 @@ review_files() {
     if ErrorLevel
         Exit
 
+    total_count := ComObjCreate("Scripting.FileSystemObject").GetFolder(in_dir ).Files.Count
+    Progress, M2 R0-%total_count%, % "Files Done:`r`n0", % "Total Files: " . total_count, "File Review"
+
+    ; TODO: Limit this loop so it only runs while Adobe is active window.
+    ; Right now you have to be careful while using this not to change window focus.
     Loop, Files, % in_dir "\*.pdf"
     {
+        Progress, %A_Index%, % "Reviewing File: " . A_Index "`r`n" . A_LoopFileName
         Run, % A_LoopFileFullPath
         Sleep, 100
         Send, ^f
         Sleep, 100
         Send, %search_phrase% {Enter}
         KeyWait Space, D
+        Sleep, 100
         Send, ^w
         Sleep, 100
     }
+
+    Progress, Off
 }
 
 ^+!p::
