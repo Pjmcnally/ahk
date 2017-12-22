@@ -138,6 +138,7 @@ daily_auto_docket_review_code(elems, f_step) {
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
 ; Daily auto-docket review Hotstrings
+#IfWinActive ahk_exe EXCEL.EXE
 :co:abanf::
     elems :=  ["US-90", "Document failed rule: Application status does not contain ""To Be Abandoned""", "This is not an issue with Auto-Docketing. This should be reviewed by a docketer.", "Docketer"]
     final_step := "copy_num"
@@ -155,7 +156,11 @@ return
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
-
+:co:codef::
+    elems := ["Document failed multiple rules. The tried p-code is not correct for this document.", "For this to work we would need to make a p-code for this specific document.", "Milena"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
+return
 :co:multh::
     elems := ["Document passed all rules. Docketing failed due to duplicate host activities found error", "This means that there are multiple possible activities in the Host system for this activity to be docketed into.", "Docketer"]
     final_step := "copy_num"
@@ -198,8 +203,12 @@ return
     daily_auto_docket_review_code(elems, final_step)
 return
 
-
-
+:co:quef::
+    elems := ["Document passed all rules. Docket action set to Queued so document was not automatically docketed.", "This is not an error. Documents set to Queue are supposed to be reviewed before docketing.", "Docketer"]
+    final_step := "copy_num"
+    daily_auto_docket_review_code(elems, final_step)
+return
+#IfWinActive  ; Clear #IfWinActive from above
 
 ; SQL Hostrings
 :o:bt::{/}{*}{ENTER}BEGIN TRAN{Enter 2}--commit{ENTER}ROLLBACK{ENTER}{*}{/}
