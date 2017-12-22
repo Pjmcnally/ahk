@@ -54,7 +54,7 @@ review_files() {
         Send, ^f
         Sleep, 100
         Send, %search_phrase% {Enter}
-        Sleep, 800
+        KeyWait Space, D
         Send, ^w
         Sleep, 100
     }
