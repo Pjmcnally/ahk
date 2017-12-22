@@ -68,6 +68,8 @@ review_files() {
     }
 
     Progress, Off
+
+    return
 }
 
 ^+!p::
@@ -75,5 +77,5 @@ review_files() {
 return
 
 ^+!r::
-    review_files()
+    timer_wrapper("review_files")
 return

@@ -106,6 +106,30 @@ clip_func(func) {
     return
 }
 
+timer_wrapper(func, args:="") {
+    /*  A wrapper function to time the wrapped function
+
+        This function takes in a func name and list of arguments (optional).
+        That provided function is run with the provided arguements. That
+        process is timed which is displayed at the end.
+
+        Args:
+            func (str): Name of function to be run on highlighted text
+            args (str): Optional. Args for internal function
+        Returns:
+            None
+    */
+    start_time := A_Now
+
+    %func%(%args%)
+
+    end_time := A_Now
+    t_diff := end_time - start_time
+    t_diff := Format("{1:014}", t_diff)
+    FormatTime, t, %t_diff%, HH:mm:ss
+    MsgBox, % "Time Elapsed: " . t
+}
+
 string_upper(string) {
     /*  Call stringUpper as a function (not command)
     */
