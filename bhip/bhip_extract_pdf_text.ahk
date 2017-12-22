@@ -39,10 +39,13 @@ write_output(file, content) {
     f.close()
 }
 
-
 review_files() {
     InputBox, in_dir, "Directory", "Enter directory..."
-    search_phrase := "DEPOSIT OF and/or"
+    if ErrorLevel
+        Exit
+    InputBox, search_phrase, "Search Phrase", "Enter Search Phrase"
+    if ErrorLevel
+        Exit
 
     Loop, Files, % in_dir "\*.pdf"
     {
