@@ -119,15 +119,28 @@ timer_wrapper(func, args:="") {
         Returns:
             None
     */
-    start_time := A_Now
+    start_time := A_TickCount
 
     %func%(%args%)
 
-    end_time := A_Now
+    end_time := A_TickCount
     t_diff := end_time - start_time
-    t_diff := Format("{1:014}", t_diff)
-    FormatTime, t, %t_diff%, HH:mm:ss
-    MsgBox, % "Time Elapsed: " . t
+    MsgBox, % milli_to_hhmmss(t_diff)
+}
+
+milli_to_hhmmss(milli) {
+    /*  A function to convert milliseconds to readable time.
+
+        Args:
+            milli (int): number of milliseconds
+        Returns:
+            Str: The formatted string in hh:mm:ss.mil
+    */
+    mil := mod(milli, 1000)
+    sec := mod(milli //= 1000, 60)
+    min := mod(milli //= 60, 60)
+    hou := milli // 60
+    return Format("{1:02d}:{2:02d}:{3:02d}.{4:03d}", hou, min, sec, mil)
 }
 
 string_upper(string) {
