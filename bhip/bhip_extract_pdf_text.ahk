@@ -57,14 +57,13 @@ review_files() {
     {
         Progress, %A_Index%, % "Reviewing File: " . A_Index "`r`n" . A_LoopFileName
         Run, % A_LoopFileFullPath
-        Sleep, 100
+        Sleep, 150
         Send, ^f
-        Sleep, 100
+        Sleep, 150
         Send, %search_phrase% {Enter}
         KeyWait Space, D
-        Sleep, 100
         Send, ^w
-        Sleep, 100
+        Sleep, 150
     }
 
     Progress, Off
