@@ -1,6 +1,6 @@
 save_as_text() {
-    in_dir := "C:\Users\Patrick\Desktop\OcrCheck\pdf\ocr"
-    out_dir := "C:\Users\Patrick\Desktop\OcrCheck\text"
+    in_dir := "C:\Users\Patrick\Desktop\new_ocr"
+    out_dir := "C:\Users\Patrick\Desktop\new_text"
 
     Loop, Files, % in_dir "\*.pdf"
     {
@@ -25,7 +25,7 @@ get_text(file_path) {
     Send ^a
     Sleep, 500
     Send ^c
-    Sleep, 3000
+    Sleep, 10000
     WinClose, ahk_exe Acrobat.exe
     Sleep, 500
 
