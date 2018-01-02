@@ -1,6 +1,6 @@
 save_as_text() {
-    in_dir := "C:\Users\Patrick\Desktop\ocr"
-    out_dir := "C:\Users\Patrick\Desktop\text"
+    in_dir := "C:\Users\Patrick\Desktop\OcrCheck\new"
+    out_dir := "C:\Users\Patrick\Desktop\OcrCheck\new_text"
 
     Loop, Files, % in_dir "\*.pdf"
     {
