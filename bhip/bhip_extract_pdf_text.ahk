@@ -1,7 +1,10 @@
 save_as_text() {
-    base_dir := "C:\Users\Patrick\Desktop\OcrCheck\runs\05_new\"
-    ocr_dir := base_dir . "ocr"
-    txt_dir := base_dir . "text"
+    InputBox, base_dir, % "Folder", % "Please enter the folder location for the run to extract"
+    if ErrorLevel
+        Exit
+
+    ocr_dir := base_dir . "\ocr"
+    txt_dir := base_dir . "\text"
 
     Loop, Files, % ocr_dir "\*.pdf"
     {
@@ -42,10 +45,10 @@ write_output(file, content) {
 
 
 review_files() {
-    InputBox, in_dir, "Directory", "Enter directory..."
+    InputBox, in_dir, % "Directory", % "Enter directory..."
     if ErrorLevel
         Exit
-    InputBox, search_phrase, "Search Phrase", "Enter Search Phrase"
+    InputBox, search_phrase, % "Search Phrase", % "Enter Search Phrase"
     if ErrorLevel
         Exit
 
