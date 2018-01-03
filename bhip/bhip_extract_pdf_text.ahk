@@ -1,10 +1,14 @@
 save_as_text() {
+    old_clip := clipboard
+
     InputBox, base_dir, % "Folder", % "Please enter the folder location for the run to extract"
     if ErrorLevel
         Exit
 
     ocr_dir := base_dir . "\ocr"
     txt_dir := base_dir . "\text"
+    IfNotExist, % txt_dir
+        FileCreateDir, % txt_dir
 
     Loop, Files, % ocr_dir "\*.pdf"
     {
@@ -12,6 +16,9 @@ save_as_text() {
         out_file := make_new_filename(txt_dir, A_LoopFileName, ".txt")
         write_output(out_file, content)
     }
+
+    sleep, 100
+    clipboard := old_clip
 }
 
 
@@ -23,13 +30,13 @@ make_new_filename(dir, basename, new_ext) {
 
 
 get_text(file_path) {
-    ; This is a clunky way to get text from a while.
+    ; This is a clunky way to get text from a pdf.
     Run, % file_path
     Sleep, 500
     Send ^a
     Sleep, 500
     Send ^c
-    Sleep, 3000
+    Sleep, 2000
     WinClose, ahk_exe Acrobat.exe
     Sleep, 500
 
