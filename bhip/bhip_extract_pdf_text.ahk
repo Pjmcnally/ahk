@@ -3,9 +3,6 @@ save_as_text() {
     ocr_dir := base_dir . "ocr"
     txt_dir := base_dir . "text"
 
-    MsgBox, % ocr_dir
-    MsgBox, % txt_dir
-
     Loop, Files, % ocr_dir "\*.pdf"
     {
         content := get_text(A_LoopFileFullPath)
