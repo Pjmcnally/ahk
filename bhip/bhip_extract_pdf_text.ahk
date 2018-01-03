@@ -1,11 +1,15 @@
 save_as_text() {
-    in_dir := "C:\Users\Patrick\Desktop\OcrCheck\new"
-    out_dir := "C:\Users\Patrick\Desktop\OcrCheck\new_text"
+    base_dir := "C:\Users\Patrick\Desktop\OcrCheck\runs\05_new\"
+    ocr_dir := base_dir . "ocr"
+    txt_dir := base_dir . "text"
 
-    Loop, Files, % in_dir "\*.pdf"
+    MsgBox, % ocr_dir
+    MsgBox, % txt_dir
+
+    Loop, Files, % ocr_dir "\*.pdf"
     {
         content := get_text(A_LoopFileFullPath)
-        out_file := make_new_filename(out_dir, A_LoopFileName, ".txt")
+        out_file := make_new_filename(txt_dir, A_LoopFileName, ".txt")
         write_output(out_file, content)
     }
 }
