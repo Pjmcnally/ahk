@@ -102,19 +102,20 @@ format_db_for_get_files() {
     return
 }
 
-daily_auto_docket_review_code(elems, f_step) {
+daily_auto_docket_review_code(elems) {
     for key, value in elems {
         Send, % value
         Send {tab}
     }
-
-    if (f_step = "copy_num") {
-        Send {tab 4}{Down}^c
-    } else if (f_step = "edit_last") {
-        Send {ShiftDown}{tab 2}{ShiftUp}{F2}{space}
-    }
 }
 
+copy_num() {
+    Send {tab 4}{Down}^c
+}
+
+edit_last() {
+    Send {ShiftDown}{tab 2}{ShiftUp}{F2}{space}
+}
 
 ; Hotstrings & Hotkeys in this module
 ; ==============================================================================
@@ -141,14 +142,14 @@ daily_auto_docket_review_code(elems, f_step) {
 #IfWinActive ahk_exe EXCEL.EXE
 :co:abanf::
     elems :=  ["US-90", "Document failed rule: Application status does not contain ""To Be Abandoned""", "This is not an issue with Auto-Docketing. This should be reviewed by a docketer.", "Docketer"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
+    daily_auto_docket_review_code(elems)
+    copy_num()
 return
 
 :co:appinf::
     elems := ["US-10", "Document failed rule: Contains text ""Applicant initiated""", "Document broken into odd pieces. The piece the rule was applied to was only the cover letter. Other pieces contained the text", "Docketer"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
+    daily_auto_docket_review_code(elems)
+    copy_num()
 return
 
 :co:miscf::
@@ -161,61 +162,69 @@ return
     }
 
     elems := [code, "Document failed multiple rules. None of the tried p-codes are correct for this document.", "For this to work we would need to make a p-code for this specific document.", "Milena"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
+    daily_auto_docket_review_code(elems)
+    copy_num()
 return
 
 :co:multh::
     elems := ["", "Document passed all rules. Docketing failed due to duplicate host activities found error", "This means that there are multiple possible activities in the Host system for this activity to be docketed into.", "Docketer"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
+    daily_auto_docket_review_code(elems)
+    copy_num()
 return
 
 :co:multc::
     elems := ["", "Document passed all rules for multiple procedure codes.", "Auto-docketing unable to complete as it can't determing which procedure code to use. We need to make the rules more specific.", "Milena"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
+    daily_auto_docket_review_code(elems)
+    copy_num()
 return
 
 :co:multd::
     input, code, V, {SPACE},
     elems := ["", "Document passed all rules. Auto-Docketing failed because multiple documents with the same name were received", "I do not believe this is an issue we can/need to fix in the auto-docket system.", "Docketer"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
+    daily_auto_docket_review_code(elems)
+    copy_num()
 return
 
 :co:valf::
     input, code, V, {SPACE},
     elems := ["", "Document passed all rules. Docketing failed due to error validating application.", "I searched the client host system. This matter doesn't exist.", "Docketer"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
+    daily_auto_docket_review_code(elems)
+    copy_num()
 return
 
 :co:ratt::
     input, code, V, {SPACE},
     elems := ["", "Document passed all rules. Docketing failed due to empty required attributes.", "We need to make/update an annotation to indentify and extract the following:", "Milena/Patrick"]
-    final_step := "edit_last"
-    daily_auto_docket_review_code(elems, final_step)
+    daily_auto_docket_review_code(elems)
+    edit_last()
+    input, temp, V, {TAB}
+    Send, {TAB}
+    copy_num()
 return
 
 :co:finf::
     elems := ["US-62", "Document failed rule: Document contains text ""MADE FINAL""", "This is not an OCR issue. The text ""Made final"" does not appear in the document. The final checkbox is checked.", "Docketer"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
+    daily_auto_docket_review_code(elems)
+    copy_num()
 return
 
 :co:finof::
     elems := ["US-62", "Document failed rule: Document contains text ""MADE FINAL""", "This is an OCR issue. The text ""Made final"" does appear in the document but was not OCR'd correctly.", "Docketer"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
+    daily_auto_docket_review_code(elems)
+    copy_num()
 return
 
 :co:quef::
     input, code, V, {SPACE},
     elems := ["", "Document passed all rules. Docket action set to Queued so document was not automatically docketed.", "This is not an error. Documents set to Queue are supposed to be reviewed before docketing.", "Docketer"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
+    daily_auto_docket_review_code(elems)
+    copy_num()
 return
+
+:co:intf::
+    elems := ["This is not an issue with auto-docketing. This should be reviewed by a docketer.", "Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
 #IfWinActive  ; Clear #IfWinActive from above
 
 ; SQL Hostrings
@@ -232,10 +241,4 @@ return
 
 ^!f::
     clip_func("format_jira")  ; Run "format_jira" func on selected text
-return
-
-:co:abant::
-    elems :=  ["US-90", "Application status does not contain ""To Be Abandoned""", "This is not an issue with Auto-Docketing", "Docketer"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
 return
