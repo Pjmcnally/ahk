@@ -1,7 +1,7 @@
 save_as_text() {
     old_clip := clipboard
 
-    InputBox, base_dir, % "Folder", % "Please enter the folder location for the run to extract"
+    InputBox, base_dir, % "Run Folder", % "Please enter the folder location for the run to extract:"
     if ErrorLevel
         Exit
 
@@ -52,12 +52,16 @@ write_output(file, content) {
 
 
 review_files() {
-    InputBox, in_dir, % "Directory", % "Enter directory..."
+    InputBox, base_dir, % "Run folder", % "Please enter the folder location for the run to check:"
     if ErrorLevel
         Exit
-    InputBox, search_phrase, % "Search Phrase", % "Enter Search Phrase"
+    InputBox, search_phrase, % "Search Phrase", % "Please enter the search phrase:"
     if ErrorLevel
         Exit
+
+    in_dir := base_dir . "\ocr"
+    IfNotExist, % in_dir
+        Exit  ; TODO: Add error message here.
 
     total_count := ComObjCreate("Scripting.FileSystemObject").GetFolder(in_dir ).Files.Count
     Progress, M2 R0-%total_count%, % "Files Done:`r`n0", % "Total Files: " . total_count, "File Review"
@@ -82,7 +86,7 @@ review_files() {
     return
 }
 
-^+!p::
+^+!e::
     save_as_text()
 return
 
