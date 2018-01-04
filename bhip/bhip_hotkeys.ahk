@@ -152,7 +152,6 @@ return
     copy_num()
 return
 
-:co:miscf::
 :co:codef::
     input, code, V, {SPACE},
     if (code) {
