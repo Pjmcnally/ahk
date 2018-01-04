@@ -146,47 +146,54 @@ daily_auto_docket_review_code(elems, f_step) {
 return
 
 :co:appinf::
-    elems := ["US-10", "Document failed rule: Document contains text ""Applicant initiated""", "Document broken into odd pieces. The piece the rule was applied to was only the cover letter. Other pieces contained the text", "Docketer"]
+    elems := ["US-10", "Document failed rule: Contains text ""Applicant initiated""", "Document broken into odd pieces. The piece the rule was applied to was only the cover letter. Other pieces contained the text", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
 
 :co:miscf::
-    elems := ["Misc codes", "Document failed multiple rules. None of the tried p-codes are correct  for this document.", "For this to work we would need to make a p-code for this specific document.", "Milena"]
-    final_step := "copy_num"
-    daily_auto_docket_review_code(elems, final_step)
-return
 :co:codef::
-    elems := ["Document failed multiple rules. The tried p-code is not correct for this document.", "For this to work we would need to make a p-code for this specific document.", "Milena"]
+    input, code, V, {SPACE},
+    if (code) {
+        code := ""
+    } else {
+        code := "{BACKSPACE}Misc codes"
+    }
+
+    elems := [code, "Document failed multiple rules. None of the tried p-codes are correct for this document.", "For this to work we would need to make a p-code for this specific document.", "Milena"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
+
 :co:multh::
-    elems := ["Document passed all rules. Docketing failed due to duplicate host activities found error", "This means that there are multiple possible activities in the Host system for this activity to be docketed into.", "Docketer"]
+    elems := ["", "Document passed all rules. Docketing failed due to duplicate host activities found error", "This means that there are multiple possible activities in the Host system for this activity to be docketed into.", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
 
 :co:multc::
-    elems := ["Document passed all rules for multiple procedure codes.", "Auto-docketing unable to complete as it can't determing which procedure code to use. We need to make the rules more specific.", "Milena"]
+    elems := ["", "Document passed all rules for multiple procedure codes.", "Auto-docketing unable to complete as it can't determing which procedure code to use. We need to make the rules more specific.", "Milena"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
 
 :co:multd::
-    elems := ["Document passed all rules. Auto-Docketing failed because multiple documents with the same name were received", "I do not believe this is an issue we can/need to fix in the auto-docket system.", "Docketer"]
+    input, code, V, {SPACE},
+    elems := ["", "Document passed all rules. Auto-Docketing failed because multiple documents with the same name were received", "I do not believe this is an issue we can/need to fix in the auto-docket system.", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
 
 :co:valf::
-    elems := ["Document passed all rules. Docketing failed due to error validating application.", "I searched the client host system. This matter doesn't exist.", "Docketer"]
+    input, code, V, {SPACE},
+    elems := ["", "Document passed all rules. Docketing failed due to error validating application.", "I searched the client host system. This matter doesn't exist.", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
 
 :co:ratt::
-    elems := ["Document passed all rules. Docketing failed due to empty required attributes.", "We need to make/update an annotation to indentify and extract the following:", "Milena/Patrick"]
+    input, code, V, {SPACE},
+    elems := ["", "Document passed all rules. Docketing failed due to empty required attributes.", "We need to make/update an annotation to indentify and extract the following:", "Milena/Patrick"]
     final_step := "edit_last"
     daily_auto_docket_review_code(elems, final_step)
 return
@@ -204,7 +211,8 @@ return
 return
 
 :co:quef::
-    elems := ["Document passed all rules. Docket action set to Queued so document was not automatically docketed.", "This is not an error. Documents set to Queue are supposed to be reviewed before docketing.", "Docketer"]
+    input, code, V, {SPACE},
+    elems := ["", "Document passed all rules. Docket action set to Queued so document was not automatically docketed.", "This is not an error. Documents set to Queue are supposed to be reviewed before docketing.", "Docketer"]
     final_step := "copy_num"
     daily_auto_docket_review_code(elems, final_step)
 return
