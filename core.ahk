@@ -203,7 +203,7 @@ click_and_return(x_dest, y_dest, speed:=0) {
 
 ; Universal Hostrings:
 ; ==============================================================================
-^!p::  ; Assign Ctrl-Alt-P as a hotkey to pause all active ahk processes
+^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
     Pause, Toggle
 Return
 
