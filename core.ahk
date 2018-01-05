@@ -203,6 +203,10 @@ click_and_return(x_dest, y_dest, speed:=0) {
 
 ; Universal Hostrings:
 ; ==============================================================================
+^!p::  ; Assign Ctrl-Alt-P as a hotkey to pause all active ahk processes
+    Pause, Toggle
+Return
+
 ^!r::  ; Assign Ctrl-Alt-R as a hotkey to reload active script.
     Reload
 Return
