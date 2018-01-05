@@ -52,23 +52,22 @@ write_output(file, content) {
 
 
 review_files() {
-    InputBox, base_dir, % "Run folder", % "Please enter the folder location for the run to check:"
+    InputBox, rev_dir, % "Run folder", % "Please enter the folder location to review:"
     if ErrorLevel
         Exit
     InputBox, search_phrase, % "Search Phrase", % "Please enter the search phrase:"
     if ErrorLevel
         Exit
 
-    in_dir := base_dir . "\ocr"
-    IfNotExist, % in_dir
+    IfNotExist, % rev_dir
         Exit  ; TODO: Add error message here.
 
-    total_count := ComObjCreate("Scripting.FileSystemObject").GetFolder(in_dir ).Files.Count
+    total_count := ComObjCreate("Scripting.FileSystemObject").GetFolder(rev_dir).Files.Count
     Progress, M2 R0-%total_count%, % "Files Done:`r`n0", % "Total Files: " . total_count, "File Review"
 
     ; TODO: Limit this loop so it only runs while Adobe is active window.
     ; Right now you have to be careful while using this not to change window focus.
-    Loop, Files, % in_dir "\*.pdf"
+    Loop, Files, % rev_dir "\*.pdf"
     {
         Progress, %A_Index%, % "Reviewing File: " . A_Index "`r`n" . A_LoopFileName
         Run, % A_LoopFileFullPath
