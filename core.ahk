@@ -219,5 +219,10 @@ Return
     clip_func("string_lower")
 Return
 
+:?*:.  ::  ; I am trying to break the habbit of double spacing after a "."
+    Send, % ". "
+    SoundBeep, 750, 500
+Return
+
 ^!t::  ; Ctrl-Alt-T for temp function/hotkeys (one-offs uses or testing)
 Return
