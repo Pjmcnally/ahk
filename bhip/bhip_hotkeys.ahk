@@ -160,7 +160,6 @@ return
     } else {
         code := "{BACKSPACE}Misc codes"
     }
-
     elems := [code, "Document failed multiple rules. None of the tried p-codes are correct for this document.", "For this to work we would need to make a p-code for this specific document.", "Milena"]
     daily_auto_docket_review_code(elems)
     copy_num()
@@ -204,13 +203,13 @@ return
 return
 
 :co:finf::
-    elems := ["US-62", "Document failed rule: Document contains text ""MADE FINAL""", "This is not an OCR issue. The text ""Made final"" does not appear in the document. The final checkbox is checked.", "Docketer"]
+    elems := ["US-62", "Document failed rule: Contains text ""MADE FINAL""", "This is not an OCR issue. The text ""Made final"" does not appear in the document. The final checkbox is checked.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
 
 :co:finof::
-    elems := ["US-62", "Document failed rule: Document contains text ""MADE FINAL""", "This is an OCR issue. The text ""Made final"" does appear in the document but was not OCR'd correctly.", "Docketer"]
+    elems := ["US-62", "Document failed rule: Contains text ""MADE FINAL""", "This is an OCR issue. The text ""Made final"" does appear in the document but was not OCR'd correctly.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
@@ -226,6 +225,14 @@ return
     elems := ["This is not an issue with auto-docketing. This should be reviewed by a docketer.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
+return
+
+:co:oathf::
+    elems := ["US-95", "Document failed rule: Annotation not match Oath or Declaration.", "This is an intentional failure. This is desired behaviour.", "Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
 #IfWinActive  ; Clear #IfWinActive from above
 
 ; SQL Hostrings
