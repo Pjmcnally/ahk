@@ -110,6 +110,14 @@ daily_auto_docket_review_code(elems) {
     }
 }
 
+get_input() {
+    input, in_text, V, {SPACE}{Escape},
+    if (ErrorLevel = "EndKey:Escape") {
+        Exit
+    }
+    return True
+}
+
 copy_num() {
     Send {tab 4}{Down}^c
 }
@@ -154,8 +162,7 @@ return
 return
 
 :co:codef::
-    input, code, V, {SPACE},
-    if (code) {
+    if (get_input()) {
         code := ""
     } else {
         code := "{BACKSPACE}Misc codes"
@@ -166,7 +173,7 @@ return
 return
 
 :co:multh::
-    input, code, V, {SPACE},
+    get_input()
     elems := ["", "Document passed all rules. Docketing failed due to duplicate host activities found error", "This means that there are multiple possible activities in the Host system for this activity to be docketed into.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
@@ -179,21 +186,21 @@ return
 return
 
 :co:multd::
-    input, code, V, {SPACE},
+    get_input()
     elems := ["", "Document passed all rules. Auto-Docketing failed because multiple documents with the same name were received", "I do not believe this is an issue we can/need to fix in the auto-docket system.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
 
 :co:valf::
-    input, code, V, {SPACE},
+    get_input()
     elems := ["", "Document passed all rules. Docketing failed due to error validating application.", "I searched the client host system. This matter doesn't exist.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
 
 :co:ratt::
-    input, code, V, {SPACE},
+    get_input()
     elems := ["", "Document passed all rules. Docketing failed due to empty required attributes.", "We need to make/update an annotation to indentify and extract the following:", "Milena/Patrick"]
     daily_auto_docket_review_code(elems)
     edit_last()
@@ -215,7 +222,7 @@ return
 return
 
 :co:quef::
-    input, code, V, {SPACE},
+    get_input()
     elems := ["", "Document passed all rules. Docket action set to Queued so document was not automatically docketed.", "This is not an error. Documents set to Queue are supposed to be reviewed before docketing.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
@@ -232,6 +239,14 @@ return
     daily_auto_docket_review_code(elems)
     copy_num()
 return
+
+:co:techf::
+    get_input()
+    elems := ["", "Document passed all rules. Document failed to docket due to a technical error.", "This is not an auto-docket issue. The error is intermittant and a rare event. We are looking into it.", "Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
 
 #IfWinActive  ; Clear #IfWinActive from above
 
