@@ -111,11 +111,20 @@ daily_auto_docket_review_code(elems) {
 }
 
 get_input() {
+    /*  Function allows text to be entered (and shown on screen).
+        text input will be finished by pressing {Space} or {Escape}.
+
+        Since text is written to screen text is not returned. Instead True or
+        False is returned depending on whether text was written or not.
+    */
     input, in_text, V, {SPACE}{Escape},
     if (ErrorLevel = "EndKey:Escape") {
         Exit
+    } else if (in_text = "") {
+        return False
+    } else {
+        return True
     }
-    return True
 }
 
 copy_num() {
