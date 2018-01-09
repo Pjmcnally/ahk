@@ -26,7 +26,7 @@ format_jira(str) {
     Loop, parse, str, `n, `r
     {
         line := A_LoopField
-        line := RegExReplace(line, "\s*{color.*?}\s*")  ; Remove all {color} tags and ajoining spaces and underscores
+        line := RegExReplace(line, "{color.*?}")  ; Remove all {color} tags
         line := RegexReplace(line, "\*\s*(.*?)\s*\*", "$1")  ; Remove all * tags leaving surrounded text
         line := RegExReplace(line, "_{2,}(.*?)_{2,}", "_$1_")  ; Remove all double underscores.
         line := RegExReplace(line, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Remove all double brackets.
