@@ -256,6 +256,13 @@ return
     copy_num()
 return
 
+:co:timeoutf::
+    get_input()
+    elems := ["", "Document failed rule: Over Extended Pending Validation Time", "Matter is still pending validation. Item was removed from auto-docket after timeout window expired.", "Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
 
 #IfWinActive  ; Clear #IfWinActive from above
 
