@@ -152,7 +152,6 @@ edit_last() {
 :co:mrel::Task-83{Tab 3}* Weekly Release Meeting
 
 ; Signature/Ticket Hotstrings
-:o:-p::--Patrick
 :o:psig::Patrick McNally{Enter}DevOps Support{Enter}pmcnally@blackhillsip.com
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
