@@ -263,6 +263,14 @@ return
     copy_num()
 return
 
+:co:ocrf::
+    Send % "This is an OCR issue. The text was OCR'd as """ . Clipboard . """"
+    Send {TAB}
+    Send % "Docketer"
+    Send {TAB}
+    copy_num()
+return
+
 
 #IfWinActive  ; Clear #IfWinActive from above
 
