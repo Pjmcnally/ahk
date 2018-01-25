@@ -5,6 +5,35 @@ This module contains all of the Hotkeys, Hotstrings and functions I use at BHIP.
 
 ; Functions used in this module
 ; ==============================================================================
+fill_scrape_mail_date() {
+    InputBox, scrape_start, "Scrape Start", "Please enter scrape start date"
+    InputBox, mail_start, "Mail Start", "Please enter mail start date"
+    InputBox, num, "Number?", "Please enter the number of lines to fill"
+    i = 0
+    box_height := 24
+
+    While(i < num) {
+        if (Mod(i, 20) = 0) {
+            KeyWait, LButton, D
+            MouseGetPos, x, y
+        }
+
+        Sleep, 200
+        Send {Click, 2}
+        Sleep, 200
+        Send, % scrape_start
+        Click, 325, 1225, 2  ; Magic number for location of mail date box
+        Sleep, 200
+        Send, % mail_start
+
+        y += box_height
+        MouseMove, x, y
+
+        i += 1
+    }
+}
+
+
 format_jira(str) {
     /*  Reformat text sent into JIRA from Outlook email.
 
@@ -288,3 +317,7 @@ return
 ^!f::
     clip_func("format_jira")  ; Run "format_jira" func on selected text
 return
+
+^!d::
+    fill_scrape_mail_date()
+Return
