@@ -104,34 +104,6 @@ format_db_for_jira() {
     return
 }
 
-format_db_for_get_files() {
-    /*  Format content copied out of MSSMS as a powershell hash table.
-
-        Search to get data with columns jd & jds (order is important)
-    */
-    CrLf := "`r`n"
-    res := "$files = @{" . CrLf
-    str := Clipboard
-
-    Loop, parse, str, `n, `r
-    {
-        Loop, Parse, A_LoopField, `t
-        {
-            if (A_index = 1) {
-                res := res . "`t'" . A_loopField . "'" . " = '"
-            } else {
-                res := res . A_LoopField . "'"
-            }
-        }
-        res := res . CrLf
-    }
-
-    res := res . "}"
-
-    paste_contents(res)
-    return
-}
-
 daily_auto_docket_review_code(elems) {
     for key, value in elems {
         Send, % value
@@ -308,10 +280,6 @@ return
 ; Complex Hotkeys
 ^!v::
     format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
-return
-
-^!b::
-    format_db_for_get_files()  ; Run format_db_for_jira on contents on clipboard
 return
 
 ^!f::
