@@ -6,6 +6,13 @@ This module contains all of the Hotkeys, Hotstrings and functions I use at BHIP.
 ; Functions used in this module
 ; ==============================================================================
 fill_scrape_mail_date() {
+        /*  Fill scrape start dates and mail start date into jobs screen.
+
+        Args:
+            None
+        Return:
+            None
+    */
     InputBox, scrape_start, "Scrape Start", "Please enter scrape start date"
     InputBox, mail_start, "Mail Start", "Please enter mail start date"
     InputBox, num, "Number?", "Please enter the number of lines to fill"
