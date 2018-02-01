@@ -70,7 +70,7 @@ review_files() {
 }
 
 ^+!e::
-    extract_pdf_text()
+    timer_wrapper("extract_pdf_text")
 return
 
 ^+!r::
