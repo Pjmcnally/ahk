@@ -1,53 +1,37 @@
-save_as_text() {
-    old_clip := clipboard
-
+extract_pdf_text() {
     InputBox, base_dir, % "Run Folder", % "Please enter the folder location for the run to extract:"
     if ErrorLevel
         Exit
 
     ocr_dir := base_dir . "\ocr"
+    pdfs := ocr_dir . "\*.pdf"
+
     txt_dir := base_dir . "\text"
     IfNotExist, % txt_dir
         FileCreateDir, % txt_dir
 
-    Loop, Files, % ocr_dir "\*.pdf"
+    Loop, Files, % pdfs
     {
-        content := get_text(A_LoopFileFullPath)
-        out_file := make_new_filename(txt_dir, A_LoopFileName, ".txt")
-        write_output(out_file, content)
+        SplitPath, A_LoopFileFullPath, name, dir, ext, base_name
+        out_file := txt_dir "\" base_name ".txt"
+        save_pdf_as_text(A_LoopFileFullPath, out_file)
     }
-
-    sleep, 100
-    clipboard := old_clip
 }
 
 
-make_new_filename(dir, basename, new_ext) {
-    new_filename := dir "\" basename
-    new_filename := RegExReplace(new_filename, "\..*", new_ext)
-    return new_filename
-}
-
-
-get_text(file_path) {
-    ; This is a clunky way to get text from a pdf.
-    Run, % file_path
-    Sleep, 500
-    Send ^a
-    Sleep, 500
-    Send ^c
-    Sleep, 2000
-    WinClose, ahk_exe Acrobat.exe
-    Sleep, 500
-
-    return Clipboard
-}
-
-
-write_output(file, content) {
-    f := FileOpen(file, "w")
-    f.write(content)
-    f.close()
+save_pdf_as_text(in_file, out_file) {
+    Run, % in_file
+    Sleep, 300
+    Send !fhmt  ; Key combination in Adobe to Save as plain text file.
+    Sleep, 200
+    Send, % out_file  ; Type new file name into save box
+    Sleep, 200
+    Send, {Enter}  ; Hit enter to save file
+    Sleep, 100
+    Send, y  ; Hit "y" to save over existing file (does nothing if no prompt)
+    Sleep, 100
+    Send, ^w  ; Close file
+    Sleep, 100
 }
 
 
@@ -86,7 +70,7 @@ review_files() {
 }
 
 ^+!e::
-    save_as_text()
+    extract_pdf_text()
 return
 
 ^+!r::
