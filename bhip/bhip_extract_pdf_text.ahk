@@ -10,12 +10,18 @@ extract_pdf_text() {
     IfNotExist, % txt_dir
         FileCreateDir, % txt_dir
 
+    total_count := ComObjCreate("Scripting.FileSystemObject").GetFolder(ocr_dir).Files.Count
+    Progress, M2 R0-%total_count%, % "Files Done:`r`n0", % "Total Files: " . total_count, "Text Extaction"
+
     Loop, Files, % pdfs
     {
+        Progress, %A_Index%, % "Reviewing File: " . A_Index "`r`n" . A_LoopFileName
         SplitPath, A_LoopFileFullPath, name, dir, ext, base_name
         out_file := txt_dir "\" base_name ".txt"
         save_pdf_as_text(A_LoopFileFullPath, out_file)
     }
+
+    Progress, Off
 }
 
 
@@ -69,10 +75,23 @@ review_files() {
     return
 }
 
+
+; The two hotkeys below dynamically call timer_wrapper to avoid error at
+; startup if timer_wrapper doesn't exist.
 ^+!e::
-    timer_wrapper("extract_pdf_text")
+    if IsFunc("timer_wrapper") {
+        %timer_wrapper%("extract_pdf_text")
+    } else {
+        extract_pdf_text()
+    }
+
 return
 
 ^+!r::
-    timer_wrapper("review_files")
+    if IsFunc("timer_wrapper") {
+        %timer_wrapper%("review_files")
+    } else {
+        extract_pdf_text()
+    }
+
 return
