@@ -13,9 +13,15 @@ fill_scrape_mail_date() {
         Return:
             None
     */
-    InputBox, scrape_start, "Scrape Start", "Please enter scrape start date"
-    InputBox, mail_start, "Mail Start", "Please enter mail start date"
-    InputBox, num, "Number?", "Please enter the number of lines to fill"
+    InputBox, scrape_start, % "Scrape Start", % "Please enter scrape start date"
+    if ErrorLevel
+        Exit
+    InputBox, mail_start, % "Mail Start", % "Please enter mail start date"
+    if ErrorLevel
+        Exit
+    InputBox, num, % "Number?", % "Please enter the number of lines to fill"
+    if ErrorLevel
+        Exit
     i = 0
     box_height := 24
 
