@@ -12,33 +12,30 @@ runPandoraMin() {
 
 pandoraCmd(command) {
     ; Function to pass command (param as string) to Pandora.
-    IfWinExist, Pandora                     ; Check if Pandora Exists
-        ControlSend, , %command%, Pandora   ; Send command
+    IfWinExist, Pandora
+        ControlSend, , %command%, Pandora
     Else
-        runPandoraMin()                     ; Run and minimize Pandora
+        runPandoraMin()
 }
-
 
 
 ; Hotstrings in this module
 ; ------------------------------------------------------------------------------
 
 ; This hotkey plays/pauses the Windows Pandora client
-F11::                                       ; For laptop compatibility (No media keys)
-Media_Play_Pause::                          ; Fn-F11 (The media play button on my bhip keyboard)
-    pandoraCmd("{Space}")                   ; Send {Space} to Pandora (Pause/Play)
+F11::  ; F11 - Same as "Media Play" on my BHIP Keyboard
+    pandoraCmd("{Space}")  ; Send {Space} to Pandora (Pause/Play)
 Return
 
 
 ; This hotkey skips to the next song on the Windows Pandora Client
-F12::                                       ; For laptop compatibility (No media keys)
-Media_Next::                                ; Fn-F12 (The media next button on my bhip keyboard)
-    pandoraCmd("{Right}")                   ; Send {Right} to Pandora (Next track)
+F12::  ; F12 - Same as "Media Next" on my BHIP Keyboard
+    pandoraCmd("{Right}")  ; Send {Right} to Pandora (Next track)
 Return
 
 
-; This hotkey resolves the "Connect" issue.
-+F11::                                      ; Shift-F11
+; This hotkey resolves the "Connect" issue w/the Pandora desktop client.
++F11::  ; Shift-F11
     ifWinExist, Pandora
         WinClose, Pandora
         WinWaitClose, Pandora
@@ -48,21 +45,20 @@ Return
 Return
 
 
-; This hotkey Runs/Maximizes/Minimize the Windows Pandora Client
-^F11::                                      ; CTRL-F11 (The media play button on my bhip keyboard)
-    ifWinNotExist, Pandora                  ; Run Pandora if not running
+; This hotkey Maximizes or Minimize the Windows Pandora Client
+^F11::  ; CTRL-F11
+    ifWinNotExist, Pandora
         runPandoraMin()
-
     Else
-        IfWinActive, Pandora                ; If Active
-            WinMinimize, Pandora            ; Minimize
-        else                                ; If not active
-            WinActivate, Pandora            ; Activate
+        IfWinActive, Pandora
+            WinMinimize, Pandora
+        else
+            WinActivate, Pandora
 Return
 
 
 ; This hotkey closes the Windows Pandora Client
-^!F11::  ; CTRL-ALT-F11 (The media play button on my bhip keyboard)
+^!F11::  ; CTRL-ALT-F11
     ifWinExist, Pandora
         WinClose, Pandora
 Return
