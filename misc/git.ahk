@@ -10,7 +10,7 @@
 ::gp::git push
 ::gs::git status
 ::gd::git diff
-::gfa::git fetch --all
+::gfa::git fetch --all --prune
 :o:gc::git commit -m "
 :o:gca::git commit -am "
 
