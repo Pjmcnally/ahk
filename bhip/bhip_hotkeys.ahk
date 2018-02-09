@@ -205,6 +205,7 @@ edit_last() {
 :co:mdev::Task-80{Tab 3}* Weekly DevOps Meeting
 :co:mwad::Task-82{Tab 3}* Weekly Auto-Docket Meeting
 :co:mrel::Task-83{Tab 3}* Weekly Release Meeting
+:co:mmbhip::Task-95{Tab 3}* Monthly BHIP Meeting
 
 ; Other billing hotkeys
 :co:tupdb::Task-94{Tab 3}* Updating UPDB
