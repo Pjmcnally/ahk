@@ -211,6 +211,23 @@ edit_last() {
 :o:psig::Patrick McNally{Enter}DevOps Support{Enter}pmcnally@blackhillsip.com
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 
+; UPDB Import emails
+#IfWinActive ahk_exe OUTLOOK.EXE
+:co:eups::
+    subject := "Importing UPDB Today"
+    body := "I will be importing today, starting at 7:15 pm. Please be sure to exit the UPDB before then.{Enter 2}Thank you."
+    recipients := get_updb_email_group()
+    send_outlook_email(subject, body, recipients)
+Return
+
+:co:eupd::
+    subject := "Importing UPDB Today - Complete"
+    body := "The import of the UPDB is now complete."
+    recipients := get_updb_email_group()
+    send_outlook_email(subject, body, recipients)
+Return
+#IfWinActive  ; End UPDB Import emails
+
 ; Daily auto-docket review Hotstrings
 #IfWinActive ahk_exe EXCEL.EXE
 :co:abanf::
@@ -311,8 +328,6 @@ return
     daily_auto_docket_review_code(elems)
     copy_num()
 return
-
-
 #IfWinActive  ; Clear #IfWinActive from above
 
 ; SQL Hostrings
