@@ -194,7 +194,6 @@ edit_last() {
 ; Hotstrings & Hotkeys in this module
 ; ==============================================================================
 ; Misc Hotstrings
-:co:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@blackhillsip.com{Tab}{Down}{Tab}{Tab}{Space}
 :co:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
 :co:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
 :co:b1::BACKLOG 001!o

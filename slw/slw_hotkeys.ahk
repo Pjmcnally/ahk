@@ -51,7 +51,6 @@ Return
 :co:fsids::^v SIDS
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 :co:ifs::If this is satisfactory please sign the attached documents and return them to me.  If not please let me know what changes you would like made.
-:co:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@slwip.com{Tab}{Down}{Tab}{Tab}{Space}
 :co:pnum::^v{Tab}A1{Tab}United States of America{Tab}{Enter}
 :co:w/ec::w/English Claims
 :co:w/et::w/English Translation
