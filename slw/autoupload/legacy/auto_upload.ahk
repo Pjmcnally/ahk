@@ -1,7 +1,7 @@
 ;Scripts below mass upload documents to USPTO
 ;Version 2.0
 ;last updated 01-24-17
-;Created by Patrick McNally 
+;Created by Patrick McNally
 
 #z::
 #i::
@@ -19,9 +19,9 @@ checkCancel(Val) {
 
 getRefNums() {
     ; Function to display input box and request reference numbers from user.
-    InputBox, First, First reference, Please enter the number preceeding the underscore of the FIRST reference being submitted (For Example 1 or 0001) 
+    InputBox, First, First reference, Please enter the number preceeding the underscore of the FIRST reference being submitted (For Example 1 or 0001)
     checkCancel(ErrorLevel)
-    InputBox, Last, Last reference, Please enter the number preceeding the underscore of the LAST reference being submitted (For Example 20 or 0020) 
+    InputBox, Last, Last reference, Please enter the number preceeding the underscore of the LAST reference being submitted (For Example 20 or 0020)
     checkCancel(ErrorLevel)
 
     Results := {"First": First, "Last": Last}
@@ -106,7 +106,7 @@ submitRef(num, maxFor, dict, browser, submitDelay) {
     Sleep, %submitDelay%
 
     IfWinNotActive, ahk_class %normalWindow%, , WinActivate, ahk_class %normalWindow%,
-    WinWaitActive, ahk_class %normalWindow% 
+    WinWaitActive, ahk_class %normalWindow%
     SendInput, {TAB}i
     if (foreign) {
         SendInput, {TAB}f
@@ -154,7 +154,7 @@ main() {
     While (refNum <= Nums["last"]) {
         ; While loop to iterate over and submit references
         submitRef(refNum, forRefMax, browseDict, browser, submitDelay)
-        
+
         if (refnum >= Nums["last"]) {
             MsgBox % "AutoHotkey has attempted to select all references. There should be " forRefs " Foreign and " NPLRefs " NPL References.  There should be a total of " totalRefs " references.  If this is correct please click 'Upload and Validate'"
         ; } else if (Mod(refNum - 1, 20) = 0) {  ; These two lines are used in the looping variant
@@ -169,7 +169,7 @@ main() {
         refNum += 1
     }
 }
-Return
+return
 
 #x::
 ;This version works in FireFox
@@ -196,7 +196,7 @@ While % NumbOfRef >20
         NumbOfRef := 0
         NumbOfFor := 0
         MsgBox % "Please make sure that the number of the First reference is lower than the number of the Last reference"
-        Break       
+        Break
 }
 
     NumbOfRef := (Last - First + 1)
@@ -206,11 +206,11 @@ While % NumbOfRef >20
 
 ;This section request input from the user regarding the number of foreign references to be submitted
 While % NumbOfFor > NumbOfRef
-{   
-    InputBox, NumbOfFor, Foreign References, How many of the references being submitted are foreign references? 
+{
+    InputBox, NumbOfFor, Foreign References, How many of the references being submitted are foreign references?
     If % NumbOfFor > NumbOfRef
         MsgBox % "You cannot submit more foreign references than total references.  Please re-enter the number of foreign referneces."
-}   
+}
 
 RefNum := First - 1 + .0000
 SetFormat, float, 04.0
@@ -220,13 +220,13 @@ While % RefSub < NumbOfFor
 {
     RefNum := (RefNum + 1.0)
     RefSub := (RefSub + 1)
-    WinWait, File Upload, 
-    IfWinNotActive, File Upload, , WinActivate, File Upload, 
-    WinWaitActive, File Upload, 
+    WinWait, File Upload,
+    IfWinNotActive, File Upload, , WinActivate, File Upload,
+    WinWaitActive, File Upload,
     Send, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}%RefNum%{ENTER}
-    WinWait, ahk_class MozillaWindowClass, 
-    IfWinNotActive, ahk_class MozillaWindowClass, , WinActivate, ahk_class MozillaWindowClass, 
-    WinWaitActive, ahk_class MozillaWindowClass, 
+    WinWait, ahk_class MozillaWindowClass,
+    IfWinNotActive, ahk_class MozillaWindowClass, , WinActivate, ahk_class MozillaWindowClass,
+    WinWaitActive, ahk_class MozillaWindowClass,
     Send, {TAB}i{TAB}f
     If % RefSub = NumbOfRef
         MsgBox AutoHotkey has attempted to select all references.  There should be %NumbOfFor% Foreign and %NumbOfNPL% NPL References.  There should be a total of %RefSub% references.  If this is correct please click "Upload and Validate"
@@ -239,13 +239,13 @@ While % RefSub < NumbOfRef
     RefNum := (RefNum + 1.0)
     RefSub := (RefSub + 1)
     NumbOfNPL := (NumbOfNPL + 1)
-    WinWait, File Upload, 
-    IfWinNotActive, File Upload, , WinActivate, File Upload, 
-    WinWaitActive, File Upload, 
+    WinWait, File Upload,
+    IfWinNotActive, File Upload, , WinActivate, File Upload,
+    WinWaitActive, File Upload,
     Send, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}%RefNum%{ENTER}
-    WinWait, ahk_class MozillaWindowClass, 
-    IfWinNotActive, ahk_class MozillaWindowClass, , ahk_class MozillaWindowClass, 
-    WinWaitActive, ahk_class MozillaWindowClass, 
+    WinWait, ahk_class MozillaWindowClass,
+    IfWinNotActive, ahk_class MozillaWindowClass, , ahk_class MozillaWindowClass,
+    WinWaitActive, ahk_class MozillaWindowClass,
     Send, {TAB}i{TAB}N
     If % RefSub = NumbOfRef
         MsgBox AutoHotkey has attempted to select all references.  There should be %NumbOfFor% Foreign and %NumbOfNPL% NPL References.  There should be a total of %RefSub% references.  If this is correct please click "Upload and Validate"

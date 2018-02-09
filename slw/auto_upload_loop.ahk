@@ -1,7 +1,7 @@
 ; Scripts below mass upload documents to USPTO
 ; Version 4.0 (loop)
 ; last updated 03-07-17
-; Created by Patrick McNally 
+; Created by Patrick McNally
 
 ; This is my new attempt at a master upload script to work on any browser (It currently supports IE and Chrome).
 ; I am very close to getting this to work in Firefox but for some reason the upload window behaves inconsistently.
@@ -9,8 +9,8 @@
 #i::
 #c::
 #z::
-main() ; Runs entire script 
-Return
+    main() ; Runs entire script
+return
 
 main() {
     ; Create instance of UploadSession
@@ -68,11 +68,11 @@ class UploadSession {
 
         ; get proper window references per browser.
         ; dict of supported browsers and the names of the window where the files to be uploaded are selected.
-        ; "upload" and "normal" are keys. The correspoding values are the titles of the windows. These are found by 
+        ; "upload" and "normal" are keys. The correspoding values are the titles of the windows. These are found by
         ; using AutoHotkey WindowSpy. Right click on AutoHotkey icon in task bar to run.
         browserDict := {"chrome.exe": {"upload": "Open", "normal": "United States Patent & Trademark Office - Google Chrome"}
             , "firefox.exe": {"upload": "File Upload", "normal": "United States Patent & Trademark Office - Mozilla Firefox"} ; doesn't actually work.
-            , "IEXPLORE.EXE": {"upload": "Choose File to Upload", "normal": "United States Patent & Trademark Office - Internet Explorer"}} 
+            , "IEXPLORE.EXE": {"upload": "Choose File to Upload", "normal": "United States Patent & Trademark Office - Internet Explorer"}}
 
         This.upload_window := browserDict[This.window]["upload"]
         This.browser_window := browserDict[This.window]["normal"]
@@ -82,7 +82,7 @@ class UploadSession {
         ; Asks user which directory they would like to upload from. If no reponse uses default directory.
         InputBox, directory, Directory, Please enter the directory containg the references.
         if ErrorLevel
-            Exit    
+            Exit
 
         if (directory) {
             directory := directory UploadSession.file_default

@@ -62,34 +62,34 @@ openAll(array){
 ; ==============================================================================
 
 
-; Hotkeys to access functions 
+; Hotkeys to access functions
 ; ==============================================================================
 
 ; Minimize all windows (listed above)
 ^!m::
   minimizeAll(folder_list)
-Return
+return
 
 
 ; Restore all minimized windows (listed above)
 ^!r::
   restoreAll(folder_list)
-Return
+return
 
 
 ; Close all windows (listed above)
 ^!c::
   closeAll(folder_list)
-Return
+return
 
 
 ;Restore window positions from file
 ^!o::
   ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
-  KeyWait Control  
+  KeyWait Control
   KeyWait Alt
 
-  ; Function to open all 
+  ; Function to open all
   openAll(folder_list)
   Sleep, 400
 
@@ -98,7 +98,7 @@ Return
   ParmVals := "Title x y height width"
   SectionToFind := SectionHeader()
   SectionFound := false
- 
+
   Loop, Read, %FileName%
   {
     ; When right section discovered set section found and declare variables
@@ -146,7 +146,7 @@ Return
 
   ;Restore window that was active at beginning of script
   WinActivate, %SavedActiveWindow%
-RETURN
+return
 
 
 ;Win-Shift-0 (Save current windows to file)
@@ -154,7 +154,7 @@ RETURN
 
   ; Check before process.
   MsgBox, 4,Dock Windows,Save window positions?
-  IfMsgBox, NO, Return
+  IfMsgBox, NO, return
 
   ; Save Currently active window.
   WinGetActiveTitle, SavedActiveWindow
@@ -164,7 +164,7 @@ RETURN
   if !IsObject(file)
   {
   MsgBox, Can't open "%FileName%" for writing.
-  Return
+  return
   }
 
   ; Write Section header to file.
@@ -193,7 +193,7 @@ RETURN
 
   ;Restore active window
   WinActivate, %SavedActiveWindow%
-RETURN
+return
 
 ; -------
 
@@ -204,7 +204,7 @@ SectionHeader()
   SysGet, MonPrim, MonitorPrimary
   WinGetPos, x, y, Width, Height, Program Manager
 
-  Return "SECTION: Monitors=" . MonCt . ",MonitorPrimary=" . MonPrim
+  return "SECTION: Monitors=" . MonCt . ",MonitorPrimary=" . MonPrim
        . "; Desktop size:" . x . "," . y . "," . width . "," . height
 }
 

@@ -6,7 +6,7 @@
 
 ;#InstallKeybdHook
 #SingleInstance, Force
-SetTitleMatchMode, 2        ; 2: A window's title can contain WinTitle anywhere inside it to be a match. 
+SetTitleMatchMode, 2        ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
 SetTitleMatchMode, Fast     ;Fast is default
 DetectHiddenWindows, off    ;Off is default
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -21,15 +21,15 @@ FileName:="WinPos.txt"
   ParmVals:="Title x y height width"
   SectionToFind:= SectionHeader()
   SectionFound:= 0
- 
+
   Loop, Read, %FileName%
   {
     if !SectionFound
     {
       ;Read through file until correction section found
-      If (A_LoopReadLine<>SectionToFind) 
+      If (A_LoopReadLine<>SectionToFind)
     Continue
-    }     
+    }
 
         ;Exit if another section reached
         If ( SectionFound and SubStr(A_LoopReadLine,1,8)="SECTION:")
@@ -38,7 +38,7 @@ FileName:="WinPos.txt"
                 SectionFound:=1
         Win_Title:="", Win_x:=0, Win_y:=0, Win_width:=0, Win_height:=0
 
-        Loop, Parse, A_LoopReadLine, CSV 
+        Loop, Parse, A_LoopReadLine, CSV
         {
             EqualPos:=InStr(A_LoopField,"=")
             Var:=SubStr(A_LoopField,1,EqualPos-1)
@@ -46,16 +46,16 @@ FileName:="WinPos.txt"
             IfInString, ParmVals, %Var%
             {
                 ;Remove any surrounding double quotes (")
-                If (SubStr(Val,1,1)=Chr(34)) 
+                If (SubStr(Val,1,1)=Chr(34))
                 {
                     StringMid, Val, Val, 2, StrLen(Val)-2
                 }
-                Win_%Var%:=Val  
+                Win_%Var%:=Val
             }
         }
 
         If ( (StrLen(Win_Title) > 0) and WinExist(Win_Title) )
-        {   
+        {
             WinRestore
             WinActivate
             WinMove, A,,%Win_x%,%Win_y%,%Win_width%,%Win_height%
@@ -70,14 +70,14 @@ FileName:="WinPos.txt"
 
   ;Restore window that was active at beginning of script
   WinActivate, %SavedActiveWindow%
-RETURN
+return
 
 
 ;Win-Shift-0 (Save current windows to file)
 #+0::
 
  MsgBox, 4,Dock Windows,Save window positions?
- IfMsgBox, NO, Return
+ IfMsgBox, NO, return
 
  WinGetActiveTitle, SavedActiveWindow
 
@@ -85,7 +85,7 @@ RETURN
  if !IsObject(file)
  {
     MsgBox, Can't open "%FileName%" for writing.
-    Return
+    return
  }
 
   line:= SectionHeader() . CrLf
@@ -113,7 +113,7 @@ RETURN
 
   ;Restore active window
   WinActivate, %SavedActiveWindow%
-RETURN
+return
 
 ; -------
 
@@ -127,7 +127,7 @@ SectionHeader()
         WinGetPos, x, y, Width, Height, Program Manager
     line:= line . "; Desktop size:" . x . "," . y . "," . width . "," . height
 
-    Return %line%
+    return %line%
 }
 
 ;<EOF>

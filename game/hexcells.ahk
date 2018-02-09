@@ -23,7 +23,6 @@ Escape::
     }
 
     click_and_return(dest_x, dest_y)
-
-Return
+return
 
 #IfWinActive

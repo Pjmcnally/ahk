@@ -217,17 +217,17 @@ edit_last() {
     body := "I will be importing today, starting at 7:15 pm. Please be sure to exit the UPDB before then.{Enter 2}Thank you."
     recipients := get_updb_email_group()
     send_outlook_email(subject, body, recipients)
-Return
+return
 
 :co:eupd::
     subject := "Importing UPDB Today - Complete"
     body := "The import of the UPDB is now complete."
     recipients := get_updb_email_group()
     send_outlook_email(subject, body, recipients)
-Return
+return
 #IfWinActive  ; End UPDB Import emails
 
-; Daily auto-docket review Hotstrings
+; Daily auto-docket review Hotstrings (Excel)
 #IfWinActive ahk_exe EXCEL.EXE
 :co:abanf::
     elems :=  ["US-90", "Document failed rule: Application status does not contain ""To Be Abandoned""", "This is not an issue with Auto-Docketing. This should be reviewed by a docketer.", "Docketer"]
@@ -327,10 +327,11 @@ return
     daily_auto_docket_review_code(elems)
     copy_num()
 return
-#IfWinActive  ; Clear #IfWinActive from above
+#IfWinActive  ; End Excel Hostrings
 
-; SQL Hostrings
+#IfWinActive ahk_exe Ssms.exe  ; SQL hotstrings
 :o:bt::{/}{*}{ENTER}BEGIN TRAN{Enter 2}--commit{ENTER}ROLLBACK{ENTER}{*}{/}
+#IfWinActive ; End SQL Hostrings
 
 ; Complex Hotkeys
 ^!v::
@@ -343,8 +344,8 @@ return
 
 ^!d::
     fill_scrape_mail_date()
-Return
+return
 
 ^!a::
     rename_adobe_bookmarks()
-Return
+return

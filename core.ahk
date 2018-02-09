@@ -198,31 +198,31 @@ click_and_return(x_dest, y_dest, speed:=0) {
     Sleep 10  ; For stabiltiy and consistent results, increase if issues occur.
     Click Up
     MouseMove, % x_orig, y_orig, 0
-    Return
+    return
 }
 
 ; Universal Hostrings:
 ; ==============================================================================
 ^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
     Pause, Toggle
-Return
+return
 
 ^!r::  ; Assign Ctrl-Alt-R as a hotkey to reload active script.
     Reload
-Return
+return
 
 ^!u::  ; Ctrl-Alt-U to uppercase any hightlighted text
     clip_func("string_upper")
-Return
+return
 
 ^!l::  ; Ctrl-Alt-L to lowercase all highlighted text
     clip_func("string_lower")
-Return
+return
 
 :?*:.  ::  ; I am trying to break the habbit of double spacing after a "."
     Send, % ". "
     SoundBeep, 750, 500
-Return
+return
 
 ^!t::  ; Ctrl-Alt-T for temp function/hotkeys (one-offs uses or testing)
-Return
+return

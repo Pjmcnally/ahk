@@ -14,7 +14,7 @@ pandoraCmd(command) {
     ; Function to pass command (param as string) to Pandora.
     IfWinExist, Pandora
         ControlSend, , %command%, Pandora
-    Else
+    else
         runPandoraMin()
 }
 
@@ -25,13 +25,13 @@ pandoraCmd(command) {
 ; This hotkey plays/pauses the Windows Pandora client
 F11::  ; F11 - Same as "Media Play" on my BHIP Keyboard
     pandoraCmd("{Space}")  ; Send {Space} to Pandora (Pause/Play)
-Return
+return
 
 
 ; This hotkey skips to the next song on the Windows Pandora Client
 F12::  ; F12 - Same as "Media Next" on my BHIP Keyboard
     pandoraCmd("{Right}")  ; Send {Right} to Pandora (Next track)
-Return
+return
 
 
 ; This hotkey resolves the "Connect" issue w/the Pandora desktop client.
@@ -42,25 +42,25 @@ Return
 
     ifWinNotExist, Pandora
         runPandoraMin()
-Return
+return
 
 
 ; This hotkey Maximizes or Minimize the Windows Pandora Client
 ^F11::  ; CTRL-F11
     ifWinNotExist, Pandora
         runPandoraMin()
-    Else
+    else
         IfWinActive, Pandora
             WinMinimize, Pandora
         else
             WinActivate, Pandora
-Return
+return
 
 
 ; This hotkey closes the Windows Pandora Client
 ^!F11::  ; CTRL-ALT-F11
     ifWinExist, Pandora
         WinClose, Pandora
-Return
+return
 
 

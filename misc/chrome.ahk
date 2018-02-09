@@ -5,7 +5,7 @@
 ^j::
     Input, OutVar, L1 T3, {Tab}{Enter}{Space}
     If OutVar is not Integer
-        Return
+        return
 
     i := 0
     OutVar := (OutVar = 0 ? 10 : Outvar) ; If input is 0 set val to 10
@@ -15,7 +15,7 @@
         Sleep, 50
         i++
     }
-Return
+return
 
 #IfWinActive ; Clear IfWinActive
 

@@ -4,17 +4,17 @@
 #IfWinActive, Hearthstone
 
 ^!h::
-; With these updated timings this script takes longer but is much more consistent (<.5% failure rate)
-; wait for hotkey keys to be released
-KeyWait Control
-KeyWait Alt
-KeyWait h
+    ; With these updated timings this script takes longer but is much more consistent (<.5% failure rate)
+    ; wait for hotkey keys to be released
+    KeyWait Control
+    KeyWait Alt
+    KeyWait h
 
-; run main function
-SetMouseDelay 50  ; To be modified for this script
-main()
-SetMouseDelay 10  ; Return to default value
-Return
+    ; run main function
+    SetMouseDelay 50  ; To be modified for this script
+    main()
+    SetMouseDelay 10  ; Return to default value
+return
 
 
 main() {

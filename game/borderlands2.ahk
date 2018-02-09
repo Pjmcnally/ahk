@@ -5,51 +5,51 @@
 ;#IfWinActive ahk_class Borderlands 2 (32-bit`, DX9)
 #IfWinActive ahk_exe Borderlands2.exe  ; Only run in Borderlands 2
 
-~$w::  ; Start running.  
-varint = 0
-Send {shift up}
-Send {shift down}
-Send {shift up}
-Return
+~$w::  ; Start running.
+    varint = 0
+    Send {shift up}
+    Send {shift down}
+    Send {shift up}
+return
 
 
 ~$s::  ; Stop running.
-if varint { 
-    varint = 0
-    Send {w up}
-    Send {shift up}
-} 
+    if varint {
+        varint = 0
+        Send {w up}
+        Send {shift up}
+    }
 return
 
 
 ; ~$a::
-; if varint { 
+; if varint {
 ;     varint = 0
 ;     Send {w up}
 ;     Send {shift up}
-; } 
+; }
 ; return
 
 
 ; ~$d::
-; if varint { 
+; if varint {
 ;     varint = 0
 ;     Send {w up}
 ;     Send {shift up}
-; } 
+; }
 ; return
 
 
 t::  ; Stop running.
-if varint { 
-    varint = 0
-    Send {w up}
-    Send {shift up}
-} else { 
-    varint = 1
-    Send {w down}
-    Send {shift down}
-} 
+    if varint {
+        varint = 0
+        Send {w up}
+        Send {shift up}
+    } else {
+        varint = 1
+        Send {w down}
+        Send {shift down}
+    }
 return
 
 ; This should always be at the bottom

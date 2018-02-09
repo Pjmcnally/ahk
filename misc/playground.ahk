@@ -1,9 +1,9 @@
 ; This file is where I do experimental or fun stuff in Autohotkey.
 
 ^!t::
-file := generateRandArrayFile(3, 1000000)
-res_file := readRandArrayFile(file)
-Run, % res_file
+    file := generateRandArrayFile(3, 1000000)
+    res_file := readRandArrayFile(file)
+    Run, % res_file
 return
 
 
@@ -18,7 +18,7 @@ genArray(len, start := 1, step := 1) {
 
 
 generateRandArrayFile(len, num) {
-    ; Function generates num random arrays of lenght len (1 to len) and writes 
+    ; Function generates num random arrays of lenght len (1 to len) and writes
     ; them to an output file named rand_array_<len>.txt
     array := genArray(len)
 
@@ -38,10 +38,10 @@ generateRandArrayFile(len, num) {
 
 
 readRandArrayFile(name) {
-    ; Function to read my files of random arrays and count the number of time 
+    ; Function to read my files of random arrays and count the number of time
     ; each array appears.
     array := {}
-    Loop, Read, % name 
+    Loop, Read, % name
     {
         if not array.HasKey(A_LoopReadLine) {
             array[A_LoopReadLine] := 0
@@ -51,7 +51,7 @@ readRandArrayFile(name) {
 
     StringTrimRight, base_name, name, 4
     res_name := name . "_res.txt"
-    
+
     file := FileOpen(res_name, "w")
     file.Write("Array: Count`r`n")
     for key, val in array {
