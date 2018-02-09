@@ -34,7 +34,7 @@ F12::  ; F12 - Same as "Media Next" on my BHIP Keyboard
 return
 
 
-; This hotkey resolves the "Connect" issue w/the Pandora desktop client.
+; Reset Pandora Client. This resolves the "Connect" issue.
 +F11::  ; Shift-F11
     ifWinExist, Pandora
         WinClose, Pandora
