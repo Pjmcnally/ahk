@@ -166,7 +166,7 @@ format_db_for_jira() {
 daily_auto_docket_review_code(elems) {
     for key, value in elems {
         Send, % value
-        Send {tab}
+        Send {Tab}
     }
 }
 
@@ -174,7 +174,7 @@ get_input(fallback="") {
     /*  Function allows text to be entered (and shown on screen).
         text input will be finished by pressing {Space} or {Escape}.
     */
-    input, in_text, V, {SPACE}{Escape},
+    input, in_text, V, {Space}{Escape},
     if (ErrorLevel = "EndKey:Escape") {
         Exit
     } else {
@@ -251,39 +251,6 @@ return
     copy_num()
 return
 
-:co:multh::
-    elems := [get_input(), "Document passed all rules. Docketing failed due to duplicate host activities found error", "This means that there are multiple possible activities in the Host system for this activity to be docketed into.", "Docketer"]
-    daily_auto_docket_review_code(elems)
-    copy_num()
-return
-
-:co:multc::
-    elems := ["", "Document passed all rules for multiple procedure codes.", "Auto-docketing unable to complete as it can't determing which procedure code to use. We need to make the rules more specific.", "Milena"]
-    daily_auto_docket_review_code(elems)
-    copy_num()
-return
-
-:co:multd::
-    elems := [get_input(), "Document passed all rules. Auto-Docketing failed because multiple documents with the same name were received", "I do not believe this is an issue we can/need to fix in the auto-docket system.", "Docketer"]
-    daily_auto_docket_review_code(elems)
-    copy_num()
-return
-
-:co:valf::
-    elems := [get_input(), "Document passed all rules. Docketing failed due to error validating application.", "I searched the client host system. This matter doesn't exist.", "Docketer"]
-    daily_auto_docket_review_code(elems)
-    copy_num()
-return
-
-:co:ratt::
-    elems := [get_input(), "Document passed all rules. Docketing failed due to empty required attributes.", "We need to make/update an annotation to indentify and extract the following:", "Milena/Patrick"]
-    daily_auto_docket_review_code(elems)
-    edit_last()
-    input, temp, V, {TAB}
-    Send, {TAB}
-    copy_num()
-return
-
 :co:finf::
     elems := ["US-62", "Document failed rule: Contains text ""MADE FINAL""", "This is not an OCR issue. The text ""Made final"" does not appear in the document. The final checkbox is checked.", "Docketer"]
     daily_auto_docket_review_code(elems)
@@ -296,14 +263,32 @@ return
     copy_num()
 return
 
-:co:quef::
-    elems := [get_input(), "Document passed all rules. Docket action set to Queued so document was not automatically docketed.", "This is not an error. Documents set to Queue are supposed to be reviewed before docketing.", "Docketer"]
+:co:intf::
+    elems := ["This is not an issue with auto-docketing. This should be reviewed by a docketer.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
 
-:co:intf::
-    elems := ["This is not an issue with auto-docketing. This should be reviewed by a docketer.", "Docketer"]
+:co:multc::
+    elems := ["", "Document passed all rules for multiple procedure codes.", "Auto-docketing unable to complete as it can't determing which procedure code to use. We need to make the rules more specific.", "Milena"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
+:co:multd::
+    elems := [get_input(), "Document passed all rules. Auto-Docketing failed because multiple documents with the same name were received", "This is not an issue with auto-docketing. This should be reviewed by a docketer.", "Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
+:co:multh::
+    elems := [get_input(), "Document passed all rules. Docketing failed due to duplicate host activities found error", "This means that there are multiple possible activities in the Host system for this activity to be docketed into.", "Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
+:co:multm::
+    elems := [get_input(), "Document failed rule: Multi-Matter Document Indentified.", "This is not an issue with auto-docketing. This should be reviewed by a docketer.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
@@ -311,6 +296,27 @@ return
 :co:oathf::
     elems := ["US-95", "Document failed rule: Annotation not match Oath or Declaration.", "This is an intentional failure. This is desired behaviour.", "Docketer"]
     daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
+:co:ocrf::
+    elems := ["This is an OCR issue. The text was OCR'd as """ . Clipboard . """", "Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
+:co:quef::
+    elems := [get_input(), "Document passed all rules. Docket action set to Queued so document was not automatically docketed.", "This is not an error. Documents set to Queue are supposed to be reviewed before docketing.", "Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
+:co:ratt::
+    elems := [get_input(), "Document passed all rules. Docketing failed due to empty required attributes.", "We need to make/update an annotation to indentify and extract the following:", "Milena/Patrick"]
+    daily_auto_docket_review_code(elems)
+    edit_last()
+    input, temp, V, {TAB}
+    Send, {TAB}
     copy_num()
 return
 
@@ -326,8 +332,20 @@ return
     copy_num()
 return
 
-:co:ocrf::
-    elems := ["This is an OCR issue. The text was OCR'd as """ . Clipboard . """", "Docketer"]
+:co:transf::
+    elems := ["US-95", "Document failed rule: PTO Trans History does not contain ""Mail Notice of Allowance""", "This is an intentional failure. This is desired behaviour.", "Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
+:co:upf::
+    elems := ["US-206", "Document failed rule: Not contains text ""UPDATED FILING RECEIPT""", "This code and document should both be reviewed.", "Milena/Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
+:co:valf::
+    elems := [get_input(), "Document passed all rules. Docketing failed due to error validating application.", "This is not an issue with auto-docketing. This should be reviewed by a docketer.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
