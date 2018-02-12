@@ -251,6 +251,12 @@ return
     copy_num()
 return
 
+:co:expf::
+    elems := [get_input(), "Document failed rule: Contains text ""TO EXPIRE 3 MONTHS""", "This is an OCR issue. The text was OCR'd as """ . Clipboard . """", "Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
 :co:finf::
     elems := ["US-62", "Document failed rule: Contains text ""MADE FINAL""", "This is not an OCR issue. The text ""Made final"" does not appear in the document. The final checkbox is checked.", "Docketer"]
     daily_auto_docket_review_code(elems)
@@ -259,6 +265,12 @@ return
 
 :co:finof::
     elems := ["US-62", "Document failed rule: Contains text ""MADE FINAL""", "This is an OCR issue. The text ""Made final"" does appear in the document but was not OCR'd correctly.", "Docketer"]
+    daily_auto_docket_review_code(elems)
+    copy_num()
+return
+
+:co:hostf::
+    elems := [get_input(), "Document passed all rules. Docketing failed due to host not ready for docketing.", "This is usually due to missing value, missing completed value or other configuration issue.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
@@ -282,7 +294,7 @@ return
 return
 
 :co:multh::
-    elems := [get_input(), "Document passed all rules. Docketing failed due to duplicate host activities found error", "This means that there are multiple possible activities in the Host system for this activity to be docketed into.", "Docketer"]
+    elems := [get_input(), "Document passed all rules. Docketing failed due to duplicate host activities found error", "This is not an issue with auto-docketing. This should be reviewed by a docketer.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
