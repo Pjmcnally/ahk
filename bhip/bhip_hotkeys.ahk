@@ -191,6 +191,13 @@ edit_last() {
     Send {ShiftDown}{tab 2}{ShiftUp}{F2}{space}
 }
 
+transfer_script_files() {
+    ; Copys script files from
+    source := "C:\Dev\BHIP\DevOps\Scripts\Server\Scheduled\*"
+    dest := "C:\Users\Patrick\Dropbox\BHIP-Sys-Docs\Support\Scripts\Scheduled"
+    FileCopy, % source, % dest, 1  ; 1 flag = overwrite files
+}
+
 ; Hotstrings & Hotkeys in this module
 ; ==============================================================================
 ; Misc Hotstrings
@@ -382,4 +389,8 @@ return
 
 ^!a::
     rename_adobe_bookmarks()
+return
+
+^!s::
+    transfer_script_files()
 return

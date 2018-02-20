@@ -84,7 +84,6 @@ review_files() {
     } else {
         extract_pdf_text()
     }
-
 return
 
 ^+!r::
@@ -93,5 +92,4 @@ return
     } else {
         extract_pdf_text()
     }
-
 return
