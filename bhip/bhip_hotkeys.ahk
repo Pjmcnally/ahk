@@ -191,11 +191,35 @@ edit_last() {
     Send {ShiftDown}{tab 2}{ShiftUp}{F2}{space}
 }
 
-transfer_script_files() {
-    ; Copys script files from
-    source := "C:\Dev\BHIP\DevOps\Scripts\Server\Scheduled\*"
-    dest := "C:\Users\Patrick\Dropbox\BHIP-Sys-Docs\Support\Scripts\Scheduled"
-    FileCopy, % source, % dest, 1  ; 1 flag = overwrite files
+diff_folders(src, dst) {
+    ; Powershell script to diff the files
+    PsScript =
+    (
+        param($param1, $param2)
+
+        $SrcCont = Get-ChildItem $param1 -File -Recurse | ForEach {Get-Content $_.FullName}
+        $DstCont = Get-ChildItem $param2 -File -Recurse | ForEach {Get-Content $_.FullName}
+        Compare-Object $SrcCont $DstCont > "C:\Users\Patrick\Documents\temp.txt"
+    )
+
+    ; Execute the Pshell script. Diff results stored at C:\Users\Patrick\Documents\temp.txt
+    RunWait PowerShell.exe -Command &{%PsScript%} '%src%' '%dst%',, hide
+
+    ; Reads results. Notifies if differences found or not.
+    FileRead, f_cont, C:\Users\Patrick\Documents\temp.txt
+    if (f_cont) {
+        MsgBox, % "Comparing " . src . " with " . dst . "`r`n`r`nDifferences Found."
+        Run C:\Users\Patrick\Documents\temp.txt
+    } else {
+        MsgBox, % "Comparing " . src . " with " . dst . "`r`n`r`nNo differences Found."
+        FileDelete, C:\Users\Patrick\Documents\temp.txt
+    }
+}
+
+sync_folders(src, dst) {
+    ; Copy folder from src to dev
+    FileCopyDir, % src, % dst, 1  ; 1 flag = overwrite files
+    MsgBox, % "Files Copied from " . src . " to " . dst . " ."
 }
 
 ; Hotstrings & Hotkeys in this module
@@ -392,5 +416,13 @@ return
 return
 
 ^!s::
-    transfer_script_files()
+    ; Syncs script files from Dev to Deploy
+    sync_folders("C:\Dev\BHIP\DevOps\Scripts"
+        , "C:\Users\Patrick\Dropbox\BHIP-Sys-Docs\Support\Scripts")
+return
+
+^!c::
+    ; Diffs scripts in Dev against Deploy
+    diff_folders("C:\Dev\BHIP\DevOps\Scripts"
+        , "C:\Users\Patrick\Dropbox\BHIP-Sys-Docs\Support\Scripts")
 return
