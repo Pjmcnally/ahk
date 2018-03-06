@@ -32,12 +32,13 @@ SetTitleMatchMode, 2            ; 2: A window's title can contain WinTitle anywh
 GroupAdd, consoles, ahk_exe powershell.exe
 GroupAdd, consoles, ahk_exe powershell_ise.exe
 GroupAdd, consoles, ahk_exe mintty.exe
+GroupAdd, consoles, ahk_exe RDCMan.exe
 
 return  ; End of Auto-Execute Section
 
 ; Universal Functions:
 ; ==============================================================================
-get_highlighted() {
+get_highlighted(persist=TRUE) {
     /*  Return whatever text is currently highlighted in the active window.
 
         Args:
@@ -45,19 +46,26 @@ get_highlighted() {
         Returns:
             str: Higligted text
     */
-    ClipSaved := ClipboardAll
+
+    if (persist) {
+        ClipSaved := ClipboardAll
+    }
     Clipboard =
+    Sleep, 100
 
     Send ^c
-    ClipWait, .5
+    ClipWait, 2, 1
     if ErrorLevel {
         MsgBox, % "No text selected.`r`n`r`nPlease select text and try again."
         return
     }
 
     res := Clipboard
-    Clipboard := ClipSaved
-    ClipSaved =
+
+    if (persist) {
+        Clipboard := ClipSaved
+        ClipSaved =
+    }
 
     return res
 }
