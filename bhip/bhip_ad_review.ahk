@@ -1,6 +1,6 @@
-/*  These scripts and functions are no longer needed.
+/*  These scripts and functions are no longer needed. This file is not loaded.
 
-    I am archiving them in this file.
+    This file exists as an archive.
 */
 
 ; Functions used in this module
