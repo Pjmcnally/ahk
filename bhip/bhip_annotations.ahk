@@ -75,6 +75,49 @@ review_files() {
     return
 }
 
+rename_adobe_bookmarks() {
+        /*  Renames bookmarks in Adobe Acrobat document. Replaces old with new.
+
+        Args:
+            None
+        Return:
+            None
+    */
+    InputBox, old, % "Text to change", % "Please enter the regex pattern to search for."
+    if ErrorLevel
+        Exit
+    InputBox, new, % "Replacement Text", % "Please enter the replacment text. Leave blank to remove old text."
+    if ErrorLevel
+        Exit
+    InputBox, num, % "Number?", % "Please enter the number of bookmarks to change. Hit enter to change all."
+    if ErrorLevel
+        Exit
+    if (num = "") {  ; If num is empty set to arbitrarily large num.
+        num = 10000000
+    }
+
+    WinActivate ahk_exe Acrobat.exe
+    WinWait ahk_exe Acrobat.exe
+
+    i = 0
+    While(i < num) {
+        Send, {F2}  ; f2 to edit bookmark
+        Sleep, 100
+
+        str := get_highlighted()  ; Get text of bookmark (highlighte dy default)
+        new_str := RegExReplace(str, old, new)  ; Replace old with new
+        paste_contents(new_str)  ; Paste new string.
+        Send, {Enter}  ; Stop editing bookmark
+
+        if (str = new_str) {
+            Break
+        } else {
+            Sleep, 100
+            Send, {Down}
+            i += 1
+        }
+    }
+}
 
 ; The two hotkeys below dynamically call timer_wrapper to avoid error at
 ; startup if timer_wrapper doesn't exist.
@@ -92,4 +135,8 @@ return
     } else {
         extract_pdf_text()
     }
+return
+
+^!a::
+    rename_adobe_bookmarks()
 return
