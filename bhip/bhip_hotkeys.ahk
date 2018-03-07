@@ -151,7 +151,7 @@ return
 
 :co:eupd::
     subject := "Importing UPDB Today - Complete"
-    body := "The import of the UPDB is now complete."
+    body := "The import of the UPDB is now complete.{Enter 2}There were some import conflicts. I have added them to the spreadsheet."
     recipients := get_updb_email_group()
     send_outlook_email(subject, body, recipients)
 return
