@@ -19,5 +19,6 @@
 :o:drun::python manage.py runserver
 :o:dmm::python manage.py makemigrations
 :o:dmig::python manage.py migrate
+:o:dcol::python manage.py collectstatic --noinput --clear
 
 #IfWinActive ; Clear IfWinActive
