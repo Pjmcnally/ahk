@@ -7,11 +7,13 @@
 
 ; Hotstrings in this module
 ; ------------------------------------------------------------------------------
+; Git hotkeys
 ::gp::git push
 ::gs::git status
 ::gd::git diff
 ::gfa::git fetch --all --prune
 :o:gc::git commit -m "
 :o:gca::git commit -am "
+
 
 #IfWinActive ; Clear IfWinActive
