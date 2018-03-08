@@ -15,5 +15,9 @@
 :o:gc::git commit -m "
 :o:gca::git commit -am "
 
+; Django hotkeys
+:o:drun::python manage.py runserver
+:o:dmm::python manage.py makemigrations
+:o:dmig::python manage.py migrate
 
 #IfWinActive ; Clear IfWinActive
