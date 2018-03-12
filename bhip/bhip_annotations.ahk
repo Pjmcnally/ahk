@@ -1,15 +1,15 @@
 extract_pdf_text() {
-    InputBox, base_dir, % "Run Folder", % "Please enter the folder location for the run to extract:"
+    InputBox, ocr_dir, % "Input Folder", % "Please enter the input folder containing PDFs to extract:"
     if ErrorLevel
         Exit
 
-    ocr_dir := base_dir . "\ocr"
-    pdfs := ocr_dir . "\*.pdf"
-
-    txt_dir := base_dir . "\text"
+    InputBox, text_dir, % "Output Folder", % "Please enter the output folder for text to be saved:"
+    if ErrorLevel
+        Exit
     IfNotExist, % txt_dir
         FileCreateDir, % txt_dir
 
+    pdfs := ocr_dir . "\*.pdf"
     total_count := ComObjCreate("Scripting.FileSystemObject").GetFolder(ocr_dir).Files.Count
     Progress, M2 R0-%total_count%, % "Files Done:`r`n0", % "Total Files: " . total_count, "Text Extaction"
 
@@ -122,19 +122,11 @@ rename_adobe_bookmarks() {
 ; The two hotkeys below dynamically call timer_wrapper to avoid error at
 ; startup if timer_wrapper doesn't exist.
 ^+!e::
-    if IsFunc("timer_wrapper") {
-        %timer_wrapper%("extract_pdf_text")
-    } else {
-        extract_pdf_text()
-    }
+    extract_pdf_text()
 return
 
 ^+!r::
-    if IsFunc("timer_wrapper") {
-        %timer_wrapper%("review_files")
-    } else {
-        extract_pdf_text()
-    }
+    review_files()
 return
 
 ^!a::
