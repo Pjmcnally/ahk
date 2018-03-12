@@ -3,7 +3,7 @@ extract_pdf_text() {
     if ErrorLevel
         Exit
 
-    InputBox, text_dir, % "Output Folder", % "Please enter the output folder for text to be saved:"
+    InputBox, txt_dir, % "Output Folder", % "Please enter the output folder for text to be saved:"
     if ErrorLevel
         Exit
     IfNotExist, % txt_dir
