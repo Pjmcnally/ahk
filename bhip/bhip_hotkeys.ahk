@@ -122,6 +122,7 @@ format_db_for_jira() {
 ; Misc Hotstrings
 :co:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
 :co:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
+:co:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
 :co:b1::BACKLOG 001!o
 :co:fd::For documentation please see: ^v
 :co:nopr::Notice of Publication
