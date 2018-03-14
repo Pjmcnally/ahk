@@ -1,4 +1,6 @@
 extract_pdf_text() {
+    base_delay = 100  ; Do not set below 100
+
     InputBox, ocr_dir, % "Input Folder", % "Please enter the input folder containing PDFs to extract:"
     if ErrorLevel
         Exit
@@ -18,26 +20,26 @@ extract_pdf_text() {
         Progress, %A_Index%, % "Reviewing File: " . A_Index "`r`n" . A_LoopFileName
         SplitPath, A_LoopFileFullPath, name, dir, ext, base_name
         out_file := txt_dir "\" base_name ".txt"
-        save_pdf_as_text(A_LoopFileFullPath, out_file)
+        save_pdf_as_text(A_LoopFileFullPath, out_file, base_delay)
     }
 
     Progress, Off
 }
 
 
-save_pdf_as_text(in_file, out_file) {
+save_pdf_as_text(in_file, out_file, base_delay) {
     Run, % in_file
-    Sleep, 300
+    Sleep, % (base_delay + 200)
     Send !fhmt  ; Key combination in Adobe to Save as plain text file.
-    Sleep, 200
+    Sleep, % (base_delay + 100)
     Send, % out_file  ; Type new file name into save box
-    Sleep, 200
+    Sleep, % (base_delay + 100)
     Send, {Enter}  ; Hit enter to save file
-    Sleep, 100
-    Send, y  ; Hit "y" to save over existing file (does nothing if no prompt)
-    Sleep, 100
+    Sleep, % base_delay
+    Send, y{Enter}  ; Hit "y" to save over existing file or close other prompt
+    Sleep, % base_delay
     Send, ^w  ; Close file
-    Sleep, 100
+    Sleep, % base_delay
 }
 
 

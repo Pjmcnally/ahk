@@ -124,8 +124,6 @@ format_db_for_jira() {
 :co:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
 :co:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
 :co:b1::BACKLOG 001!o
-:co:fd::For documentation please see: ^v
-:co:nopr::Notice of Publication
 
 ; Meeting hotkeys (for time entry)
 :co:mdad::Task-78{Tab 3}* Getting raw data for auto-docket review{Enter}Parsing data and updating auto-docket review spreadsheet  ; *'s for all items after first are auto-filled by JIRA
