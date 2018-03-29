@@ -1,5 +1,5 @@
 extract_pdf_text() {
-    base_delay = 100  ; Do not set below 100
+    base_delay = 250  ; Do not set below 100
 
     InputBox, ocr_dir, % "Input Folder", % "Please enter the input folder containing PDFs to extract:"
     if ErrorLevel
@@ -17,7 +17,7 @@ extract_pdf_text() {
 
     Loop, Files, % pdfs
     {
-        Progress, %A_Index%, % "Reviewing File: " . A_Index "`r`n" . A_LoopFileName
+        Progress, %A_Index%, % "Extracting File: " . A_Index "`r`n" . A_LoopFileName
         SplitPath, A_LoopFileFullPath, name, dir, ext, base_name
         out_file := txt_dir "\" base_name ".txt"
         save_pdf_as_text(A_LoopFileFullPath, out_file, base_delay)
