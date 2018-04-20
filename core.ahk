@@ -165,6 +165,20 @@ string_lower(string) {
     return res
 }
 
+string_hyphenate(string) {
+    /*  Function to replace all spaces with hyphens '-'
+    */
+    res := StrReplace(string, " ", "-")
+    return res
+}
+
+string_underscore(string) {
+    /*  Function to replace all spaces with underscore '_'
+    */
+    res := StrReplace(string, " ", "_")
+    return res
+}
+
 f_date(date:="", format:="MM-dd-yyyy") {
     /*  Function to return formatted date.
 
@@ -225,6 +239,14 @@ return
 
 ^!l::  ; Ctrl-Alt-L to lowercase all highlighted text
     clip_func("string_lower")
+return
+
+^!-:: ; Ctrl-Alt-Hyphen to Hyphenate all text
+    clip_func("string_hyphenate")
+return
+
+^!+_:: ; Ctrl-Alt-Hyphen to Hyphenate all text
+    clip_func("string_underscore")
 return
 
 :?*:.  ::  ; I am trying to break the habbit of double spacing after a "."
