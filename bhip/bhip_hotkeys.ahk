@@ -117,6 +117,21 @@ format_db_for_jira() {
     return
 }
 
+send_UPDB_email(option) {
+    if (option = "start") {
+        subject := "Importing UPDB Today"
+        body := "I will be importing today, starting at 7:15 pm. Please be sure to exit the UPDB before then.{Enter 2}Thank you."
+    } else if (option = "done") {
+        subject := "Importing UPDB Today - Complete"
+        body := "The import of the UPDB is now complete.{Enter 2}There were some import conflicts. I have added them to the spreadsheet."
+    } else {
+        MsgBox, % "No valid option specified"
+    }
+
+    recipients := get_updb_email_group()
+    send_outlook_email(subject, body, get_updb_email_group())
+}
+
 ; Hotstrings & Hotkeys in this module
 ; ==============================================================================
 ; Misc Hotstrings
@@ -142,17 +157,11 @@ format_db_for_jira() {
 ; UPDB Import emails
 #IfWinActive ahk_exe OUTLOOK.EXE
 :co:eups::
-    subject := "Importing UPDB Today"
-    body := "I will be importing today, starting at 7:15 pm. Please be sure to exit the UPDB before then.{Enter 2}Thank you."
-    recipients := get_updb_email_group()
-    send_outlook_email(subject, body, recipients)
+    send_UPDB_email("start")
 return
 
 :co:eupd::
-    subject := "Importing UPDB Today - Complete"
-    body := "The import of the UPDB is now complete.{Enter 2}There were some import conflicts. I have added them to the spreadsheet."
-    recipients := get_updb_email_group()
-    send_outlook_email(subject, body, recipients)
+    send_UPDB_email("done")
 return
 #IfWinActive  ; End UPDB Import emails
 

@@ -83,3 +83,21 @@ sync_folders(src, dst) {
     FileCopyDir, % src, % dst, 1  ; 1 flag = overwrite files
     MsgBox, % "Files Copied from " . src . " to " . dst . " ."
 }
+
+click_the_button() {
+    x := 1438
+    y := 473
+    PixelGetColor, OutputVar, x, y
+
+    CRLF := "`r`n"
+
+    FormatTime, now, , % "yyyy-MM-dd HH:mm:ss"
+    FileAppend, % CRLF . now . " Pixel Color: " . OutputVar, % "C:\Users\Patrick\Desktop\clicked.txt"
+
+    if (OutputVar = 0x4B4B4B) {
+        FileAppend, % CRLF . now . " --> Clicking Button.", % "C:\Users\Patrick\Desktop\clicked.txt"
+        TrayTip, % "Click", % "Clicking Button", ,
+
+        Click x, y
+    }
+}
