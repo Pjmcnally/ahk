@@ -1,12 +1,5 @@
 ; This file is where I do experimental or fun stuff in Autohotkey.
 
-^!t::
-    file := generateRandArrayFile(3, 1000000)
-    res_file := readRandArrayFile(file)
-    Run, % res_file
-return
-
-
 genArray(len, start := 1, step := 1) {
     array := []
     for x in range(start, len + 1, step) {
