@@ -1,4 +1,44 @@
-extract_pdf_text() {
+get_choice(title, prompt, array) {
+    /*  Takes and array. Returns an element of the array chosen by the user.
+    */
+
+    Static format_choice := % ""
+
+    ; Build string of choices from array
+    l_box_string := ""
+    For index, elem in array {
+        l_box_string := l_box_string . elem . "|"
+    }
+
+    ; Build Gui to take user choice
+    Gui, choice:New,, % title
+    Gui, choice:Font, s12
+    Gui, choice:Add, Text, , % prompt
+    Gui, choice:Add, ListBox, x25 y+10  vformat_choice, % l_box_string
+    Gui, choice:Add, Button, x35 y+20 gButtonOk, OK
+    Gui, choice:Add, Button, x+65 gButtonCancel, Cancel
+    Gui, choice:Show, ,
+
+    ; Wait for response return if received else error.
+    WinWaitClose, % title
+    if (format_choice) {
+        return format_choice
+    } else {
+        ErrorLevel = 1
+        return
+    }
+
+    ; Button handlers
+    buttonOk:
+        Gui Submit
+    choiceGuiClose:
+    ButtonCancel:
+        Gui Destroy
+    return
+}
+
+
+convert_pdf() {
     base_delay = 250  ; Do not set below 100
 
     InputBox, ocr_dir, % "Input Folder", % "Please enter the input folder containing PDFs to extract:"
