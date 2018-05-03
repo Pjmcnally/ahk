@@ -40,17 +40,28 @@ get_choice(title, prompt, array) {
 
 convert_pdf() {
     base_delay = 250  ; Do not set below 100
+    format_map := {"Text": "!fhmt", "Jpeg": "!fhij"}
+    formats := []
+    for key, value in format_map
+        formats.Push(key)
 
-    InputBox, ocr_dir, % "Input Folder", % "Please enter the input folder containing PDFs to extract:"
+    ; Get inputs
+    choice := get_choice("Output Format", "Please select desired output format:", formats)
     if ErrorLevel
         Exit
 
-    InputBox, txt_dir, % "Output Folder", % "Please enter the output folder for text to be saved:"
+    InputBox, ocr_dir, % "Input Folder", % "Please enter the input folder containing PDFs to convert:"
+    if ErrorLevel
+        Exit
+
+    InputBox, txt_dir, % "Output Folder", % "Please enter the output folder for converted files:"
     if ErrorLevel
         Exit
     IfNotExist, % txt_dir
         FileCreateDir, % txt_dir
 
+
+    ; Process PDF's
     pdfs := ocr_dir . "\*.pdf"
     total_count := ComObjCreate("Scripting.FileSystemObject").GetFolder(ocr_dir).Files.Count
     Progress, M2 R0-%total_count%, % "Files Done:`r`n0", % "Total Files: " . total_count, "Text Extaction"
@@ -60,17 +71,17 @@ convert_pdf() {
         Progress, %A_Index%, % "Extracting File: " . A_Index "`r`n" . A_LoopFileName
         SplitPath, A_LoopFileFullPath, name, dir, ext, base_name
         out_file := txt_dir "\" base_name ".txt"
-        save_pdf_as_text(A_LoopFileFullPath, out_file, base_delay)
+        save_pdf_as(A_LoopFileFullPath, out_file, base_delay, format_map[choice])
     }
 
     Progress, Off
 }
 
 
-save_pdf_as_text(in_file, out_file, base_delay) {
+save_pdf_as(in_file, out_file, base_delay, format_string) {
     Run, % in_file
     Sleep, % (base_delay + 200)
-    Send !fhmt  ; Key combination in Adobe to Save as plain text file.
+    Send, % format_string  ; Key combination in Adobe to Save as specified format.
     Sleep, % (base_delay + 100)
     Send, % out_file  ; Type new file name into save box
     Sleep, % (base_delay + 100)
@@ -164,7 +175,7 @@ rename_adobe_bookmarks() {
 ; The two hotkeys below dynamically call timer_wrapper to avoid error at
 ; startup if timer_wrapper doesn't exist.
 ^+!e::
-    extract_pdf_text()
+    convert_pdf()
 return
 
 ^+!r::
