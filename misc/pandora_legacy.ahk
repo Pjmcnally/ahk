@@ -5,17 +5,45 @@
 ; ------------------------------------------------------------------------------
 runPandoraMin() {
     ; Function to run then minimize Pandora.
-    Run, pandora.exe, C:\Program Files (x86)\Pandora\
+    Run, % "C:\Program Files (x86)\Pandora\pandora.exe"
     Sleep, 2000
     WinMinimize, Pandora
 }
 
 pandoraCmd(command) {
     ; Function to pass command (param as string) to Pandora.
-    IfWinExist, Pandora
+    if WinExist("ahk_exe Pandora.exe") {
         ControlSend, , %command%, Pandora
-    else
+    } else {
         runPandoraMin()
+    }
+}
+
+resetPandora() {
+    pandora := "ahk_exe Pandora.exe"
+    if WinExist(pandora) {
+        WinClose, % pandora
+        WinWaitClose, % pandora
+    }
+
+    runPandoraMin()
+}
+
+closeWindow(window) {
+    if WinExist(window) {
+        WinClose, % window
+    }
+}
+
+
+minMaxWindow(window) {
+    if (WinExist(window) and WinActive(window)) {
+        WinMinimize, % window
+    } else if (WinExist(window) and (!WinActive(window))) {
+        WinActivate, % window
+    } else {
+        runPandoraMin()
+    }
 }
 
 
@@ -36,31 +64,20 @@ return
 
 ; Reset Pandora Client. This resolves the "Connect" issue.
 +F11::  ; Shift-F11
-    ifWinExist, Pandora
-        WinClose, Pandora
-        WinWaitClose, Pandora
-
-    ifWinNotExist, Pandora
-        runPandoraMin()
+    resetPandora()
 return
 
 
 ; This hotkey Maximizes or Minimize the Windows Pandora Client
 ^F11::  ; CTRL-F11
-    ifWinNotExist, Pandora
-        runPandoraMin()
-    else
-        IfWinActive, Pandora
-            WinMinimize, Pandora
-        else
-            WinActivate, Pandora
+    minMaxWindow("ahk_exe Pandora.exe")
 return
 
 
 ; This hotkey closes the Windows Pandora Client
 ^!F11::  ; CTRL-ALT-F11
-    ifWinExist, Pandora
-        WinClose, Pandora
+    closeWindow("ahk_exe Pandora.exe")
 return
+
 
 
