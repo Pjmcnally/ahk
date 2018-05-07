@@ -35,7 +35,6 @@ closeWindow(window) {
     }
 }
 
-
 minMaxWindow(window) {
     if (WinExist(window) and WinActive(window)) {
         WinMinimize, % window
