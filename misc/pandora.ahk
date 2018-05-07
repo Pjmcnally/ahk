@@ -32,6 +32,7 @@ F12::  ; F12 - Same as "Media Next" on my BHIP Keyboard
     pandoraCmd("{Media_Next}")  ; Send {Right} to Pandora (Next track)
 return
 
+
 ; This hotkey Maximizes or Minimize the Windows Pandora Client
 ^F11::  ; CTRL-F11
     ifWinNotExist, Pandora
