@@ -5,17 +5,39 @@
 ; ------------------------------------------------------------------------------
 runPandoraMin() {
     ; Function to run then minimize Pandora.
-    Run, % "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\pandora"
+    pandora := "Pandora ahk_exe ApplicationFrameHost.exe"
+    pandora_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\pandora"
+
+    Run, % pandora_src
     Sleep, 5000
-    WinMinimize, Pandora
+    WinMinimize, % pandora
 }
 
 pandoraCmd(command) {
     ; Function to pass command (param as string) to Pandora.
-    IfWinExist, Pandora
+    pandora := "Pandora ahk_exe ApplicationFrameHost.exe"
+
+    If WinExist(pandora) {
         Send, % command
-    else
+    } else {
         runPandoraMin()
+    }
+}
+
+closeWindow(window) {
+    if WinExist(window) {
+        WinClose, % window
+    }
+}
+
+minMaxWindow(window) {
+    if (WinExist(window) and WinActive(window)) {
+        WinMinimize, % window
+    } else if (WinExist(window) and (!WinActive(window))) {
+        WinActivate, % window
+    } else {
+        runPandoraMin()
+    }
 }
 
 
@@ -35,31 +57,11 @@ return
 
 ; This hotkey Maximizes or Minimize the Windows Pandora Client
 ^F11::  ; CTRL-F11
-    ifWinNotExist, Pandora
-        runPandoraMin()
-    else
-        IfWinActive, Pandora
-            WinMinimize, Pandora
-        else
-            ; WinActivate isn't working but re-running the program does.
-            Run, % "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\pandora"
+    minMaxWindow("Pandora ahk_exe ApplicationFrameHost.exe")
 return
 
 
 ; This hotkey closes the Windows Pandora Client
 ^!F11::  ; CTRL-ALT-F11
-    ifWinExist, Pandora
-        WinClose, Pandora
+    closeWindow("Pandora ahk_exe ApplicationFrameHost.exe")
 return
-
-
-; ; Reset Pandora Client. This resolves the "Connect" issue.
-; ; I believe this is now obsolete with the new Pandora app. Testing currently.
-; +F11::  ; Shift-F11
-;     ifWinExist, Pandora
-;         WinClose, Pandora
-;         WinWaitClose, Pandora
-
-;     ifWinNotExist, Pandora
-;         runPandoraMin()
-; return
