@@ -1,7 +1,6 @@
 #IfWinActive, ahk_exe Hexcells Infinite.exe
 
-; Hotkey to make excape do what it should in this otherwise awesome game
-Escape::
+quit_func() {
     ; There are all kinds of magic numbers in here but I am tired and going to bed.
     ; TO DO: Comment or refactor magic numbers
     PixelGetColor, c_val_1, 965, 875
@@ -23,6 +22,11 @@ Escape::
     }
 
     click_and_return(dest_x, dest_y)
+}
+
+; Hotkey to make excape do what it should in this otherwise awesome game
+Escape::
+    quit_func()
 return
 
 #IfWinActive
