@@ -129,7 +129,7 @@ review_files() {
 }
 
 rename_adobe_bookmarks() {
-        /*  Renames bookmarks in Adobe Acrobat document. Replaces old with new.
+    /*  Renames bookmarks in Adobe Acrobat document. Replaces old with new.
 
         Args:
             None
@@ -172,6 +172,25 @@ rename_adobe_bookmarks() {
     }
 }
 
+
+paste_as_sql_list() {
+    raw_str := Trim(Clipboard, "`r`n`t")
+    array := StrSplit(raw_str, "`n", "`r")
+    str := "("
+
+    Loop, % array.MaxIndex()
+    {
+        str := str . "'" . array[A_Index] . "'"
+        if (A_Index < (array.MaxIndex())) {
+            str := str . ",`r`n"
+        }
+    }
+    str := str . ")"
+    paste_contents(str)
+
+    return
+}
+
 ; The two hotkeys below dynamically call timer_wrapper to avoid error at
 ; startup if timer_wrapper doesn't exist.
 ^+!e::
@@ -184,4 +203,8 @@ return
 
 ^!a::
     rename_adobe_bookmarks()
+return
+
+^+!l::
+    paste_as_sql_list()
 return
