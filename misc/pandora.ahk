@@ -78,43 +78,65 @@ class PandoraInterface {
     }
 }
 
+; Functions in this module
+; ------------------------------------------------------------------------------
+PandoraPlay() {
+    pandora := new PandoraInterface
+    pandora.SetVersion()
+    pandora.playPause()
+}
+
+PandoraNext() {
+    pandora := new PandoraInterface
+    pandora.SetVersion()
+    pandora.Next()
+}
+
+PandoraMinMax() {
+    pandora := new PandoraInterface
+    pandora.SetVersion()
+    pandora.minMax()
+}
+
+PandoraReset() {
+    pandora := new PandoraInterface
+    pandora.SetVersion()
+    pandora.Reset()
+}
+
+PandoraClose() {
+    pandora := new PandoraInterface
+    pandora.SetVersion()
+    pandora.kill()
+}
+
 ; Hotstrings in this module
 ; ------------------------------------------------------------------------------
 ; This hotkey plays/pauses the Windows Pandora client
 F11::  ; F11
-    pandora := new PandoraInterface
-    pandora.SetVersion()
-    pandora.playPause()
+    PandoraPlay()
 return
 
 
 ; This hotkey skips to the next song on the Windows Pandora Client
 F12::  ; F12
-    pandora := new PandoraInterface
-    pandora.SetVersion()
-    pandora.Next()
+    PandoraNext()
 return
 
 
 ; This hotkey Maximizes or Minimize the Windows Pandora Client
 ^F11::  ; CTRL-F11
-    pandora := new PandoraInterface
-    pandora.SetVersion()
-    pandora.minMax()
+    PandoraMinMax()
 return
 
 
 ; This hotkey Maximizes or Minimize the Windows Pandora Client
 +F11::  ; Shift-F11
-    pandora := new PandoraInterface
-    pandora.SetVersion()
-    pandora.Reset()
+    PandoraReset()
 return
 
 
 ; This hotkey closes the Windows Pandora Client
 ^!F11::  ; CTRL-ALT-F11
-    pandora := new PandoraInterface
-    pandora.SetVersion()
-    pandora.kill()
+    PandoraClose()
 return
