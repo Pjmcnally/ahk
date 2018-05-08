@@ -1,13 +1,15 @@
 #IfWinActive, ahk_exe PathOfExile_x64Steam.exe
 
-attack_in_place(key) {
-    Send {F10 down}
+attack_in_place(pressed_key) {
+    keybind := "F10"
+
+    Send {%keybind% down}
     if (key = "rbutton") {
         Click, right
     } else {
-        Send, % key
+        Send, % pressed_key
     }
-    Send, {F10 Up}
+    Send, {%keybind% Up}
 }
 
 rbutton::
