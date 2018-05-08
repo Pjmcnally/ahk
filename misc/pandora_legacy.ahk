@@ -5,15 +5,20 @@
 ; ------------------------------------------------------------------------------
 runPandoraMin() {
     ; Function to run then minimize Pandora.
-    Run, % "C:\Program Files (x86)\Pandora\pandora.exe"
+    pandora := "ahk_exe Pandora.exe"
+    pandora_src := "C:\Program Files (x86)\Pandora\pandora.exe"
+
+    Run, % pandora_src
     Sleep, 2000
-    WinMinimize, Pandora
+    WinMinimize, pandora
 }
 
 pandoraCmd(command) {
     ; Function to pass command (param as string) to Pandora.
-    if WinExist("ahk_exe Pandora.exe") {
-        ControlSend, , %command%, Pandora
+    pandora := "ahk_exe Pandora.exe"
+
+    if WinExist(pandora) {
+        ControlSend, , % command, % pandora
     } else {
         runPandoraMin()
     }
@@ -77,6 +82,3 @@ return
 ^!F11::  ; CTRL-ALT-F11
     closeWindow("ahk_exe Pandora.exe")
 return
-
-
-
