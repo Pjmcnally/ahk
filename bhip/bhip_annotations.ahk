@@ -176,7 +176,7 @@ rename_adobe_bookmarks() {
 paste_as_sql_list() {
     raw_str := Trim(Clipboard, "`r`n`t")
     array := StrSplit(raw_str, "`n", "`r")
-    str := "("
+    str := ""
 
     Loop, % array.MaxIndex()
     {
@@ -185,7 +185,6 @@ paste_as_sql_list() {
             str := str . ",`r`n"
         }
     }
-    str := str . ")"
     paste_contents(str)
 
     return
