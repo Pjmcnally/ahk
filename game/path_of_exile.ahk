@@ -32,6 +32,7 @@ build_aip_gui(state) {
     Gui, AipGui:+AlwaysOnTop
     Gui, AipGui:+Border
     Gui, AipGui:-SysMenu
+    Gui, AipGui:+ToolWindow
     Gui, AipGui:Show, h0 w25, % state
 }
 
