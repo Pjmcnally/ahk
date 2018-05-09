@@ -229,6 +229,10 @@ click_and_return(x_dest, y_dest, speed:=0) {
     Pause, Toggle
 return
 
+^!Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
+    Suspend, Toggle
+return
+
 ^!r::  ; Assign Ctrl-Alt-R as a hotkey to reload active script.
     Reload
 return
