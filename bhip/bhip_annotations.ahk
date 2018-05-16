@@ -64,7 +64,7 @@ convert_pdf() {
     ; Process PDF's
     pdfs := ocr_dir . "\*.pdf"
     total_count := ComObjCreate("Scripting.FileSystemObject").GetFolder(ocr_dir).Files.Count
-    Progress, M2 R0-%total_count%, % "Files Done:`r`n0", % "Total Files: " . total_count, "Text Extaction"
+    Progress, M2 R0-%total_count%, % "Files Done:`r`n0", % "Total Files: " . total_count, "Text Extraction"
 
     Loop, Files, % pdfs
     {
@@ -139,7 +139,7 @@ rename_adobe_bookmarks() {
     InputBox, old, % "Text to change", % "Please enter the regex pattern to search for."
     if ErrorLevel
         Exit
-    InputBox, new, % "Replacement Text", % "Please enter the replacment text. Leave blank to remove old text."
+    InputBox, new, % "Replacement Text", % "Please enter the replacement text. Leave blank to remove old text."
     if ErrorLevel
         Exit
     InputBox, num, % "Number?", % "Please enter the number of bookmarks to change. Hit enter to change all."
@@ -157,7 +157,7 @@ rename_adobe_bookmarks() {
         Send, {F2}  ; f2 to edit bookmark
         Sleep, 100
 
-        str := get_highlighted()  ; Get text of bookmark (highlighte dy default)
+        str := get_highlighted()  ; Get text of bookmark (highlighted by default)
         new_str := RegExReplace(str, old, new)  ; Replace old with new
         paste_contents(new_str)  ; Paste new string.
         Send, {Enter}  ; Stop editing bookmark

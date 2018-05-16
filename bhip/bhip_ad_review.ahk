@@ -12,7 +12,7 @@ daily_auto_docket_review_code(elems) {
     }
 }
 
-get_input(fallback="") {
+get_input(default_="") {
     /*  Function allows text to be entered (and shown on screen).
         text input will be finished by pressing {Space} or {Escape}.
     */
@@ -20,8 +20,8 @@ get_input(fallback="") {
     if (ErrorLevel = "EndKey:Escape") {
         Exit
     } else {
-        ; If in_text is empty send the fallback. Othewise send nothing as in_text was already typed
-        return, % ( in_text = "" ? fallback : "")
+        ; If in_text is empty send the default. Otherwise send nothing as in_text was already typed
+        return, % ( in_text = "" ? default_ : "")
     }
 }
 
@@ -87,7 +87,7 @@ return
 return
 
 :co:multc::
-    elems := ["", "Document passed all rules for multiple procedure codes.", "Auto-docketing unable to complete as it can't determing which procedure code to use. We need to make the rules more specific.", "Milena"]
+    elems := ["", "Document passed all rules for multiple procedure codes.", "Auto-docketing unable to complete as it can't determine which procedure code to use. We need to make the rules more specific.", "Milena"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
@@ -105,13 +105,13 @@ return
 return
 
 :co:multm::
-    elems := [get_input(), "Document failed rule: Multi-Matter Document Indentified.", "This is not an issue with auto-docketing. This should be reviewed by a docketer.", "Docketer"]
+    elems := [get_input(), "Document failed rule: Multi-Matter Document Identified.", "This is not an issue with auto-docketing. This should be reviewed by a docketer.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
 
 :co:oathf::
-    elems := ["US-95", "Document failed rule: Annotation not match Oath or Declaration.", "This is an intentional failure. This is desired behaviour.", "Docketer"]
+    elems := ["US-95", "Document failed rule: Annotation not match Oath or Declaration.", "This is an intentional failure. This is desired behavior.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
@@ -129,7 +129,7 @@ return
 return
 
 :co:ratt::
-    elems := [get_input(), "Document passed all rules. Docketing failed due to empty required attributes.", "We need to make/update an annotation to indentify and extract the following:", "Milena/Patrick"]
+    elems := [get_input(), "Document passed all rules. Docketing failed due to empty required attributes.", "We need to make/update an annotation to identify and extract the following:", "Milena/Patrick"]
     daily_auto_docket_review_code(elems)
     edit_last()
     input, temp, V, {TAB}
@@ -138,7 +138,7 @@ return
 return
 
 :co:techf::
-    elems := [get_input(), "Document passed all rules. Document failed to docket due to a technical error.", "This is not an auto-docket issue. The error is intermittant and a rare event. We are looking into it.", "Docketer"]
+    elems := [get_input(), "Document passed all rules. Document failed to docket due to a technical error.", "This is not an auto-docket issue. The error is intermittent and a rare event. We are looking into it.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
@@ -150,7 +150,7 @@ return
 return
 
 :co:transf::
-    elems := ["US-95", "Document failed rule: PTO Trans History does not contain ""Mail Notice of Allowance""", "This is an intentional failure. This is desired behaviour.", "Docketer"]
+    elems := ["US-95", "Document failed rule: PTO Trans History does not contain ""Mail Notice of Allowance""", "This is an intentional failure. This is desired behavior.", "Docketer"]
     daily_auto_docket_review_code(elems)
     copy_num()
 return
@@ -166,4 +166,4 @@ return
     daily_auto_docket_review_code(elems)
     copy_num()
 return
-#IfWinActive  ; End Excel Hostrings
+#IfWinActive  ; End Excel Hotstrings

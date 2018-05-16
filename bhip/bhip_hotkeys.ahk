@@ -72,16 +72,16 @@ format_jira(str) {
         line := RegexReplace(line, "\+\s*(.*?)\s*\+", "$1")  ; Remove all + tags leaving surrounded text
         line := RegExReplace(line, "_{2,}(.*?)_{2,}", "_$1_")  ; Remove all double underscores.
         line := RegExReplace(line, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Remove all double brackets.
-        line := RegExReplace(line, "(?:(\[)\s+|\s+(\]))", "$1$2")  ; Remove any spaces immediatly inside of open bracket or before closing bracket
+        line := RegExReplace(line, "(?:(\[)\s+|\s+(\]))", "$1$2")  ; Remove any spaces immediately inside of open bracket or before closing bracket
         line := RegExReplace(line, "\[(.*?)\|\]", "$1")  ; Remove any link tags with no link content
         line := RegExReplace(line, "\xA0+")  ; Remove all Non-breaking spaces
 
         line := Trim(line)  ; Trim whitespace
 
 
-        if not (line) {  ; Some lines end up empty.  Consecutive emply lines are collapsed to 1.
+        if not (line) {  ; Some lines end up empty.  Consecutive empty lines are collapsed to 1.
             empty_count += 1
-        } else if (line and empty_count > 1 ) {  ; If a line is preceeded by multiple empty lines append it too string with preceeding empty line
+        } else if (line and empty_count > 1 ) {  ; If a line is preceded by multiple empty lines append it too string with preceding empty line
             res := res . CrLf . line . Crlf
             empty_count := 0
         } else {  ; Otherwise just add to string.
@@ -105,7 +105,7 @@ format_db_for_jira() {
         div_char := (A_Index == 1) ? "||" : "|"  ; || in header. | elsewhere.
         Loop, Parse, A_LoopField, `t
         {
-            If (A_Index == 1) {  ; If first elem preceed with div char
+            If (A_Index == 1) {  ; If first elem precede with div char
                 res := res . div_char
             }
             res := res . A_LoopField . div_char
@@ -167,7 +167,7 @@ return
 
 #IfWinActive ahk_exe Ssms.exe  ; SQL hotstrings
 :o:bt::{/}{*}{ENTER}BEGIN TRAN{Enter 2}--commit{ENTER}ROLLBACK{ENTER}{*}{/}
-#IfWinActive ; End SQL Hostrings
+#IfWinActive ; End SQL Hotstrings
 
 ; Complex Hotkeys
 ^!v::
