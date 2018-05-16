@@ -1,4 +1,4 @@
-; I run pandora on all of my computers. However, I run differnt
+; I run Pandora on all of my computers. However, I run different
 ; versions depending on the computer. This set of hotkeys allows
 ; me to use a standard interface regardless of app or computer.
 

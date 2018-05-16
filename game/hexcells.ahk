@@ -24,7 +24,7 @@ quit_func() {
     click_and_return(dest_x, dest_y)
 }
 
-; Hotkey to make excape do what it should in this otherwise awesome game
+; Hotkey to make escape do what it should in this otherwise awesome game
 Escape::
     quit_func()
 return

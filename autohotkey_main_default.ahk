@@ -2,7 +2,7 @@
 Main ahk script executed on this computer.
 
 This module functions as a hub to include other AHK files and runs any system
-specific Auto-Execute commands.  Core/Universial Auto-Execute commands should
+specific Auto-Execute commands.  Core/Universal Auto-Execute commands should
 be added to core.ahk.
 
 System description: <Change as needed>

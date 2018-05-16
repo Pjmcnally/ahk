@@ -1,4 +1,4 @@
-; This is a gear switcher I made for Diable 3.  It allows be to quickly switch
+; This is a gear switcher I made for Diablo 3.  It allows be to quickly switch
 ; from 1 set of gear to another.
 
 ; As of Diablo patch 2.5 (season 10) This will be obsolete. As they are

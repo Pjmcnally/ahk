@@ -129,7 +129,7 @@ return
         file.Write(line)
     }
 
-    if(win_maximized = -1)      ;Re-minimize any windows that were minimised before we started.
+    if(win_maximized = -1)      ;Re-minimize any windows that were minimized before we started.
     {
         WinMinimize, A
     }

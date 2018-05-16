@@ -51,7 +51,7 @@ class UploadSession {
 
     verifyBrowser() {
         ; Function to check if active window is supported browser.
-        ; Currently not compatable with Firefox so check is commented out.
+        ; Currently not compatible with Firefox so check is commented out.
         if (This.window != "chrome.exe" and This.window != "iexplore.exe") { ; and window != "firefox.exe"
             MsgBox % "Please make sure to your Chrome or Internet Explorer window is active before using hotkey."
             Exit
@@ -68,7 +68,7 @@ class UploadSession {
 
         ; get proper window references per browser.
         ; dict of supported browsers and the names of the window where the files to be uploaded are selected.
-        ; "upload" and "normal" are keys. The correspoding values are the titles of the windows. These are found by
+        ; "upload" and "normal" are keys. The corresponding values are the titles of the windows. These are found by
         ; using AutoHotkey WindowSpy. Right click on AutoHotkey icon in task bar to run.
         browserDict := {"chrome.exe": {"upload": "Open", "normal": "United States Patent & Trademark Office - Google Chrome"}
             , "firefox.exe": {"upload": "File Upload", "normal": "United States Patent & Trademark Office - Mozilla Firefox"} ; doesn't actually work.
@@ -79,7 +79,7 @@ class UploadSession {
     }
 
     getDirectory() {
-        ; Asks user which directory they would like to upload from. If no reponse uses default directory.
+        ; Asks user which directory they would like to upload from. If no response uses default directory.
         InputBox, directory, Directory, Please enter the directory containg the references.
         if ErrorLevel
             Exit
@@ -164,7 +164,7 @@ class UploadSession {
 
         IfWinNotActive, % This.browser_window, , WinActivate, % This.browser_window,
         WinWaitActive, % This.browser_window
-        ; Sleep, 10000  ; Wait for file to be "recieved" only use when virtual desktop is behaving weirdly
+        ; Sleep, 10000  ; Wait for file to be "received" only use when virtual desktop is behaving weirdly
         Send, {TAB}i
         if (A_Index <= This.foreign_count) {
             ; Sleep, % UploadSession.submitDelay ; option sleep if going to fast for computer. Remove first ";" to activate
@@ -191,7 +191,7 @@ class UploadSession {
 
 isNotInt(str) {
     ; function to check if value is integer.
-    ; I am not sure why but this doesn't work inline so I had to make a little function to do it.
+    ; I am not sure why but this doesn't work in-line so I had to make a little function to do it.
     if str is not integer
         return True
     return False

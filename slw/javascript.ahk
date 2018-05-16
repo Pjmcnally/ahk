@@ -1,10 +1,10 @@
-; This script pastes javascript into the browser so I can quickly and easily exicute it.
+; This script pastes javascript into the browser so I can quickly and easily execute it.
 
 ^!d::
     ; this is a hacky test script
     temp := clipboard
     Sleep, 100
-    clipboard =  
+    clipboard =
     (
         // function to select all references to be downloaded for submission with IDS/SIDS
         (function checkDownload(){
@@ -20,7 +20,7 @@
                     }
                 }
 
-                // Select all matching lines in the NPL section 
+                // Select all matching lines in the NPL section
                 var pub_rows = document.querySelectorAll("input.pub_checkRow")
                 for (var j=0; j < pub_rows.length; j++) {
                     var parent = pub_rows[j].parentNode.parentNode;
@@ -60,7 +60,7 @@
             }
             var forCount = checkForeignPat()
             var nplCount = checkNPL()
-            console.log("Refs missing attachments: " + noFile + ".\n" + forCount + " Foreign and " + nplCount + " NPL refs checked and ready to download.")    
+            console.log("Refs missing attachments: " + noFile + ".\n" + forCount + " Foreign and " + nplCount + " NPL refs checked and ready to download.")
         }())
     )
     SendInput ^v

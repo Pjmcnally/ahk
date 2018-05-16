@@ -1,7 +1,7 @@
 ; ------------------------------------------------------------------------------
 ; Hotstrings in this module
 
-; Hotstrings that autofill dates
+; Hotstrings that auto-fill dates
 :co:td::
     sendInput % f_date(,"MM-dd-yy")
 return
@@ -98,7 +98,7 @@ return
 return
 
 
-; Hosttrings to generate Emails
+;   to generate Emails
 ; -----------------------------------------------
 ; basic IDS email
 :co:eids::

@@ -1,11 +1,11 @@
-/*  This file contains one-off or temorary scripts that I don't use anymore but
+/*  This file contains one-off or temporary scripts that I don't use anymore but
     still want to archive.
 */
 
 restore_win_defender_q() {
     /*  A large number of files were captures by windows defender. I wrote this
         script to check the checkbox for each one and save the data for that
-        quarentined object.
+        quarantined object.
 
         This was a one-off script to resolve a specific problem.
     */
@@ -31,7 +31,7 @@ restore_win_defender_q() {
         Send {Down}
         Sleep 100
 
-        ; Get keystay to see if time to stop
+        ; Get key state to see if time to stop
         stop := GetKeyState("shift")
     }
 
@@ -48,7 +48,7 @@ diff_folders(src, dst) {
         the problem of deployment.
     */
 
-    ; Powershell script to diff the files
+    ; PowerShell script to diff the files
     PsScript =
     (
         param($param1, $param2)
@@ -58,7 +58,7 @@ diff_folders(src, dst) {
         Compare-Object $SrcCont $DstCont > "C:\Users\Patrick\Documents\temp.txt"
     )
 
-    ; Execute the Pshell script. Diff results stored at C:\Users\Patrick\Documents\temp.txt
+    ; Execute the PowerShell script. Diff results stored at C:\Users\Patrick\Documents\temp.txt
     RunWait PowerShell.exe -Command &{%PsScript%} '%src%' '%dst%',, hide
 
     ; Reads results. Notifies if differences found or not.
@@ -79,7 +79,7 @@ sync_folders(src, dst) {
         the problem of deployment.
     */
 
-    ; Copy folder from src to dev
+    ; Copy folder from source to destination
     FileCopyDir, % src, % dst, 1  ; 1 flag = overwrite files
     MsgBox, % "Files Copied from " . src . " to " . dst . " ."
 }

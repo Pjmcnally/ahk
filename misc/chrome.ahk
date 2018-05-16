@@ -1,7 +1,7 @@
 #IfWinActive ahk_exe chrome.exe  ; Only run in Chrome
 
-; Hotkey to open 10 ites from my rss reader with 1 keypress. Works with Feedly
-; Background Tab found here: https://chrome.google.com/webstore/detail/feedly-background-tab/gjlijkhcebalcchkhgaiflaooghmoegk?hl=en-US
+; Hotkey to open 10 items from my RSS reader with 1 key press. Works with Feedly
+; Background Tab found here: HTTPS://chrome.google.com/webstore/detail/feedly-background-tab/gjlijkhcebalcchkhgaiflaooghmoegk?hl=en-US
 
 open_comics(){
     /*  This function will open x comics in Feedly. When executed the next digit

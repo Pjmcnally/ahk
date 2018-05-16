@@ -1,7 +1,7 @@
 ;DockWin v0.3 - Save and Restore window positions when docking/undocking (using hotkeys)
 ; Paul Troiano, 6/2014
 
-; This has been Extreamly modified by Patrick McNally 08/2017
+; This has been Extremely modified by Patrick McNally 08/2017
 
 ;
 ; Hotkeys: ^ = Control; ! = Alt; + = Shift; # = Windows key; * = Wildcard;
