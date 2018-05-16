@@ -169,11 +169,8 @@ return
 
 #IfWinActive ahk_exe Ssms.exe  ; SQL HotStrings
 :o:bt::{/}{*}{ENTER}BEGIN TRAN{Enter 2}--commit{ENTER}ROLLBACK{ENTER}{*}{/}
-<<<<<<< HEAD
 #IfWinActive ; End SQL Hotstrings
-=======
-#IfWinActive ; End SQL HotStrings
->>>>>>> e938b560b465906703ba347648e7876c9a89d4c4
+
 
 ; Complex Hotkeys
 ^!v::
