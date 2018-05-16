@@ -67,14 +67,16 @@ format_jira(str) {
     Loop, parse, str, `n, `r
     {
         line := A_LoopField
+        line := RegExReplace(line, "\xA0+")  ; Remove all Non-breaking spaces
         line := RegExReplace(line, "{color.*?}")  ; Remove all {color} tags
         line := RegexReplace(line, "\*\s*(.*?)\s*\*", "$1")  ; Remove all * tags leaving surrounded text
         line := RegexReplace(line, "\+\s*(.*?)\s*\+", "$1")  ; Remove all + tags leaving surrounded text
-        line := RegExReplace(line, "_{2,}(.*?)_{2,}", "_$1_")  ; Remove all double underscores.
-        line := RegExReplace(line, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Remove all double brackets.
+        line := RegExReplace(line, "\_\s*(.*?)\_\s*", "$1")  ; Remove all _ tags leaving surrounded text
+        line := RegExReplace(line, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Convert double brackets to single.
         line := RegExReplace(line, "(?:(\[)\s+|\s+(\]))", "$1$2")  ; Remove any spaces immediately inside of open bracket or before closing bracket
         line := RegExReplace(line, "\[(.*?)\|\]", "$1")  ; Remove any link tags with no link content
-        line := RegExReplace(line, "\xA0+")  ; Remove all Non-breaking spaces
+
+
 
         line := Trim(line)  ; Trim whitespace
 
@@ -165,9 +167,13 @@ return
 return
 #IfWinActive  ; End UPDB Import emails
 
-#IfWinActive ahk_exe Ssms.exe  ; SQL hotstrings
+#IfWinActive ahk_exe Ssms.exe  ; SQL HotStrings
 :o:bt::{/}{*}{ENTER}BEGIN TRAN{Enter 2}--commit{ENTER}ROLLBACK{ENTER}{*}{/}
+<<<<<<< HEAD
 #IfWinActive ; End SQL Hotstrings
+=======
+#IfWinActive ; End SQL HotStrings
+>>>>>>> e938b560b465906703ba347648e7876c9a89d4c4
 
 ; Complex Hotkeys
 ^!v::
