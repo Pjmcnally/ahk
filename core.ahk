@@ -223,6 +223,27 @@ click_and_return(x_dest, y_dest, speed:=0) {
     return
 }
 
+get_gui_id(gui_name) {
+    Gui, %gui_name%:+LastFoundExist
+    return WinExist()  ; return ID of the lastfound window or "0x0" if not found
+}
+
+destroy_gui(gui_name) {
+    Gui, %gui_name%:Destroy
+    return
+}
+
+update_gui(gui_name, state) {
+    Gui, %gui_name%:Show, NoActivate, % state
+}
+
+; This is outside of #IfWinExist so I can kill this after I close the game
++F10::
+    destroy_gui("AslGui")  ; For Divinity 1
+    destroy_gui("AipGui")  ; For PoE
+    Send, {get_aip_keybind() Up}
+return
+
 ; Universal Hotstrings:
 ; ==============================================================================
 ^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes

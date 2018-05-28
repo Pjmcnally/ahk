@@ -1,10 +1,10 @@
-#IfWinExist, ahk_exe PathOfExile_x64Steam.exe
+#IfWinExist, ahk_exe ahk_exe EoCApp.exe
 
-attack_in_place() {
-    keybind := get_aip_keybind()
-    gui_name := "AipGui"
+always_show_loot() {
+    keybind := get_asl_keybind()
+    gui_name := "AslGui"
     word_status := {0: "Off", 1: "On"}
-    game := "ahk_exe PathOfExile_x64Steam.exe"
+    game := "ahk_exe EoCApp.exe"
 
     if GetKeyState(keybind) {
         Send {%keybind% up}
@@ -22,18 +22,18 @@ attack_in_place() {
     winActivate, % game
 }
 
-get_aip_keybind() {
+get_asl_keybind() {
     return "F10"
 }
 
-build_aip_gui(state) {
-    Gui, AipGui:New, ,
-    Gui, AipGui:Color, green
-    Gui, AipGui:+AlwaysOnTop
-    Gui, AipGui:+Border
-    Gui, AipGui:-SysMenu
-    Gui, AipGui:+ToolWindow
-    Gui, AipGui:Show, h0 w25 NoActivate, % state
+build_asl_gui(state) {
+    Gui, AslGui:New, ,
+    Gui, AslGui:Color, green
+    Gui, AslGui:+AlwaysOnTop
+    Gui, AslGui:+Border
+    Gui, AslGui:-SysMenu
+    Gui, AslGui:+ToolWindow
+    Gui, AslGui:Show, h0 w25 NoActivate, % state
 }
 
 $F10::
