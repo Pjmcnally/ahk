@@ -147,7 +147,7 @@ send_UPDB_email(option) {
 :co:mdev::Task-80{Tab 3}* Weekly DevOps Meeting
 :co:mwad::Task-82{Tab 3}* Weekly Auto-Docket Meeting
 :co:mrel::Task-83{Tab 3}* Weekly Release Meeting
-:co:mmbhip::Task-136{Tab 3}* Monthly BHIP Meeting
+:co:mbhip::Task-136{Tab 3}* Monthly BHIP Meeting
 :co:tupdb::Task-94{Tab 3}* Updating UPDB
 
 ; Signature/Ticket Hotstrings
