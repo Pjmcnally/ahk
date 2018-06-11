@@ -171,14 +171,14 @@ return
 
 
 ; Complex Hotkeys
-^!v::
+^!v::  ; ctrl-alt-v
     format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
 return
 
-^!f::
+^!f::  ; ctrl-alt-f
     clip_func("format_jira")  ; Run "format_jira" func on selected text
 return
 
-^!d::
+^!d::  ; ctrl-alt-d
     fill_scrape_mail_date()
 return
