@@ -1,4 +1,10 @@
-#IfWinExist, ahk_exe ahk_exe EoCApp.exe
+/*  This was an attempt to always show dropped loot in Divinity OS 1. It didn't
+    work as indended due to the way the game works. However, it was an
+    interesting experiment with GUI creation and use so I want to archive the
+    file.
+*/
+
+#IfWinActive, ahk_exe ahk_exe EoCApp.exe
 
 always_show_loot() {
     keybind := get_asl_keybind()
@@ -36,8 +42,18 @@ build_asl_gui(state) {
     Gui, AslGui:Show, h0 w25 NoActivate, % state
 }
 
-$F10::
-    attack_in_place()
-return
+get_gui_id(gui_name) {
+    Gui, %gui_name%:+LastFoundExist
+    return WinExist()  ; return ID of the lastfound window or "0x0" if not found
+}
 
-#IfWinExist
+destroy_gui(gui_name) {
+    Gui, %gui_name%:Destroy
+    return
+}
+
+update_gui(gui_name, state) {
+    Gui, %gui_name%:Show, NoActivate, % state
+}
+
+#IfWinActive
