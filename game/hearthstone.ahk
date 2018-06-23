@@ -1,5 +1,6 @@
-; This is a hotstring to automatically open packs in Hearthstone
-; Designed to work on 1920 x 1080 interface
+/*  This is a hotstring to automatically open packs in Hearthstone
+    Designed to work on 1920 x 1080 interface
+*/
 
 #IfWinActive, Hearthstone
 

@@ -1,5 +1,6 @@
-; This is my script for auto run in borderlands 2.  Honestly, I just got tired
-; of holding down Shift all the time to run so I made this.
+/*  This is my script for auto run in borderlands 2.  Honestly, I just got tired
+    of holding down Shift all the time to run so I made this.
+*/
 
 ;#IfWinActive ahk_class BigHugeClass
 ;#IfWinActive ahk_class Borderlands 2 (32-bit`, DX9)
