@@ -172,24 +172,6 @@ rename_adobe_bookmarks() {
     }
 }
 
-
-paste_as_sql_list() {
-    raw_str := Trim(Clipboard, "`r`n`t")
-    array := StrSplit(raw_str, "`n", "`r")
-    str := ""
-
-    Loop, % array.MaxIndex()
-    {
-        str := str . "'" . array[A_Index] . "'"
-        if (A_Index < (array.MaxIndex())) {
-            str := str . ",`r`n"
-        }
-    }
-    paste_contents(str)
-
-    return
-}
-
 ; The two hotkeys below dynamically call timer_wrapper to avoid error at
 ; startup if timer_wrapper doesn't exist.
 ^+!e::
@@ -202,8 +184,4 @@ return
 
 ^!a::
     rename_adobe_bookmarks()
-return
-
-^+!l::
-    paste_as_sql_list()
 return

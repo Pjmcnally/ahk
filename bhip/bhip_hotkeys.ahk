@@ -119,6 +119,23 @@ format_db_for_jira() {
     return
 }
 
+paste_as_sql_list() {
+    raw_str := Trim(Clipboard, "`r`n`t")
+    array := StrSplit(raw_str, "`n", "`r")
+    str := ""
+
+    Loop, % array.MaxIndex()
+    {
+        str := str . "'" . array[A_Index] . "'"
+        if (A_Index < (array.MaxIndex())) {
+            str := str . ",`r`n"
+        }
+    }
+    paste_contents(str)
+
+    return
+}
+
 send_UPDB_email(option) {
     if (option = "start") {
         subject := "Importing UPDB Today"
@@ -181,4 +198,8 @@ return
 
 ^!d::  ; ctrl-alt-d
     fill_scrape_mail_date()
+return
+
+^+!l::  ; ctrl-alt-shift-l
+    paste_as_sql_list()
 return
