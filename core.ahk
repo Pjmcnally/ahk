@@ -223,6 +223,15 @@ click_and_return(x_dest, y_dest, speed:=0) {
     return
 }
 
+HasVal(haystack, needle) {
+    if !(IsObject(haystack)) || (haystack.Length() = 0)
+        return 0
+    for index, value in haystack
+        if (value = needle)
+            return index
+    return 0
+}
+
 ; Universal Hotstrings:
 ; ==============================================================================
 ^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
