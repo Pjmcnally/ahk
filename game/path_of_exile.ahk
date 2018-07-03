@@ -23,16 +23,19 @@ checkPoeMap() {
     map_properties := StrSplit(item, "`r", "`n")
 
     bad_statuses := ["Players are Cursed with Temporal Chains", "Players cannot Regenerate Life, Mana or Energy Shield"]
-    results := ""
+    bad_results := ""
 
     for index, elem in map_properties {
         if (HasVal(bad_statuses, elem)) {
-            MsgBox, % "Re-Roll map:`r`n" . elem
-            Break
+            bad_results := bad_results . elem . "`r`n"
         }
     }
 
-    MsgBox, , % "Run", % "Good to run", .3
+    if (StrLen(bad_results) > 0) {
+        MsgBox, % "Re-Roll map:`r`n" . bad_results
+    } else {
+        MsgBox, , % "Run", % "Good to Go." , .5
+    }
 }
 
 #IfWinActive, ahk_exe PathOfExile_x64Steam.exe
