@@ -75,12 +75,14 @@ format_jira(str) {
         line := RegExReplace(line, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Convert double brackets to single.
         line := RegExReplace(line, "(?:(\[)\s+|\s+(\]))", "$1$2")  ; Remove any spaces immediately inside of open bracket or before closing bracket
         line := RegExReplace(line, "\[(.*?)\|\]", "$1")  ; Remove any link tags with no link content
-
-
-
         line := Trim(line)  ; Trim whitespace
 
+        ; Add seperator before new email
+        if (RegexMatch(line, "^From:")) {
+            line := "----" . Crlf . CrLf . Line
+        }
 
+        ; Process lines into outstring
         if not (line) {  ; Some lines end up empty.  Consecutive empty lines are collapsed to 1.
             empty_count += 1
         } else if (line and empty_count > 1 ) {  ; If a line is preceded by multiple empty lines append it too string with preceding empty line
