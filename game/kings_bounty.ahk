@@ -28,7 +28,7 @@ F1:: ;Gear Switcher
 return
 
 F2:: ;new dragon eye
-    sendinput item addon3_artefact_eye_of_drakkentir
+    SendInput item addon3_artefact_eye_of_drakkentir
 return
 
 ; This should always be at the bottom

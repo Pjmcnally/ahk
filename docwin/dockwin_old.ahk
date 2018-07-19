@@ -7,7 +7,6 @@
 ; Hotkeys: ^ = Control; ! = Alt; + = Shift; # = Windows key; * = Wildcard;
 ;          & = Combo keys; Others include ~, $, UP (see "Hotkeys" in Help)
 
-;#InstallKeybdHook
 #SingleInstance, Force
 SetTitleMatchMode, 2          ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
 SetTitleMatchMode, Fast       ; Fast is default
@@ -16,7 +15,7 @@ SetWorkingDir %A_ScriptDir%   ; Ensures a consistent starting directory.
 CrLf=`r`n
 FileName:="WinPos.txt"
 
-; TODO: Change this so it is derived from the docwin text file (However, I have to change that file first)
+; TODO: Change this so it is derived from the DocWin text file (However, I have to change that file first)
 folder_list := { "Downloads": "C:\Users\PMcNally\Downloads"
                , "bulk downloads": "C:\Users\PMcNally\Documents\bulk downloads"
                , "bulk print": "C:\Users\PMcNally\bulk print"
@@ -85,7 +84,7 @@ return
 
 ;Restore window positions from file
 ^!o::
-  ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
+  ; Wait for the key to be released.  Use one KeyWait for each of the hotkeys modifiers.
   KeyWait Control
   KeyWait Alt
 
@@ -142,7 +141,7 @@ return
 
   ; If no matching section found display error and instructions.
   if !SectionFound
-    msgbox,,Dock Windows, Searching for section:`n%SectionToFind%`n`nUnable to find in %FileName%`n`nPlease save a new section and try again.
+    MsgBox,,Dock Windows, Searching for section:`n%SectionToFind%`n`nUnable to find in %FileName%`n`nPlease save a new section and try again.
 
   ;Restore window that was active at beginning of script
   WinActivate, %SavedActiveWindow%
@@ -177,7 +176,7 @@ return
   {
     this_id := id%A_Index%
     WinActivate, ahk_id %this_id%
-    WinGetPos, x, y, Width, Height, A ;Wintitle
+    WinGetPos, x, y, Width, Height, A ;WinTitle
     WinGetClass, this_class, ahk_id %this_id%
     WinGetTitle, this_title, ahk_id %this_id%
 

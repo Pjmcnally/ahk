@@ -4,7 +4,6 @@
 ; Hotkeys: ^ = Control; ! = Alt; + = Shift; # = Windows key; * = Wildcard;
 ;          & = Combo keys; Others include ~, $, UP (see "Hotkeys" in Help)
 
-;#InstallKeybdHook
 #SingleInstance, Force
 SetTitleMatchMode, 2        ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
 SetTitleMatchMode, Fast     ;Fast is default
@@ -12,8 +11,6 @@ DetectHiddenWindows, off    ;Off is default
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 CrLf=`r`n
 FileName:="WinPos.txt"
-
-
 
 ;Win-0 (Restore window positions from file)
 #0::
@@ -65,7 +62,7 @@ FileName:="WinPos.txt"
 
   if !SectionFound
   {
-    msgbox,,Dock Windows, Section does not exist in %FileName% `nLooking for: %SectionToFind%`n`nTo save a new section, use Win-Shift-0 (zero key above letter P on keyboard)
+    MsgBox,,Dock Windows, Section does not exist in %FileName% `nLooking for: %SectionToFind%`n`nTo save a new section, use Win-Shift-0 (zero key above letter P on keyboard)
   }
 
   ;Restore window that was active at beginning of script
@@ -97,7 +94,7 @@ return
   {
     this_id := id%A_Index%
     WinActivate, ahk_id %this_id%
-    WinGetPos, x, y, Width, Height, A ;Wintitle
+    WinGetPos, x, y, Width, Height, A ;WinTitle
     WinGetClass, this_class, ahk_id %this_id%
     WinGetTitle, this_title, ahk_id %this_id%
 

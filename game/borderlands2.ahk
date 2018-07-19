@@ -7,7 +7,7 @@
 #IfWinActive ahk_exe Borderlands2.exe  ; Only run in Borderlands 2
 
 ~$w::  ; Start running.
-    varint = 0
+    varInt = 0
     Send {shift up}
     Send {shift down}
     Send {shift up}
@@ -15,8 +15,8 @@ return
 
 
 ~$s::  ; Stop running.
-    if varint {
-        varint = 0
+    if varInt {
+        varInt = 0
         Send {w up}
         Send {shift up}
     }
@@ -24,8 +24,8 @@ return
 
 
 ; ~$a::
-; if varint {
-;     varint = 0
+; if varInt {
+;     varInt = 0
 ;     Send {w up}
 ;     Send {shift up}
 ; }
@@ -33,8 +33,8 @@ return
 
 
 ; ~$d::
-; if varint {
-;     varint = 0
+; if varInt {
+;     varInt = 0
 ;     Send {w up}
 ;     Send {shift up}
 ; }
@@ -42,12 +42,12 @@ return
 
 
 t::  ; Stop running.
-    if varint {
-        varint = 0
+    if varInt {
+        varInt = 0
         Send {w up}
         Send {shift up}
     } else {
-        varint = 1
+        varInt = 1
         Send {w down}
         Send {shift down}
     }

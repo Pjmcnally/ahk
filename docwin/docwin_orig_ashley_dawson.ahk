@@ -5,7 +5,6 @@
 ; Hotkeys: ^ = Control; ! = Alt; + = Shift; # = Windows key; * = Wildcard;
 ;          & = Combo keys; Others include ~, $, UP (see "Hotkeys" in Help)
 
-;#InstallKeybdHook
 #SingleInstance, Force
 SetTitleMatchMode, 2        ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
 SetTitleMatchMode, Fast     ;Fast is default
@@ -70,7 +69,7 @@ FileName:="WinPos.txt"
             WinActivate
             WinMove, A,,%Win_x%,%Win_y%,%Win_width%,%Win_height%
             WinMaximize, A
-        } Else If ((Win_maximized = -1) and (StrLen(Win_Title) > 0) and WinExist(Win_Title) )       ; Value of -1 means Window is minimised
+        } Else If ((Win_maximized = -1) and (StrLen(Win_Title) > 0) and WinExist(Win_Title) )       ; Value of -1 means Window is minimized
         {
             WinRestore
             WinActivate
@@ -86,7 +85,7 @@ FileName:="WinPos.txt"
 
   if !SectionFound
   {
-    msgbox,,Dock Windows, Section does not exist in %FileName% `nLooking for: %SectionToFind%`n`nTo save a new section, use Win-Shift-0 (zero key above letter P on keyboard)
+    MsgBox,,Dock Windows, Section does not exist in %FileName% `nLooking for: %SectionToFind%`n`nTo save a new section, use Win-Shift-0 (zero key above letter P on keyboard)
   }
 
   ;Restore window that was active at beginning of script
@@ -118,7 +117,7 @@ return
   {
     this_id := id%A_Index%
     WinActivate, ahk_id %this_id%
-    WinGetPos, x, y, Width, Height, A ;Wintitle
+    WinGetPos, x, y, Width, Height, A ;WinTitle
     WinGetClass, this_class, ahk_id %this_id%
     WinGetTitle, this_title, ahk_id %this_id%
     WinGet, win_maximized, minmax, %this_title%

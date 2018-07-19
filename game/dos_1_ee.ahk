@@ -1,5 +1,5 @@
 /*  This was an attempt to always show dropped loot in Divinity OS 1. It didn't
-    work as indended due to the way the game works. However, it was an
+    work as intended due to the way the game works. However, it was an
     interesting experiment with GUI creation and use so I want to archive the
     file.
 */
@@ -44,7 +44,7 @@ build_asl_gui(state) {
 
 get_gui_id(gui_name) {
     Gui, %gui_name%:+LastFoundExist
-    return WinExist()  ; return ID of the lastfound window or "0x0" if not found
+    return WinExist()  ; return ID of the last found window or "0x0" if not found
 }
 
 destroy_gui(gui_name) {

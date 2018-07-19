@@ -1,6 +1,6 @@
 getItemName(str) {
     /*  Items can be copied in PoE by mousing over and pressing ctrl-c. The
-        items name is alwasy on the second line.
+        items name is always on the second line.
 
         This function extracts the items name to be used in certain websites.
     */
