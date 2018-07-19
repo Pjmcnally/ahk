@@ -23,7 +23,7 @@ modules that this module is imported.
 #SingleInstance, Force          ; Automatically replaces old script with new if the same script file is rune twice
 #NoEnv                          ; Avoids checking empty variables to see if they are environment variables (recommended for all new scripts).
 #Warn                           ; Enable warnings to assist with detecting common errors. (More explicit)
-#Hotstring EndChars `n `t       ; Limits Hotstring EndChars to {Enter}{Tab}{Space}
+#Hotstring EndChars `n `t       ; Limits hotstring ending characters to {Enter}{Tab}{Space}
 SendMode Input                  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir, %A_ScriptDir%    ; Ensures a consistent starting directory.
 SetTitleMatchMode, 2            ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
@@ -31,7 +31,6 @@ SetTitleMatchMode, 2            ; 2: A window's title can contain WinTitle anywh
 ; Create group of consoles for git commands
 GroupAdd, consoles, ahk_exe powershell.exe
 GroupAdd, consoles, ahk_exe powershell_ise.exe
-GroupAdd, consoles, ahk_exe mintty.exe
 GroupAdd, consoles, ahk_exe RDCMan.exe
 
 return  ; End of Auto-Execute Section
