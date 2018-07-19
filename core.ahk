@@ -238,7 +238,7 @@ HasVal(haystack, needle) {
     Pause, Toggle
 return
 
-^!Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
+^!Space::  ; Assign Ctrl-Alt-Spacebar to suspend all hotkeys
     Suspend, Toggle
 return
 
@@ -269,4 +269,3 @@ return
 
 ^!t::  ; Ctrl-Alt-T for temp function/hotkeys (one-offs uses or testing)
 return
-
