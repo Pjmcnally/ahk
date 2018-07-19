@@ -20,8 +20,8 @@ restore_win_defender_q() {
         Sleep, 100
         Send ^a
         Sleep, 200
-        FileAppend, % get_highlighted(FALSE), C:\Users\Patrick\Desktop\WindowsDefenderQuarentine.txt
-        FileAppend, `r`n`r`n, C:\Users\Patrick\Desktop\WindowsDefenderQuarentine.txt
+        FileAppend, % get_highlighted(FALSE), C:\Users\Patrick\Desktop\WindowsDefenderQuarantine.txt
+        FileAppend, `r`n`r`n, C:\Users\Patrick\Desktop\WindowsDefenderQuarantine.txt
         Sleep, 100
         Send +{Tab}
 

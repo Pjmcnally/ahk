@@ -77,12 +77,12 @@ format_jira(str) {
         line := RegExReplace(line, "\[(.*?)\|\]", "$1")  ; Remove any link tags with no link content
         line := Trim(line)  ; Trim whitespace
 
-        ; Add seperator before new email
+        ; Add separator before new email
         if (RegexMatch(line, "^From:")) {
             line := "----" . Crlf . CrLf . Line
         }
 
-        ; Process lines into outstring
+        ; Process lines into resulting string
         if not (line) {  ; Some lines end up empty.  Consecutive empty lines are collapsed to 1.
             empty_count += 1
         } else if (line and empty_count > 1 ) {  ; If a line is preceded by multiple empty lines append it too string with preceding empty line
@@ -170,8 +170,10 @@ send_UPDB_email(option) {
 :co:tupdb::Task-94{Tab 3}* Updating UPDB
 
 ; Signature/Ticket Hotstrings
-:o:psig::Patrick McNally{Enter}DevOps Support{Enter}pmcnally@blackhillsip.com
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
+:o:psig::
+    Send, % "Patrick McNally`r`nDevOps Support`r`n" . get_my_bhip_email() . "`r`n"
+return
 
 ; UPDB Import emails
 #IfWinActive ahk_exe OUTLOOK.EXE

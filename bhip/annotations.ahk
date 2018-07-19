@@ -61,7 +61,7 @@ convert_pdf() {
         FileCreateDir, % txt_dir
 
 
-    ; Process PDF's
+    ; Process PDFs
     pdfs := ocr_dir . "\*.pdf"
     total_count := ComObjCreate("Scripting.FileSystemObject").GetFolder(ocr_dir).Files.Count
     Progress, M2 R0-%total_count%, % "Files Done:`r`n0", % "Total Files: " . total_count, "Text Extraction"
