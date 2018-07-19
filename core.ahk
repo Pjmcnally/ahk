@@ -32,6 +32,7 @@ SetTitleMatchMode, 2            ; 2: A window's title can contain WinTitle anywh
 GroupAdd, consoles, ahk_exe powershell.exe
 GroupAdd, consoles, ahk_exe powershell_ise.exe
 GroupAdd, consoles, ahk_exe RDCMan.exe
+GroupAdd, consoles, ahk_exe Code.exe
 
 return  ; End of Auto-Execute Section
 
