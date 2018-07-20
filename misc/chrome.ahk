@@ -14,10 +14,8 @@ open_comics(){
     i := 0
     num := (num = 0 ? 10 : num) ; If input is 0 set val to 10
     While (i < num) {
-        Send, j  ; "j" is the Feedly hotkey to open next item.
-        Sleep, 50
-        Send, ,  ; "," is my hotkey to open the open Feedly item in a new tab.
-        Sleep, 50
+        SendWait("j", 50)  ; "j" is the Feedly hotkey to open next item.
+        SendWait(",", 50)  ; "," is my hotkey to open the open Feedly item in a new tab.
         i++
     }
 }
@@ -29,4 +27,3 @@ open_comics(){
 return
 
 #IfWinActive ; Clear IfWinActive
-

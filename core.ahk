@@ -232,6 +232,20 @@ HasVal(haystack, needle) {
     return 0
 }
 
+SendWait(msg, wait:=0) {
+    Send % msg
+    if (wait) {
+        Sleep % wait
+    }
+}
+
+SendLines(iter, wait:=0) {
+    For index, value in iter {
+        SendWait(value, wait)
+        SendWait("{Enter}", wait)
+    }
+}
+
 ; Universal Hotstrings:
 ; ==============================================================================
 ^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes

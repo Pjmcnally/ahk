@@ -16,20 +16,16 @@ restore_win_defender_q() {
         total += 1
 
         ; Get text content and write to file
-        Send {Tab}
-        Sleep, 100
-        Send ^a
-        Sleep, 200
+        SendWait("{Tab}", 100)
+        SendWait("^a", 200)
         FileAppend, % get_highlighted(FALSE), C:\Users\Patrick\Desktop\WindowsDefenderQuarantine.txt
         FileAppend, `r`n`r`n, C:\Users\Patrick\Desktop\WindowsDefenderQuarantine.txt
         Sleep, 100
         Send +{Tab}
 
         ; Check and advance
-        Send {Space}
-        Sleep 100
-        Send {Down}
-        Sleep 100
+        SendWait("{Space}", 100)
+        SendWait("{Down}", 100)
 
         ; Get key state to see if time to stop
         stop := GetKeyState("shift")
