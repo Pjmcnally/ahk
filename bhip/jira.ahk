@@ -10,6 +10,30 @@
     m --> Jumps to new comment
 */
 
+close_issue() {
+    wait := 250
+
+    if (WinActive("TECH")) {
+        close_command := "Close"
+    } else if (WinActive("HELP")){
+        close_command := "Resolve this issue"
+    } else if (WinActive("TASK")){
+        close_command := "Done"
+    }
+
+    SendWait(., wait)
+    SendWait(close_command, wait)
+    Send {Enter}
+}
+
+#IfWinActive ahk_exe chrome.exe
+
+
 ; To make this work I need to add a bit of logic. Set the "close" action by project
 ; Also use an IfWinActive to filter for only chrome jira windows
-; !c::Send .close{Enter}
+!c::
+    KeyWait Alt
+    close_issue()
+return
+
+#IfWinActive
