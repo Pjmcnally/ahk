@@ -172,8 +172,7 @@ send_UPDB_email(option) {
 ; Signature/Ticket Hotstrings
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 :o:psig::
-    email := get_my_bhip_email()
-    Send, Patrick McNally{Enter}DevOps Support{Enter}%email%{Enter}
+    SendLines(["Patrick McNally", "DevOps Support", get_my_bhip_email()])
 return
 
 ; UPDB Import emails
