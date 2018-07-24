@@ -186,7 +186,6 @@ return
 :o:bt::{/}{*}{ENTER}BEGIN TRAN{Enter 2}--commit{ENTER}ROLLBACK{ENTER}{*}{/}
 #IfWinActive ; End SQL Hotstrings
 
-
 ; Complex Hotkeys
 ^!v::  ; ctrl-alt-v
     format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
