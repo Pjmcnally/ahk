@@ -162,12 +162,8 @@ send_UPDB_email(option) {
 :co:b1::BACKLOG 001!o
 
 ; Time tracking hotkeys
-:co:mdad::Task-78{Tab 3}* Getting raw data for auto-docket review{Enter}Parsing data and updating auto-docket review spreadsheet  ; *'s for all items after first are auto-filled by JIRA
-:co:mdev::Task-80{Tab 3}* Weekly DevOps Meeting
-:co:mwad::Task-82{Tab 3}* Weekly Auto-Docket Meeting
-:co:mrel::Task-83{Tab 3}* Weekly Release Meeting
 :co:mbhip::Task-136{Tab 3}* Monthly BHIP Meeting
-:co:tupdb::Task-94{Tab 3}* Updating UPDB
+:co:mday::Task-121{Tab 3}* Daily Huddle
 
 ; Signature/Ticket Hotstrings
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
