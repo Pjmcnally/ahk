@@ -23,7 +23,10 @@ close_issue() {
 
     SendWait(., wait)
     SendWait(close_command, wait)
-    Send {Enter}
+    SendWait("{Enter}", wait)
+    SendWait("{shift down}{tab 2}{shift up}", wait)
+    Send, {Enter}
+
 }
 
 #IfWinActive ahk_exe chrome.exe
