@@ -249,30 +249,44 @@ SendLines(iter, wait:=0) {
 ; Universal Hotstrings:
 ; ==============================================================================
 ^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
+    KeyWait ctrl
     Pause, Toggle
 return
 
 ^!Space::  ; Assign Ctrl-Alt-Spacebar to suspend all hotkeys
+    KeyWait ctrl
+    KeyWait alt
     Suspend, Toggle
 return
 
 ^!r::  ; Assign Ctrl-Alt-R as a hotkey to reload active script.
+    KeyWait ctrl
+    KeyWait alt
     Reload
 return
 
 ^!u::  ; Ctrl-Alt-U to uppercase any highlighted text
+    KeyWait ctrl
+    KeyWait alt
     clip_func("string_upper")
 return
 
 ^!l::  ; Ctrl-Alt-L to lowercase all highlighted text
+    KeyWait ctrl
+    KeyWait alt
     clip_func("string_lower")
 return
 
 ^!-:: ; Ctrl-Alt-Hyphen to Hyphenate all text
+    KeyWait ctrl
+    KeyWait alt
     clip_func("string_hyphenate")
 return
 
-^!+_:: ; Ctrl-Alt-Hyphen to Hyphenate all text
+^!+_:: ; Ctrl-Alt-Shift-Underscore to underscore all text
+    KeyWait ctrl
+    KeyWait alt
+    KeyWait shift
     clip_func("string_underscore")
 return
 
@@ -282,4 +296,6 @@ return
 return
 
 ^!t::  ; Ctrl-Alt-T for temp function/hotkeys (one-offs uses or testing)
+    KeyWait ctrl
+    KeyWait alt
 return

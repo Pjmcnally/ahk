@@ -188,17 +188,26 @@ return
 
 ; Complex Hotkeys
 ^!v::  ; ctrl-alt-v
+    KeyWait ctrl
+    KeyWait alt
     format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
 return
 
 ^!f::  ; ctrl-alt-f
+    KeyWait ctrl
+    KeyWait alt
     clip_func("format_jira")  ; Run "format_jira" func on selected text
 return
 
 ^!d::  ; ctrl-alt-d
+    KeyWait ctrl
+    KeyWait alt
     fill_scrape_mail_date()
 return
 
 ^+!l::  ; ctrl-alt-shift-l
+    KeyWait ctrl
+    KeyWait alt
+    KeyWait shift
     paste_as_sql_list()
 return
