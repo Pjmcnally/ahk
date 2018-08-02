@@ -39,7 +39,7 @@ get_choice(title, prompt, array) {
 
 
 convert_pdf() {
-    base_delay = 250  ; Do not set below 100
+    base_delay = 100  ; Do not set below 100
     format_map := {"Text": "!fhmt", "Jpeg": "!fhij"}
     formats := []
     for key, value in format_map
