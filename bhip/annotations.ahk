@@ -74,23 +74,44 @@ convert_pdf() {
         save_pdf_as(A_LoopFileFullPath, out_file, base_delay, format_map[choice])
     }
 
+    Send ^w  ; Close final PDF
     Progress, Off
 }
 
 
 save_pdf_as(in_file, out_file, base_delay, format_string) {
+    base := "Adobe Acrobat"
+    WinGetActiveTitle, active
+
+    ; Close any open Adobe Acrobat windows
+    While (active != base) {
+        WinActivate Adobe Acrobat
+        WinWaitActive Adobe Acrobat
+        SendWait("^w", base_delay)
+        WinActivate Adobe Acrobat
+        WinWaitActive Adobe Acrobat
+        WinGetActiveTitle, active
+    }
+
+    ; Run desired file and wait for it to load
     Run, % in_file
-    Sleep, % (base_delay + 200)
+    while (active = "Adobe Acrobat") {
+        WinGetActiveTitle, active
+        Sleep, base_delay
+    }
+
+    ; Save file in desired format
     Send, % format_string  ; Key combination in Adobe to Save as specified format.
-    Sleep, % (base_delay + 100)
-    Send, % out_file  ; Type new file name into save box
-    Sleep, % (base_delay + 100)
-    Send, {Enter}  ; Hit enter to save file
-    Sleep, % base_delay
-    Send, y{Enter}  ; Hit "y" to save over existing file or close other prompt
-    Sleep, % base_delay
-    Send, ^w  ; Close file
-    Sleep, % base_delay
+    WinWaitActive, % "Save As"  ; Wait for Save dialog to appear
+    SendWait(out_file, base_delay)  ; Type new file name into save box
+    SendWait("{Enter}", base_delay)  ; Hit enter wait for save dialog to clear
+
+    ; Check and close any errors that opened
+    WinGetActiveTitle, errorCheck
+    while (active != errorCheck) {
+        SendWait("y{Enter}", base_delay) ; Hit "y" to save over existing file or close other prompt
+        WinGetActiveTitle, errorCheck
+    }
 }
 
 
