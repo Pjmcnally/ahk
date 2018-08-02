@@ -95,7 +95,7 @@ save_pdf_as(in_file, out_file, base_delay, format_string) {
 
     ; Run desired file and wait for it to load
     Run, % in_file
-    while (active = "Adobe Acrobat") {
+    while (active = base) {
         WinGetActiveTitle, active
         Sleep, base_delay
     }
@@ -104,9 +104,10 @@ save_pdf_as(in_file, out_file, base_delay, format_string) {
     Send, % format_string  ; Key combination in Adobe to Save as specified format.
     WinWaitActive, % "Save As"  ; Wait for Save dialog to appear
     SendWait(out_file, base_delay)  ; Type new file name into save box
-    SendWait("{Enter}", base_delay)  ; Hit enter wait for save dialog to clear
+    Send, {Enter} ; Hit enter wait for save dialog to clear
 
-    ; Check and close any errors that opened
+    ; Wait for, check and close any errors that opened
+    sleep, (base_delay * 3)
     WinGetActiveTitle, errorCheck
     while (active != errorCheck) {
         SendWait("y{Enter}", base_delay) ; Hit "y" to save over existing file or close other prompt
