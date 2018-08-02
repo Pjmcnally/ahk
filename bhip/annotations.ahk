@@ -193,8 +193,6 @@ rename_adobe_bookmarks() {
     }
 }
 
-; The two hotkeys below dynamically call timer_wrapper to avoid error at
-; startup if timer_wrapper doesn't exist.
 ^+!e::
     convert_pdf()
 return
