@@ -19,6 +19,9 @@ return
 
 
 main() {
+    WinActivate Hearthstone
+    WinWaitActive Hearthstone
+
     num_packs := getNumPacks()
     sleep, % 1000  ; wait for dialog to fully close.
     while num_packs > 0 {
@@ -29,6 +32,7 @@ main() {
 
 
 getNumPacks() {
+    num = 0
     while num <= 0 {
         InputBox, num, How many packs?, Please enter the number of packs you wish to open.
         if ErrorLevel
@@ -51,6 +55,18 @@ openPack() {
         SendEvent {Click, %x%, %y%}
     }
     Sleep, % 2500  ; wait of OK to appear
+}
+
+shuffle(a) {
+    ; This is an implementation of the Fischer-Yates shuffle (in place)
+    i := a.length()  ; Arrays are 1-indexed so I don't need to -1 here.
+    while (i > 1) {  ; Don't need to swap the last element with itself.
+        Random, rand, 0.0, 1.0  ; Get random float between 0 and 1
+        j := Ceil(rand * i)  ; Turn float to int between 1 and i.
+        temp := a[i], a[i] := a[j], a[j] := temp  ; swap values at i and j in array
+        i -= 1
+    }
+    return a
 }
 
 ; This should always be at the bottom
