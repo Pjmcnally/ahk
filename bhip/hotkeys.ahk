@@ -182,10 +182,6 @@ return
 return
 #IfWinActive  ; End UPDB Import emails
 
-#IfWinActive ahk_exe Ssms.exe  ; SQL HotStrings
-:o:bt::{/}{*}{ENTER}BEGIN TRAN{Enter 2}--commit{ENTER}ROLLBACK{ENTER}{*}{/}
-#IfWinActive ; End SQL Hotstrings
-
 ; Complex Hotkeys
 ^!v::  ; ctrl-alt-v
     KeyWait ctrl

@@ -4,7 +4,7 @@
     file.
 */
 
-#IfWinActive, ahk_exe ahk_exe EoCApp.exe
+#IfWinActive, ahk_exe EoCApp.exe
 
 always_show_loot() {
     keybind := get_asl_keybind()
