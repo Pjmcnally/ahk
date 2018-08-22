@@ -39,4 +39,6 @@ close_issue() {
     close_issue()
 return
 
+:o:sr::Self Resolved^{Enter}
+
 #IfWinActive
