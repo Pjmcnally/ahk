@@ -30,15 +30,13 @@ close_issue() {
 }
 
 #IfWinActive ahk_exe chrome.exe
+:o:sr::Self resolved^{Enter}
 
-
-; To make this work I need to add a bit of logic. Set the "close" action by project
-; Also use an IfWinActive to filter for only chrome jira windows
 !c::
     KeyWait Alt
     close_issue()
 return
 
-:o:sr::Self Resolved^{Enter}
+
 
 #IfWinActive
