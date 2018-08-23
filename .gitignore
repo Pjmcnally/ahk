@@ -5,3 +5,6 @@ autohotkey_main.ahk
 
 # local files not to be committed
 local/
+
+# VS Code stuff
+.vscode
