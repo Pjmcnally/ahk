@@ -29,6 +29,7 @@ SetWorkingDir, %A_ScriptDir%    ; Ensures a consistent starting directory.
 SetTitleMatchMode, 2            ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
 
 ; Create group of consoles for git commands
+GroupAdd, consoles, ahk_exe pwsh.exe
 GroupAdd, consoles, ahk_exe powershell.exe
 GroupAdd, consoles, ahk_exe powershell_ise.exe
 GroupAdd, consoles, ahk_exe RDCMan.exe
