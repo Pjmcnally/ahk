@@ -250,13 +250,12 @@ SendLines(iter, wait:=0) {
 ; Universal Hotstrings:
 ; ==============================================================================
 ^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
-    KeyWait ctrl
+    ; I cant KeyWait here or it won't work. Also it is unnecessary.
     Pause, Toggle
 return
 
 ^!Space::  ; Assign Ctrl-Alt-Spacebar to suspend all hotkeys
-    KeyWait ctrl
-    KeyWait alt
+    ; I cant KeyWait here or it won't work. Also it is unnecessary.
     Suspend, Toggle
 return
 
@@ -291,8 +290,12 @@ return
     clip_func("string_underscore")
 return
 
-:?*:.  ::  ; I am trying to break the habit of double spacing after a "."
-    Send, % ". "
+:?*:!  ::  ; I am trying to break the habit of double spacing after a sentence.
+:?*:?  ::
+:?*:.  ::
+    ; A_ThisLabel = ":?*:!  " or whichever hotstring was invoked.
+    ; SubString(..., 5, 2) Extracts the punctuation mark and 1 space
+    Send, % SubStr(A_ThisLabel, 5, 2)
     SoundBeep, 750, 500
 return
 
