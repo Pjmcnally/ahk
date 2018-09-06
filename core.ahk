@@ -295,7 +295,8 @@ return
 :?*:.  ::
     ; A_ThisLabel = ":?*:!  " or whichever hotstring was invoked.
     ; SubString(..., 5, 2) Extracts the punctuation mark and 1 space
-    Send, % SubStr(A_ThisLabel, 5, 2)
+    str := SubStr(A_ThisLabel, 5, 2)
+    SendRaw, % str  ; SendRaw so "!" isn't interpreted as "alt"
     SoundBeep, 750, 500
 return
 
