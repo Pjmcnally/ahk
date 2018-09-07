@@ -118,28 +118,28 @@ PandoraClose() {
 ; This hotkey plays/pauses the Windows Pandora client
 F7::  ; F11
     PandoraPlay()
-return
+Return
 
 
 ; This hotkey skips to the next song on the Windows Pandora Client
 F8::  ; F12
     PandoraNext()
-return
+Return
 
 
 ; This hotkey Maximizes or Minimize the Windows Pandora Client
 ^F7::  ; CTRL-F11
     PandoraMinMax()
-return
+Return
 
 
 ; This hotkey resets (stops and starts) the Windows Pandora Client
 +F7::  ; Shift-F11
     PandoraReset()
-return
+Return
 
 
 ; This hotkey closes the Windows Pandora Client
 ^!F7::  ; CTRL-ALT-F11
     PandoraClose()
-return
+Return

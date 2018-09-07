@@ -15,7 +15,7 @@
     SetMouseDelay 50  ; To be modified for this script
     main()
     SetMouseDelay 10  ; Return to default value
-return
+Return
 
 
 main() {
@@ -38,7 +38,7 @@ getNumPacks() {
         if ErrorLevel
             Exit
     }
-    return num
+Return num
 }
 
 
@@ -66,7 +66,7 @@ shuffle(a) {
         temp := a[i], a[i] := a[j], a[j] := temp  ; swap values at i and j in array
         i -= 1
     }
-    return a
+Return a
 }
 
 ; This should always be at the bottom

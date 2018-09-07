@@ -52,7 +52,7 @@ F1:: ;Gear Switcher
     Click 1739, 483, up
     send, {Space}
     BlockInput, Off
-return
+Return
 
 ; This should always be at the bottom
 #IfWinActive ; End #IfWinActive for Diablo 3

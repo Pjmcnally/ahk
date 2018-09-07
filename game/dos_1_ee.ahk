@@ -29,7 +29,7 @@ always_show_loot() {
 }
 
 get_asl_keybind() {
-    return "F10"
+Return "F10"
 }
 
 build_asl_gui(state) {
@@ -44,12 +44,12 @@ build_asl_gui(state) {
 
 get_gui_id(gui_name) {
     Gui, %gui_name%:+LastFoundExist
-    return WinExist()  ; return ID of the last found window or "0x0" if not found
+Return WinExist()  ; return ID of the last found window or "0x0" if not found
 }
 
 destroy_gui(gui_name) {
     Gui, %gui_name%:Destroy
-    return
+Return
 }
 
 update_gui(gui_name, state) {

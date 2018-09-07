@@ -25,11 +25,11 @@ F1:: ;Gear Switcher
     click 325, 550 ; click to dismiss army
     click 950, 600 ; click to confirm prompt
     BlockInput, Off
-return
+Return
 
 F2:: ;new dragon eye
     SendInput item addon3_artefact_eye_of_drakkentir
-return
+Return
 
 ; This should always be at the bottom
 #IfWinActive ; End #IfWinActive for Kings Bounty

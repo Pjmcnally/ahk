@@ -6,7 +6,7 @@ genArray(len, start := 1, step := 1) {
         array.Push(x)
     }
 
-    return array
+Return array
 }
 
 
@@ -26,7 +26,7 @@ generateRandArrayFile(len, num) {
     }
     file.Close()
 
-    return file_name
+Return file_name
 }
 
 
@@ -53,7 +53,7 @@ readRandArrayFile(name) {
     }
     file.close()
 
-    return res_name
+Return res_name
 }
 
 
@@ -65,7 +65,7 @@ arrayAsStr(array) {
     }
     StringTrimRight, str, str, 2
     str := str . "]`r`n"
-    return str
+Return str
 }
 
 
@@ -79,7 +79,7 @@ genRandomArray(array) {
 
     a := [array.clone()]  ; Copy of array so original is not changed
     shuffle(a)
-    return a
+Return a
 }
 
 
@@ -92,7 +92,7 @@ shuffle(a) {
         temp := a[i], a[i] := a[j], a[j] := temp  ; swap values at i and j in array
         i -= 1
     }
-    return a
+Return a
 }
 
 
@@ -109,12 +109,12 @@ range(start, stop:="", step:=1) {
     ; For a negative 'step', the constraints are i >= 0 and r[i] > stop
     ; No result is returned if r[0] does not meet the value constraint
     if (step > 0 ? start < stop : start > stop) ;// start == start + step*0
-        return { base: range, start: start, stop: stop, step: step }
+Return { base: range, start: start, stop: stop, step: step }
 }
 
 _RangeNewEnum(r) {
     static enum := { "Next": Func("_RangeEnumNext") }
-    return { base: enum, r: r, i: 0 }
+Return { base: enum, r: r, i: 0 }
 }
 
 _RangeEnumNext(enum, ByRef k, ByRef v:="") {
@@ -122,5 +122,5 @@ _RangeEnumNext(enum, ByRef k, ByRef v:="") {
     , k := enum.r.start + step*enum.i
     if (ret := step > 0 ? k < stop : k > stop)
         enum.i += 1
-    return ret
+Return ret
 }

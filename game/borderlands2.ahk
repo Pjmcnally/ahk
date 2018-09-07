@@ -11,7 +11,7 @@
     Send {shift up}
     Send {shift down}
     Send {shift up}
-return
+Return
 
 
 ~$s::  ; Stop running.
@@ -20,7 +20,7 @@ return
         Send {w up}
         Send {shift up}
     }
-return
+Return
 
 
 ; ~$a::
@@ -29,7 +29,7 @@ return
 ;     Send {w up}
 ;     Send {shift up}
 ; }
-; return
+; Return
 
 
 ; ~$d::
@@ -38,7 +38,7 @@ return
 ;     Send {w up}
 ;     Send {shift up}
 ; }
-; return
+; Return
 
 
 t::  ; Stop running.
@@ -51,7 +51,7 @@ t::  ; Stop running.
         Send {w down}
         Send {shift down}
     }
-return
+Return
 
 ; This should always be at the bottom
 #IfWinActive ; End #IfWinActive for Borderlands

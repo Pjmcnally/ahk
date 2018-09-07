@@ -67,14 +67,14 @@ FileName:="WinPos.txt"
 
   ;Restore window that was active at beginning of script
   WinActivate, %SavedActiveWindow%
-return
+Return
 
 
 ;Win-Shift-0 (Save current windows to file)
 #+0::
 
  MsgBox, 4,Dock Windows,Save window positions?
- IfMsgBox, NO, return
+ IfMsgBox, NO, Return
 
  WinGetActiveTitle, SavedActiveWindow
 
@@ -82,7 +82,7 @@ return
  if !IsObject(file)
  {
     MsgBox, Can't open "%FileName%" for writing.
-    return
+Return
  }
 
   line:= SectionHeader() . CrLf
@@ -110,7 +110,7 @@ return
 
   ;Restore active window
   WinActivate, %SavedActiveWindow%
-return
+Return
 
 ; -------
 
@@ -124,7 +124,7 @@ SectionHeader()
         WinGetPos, x, y, Width, Height, Program Manager
     line:= line . "; Desktop size:" . x . "," . y . "," . width . "," . height
 
-    return %line%
+Return %line%
 }
 
 ;<EOF>

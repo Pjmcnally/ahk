@@ -9,7 +9,7 @@ open_comics(){
     */
     Input, num, L1 T3, {Tab}{Enter}{Space}
     If num is not Integer
-        return
+Return
 
     i := 0
     num := (num = 0 ? 10 : num) ; If input is 0 set val to 10
@@ -24,6 +24,6 @@ open_comics(){
 
 ^j::
     open_comics()
-return
+Return
 
 #IfWinActive ; Clear IfWinActive

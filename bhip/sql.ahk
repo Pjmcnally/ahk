@@ -37,10 +37,10 @@ ROLLBACK
 ; ==============================================================================
 :o:bt::
     begin_tran()
-return
+Return
 
 :o:pmc::
     check_process_mon()
-return
+Return
 
 #IfWinActive ; End SQL Hotstrings

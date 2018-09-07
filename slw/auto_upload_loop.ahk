@@ -10,7 +10,7 @@
 #c::
 #z::
     main() ; Runs entire script
-return
+Return
 
 main() {
     ; Create instance of UploadSession
@@ -193,6 +193,6 @@ isNotInt(str) {
     ; function to check if value is integer.
     ; I am not sure why but this doesn't work in-line so I had to make a little function to do it.
     if str is not integer
-        return True
-    return False
+Return True
+Return False
 }

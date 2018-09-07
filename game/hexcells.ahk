@@ -27,6 +27,6 @@ quit_func() {
 ; Hotkey to make escape do what it should in this otherwise awesome game
 Escape::
     quit_func()
-return
+Return
 
 #IfWinActive

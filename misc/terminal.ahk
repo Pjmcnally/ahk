@@ -22,11 +22,11 @@ paste_terminal(str) {
 
 ^v::  ; Replace paste functionality in PowerShell Terminal
     paste_terminal(clipboard)
-return
+Return
 
 ^c::  ; Replace copy functionality in PowerShell Terminal
     Send, !{Space}
     Send, e{Enter}
-return
+Return
 
 #IfWinActive

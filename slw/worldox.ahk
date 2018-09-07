@@ -56,7 +56,7 @@ splitMatterNum(str) {
         cont_num := SubStr(remainder, 5, 2)
 
     num := {"raw": str, "client_num": client_num, "family_num": family_num, "c_code": c_code, "cont_num": cont_num}
-    return num
+Return num
 }
 
 
@@ -66,19 +66,19 @@ splitMatterNum(str) {
 ; Worldox save hotstrings
 :co:wcomm::
     worldoxSave("IDS Comm", "ids")
-return
+Return
 
 :co:wccca::
     worldoxSave("IDS CCCA", "comm")
-return
+Return
 
 :co:wxmit::
     worldoxSave("IDS Xmit", "xmit")
-return
+Return
 
 :co:w1449::
     worldoxSave("IDS 1449", "ids")
-return
+Return
 
 :co:wnum::
     num := splitMatterNum(clipboard)
@@ -91,4 +91,4 @@ return
     SendInput {Tab}
     SendInput % num["cont_num"]
     SendInput {Enter}
-return
+Return

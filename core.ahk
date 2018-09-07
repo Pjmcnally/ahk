@@ -35,7 +35,7 @@ GroupAdd, consoles, ahk_exe powershell_ise.exe
 GroupAdd, consoles, ahk_exe RDCMan.exe
 GroupAdd, consoles, ahk_exe Code.exe
 
-return  ; End of Auto-Execute Section
+Return  ; End of Auto-Execute Section
 
 ; Universal Functions:
 ; ==============================================================================
@@ -58,7 +58,7 @@ get_highlighted(persist=TRUE, e=TRUE) {
     ClipWait, 2, 1
     if (ErrorLevel and e) {
         MsgBox, % "No text selected.`r`n`r`nPlease select text and try again."
-        return
+Return
     } else if (ErrorLevel and not e) {
         res :=
     } else {
@@ -70,7 +70,7 @@ get_highlighted(persist=TRUE, e=TRUE) {
         ClipSaved =
     }
 
-    return res
+Return res
 }
 
 paste_contents(str) {
@@ -93,7 +93,7 @@ paste_contents(str) {
     Clipboard := ClipSaved
     ClipSaved =
 
-    return
+Return
 }
 
 clip_func(func) {
@@ -114,7 +114,7 @@ clip_func(func) {
         paste_contents(res)
     }
 
-    return
+Return
 }
 
 timer_wrapper(func, args:="") {
@@ -151,35 +151,35 @@ milli_to_hhmmss(milli) {
     sec := mod(milli //= 1000, 60)
     min := mod(milli //= 60, 60)
     hou := milli // 60
-    return Format("{1:02d}:{2:02d}:{3:02d}.{4:03d}", hou, min, sec, mil)
+Return Format("{1:02d}:{2:02d}:{3:02d}.{4:03d}", hou, min, sec, mil)
 }
 
 string_upper(string) {
     /*  Call stringUpper as a function (not command)
     */
     StringUpper, res, string
-    return res
+Return res
 }
 
 string_lower(string) {
     /*  Call stringLower as a function (not command)
     */
     StringLower, res, string
-    return res
+Return res
 }
 
 string_hyphenate(string) {
     /*  Function to replace all spaces with hyphens '-'
     */
     res := StrReplace(string, " ", "-")
-    return res
+Return res
 }
 
 string_underscore(string) {
     /*  Function to replace all spaces with underscore '_'
     */
     res := StrReplace(string, " ", "_")
-    return res
+Return res
 }
 
 f_date(date:="", format:="MM-dd-yyyy") {
@@ -192,7 +192,7 @@ f_date(date:="", format:="MM-dd-yyyy") {
             str: Date in specified format
     */
     FormatTime, res, %date%, %format%
-    return res
+Return res
 }
 
 send_outlook_email(subject, body, recipients := "") {
@@ -211,7 +211,7 @@ send_outlook_email(subject, body, recipients := "") {
     Send, %subject%{Tab}
     Send, % body
 
-    return
+Return
 }
 
 click_and_return(x_dest, y_dest, speed:=0) {
@@ -223,16 +223,16 @@ click_and_return(x_dest, y_dest, speed:=0) {
     Sleep 10  ; For stability and consistent results, increase if issues occur.
     Click Up
     MouseMove, % x_orig, y_orig, 0
-    return
+Return
 }
 
 HasVal(haystack, needle) {
     if !(IsObject(haystack)) || (haystack.Length() = 0)
-        return 0
+Return 0
     for index, value in haystack
         if (value = needle)
-            return index
-    return 0
+Return index
+Return 0
 }
 
 SendWait(msg, wait:=0) {
@@ -254,43 +254,43 @@ SendLines(iter, wait:=0) {
 ^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
     ; I cant KeyWait here or it won't work. Also it is unnecessary.
     Pause, Toggle
-return
+Return
 
 ^!Space::  ; Assign Ctrl-Alt-Spacebar to suspend all hotkeys
     ; I cant KeyWait here or it won't work. Also it is unnecessary.
     Suspend, Toggle
-return
+Return
 
 ^!r::  ; Assign Ctrl-Alt-R as a hotkey to reload active script.
     KeyWait ctrl
     KeyWait alt
     Reload
-return
+Return
 
 ^!u::  ; Ctrl-Alt-U to uppercase any highlighted text
     KeyWait ctrl
     KeyWait alt
     clip_func("string_upper")
-return
+Return
 
 ^!l::  ; Ctrl-Alt-L to lowercase all highlighted text
     KeyWait ctrl
     KeyWait alt
     clip_func("string_lower")
-return
+Return
 
 ^!-:: ; Ctrl-Alt-Hyphen to Hyphenate all text
     KeyWait ctrl
     KeyWait alt
     clip_func("string_hyphenate")
-return
+Return
 
 ^!+_:: ; Ctrl-Alt-Shift-Underscore to underscore all text
     KeyWait ctrl
     KeyWait alt
     KeyWait shift
     clip_func("string_underscore")
-return
+Return
 
 :?*:!  ::  ; I am trying to break the habit of double spacing after a sentence.
 :?*:?  ::
@@ -300,9 +300,9 @@ return
     str := SubStr(A_ThisLabel, 5, 2)
     SendRaw, % str  ; SendRaw so "!" isn't interpreted as "alt"
     SoundBeep, 750, 500
-return
+Return
 
 ^!t::  ; Ctrl-Alt-T for temp function/hotkeys (one-offs uses or testing)
     KeyWait ctrl
     KeyWait alt
-return
+Return

@@ -62,19 +62,19 @@ openAll(array){
 ; Minimize all windows (listed above)
 ^!m::
   minimizeAll(folder_list)
-return
+Return
 
 
 ; Restore all minimized windows (listed above)
 ^!r::
   restoreAll(folder_list)
-return
+Return
 
 
 ; Close all windows (listed above)
 ^!c::
   closeAll(folder_list)
-return
+Return
 
 
 ;Restore window positions from file
@@ -139,7 +139,7 @@ return
 
   ;Restore window that was active at beginning of script
   WinActivate, %SavedActiveWindow%
-return
+Return
 
 
 ;Win-Shift-0 (Save current windows to file)
@@ -147,7 +147,7 @@ return
 
   ; Check before process.
   MsgBox, 4,Dock Windows,Save window positions?
-  IfMsgBox, NO, return
+  IfMsgBox, NO, Return
 
   ; Save Currently active window.
   WinGetActiveTitle, SavedActiveWindow
@@ -157,7 +157,7 @@ return
   if !IsObject(file)
   {
   MsgBox, Can't open "%FileName%" for writing.
-  return
+Return
   }
 
   ; Write Section header to file.
@@ -186,7 +186,7 @@ return
 
   ;Restore active window
   WinActivate, %SavedActiveWindow%
-return
+Return
 
 ; -------
 
@@ -197,7 +197,7 @@ SectionHeader()
   SysGet, MonPrim, MonitorPrimary
   WinGetPos, x, y, Width, Height, Program Manager
 
-  return "SECTION: Monitors=" . MonCt . ",MonitorPrimary=" . MonPrim
+Return "SECTION: Monitors=" . MonCt . ",MonitorPrimary=" . MonPrim
        . "; Desktop size:" . x . "," . y . "," . width . "," . height
 }
 

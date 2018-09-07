@@ -94,7 +94,7 @@ format_jira(str) {
         }
     }
 
-    return res
+Return res
 }
 
 format_db_for_jira() {
@@ -118,7 +118,7 @@ format_db_for_jira() {
     }
 
     paste_contents(res)
-    return
+Return
 }
 
 paste_as_sql_list() {
@@ -135,7 +135,7 @@ paste_as_sql_list() {
     }
     paste_contents(str)
 
-    return
+Return
 }
 
 ; Hotstrings & Hotkeys in this module
@@ -154,30 +154,30 @@ paste_as_sql_list() {
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 :o:psig::
     SendLines(["Patrick McNally", "DevOps Support", get_my_bhip_email()])
-return
+Return
 
 ; Complex Hotkeys
 ^!v::  ; ctrl-alt-v
     KeyWait ctrl
     KeyWait alt
     format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
-return
+Return
 
 ^!f::  ; ctrl-alt-f
     KeyWait ctrl
     KeyWait alt
     clip_func("format_jira")  ; Run "format_jira" func on selected text
-return
+Return
 
 ^!d::  ; ctrl-alt-d
     KeyWait ctrl
     KeyWait alt
     fill_scrape_mail_date()
-return
+Return
 
 ^+!l::  ; ctrl-alt-shift-l
     KeyWait ctrl
     KeyWait alt
     KeyWait shift
     paste_as_sql_list()
-return
+Return

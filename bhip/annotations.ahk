@@ -22,10 +22,10 @@ get_choice(title, prompt, array) {
     ; Wait for response return if received else error.
     WinWaitClose, % title
     if (format_choice) {
-        return format_choice
+Return format_choice
     } else {
         ErrorLevel = 1
-        return
+Return
     }
 
     ; Button handlers
@@ -34,7 +34,7 @@ get_choice(title, prompt, array) {
     choiceGuiClose:
     ButtonCancel:
         Gui Destroy
-    return
+Return
 }
 
 
@@ -147,7 +147,7 @@ review_files() {
 
     Progress, Off
 
-    return
+Return
 }
 
 rename_adobe_bookmarks() {
@@ -196,12 +196,12 @@ rename_adobe_bookmarks() {
 
 ^+!e::
     convert_pdf()
-return
+Return
 
 ^+!r::
     review_files()
-return
+Return
 
 ^!a::
     rename_adobe_bookmarks()
-return
+Return

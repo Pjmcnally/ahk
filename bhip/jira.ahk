@@ -35,7 +35,7 @@ close_issue() {
 !c::
     KeyWait Alt
     close_issue()
-return
+Return
 
 
 
