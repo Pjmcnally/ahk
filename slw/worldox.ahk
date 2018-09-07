@@ -56,7 +56,7 @@ splitMatterNum(str) {
         cont_num := SubStr(remainder, 5, 2)
 
     num := {"raw": str, "client_num": client_num, "family_num": family_num, "c_code": c_code, "cont_num": cont_num}
-Return num
+    Return num
 }
 
 
