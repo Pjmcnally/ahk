@@ -45,7 +45,7 @@ splitMatterNum(str) {
     if InStr(c_temp, "U") {
         c_code := "US"
     } else {
-        MsgBox Invald country
+        MsgBox, % "Invalid country"
         Exit
     }
 

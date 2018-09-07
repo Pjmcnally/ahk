@@ -25,7 +25,7 @@ paste_terminal(str) {
 return
 
 ^c::  ; Replace copy functionality in PowerShell Terminal
-    Send, !{space}
+    Send, !{Space}
     Send, e{Enter}
 return
 

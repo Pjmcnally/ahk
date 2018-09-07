@@ -60,7 +60,7 @@ class UploadSession {
 
     setupBrowser() {
         ; Set input mode per browser
-        if (browswer = "firefox.exe") { ; Firefox works better (but not completely) with Send mode
+        if (browser = "firefox.exe") { ; Firefox works better (but not completely) with Send mode
             SetKeyDelay, % UploadSession.submitDelay
         } else {
             SendMode, Input ; SendInput is better and Chrome and IE both work with it.
@@ -72,7 +72,7 @@ class UploadSession {
         ; using AutoHotkey WindowSpy. Right click on AutoHotkey icon in task bar to run.
         browserDict := {"chrome.exe": {"upload": "Open", "normal": "United States Patent & Trademark Office - Google Chrome"}
             , "firefox.exe": {"upload": "File Upload", "normal": "United States Patent & Trademark Office - Mozilla Firefox"} ; doesn't actually work.
-            , "IEXPLORE.EXE": {"upload": "Choose File to Upload", "normal": "United States Patent & Trademark Office - Internet Explorer"}}
+            , "iexplore.EXE": {"upload": "Choose File to Upload", "normal": "United States Patent & Trademark Office - Internet Explorer"}}
 
         This.upload_window := browserDict[This.window]["upload"]
         This.browser_window := browserDict[This.window]["normal"]
@@ -80,7 +80,7 @@ class UploadSession {
 
     getDirectory() {
         ; Asks user which directory they would like to upload from. If no response uses default directory.
-        InputBox, directory, Directory, Please enter the directory containg the references.
+        InputBox, directory, Directory, Please enter the directory containing the references.
         if ErrorLevel
             Exit
 
@@ -159,18 +159,18 @@ class UploadSession {
         WinWaitActive, % This.upload_window,
         Send, %file%
         Sleep, % UploadSession.submitDelay
-        Send, {ENTER}
+        Send, {Enter}
         Sleep, % UploadSession.submitDelay
 
         IfWinNotActive, % This.browser_window, , WinActivate, % This.browser_window,
         WinWaitActive, % This.browser_window
         ; Sleep, 10000  ; Wait for file to be "received" only use when virtual desktop is behaving weirdly
-        Send, {TAB}i
+        Send, {Tab}i
         if (A_Index <= This.foreign_count) {
             ; Sleep, % UploadSession.submitDelay ; option sleep if going to fast for computer. Remove first ";" to activate
-            Send, {TAB}f
+            Send, {Tab}f
         } else {
-            Send, {TAB}n
+            Send, {Tab}n
             ; Sleep, % UploadSession.submitDelay ; option sleep if going to fast for computer. Remove first ";" to activate
         }
         Sleep, % UploadSession.submitDelay
@@ -179,11 +179,11 @@ class UploadSession {
     openUploadWindow() {
         ; Function to enter keyboard commands to open upload window to prep for next reference.
         if (This.window = "firefox.exe") {  ; Doesn't actually work.
-            Send, {TAB 3}{SPACE}{SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
+            Send, {Tab 3}{Space}{ShiftDown}{Tab 5}{ShiftUp}{Space}
         } else {
-            Send, {TAB 3}{SPACE}
+            Send, {Tab 3}{Space}
             Sleep % UploadSession.submitDelay
-            Send, {SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
+            Send, {ShiftDown}{Tab 5}{ShiftUp}{Space}
             Sleep % UploadSession.submitDelay
         }
     }

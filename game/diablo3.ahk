@@ -50,7 +50,7 @@ F1:: ;Gear Switcher
     ; Boots
     Click 433, 738, down
     Click 1739, 483, up
-    send, {space}
+    send, {Space}
     BlockInput, Off
 return
 
