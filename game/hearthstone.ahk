@@ -38,7 +38,7 @@ getNumPacks() {
         if ErrorLevel
             Exit
     }
-Return num
+    Return num
 }
 
 
@@ -66,7 +66,7 @@ shuffle(a) {
         temp := a[i], a[i] := a[j], a[j] := temp  ; swap values at i and j in array
         i -= 1
     }
-Return a
+    Return a
 }
 
 ; This should always be at the bottom

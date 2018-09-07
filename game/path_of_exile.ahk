@@ -6,7 +6,7 @@ getItemName(str) {
     */
 
     Array := StrSplit(str, "`r", "`n")
-Return Array[2]
+    Return Array[2]
 }
 
 checkPoePrice() {

@@ -94,7 +94,7 @@ format_jira(str) {
         }
     }
 
-Return res
+    Return res
 }
 
 format_db_for_jira() {
@@ -118,7 +118,7 @@ format_db_for_jira() {
     }
 
     paste_contents(res)
-Return
+    Return
 }
 
 paste_as_sql_list() {
@@ -135,7 +135,7 @@ paste_as_sql_list() {
     }
     paste_contents(str)
 
-Return
+    Return
 }
 
 ; Hotstrings & Hotkeys in this module
