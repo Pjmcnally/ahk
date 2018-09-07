@@ -39,7 +39,7 @@ return  ; End of Auto-Execute Section
 
 ; Universal Functions:
 ; ==============================================================================
-get_highlighted(persist=TRUE) {
+get_highlighted(persist=TRUE, e=TRUE) {
     /*  Return whatever text is currently highlighted in the active window.
 
         Args:
@@ -56,12 +56,14 @@ get_highlighted(persist=TRUE) {
 
     Send ^c
     ClipWait, 2, 1
-    if ErrorLevel {
+    if (ErrorLevel and e) {
         MsgBox, % "No text selected.`r`n`r`nPlease select text and try again."
         return
+    } else if (ErrorLevel and not e) {
+        res :=
+    } else {
+        res := Clipboard
     }
-
-    res := Clipboard
 
     if (persist) {
         Clipboard := ClipSaved
