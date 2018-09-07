@@ -20,13 +20,13 @@ modules that this module is imported.
 
 ; Auto-Execute Section (All core Auto-Execute commands should go here)
 ; ==============================================================================
-#SingleInstance, Force          ; Automatically replaces old script with new if the same script file is rune twice
-#NoEnv                          ; Avoids checking empty variables to see if they are environment variables (recommended for all new scripts).
-#Warn                           ; Enable warnings to assist with detecting common errors. (More explicit)
-#Hotstring EndChars `n `t       ; Limits hotstring ending characters to {Enter}{Tab}{Space}
-SendMode Input                  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir, %A_ScriptDir%    ; Ensures a consistent starting directory.
-SetTitleMatchMode, 2            ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
+#SingleInstance, Force              ; Automatically replaces old script with new if the same script file is rune twice
+#NoEnv                              ; Avoids checking empty variables to see if they are environment variables (recommended for all new scripts).
+#Warn                               ; Enable warnings to assist with detecting common errors. (More explicit)
+#Hotstring EndChars `n `t           ; Limits hotstring ending characters to {Enter}{Tab}{Space}
+SendMode Input                      ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir, %A_ScriptDir%\..     ; Ensures a consistent starting directory. Relative path to AHK folder from core.ahk.
+SetTitleMatchMode, 2                ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
 
 ; Create group of consoles for git commands
 GroupAdd, consoles, ahk_exe pwsh.exe
@@ -58,7 +58,7 @@ get_highlighted(persist=TRUE, e=TRUE) {
     ClipWait, 2, 1
     if (ErrorLevel and e) {
         MsgBox, % "No text selected.`r`n`r`nPlease select text and try again."
-Return
+        Return
     } else if (ErrorLevel and not e) {
         res :=
     } else {
@@ -70,7 +70,7 @@ Return
         ClipSaved =
     }
 
-Return res
+    Return res
 }
 
 paste_contents(str) {
@@ -93,7 +93,7 @@ paste_contents(str) {
     Clipboard := ClipSaved
     ClipSaved =
 
-Return
+    Return
 }
 
 clip_func(func) {
@@ -114,7 +114,7 @@ clip_func(func) {
         paste_contents(res)
     }
 
-Return
+    Return
 }
 
 timer_wrapper(func, args:="") {
@@ -151,35 +151,35 @@ milli_to_hhmmss(milli) {
     sec := mod(milli //= 1000, 60)
     min := mod(milli //= 60, 60)
     hou := milli // 60
-Return Format("{1:02d}:{2:02d}:{3:02d}.{4:03d}", hou, min, sec, mil)
+    Return Format("{1:02d}:{2:02d}:{3:02d}.{4:03d}", hou, min, sec, mil)
 }
 
 string_upper(string) {
     /*  Call stringUpper as a function (not command)
     */
     StringUpper, res, string
-Return res
+    Return res
 }
 
 string_lower(string) {
     /*  Call stringLower as a function (not command)
     */
     StringLower, res, string
-Return res
+    Return res
 }
 
 string_hyphenate(string) {
     /*  Function to replace all spaces with hyphens '-'
     */
     res := StrReplace(string, " ", "-")
-Return res
+    Return res
 }
 
 string_underscore(string) {
     /*  Function to replace all spaces with underscore '_'
     */
     res := StrReplace(string, " ", "_")
-Return res
+    Return res
 }
 
 f_date(date:="", format:="MM-dd-yyyy") {
@@ -192,7 +192,7 @@ f_date(date:="", format:="MM-dd-yyyy") {
             str: Date in specified format
     */
     FormatTime, res, %date%, %format%
-Return res
+    Return res
 }
 
 send_outlook_email(subject, body, recipients := "") {
@@ -211,7 +211,7 @@ send_outlook_email(subject, body, recipients := "") {
     Send, %subject%{Tab}
     Send, % body
 
-Return
+    Return
 }
 
 click_and_return(x_dest, y_dest, speed:=0) {
@@ -223,16 +223,16 @@ click_and_return(x_dest, y_dest, speed:=0) {
     Sleep 10  ; For stability and consistent results, increase if issues occur.
     Click Up
     MouseMove, % x_orig, y_orig, 0
-Return
+    Return
 }
 
 HasVal(haystack, needle) {
     if !(IsObject(haystack)) || (haystack.Length() = 0)
-Return 0
+        Return 0
     for index, value in haystack
         if (value = needle)
-Return index
-Return 0
+        Return index
+    Return 0
 }
 
 SendWait(msg, wait:=0) {
