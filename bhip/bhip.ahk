@@ -148,14 +148,9 @@ Return
 Return
 
 ^!d::  ; ctrl-alt-d
-    KeyWait ctrl
-    KeyWait alt
     fill_scrape_mail_date()
 Return
 
 ^+!l::  ; ctrl-alt-shift-l
-    KeyWait ctrl
-    KeyWait alt
-    KeyWait shift
     paste_as_sql_list()
 Return
