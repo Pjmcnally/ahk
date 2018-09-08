@@ -132,7 +132,7 @@ timer_wrapper(func, args:="") {
     */
     start_time := A_TickCount
 
-    %func%(%args%)
+    %func%(args)
 
     end_time := A_TickCount
     t_diff := end_time - start_time
