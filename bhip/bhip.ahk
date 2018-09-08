@@ -64,6 +64,16 @@ format_jira(str) {
     CrLf := "`r`n"
     empty_count := 0
 
+    /*  New approach to this: Don't examine each line individually. Examine the
+        Text as a whole:
+
+        str := Clipboard
+
+        new := RegExReplace(str, "s){color.*?}(.*?){color}", "$1")
+        new := RegExReplace(new, "`a)(`r`n){3,}", "`r`n`r`n")
+    */
+
+
     Loop, parse, str, `n, `r
     {
         line := A_LoopField
