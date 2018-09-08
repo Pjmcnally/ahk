@@ -140,16 +140,11 @@ paste_as_sql_list() {
 
 ; Complex Hotkeys
 ^!v::  ; ctrl-alt-v
-    KeyWait ctrl
-    KeyWait alt
     format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
 Return
 
 ^!f::  ; ctrl-alt-f
-    KeyWait ctrl
-    KeyWait alt
-    timer_wrapper("clip_func", "format_jira")
-    ; clip_func("format_jira")  ; Run "format_jira" func on selected text
+    clip_func("format_jira")  ; Run "format_jira" func on selected text
 Return
 
 ^!d::  ; ctrl-alt-d
