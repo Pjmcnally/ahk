@@ -262,8 +262,6 @@ Return
 Return
 
 ^!r::  ; Assign Ctrl-Alt-R as a hotkey to reload active script.
-    KeyWait ctrl
-    KeyWait alt
     Reload
 Return
 
@@ -302,7 +300,13 @@ Return
     SoundBeep, 750, 500
 Return
 
+
+; Testing Hotstrings:
+; ==============================================================================
+test_func() {
+    Return
+}
+
 ^!t::  ; Ctrl-Alt-T for temp function/hotkeys (one-offs uses or testing)
-    KeyWait ctrl
-    KeyWait alt
+    test_func()
 Return
