@@ -60,51 +60,23 @@ format_jira(str) {
         Return:
             str: The cleaned text.
     */
-    res := ""
-    CrLf := "`r`n"
-    empty_count := 0
 
-    /*  New approach to this: Don't examine each line individually. Examine the
-        Text as a whole:
+    str := RegExReplace(str, "\xA0+", " ")  ; Replace all Non-breaking spaces with normal ones
+    str := RegExReplace(str, "\*?{color.*?}(.*?){color}\*?", "$1")  ; Remove all {color tags} and linked * tags leaving surrounding text.
+    str := RegexReplace(str, "\*(.*?)\*", "$1")  ; Remove all * tags leaving surrounded text
+    str := RegExReplace(str, "\_(.*?)\_", "$1")  ; Remove all _ tags leaving surrounded text
+    str := RegexReplace(str, "\+(.*?)\+", "$1")  ; Remove all + tags leaving surrounded text
+    str := RegExReplace(str, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Convert double brackets to single.
+    str := RegExReplace(str, "(?:(\[)\s+|\s+(\]))", "$1$2")  ; Remove any spaces immediately inside of open bracket or before closing bracket
+    str := RegExReplace(str, "\[(.*?)\|\]", "$1")  ; Remove any link tags with no link content
+    str := RegExReplace(str, "m)^ *(.*?) *$", "$1")  ; Trim spaces from beginning and end of lines
+    str := RegExReplace(str, "`a)(`r`n){2}", "`r`n")  ; Collapse any single empty lines.
+    str := RegExReplace(str, "`a)(`r`n){3,}", "`r`n`r`n")  ; Reduce any stretch of multiple empty lines to 1 empty line.
+    str := RegExReplace(str, "^([fF]rom:.*)$", "----`r`n`r`n$1")  ; Add ---- divider before next email
+    str := RegExReplace(str, get_bhip_sig_address())  ; Remove BHIP address block
+    str := RegExReplace(str, get_bhip_sig_conf())  ; Remove bhip conf statement
 
-        str := Clipboard
-
-        new := RegExReplace(str, "s){color.*?}(.*?){color}", "$1")
-        new := RegExReplace(new, "`a)(`r`n){3,}", "`r`n`r`n")
-    */
-
-
-    Loop, parse, str, `n, `r
-    {
-        line := A_LoopField
-        line := RegExReplace(line, "\xA0+")  ; Remove all Non-breaking spaces
-        line := RegExReplace(line, "{color.*?}")  ; Remove all {color} tags
-        line := RegexReplace(line, "\*\s*(.*?)\s*\*", "$1")  ; Remove all * tags leaving surrounded text
-        line := RegexReplace(line, "\+\s*(.*?)\s*\+", "$1")  ; Remove all + tags leaving surrounded text
-        line := RegExReplace(line, "\_\s*(.*?)\_\s*", "$1")  ; Remove all _ tags leaving surrounded text
-        line := RegExReplace(line, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Convert double brackets to single.
-        line := RegExReplace(line, "(?:(\[)\s+|\s+(\]))", "$1$2")  ; Remove any spaces immediately inside of open bracket or before closing bracket
-        line := RegExReplace(line, "\[(.*?)\|\]", "$1")  ; Remove any link tags with no link content
-        line := Trim(line)  ; Trim whitespace
-
-        ; Add separator before new email
-        if (RegexMatch(line, "^From:")) {
-            line := "----" . Crlf . CrLf . Line
-        }
-
-        ; Process lines into resulting string
-        if not (line) {  ; Some lines end up empty.  Consecutive empty lines are collapsed to 1.
-            empty_count += 1
-        } else if (line and empty_count > 1 ) {  ; If a line is preceded by multiple empty lines append it too string with preceding empty line
-            res := res . CrLf . line . Crlf
-            empty_count := 0
-        } else {  ; Otherwise just add to string.
-            res := res . line . CrLf
-            empty_count := 0
-        }
-    }
-
-    Return res
+    Return str
 }
 
 format_db_for_jira() {
@@ -162,9 +134,9 @@ paste_as_sql_list() {
 
 ; Signature/Ticket Hotstrings
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
-:o:psig::
-    SendLines(["Patrick McNally", "DevOps Support", get_my_bhip_email()])
-Return
+; :o:psig::
+;     SendLines(["Patrick McNally", "DevOps Support", get_my_bhip_email()])
+; Return
 
 ; Complex Hotkeys
 ^!v::  ; ctrl-alt-v
@@ -176,7 +148,8 @@ Return
 ^!f::  ; ctrl-alt-f
     KeyWait ctrl
     KeyWait alt
-    clip_func("format_jira")  ; Run "format_jira" func on selected text
+    timer_wrapper("clip_func", "format_jira")
+    ; clip_func("format_jira")  ; Run "format_jira" func on selected text
 Return
 
 ^!d::  ; ctrl-alt-d
