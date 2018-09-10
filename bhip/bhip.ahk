@@ -134,9 +134,9 @@ paste_as_sql_list() {
 
 ; Signature/Ticket Hotstrings
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
-; :o:psig::
-;     SendLines(["Patrick McNally", "DevOps Support", get_my_bhip_email()])
-; Return
+:o:psig::
+    SendLines(["Patrick McNally", "DevOps Support", get_my_bhip_email()])
+Return
 
 ; Complex Hotkeys
 ^!v::  ; ctrl-alt-v
