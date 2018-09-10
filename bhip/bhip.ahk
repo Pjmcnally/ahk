@@ -46,7 +46,7 @@ fill_scrape_mail_date() {
     }
 }
 
-format_jira(str) {
+format_jira_email(str) {
     /*  Reformat text sent into JIRA from Outlook email.
 
         Outlook add extra line breaks to emails sent to JIRA.  Also, JETI tries
@@ -144,7 +144,7 @@ Return
 Return
 
 ^!f::  ; ctrl-alt-f
-    clip_func("format_jira")  ; Run "format_jira" func on selected text
+    clip_func("format_jira_email")  ; Run "format_jira" func on selected text
 Return
 
 ^!d::  ; ctrl-alt-d
