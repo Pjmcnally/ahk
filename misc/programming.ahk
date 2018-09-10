@@ -8,17 +8,23 @@
 ; Hotstrings in this module
 ; ------------------------------------------------------------------------------
 ; Git hotkeys
-::gp::git push
-::gs::git status
-::gd::git diff
-::gfa::git fetch --all --prune
-:o:gc::git commit -m "
-:o:gca::git commit -am "
+:*:gp::git push
+:*:gs::git status
+:*:gd::git diff
+:*:gfa::git fetch --all --prune
+:*:gc::git commit -m "
+:*:gca::git commit -am "
 
 ; Django hotkeys
-:o:drun::python manage.py runserver
-:o:dmm::python manage.py makemigrations
-:o:dmig::python manage.py migrate
-:o:dcol::python manage.py collectstatic --noinput --clear
+:*:drun::python manage.py runserver
+:*:dmm::python manage.py makemigrations
+:*:dmig::python manage.py migrate
+:*:dcol::python manage.py collectstatic --noinput --clear
+
+; Annoying hotkey replacements
++Space::  ; Shift + Space doesn't seem to work in the terminal. This fixes that.
+    Send {Space}
+Return
+
 
 #IfWinActive ; Clear IfWinActive
