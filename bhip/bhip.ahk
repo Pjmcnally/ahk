@@ -62,7 +62,7 @@ format_jira(str) {
     */
 
     str := RegExReplace(str, "\xA0+", " ")  ; Replace all Non-breaking spaces with normal ones
-    str := RegExReplace(str, "\*?{color.*?}(.*?){color}\*?", "$1")  ; Remove all {color tags} and linked * tags leaving surrounding text.
+    str := RegExReplace(str, "s)\*?{color.*?}(.*?){color}\*?", "$1")  ; Remove all {color tags} and linked * tags leaving surrounding text.
     str := RegexReplace(str, "\*(.*?)\*", "$1")  ; Remove all * tags leaving surrounded text
     str := RegExReplace(str, "\_(.*?)\_", "$1")  ; Remove all _ tags leaving surrounded text
     str := RegexReplace(str, "\+(.*?)\+", "$1")  ; Remove all + tags leaving surrounded text
@@ -70,8 +70,8 @@ format_jira(str) {
     str := RegExReplace(str, "(?:(\[)\s+|\s+(\]))", "$1$2")  ; Remove any spaces immediately inside of open bracket or before closing bracket
     str := RegExReplace(str, "\[(.*?)\|\]", "$1")  ; Remove any link tags with no link content
     str := RegExReplace(str, "m)^ *(.*?) *$", "$1")  ; Trim spaces from beginning and end of lines
-    str := RegExReplace(str, "`a)(`r`n){2}", "`r`n")  ; Collapse any single empty lines.
-    str := RegExReplace(str, "`a)(`r`n){3,}", "`r`n`r`n")  ; Reduce any stretch of multiple empty lines to 1 empty line.
+    str := RegExReplace(str, "(\r\n|\r|\n){2}", "`r`n")  ; Collapse any single empty lines.
+    str := RegExReplace(str, "(\r\n|\r|\n){3,}", "`r`n`r`n")  ; Reduce any stretch of multiple empty lines to 1 empty line.
     str := RegExReplace(str, "^([fF]rom:.*)$", "----`r`n`r`n$1")  ; Add ---- divider before next email
     str := RegExReplace(str, get_bhip_sig_address())  ; Remove BHIP address block
     str := RegExReplace(str, get_bhip_sig_conf())  ; Remove bhip conf statement
