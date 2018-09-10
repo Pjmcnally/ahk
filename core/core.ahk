@@ -58,7 +58,7 @@ get_highlighted(persist=TRUE, e=TRUE) {
     ClipWait, 2, 1
     if (ErrorLevel and e) {
         MsgBox, % "No text selected.`r`n`r`nPlease select text and try again."
-        Return
+        Return ""
     } else if (ErrorLevel and not e) {
         res :=
     } else {
@@ -110,8 +110,7 @@ clip_func(func) {
     */
     str := get_highlighted()
     if (str) {
-        res := %func%(str)
-        paste_contents(res)
+        paste_contents(%func%(str))
     }
 
     Return
