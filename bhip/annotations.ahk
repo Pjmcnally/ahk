@@ -14,15 +14,15 @@ get_choice(title, prompt, array) {
     Gui, choice:New,, % title
     Gui, choice:Font, s12
     Gui, choice:Add, Text, , % prompt
-    Gui, choice:Add, ListBox, x25 y+10  vformat_choice, % l_box_string
+    Gui, choice:Add, ListBox, x25 y+10  vFormatChoice, % l_box_string
     Gui, choice:Add, Button, x35 y+20 gButtonOk, OK
     Gui, choice:Add, Button, x+65 gButtonCancel, Cancel
     Gui, choice:Show, ,
 
     ; Wait for response return if received else error.
     WinWaitClose, % title
-    if (format_choice) {
-        Return format_choice
+    if (FormatChoice) {
+        Return FormatChoice
     } else {
         ErrorLevel = 1
         Return
@@ -40,7 +40,7 @@ get_choice(title, prompt, array) {
 
 convert_pdf() {
     base_delay = 100  ; Do not set below 100
-    format_map := {"Text": "!fhmt", "Jpeg": "!fhij"}
+    format_map := {"Text": "!fhmt", "Jpeg": "!fhij"}  ; cspell: ignore fhmt, fhij
     formats := []
     for key, value in format_map
         formats.Push(key)

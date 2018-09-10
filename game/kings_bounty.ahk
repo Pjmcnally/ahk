@@ -1,4 +1,5 @@
 ; This is a hotstring I made to automatically adjust my army in Kings Bounty
+; cspell: disable
 
 #IfWinActive, kingsbounty
 F1:: ;Gear Switcher
