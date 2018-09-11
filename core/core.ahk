@@ -248,6 +248,23 @@ SendLines(iter, wait:=0) {
     }
 }
 
+dedent(str, spaces) {
+    /*  Removes a specified number of spaces from the beginning of each line.
+
+        Used to de-indent block strings. for example:
+        a :=
+        (
+            This string shouldn't have 12 spaces in front of it
+        )
+        a := dedent(a, 12)
+    */
+    res := ""
+    pattern := "`am)^\s{" . spaces . "}(.*)$"
+    res := RegExReplace(str, pattern, "$1")
+
+    return res
+}
+
 ; Universal Hotstrings:
 ; ==============================================================================
 ^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
