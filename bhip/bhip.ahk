@@ -123,9 +123,9 @@ paste_as_sql_list() {
 ; Hotstrings & Hotkeys in this module
 ; ==============================================================================
 ; Misc Hotstrings
-:co:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
-:co:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
-:co:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
+:o*:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
+:o*:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
+:o*:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
 :co:b1::BACKLOG 001!o
 
 ; Time tracking hotkeys
