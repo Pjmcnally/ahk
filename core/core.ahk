@@ -296,9 +296,11 @@ sort_files() {
 
     Loop, Files, % rev_dir "\*.*"
     {
-        Progress, %A_Index%, % "Sorting Files: " . A_Index "`r`n" . A_LoopFileName
+        Progress, %A_Index%, % "Sorting File: " . A_Index "`r`n" . A_LoopFileName
+
         Run, % A_LoopFileFullPath
         Sleep, 150
+
         dest := ""
         while (not dest) {
             Sleep, 10
@@ -311,8 +313,10 @@ sort_files() {
                 break
             }
         }
+
         Send, ^w
         Sleep, 150
+
         FileMove, % A_LoopFileFullPath, % dest
     }
 
