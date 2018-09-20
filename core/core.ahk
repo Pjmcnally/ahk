@@ -265,6 +265,62 @@ dedent(str, spaces) {
     return res
 }
 
+sort_files() {
+    /*  Sorts files into a "left" and "right" folder.
+
+        Source, Left and Right folder are provided through input boxes. Each
+        file in the Source folder will be run. Press the left or right arrow
+        key to move into the corresponding folder.
+    */
+    InputBox, rev_dir, % "Run folder", % "Please enter the folder location to sort:"
+    if ErrorLevel
+        Exit
+    IfNotExist, % rev_dir
+        Exit  ; TODO: Add error message here.
+
+    InputBox, left_fold, % "Left Folder", % "Please enter the LEFT folder:"
+    if ErrorLevel
+        Exit
+    IfNotExist, % left_fold
+        Exit  ; TODO: Add error message here.
+
+    InputBox, right_fold, % "Right Folder", % "Please enter the RIGHT folder:"
+    if ErrorLevel
+        Exit
+    IfNotExist, % right_fold
+        Exit  ; TODO: Add error message here.
+
+
+    total_count := ComObjCreate("Scripting.FileSystemObject").GetFolder(rev_dir).Files.Count
+    Progress, M2 R0-%total_count%, % "Files Done:`r`n0", % "Total Files: " . total_count, "Sorting Files"
+
+    Loop, Files, % rev_dir "\*.*"
+    {
+        Progress, %A_Index%, % "Sorting Files: " . A_Index "`r`n" . A_LoopFileName
+        Run, % A_LoopFileFullPath
+        Sleep, 150
+        dest := ""
+        while (not dest) {
+            Sleep, 10
+            if (GetKeyState("Left") = 1) {
+                dest := left_fold
+                break
+            }
+            if (GetKeyState("Right") = 1) {
+                dest := right_fold
+                break
+            }
+        }
+        Send, ^w
+        Sleep, 150
+        FileMove, % A_LoopFileFullPath, % dest
+    }
+
+    Progress, Off
+
+    Return
+}
+
 ; Universal Hotstrings:
 ; ==============================================================================
 ^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
@@ -315,6 +371,10 @@ Return
     SendRaw, % str  ; SendRaw so "!" isn't interpreted as "alt"
     SoundBeep, 750, 500
 Return
+
+^!+s::  ; Ctrl-Alt-Shift-S to sort files
+    sort_files()
+return
 
 
 ; Testing Hotstrings:
