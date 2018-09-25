@@ -258,8 +258,7 @@ dedent(str, spaces) {
         )
         a := dedent(a, 12)
     */
-    res := ""
-    pattern := "`am)^\s{" . spaces . "}(.*)$"
+    pattern := "`am)^ {" . spaces . "}(.*)$"
     res := RegExReplace(str, pattern, "$1")
 
     return res
