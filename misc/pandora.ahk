@@ -12,13 +12,13 @@ class PandoraInterface {
             This.Version := "Legacy"
             This.Source := legacy_src
             This.Window := "ahk_exe Pandora.exe"
-            This.Wait := 3000
+            This.WaitInterval := 3000
         ; Test for winApp version of Pandora Client and set config
         } else if (FileExist(winApp_src)) {
             This.Version := "winApp"
             This.Source := winApp_src
             This.Window := "Pandora ahk_exe ApplicationFrameHost.exe"
-            This.Wait := 5000
+            This.WaitInterval := 5000
         } else {
             MsgBox, % "Pandora not found. Unable to proceed."
         }
@@ -51,7 +51,7 @@ class PandoraInterface {
     runMin() {
         ; Function to run then minimize Pandora.
         Run, % This.Source
-        Sleep, % This.Wait
+        Sleep, % This.WaitInterval
         WinMinimize, % This.Window
     }
 
