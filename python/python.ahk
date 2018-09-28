@@ -23,9 +23,13 @@ python_to_file(script, options:="") {
     return res
 }
 
-!^p::
+python_test_func() {
     func := "python_to_file"
     py_file := "C:\Users\Patrick\Documents\programming\ahk\python\test.py"
     timer_wrapper(func, py_file)
     MsgBox, % %func%(py_file)
+}
+
+!^p::
+    python_test_func()
 return
