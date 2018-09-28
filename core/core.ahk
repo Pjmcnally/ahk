@@ -35,6 +35,11 @@ GroupAdd, consoles, ahk_exe powershell_ise.exe
 GroupAdd, consoles, ahk_exe RDCMan.exe
 GroupAdd, consoles, ahk_exe Code.exe
 
+; Code to initialize PandoraInterface Object
+; This requires pandora.ahk or will error. I may need to fix this...
+pandora := new PandoraInterface
+pandora.SetVersion()
+
 Return  ; End of Auto-Execute Section
 
 ; Universal Functions:

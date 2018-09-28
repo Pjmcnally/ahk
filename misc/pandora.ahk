@@ -81,65 +81,35 @@ class PandoraInterface {
     }
 }
 
-; Functions in this module
-; ------------------------------------------------------------------------------
-PandoraPlay() {
-    pandora := new PandoraInterface
-    pandora.SetVersion()
-    pandora.playPause()
-}
-
-PandoraNext() {
-    pandora := new PandoraInterface
-    pandora.SetVersion()
-    pandora.Next()
-}
-
-PandoraMinMax() {
-    pandora := new PandoraInterface
-    pandora.SetVersion()
-    pandora.minMax()
-}
-
-PandoraReset() {
-    pandora := new PandoraInterface
-    pandora.SetVersion()
-    pandora.Reset()
-}
-
-PandoraClose() {
-    pandora := new PandoraInterface
-    pandora.SetVersion()
-    pandora.kill()
-}
-
 ; Hotstrings in this module
 ; ------------------------------------------------------------------------------
+; The Pandora object is instantiated in the Auto-Execution section of Core.ahk
+
 ; This hotkey plays/pauses the Windows Pandora client
 F7::  ; F11
-    PandoraPlay()
+    pandora.playPause()
 Return
 
 
 ; This hotkey skips to the next song on the Windows Pandora Client
 F8::  ; F12
-    PandoraNext()
+    pandora.Next()
 Return
 
 
 ; This hotkey Maximizes or Minimize the Windows Pandora Client
 ^F7::  ; CTRL-F11
-    PandoraMinMax()
+    pandora.minMax()
 Return
 
 
 ; This hotkey resets (stops and starts) the Windows Pandora Client
 +F7::  ; Shift-F11
-    PandoraReset()
+    pandora.Reset()
 Return
 
 
 ; This hotkey closes the Windows Pandora Client
 ^!F7::  ; CTRL-ALT-F11
-    PandoraClose()
+    pandora.kill()
 Return
