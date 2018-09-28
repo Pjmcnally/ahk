@@ -324,6 +324,14 @@ sort_files() {
     Return
 }
 
+stop_double_space() {
+    ; A_ThisLabel = ":?*:!  " or whichever hotstring was invoked.
+    ; SubString(..., 5, 2) Extracts the punctuation mark and 1 space
+    str := SubStr(A_ThisLabel, 5, 2)
+    SendRaw, % str  ; SendRaw so "!" isn't interpreted as "alt"
+    SoundBeep, 750, 500
+}
+
 ; Universal Hotstrings:
 ; ==============================================================================
 ^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
@@ -368,11 +376,7 @@ Return
 :?*:!  ::  ; I am trying to break the habit of double spacing after a sentence.
 :?*:?  ::
 :?*:.  ::
-    ; A_ThisLabel = ":?*:!  " or whichever hotstring was invoked.
-    ; SubString(..., 5, 2) Extracts the punctuation mark and 1 space
-    str := SubStr(A_ThisLabel, 5, 2)
-    SendRaw, % str  ; SendRaw so "!" isn't interpreted as "alt"
-    SoundBeep, 750, 500
+    stop_double_space()
 Return
 
 ^!+s::  ; Ctrl-Alt-Shift-S to sort files
