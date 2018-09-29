@@ -7,18 +7,18 @@ class PandoraInterface {
         legacy_src := "C:\Program Files (x86)\Pandora\pandora.exe"
         winApp_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\pandora.lnk"
 
-        ; Test for Legacy version of Pandora Client and set config
-        if (fileExist(legacy_src)) {
-            This.Version := "Legacy"
-            This.Source := legacy_src
-            This.Window := "ahk_exe Pandora.exe"
-            This.WaitInterval := 3000
         ; Test for winApp version of Pandora Client and set config
-        } else if (FileExist(winApp_src)) {
+        if (FileExist(winApp_src)) {
             This.Version := "winApp"
             This.Source := winApp_src
             This.Window := "Pandora ahk_exe ApplicationFrameHost.exe"
             This.WaitInterval := 5000
+        ; Test for Legacy version of Pandora Client and set config
+        } else if (fileExist(legacy_src)) {
+            This.Version := "Legacy"
+            This.Source := legacy_src
+            This.Window := "ahk_exe Pandora.exe"
+            This.WaitInterval := 3000
         } else {
             MsgBox, % "Pandora not found. Unable to proceed."
         }
