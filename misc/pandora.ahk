@@ -90,24 +90,20 @@ F7::  ; F11
     pandora.playPause()
 Return
 
-
 ; This hotkey skips to the next song on the Windows Pandora Client
 F8::  ; F12
     pandora.Next()
 Return
-
 
 ; This hotkey Maximizes or Minimize the Windows Pandora Client
 ^F7::  ; CTRL-F11
     pandora.minMax()
 Return
 
-
 ; This hotkey resets (stops and starts) the Windows Pandora Client
 +F7::  ; Shift-F11
     pandora.Reset()
 Return
-
 
 ; This hotkey closes the Windows Pandora Client
 ^!F7::  ; CTRL-ALT-F11
