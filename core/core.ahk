@@ -339,7 +339,7 @@ stop_double_space() {
 
 ; Universal Hotstrings:
 ; ==============================================================================
-^Space::  ; Assign Ctrl-Spacebar as a hotkey to pause all active ahk processes
+^+Space::  ; Assign Ctrl-Shift-Space as a hotkey to pause all active ahk processes
     ; I cant KeyWait here or it won't work. Also it is unnecessary.
     Pause, Toggle
 Return
