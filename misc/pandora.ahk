@@ -3,6 +3,10 @@
 ; me to use a standard interface regardless of app or computer.
 
 class PandoraInterface {
+    __New() {
+        This.SetVersion()
+    }
+
     SetVersion() {
         legacy_src := "C:\Program Files (x86)\Pandora\pandora.exe"
         winApp_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\pandora.lnk"
