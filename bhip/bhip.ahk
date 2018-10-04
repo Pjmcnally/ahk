@@ -73,8 +73,7 @@ format_jira_email(str) {
     str := RegExReplace(str, "(\r\n|\r|\n){2}", "`r`n")  ; Collapse any single empty lines.
     str := RegExReplace(str, "(\r\n|\r|\n){3,}", "`r`n`r`n")  ; Reduce any stretch of multiple empty lines to 1 empty line.
     str := RegExReplace(str, "m)^[fF](rom:.*)$", "----`r`n`r`nF$1")  ; Add ---- divider before next email
-    str := RegExReplace(str, get_bhip_sig_address_msp())  ; Remove MSP address block
-    str := RegExReplace(str, get_bhip_sig_address_rct())  ; Remove Rapid City address block
+    str := RegExReplace(str, get_bhip_sig_address())  ; Remove BHIP address block
     str := RegExReplace(str, get_bhip_sig_conf())  ; Remove bhip conf statement
 
     Return str
