@@ -2,7 +2,7 @@
 other programs like JIRA and VsCode
 */
 
-#IfWinActive ahk_exe lync.exe  ; cspell: ignore lync
+#IfWinActive ahk_exe lync.exe  ; lync.exe is Skype. cspell: ignore lync
 
 ^Enter:: ; Ctrl-Enter to send message
     Send, {Enter}
