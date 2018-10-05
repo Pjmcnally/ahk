@@ -1,4 +1,4 @@
-/*  JIRA Hotkeys, Hotstrings, Functions used at BHIP.
+/*  JIRA functions, hotstrings, and hotkeys used at BHIP.
 
     Details on JIRA shortcuts (used below)
 

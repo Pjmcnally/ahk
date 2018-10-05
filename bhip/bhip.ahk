@@ -1,4 +1,4 @@
-/*  Core Hotkeys, Hotstrings, Functions used at BHIP.
+/*  Core functions, hotstrings, and hotkeys used at BHIP.
 
     These hotkeys are all non-program specific and used at BHIP.
 */

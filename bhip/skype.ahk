@@ -1,7 +1,7 @@
-/* Skype Hotkeys, Hotstrings, Functions used at BHIP.
+/* Skype functions, hotstrings, and hotkeys used at BHIP.
 
-This module makes Skype respond to Enter and Ctrl-Enter as I am used to in
-other programs like JIRA and VsCode
+    This module makes Skype respond to Enter and Ctrl-Enter as I am used to in
+    other programs like JIRA and VsCode
 */
 
 #IfWinActive ahk_exe lync.exe  ; lync.exe is Skype. cspell: ignore lync

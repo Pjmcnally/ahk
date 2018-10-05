@@ -1,4 +1,4 @@
-/*  Annotation Hotkeys, Hotstrings, Functions used at BHIP.
+/*  Annotation functions, hotstrings, and hotkeys used at BHIP.
 */
 
 ; Functions

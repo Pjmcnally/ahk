@@ -1,4 +1,4 @@
-/*  SQL Hotkeys, Hotstrings, Functions used at BHIP.
+/*  SQL functions, hotstrings, and hotkeys used at BHIP.
 */
 #IfWinActive ahk_exe Ssms.exe
 
