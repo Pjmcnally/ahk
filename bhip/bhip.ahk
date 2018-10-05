@@ -1,9 +1,9 @@
-/*  Hotkeys, Hotstrings, Functions used at BHIP.
+/*  Core Hotkeys, Hotstrings, Functions used at BHIP.
 
-This module contains all of the Hotkeys, Hotstrings and functions I use at BHIP.
+    These hotkeys are all non-program specific and used at BHIP.
 */
 
-; Functions used in this module
+; Functions
 ; ==============================================================================
 fill_scrape_mail_date() {
         /*  Fill scrape start dates and mail start date into jobs screen.
@@ -79,50 +79,10 @@ format_jira_email(str) {
     Return str
 }
 
-format_db_for_jira() {
-    /*  Format content copied out of MSSMS as a table for JIRA and paste results.
-    */
-    res := ""
-    CrLf := "`r`n"
-    str := Clipboard
 
-    Loop, parse, str, `n, `r
-    {
-        div_char := (A_Index == 1) ? "||" : "|"  ; || in header. | elsewhere.
-        Loop, Parse, A_LoopField, `t
-        {
-            If (A_Index == 1) {  ; If first elem precede with div char
-                res := res . div_char
-            }
-            res := res . A_LoopField . div_char
-        }
-        res := res . CrLf
-    }
-
-    paste_contents(res)
-    Return
-}
-
-paste_as_sql_list() {
-    raw_str := Trim(Clipboard, "`r`n`t")
-    array := StrSplit(raw_str, "`n", "`r")
-    str := ""
-
-    Loop, % array.MaxIndex()
-    {
-        str := str . "'" . array[A_Index] . "'"
-        if (A_Index < (array.MaxIndex())) {
-            str := str . ",`r`n"
-        }
-    }
-    paste_contents(str)
-
-    Return
-}
-
-; Hotstrings & Hotkeys in this module
+; Hotstrings
 ; ==============================================================================
-; Misc Hotstrings
+; Miscellaneous
 :o*:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
 :o*:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
 :o*:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
@@ -134,23 +94,8 @@ paste_as_sql_list() {
 
 ; Signature/Ticket Hotstrings
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
-:o:psig::
-    SendLines(["Patrick McNally", "DevOps Support", get_my_bhip_email()])
-Return
+:Xo:psig::SendLines(["Patrick McNally", "DevOps Support", get_my_bhip_email()])
 
-; Complex Hotkeys
-^!v::  ; ctrl-alt-v
-    format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
-Return
-
-^!f::  ; ctrl-alt-f
-    clip_func("format_jira_email")  ; Run "format_jira" func on selected text
-Return
-
-^!d::  ; ctrl-alt-d
-    fill_scrape_mail_date()
-Return
-
-^+!l::  ; ctrl-alt-shift-l
-    paste_as_sql_list()
-Return
+; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
+; ==============================================================================
+^!d::fill_scrape_mail_date()

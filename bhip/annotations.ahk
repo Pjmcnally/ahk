@@ -1,3 +1,8 @@
+/*  Annotation Hotkeys, Hotstrings, Functions used at BHIP.
+*/
+
+; Functions
+; ==============================================================================
 get_choice(title, prompt, array) {
     /*  Takes and array. Returns an element of the array chosen by the user.
     */
@@ -194,14 +199,9 @@ rename_adobe_bookmarks() {
     }
 }
 
-^+!e::
-    convert_pdf()
-Return
 
-^+!r::
-    review_files()
-Return
-
-^!a::
-    rename_adobe_bookmarks()
-Return
+; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
+; ==============================================================================
+^+!e::convert_pdf()
+^+!r::review_files()
+^!a::rename_adobe_bookmarks()

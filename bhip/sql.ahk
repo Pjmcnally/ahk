@@ -1,25 +1,45 @@
-; SQL hotstrings
+/*  SQL Hotkeys, Hotstrings, Functions used at BHIP.
+*/
 #IfWinActive ahk_exe Ssms.exe
 
-; Functions used in this module
+; Functions
 ; ==============================================================================
-make_query(query, dedent, runQuery:=true) {
+make_query(query, dedent, runQuery:=true, extraAction:="") {
     paste_contents(dedent(query, dedent))
     if (runQuery) {
         Send, {F5}
     }
+
+    if(extraAction):
+        Send, %extraAction%
+}
+
+paste_as_sql_list() {
+    raw_str := Trim(Clipboard, "`r`n`t")
+    array := StrSplit(raw_str, "`n", "`r")
+    str := ""
+
+    Loop, % array.MaxIndex()
+    {
+        str := str . "'" . array[A_Index] . "'"
+        if (A_Index < (array.MaxIndex())) {
+            str := str . ",`r`n"
+        }
+    }
+    paste_contents(str)
+
+    Return
 }
 
 
-; Hotstrings & Hotkeys in this module
+; Hotstrings
 ; ==============================================================================
-:o:bt::
-    make_query(get_bt_query(), 8, false)
-    Send, {UP 3}
-Return
+:Xo:bt::make_query(get_bt_query(), 8, false, "{UP 3}")
+:Xo:pmc::make_query(get_pmc_query(), 8)
 
-:o:pmc::
-    make_query(get_pmc_query(), 8)
-Return
+
+; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
+; ==============================================================================
+^!+l::paste_as_sql_list()
 
 #IfWinActive ; End SQL Hotstrings
