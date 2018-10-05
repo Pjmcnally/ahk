@@ -5,6 +5,8 @@
 ; Functions
 ; ==============================================================================
 make_query(query, dedent, runQuery:=true, extraAction:="") {
+    /*  Execute provided SQL Query
+    */
     paste_contents(dedent(query, dedent))
     if (runQuery) {
         Send, {F5}
@@ -15,6 +17,8 @@ make_query(query, dedent, runQuery:=true, extraAction:="") {
 }
 
 paste_as_sql_list() {
+    /*  Paste items copied from excel or SSMS as formatted list
+    */
     raw_str := Trim(Clipboard, "`r`n`t")
     array := StrSplit(raw_str, "`n", "`r")
     str := ""

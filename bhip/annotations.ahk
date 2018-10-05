@@ -6,7 +6,6 @@
 get_choice(title, prompt, array) {
     /*  Takes and array. Returns an element of the array chosen by the user.
     */
-
     Static format_choice := % ""
 
     ; Build string of choices from array
@@ -44,6 +43,11 @@ get_choice(title, prompt, array) {
 
 
 convert_pdf() {
+    /*  Convert pdf files to alternate format.
+
+        This function works by opening each file in Adobe and executing a
+        "save as" to the desired format.
+    */
     base_delay = 100  ; Do not set below 100
     format_map := {"Text": "!fhmt", "Jpeg": "!fhij"}  ; cspell: ignore fhmt, fhij
     formats := []
@@ -85,6 +89,8 @@ convert_pdf() {
 
 
 save_pdf_as(in_file, out_file, base_delay, format_string) {
+    /*  Execute steps to save a pdf as a supplied format
+    */
     base := "Adobe Acrobat"
     WinGetActiveTitle, active
 
@@ -122,6 +128,8 @@ save_pdf_as(in_file, out_file, base_delay, format_string) {
 
 
 review_files() {
+    /*  Open and review PDF files in specified folder.
+    */
     InputBox, rev_dir, % "Run folder", % "Please enter the folder location to review:"
     if ErrorLevel
         Exit

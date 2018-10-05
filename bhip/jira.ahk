@@ -16,6 +16,8 @@
 ; Functions
 ; ==============================================================================
 close_issue() {
+    /*  Close active issue in JIRA.
+    */
     wait := 250
 
     if (WinActive("TECH")) {
