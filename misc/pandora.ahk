@@ -1,13 +1,20 @@
-; I run Pandora on all of my computers. However, I run different
-; versions depending on the computer. This set of hotkeys allows
-; me to use a standard interface regardless of app or computer.
+/*  Create standard hotkey interface for Pandora.
 
+    I run Pandora on all of my computers. However, I run different versions
+    depending on the computer. This set of hotkeys allows me to use a standard
+    interface regardless of app or computer.
+*/
+
+; Classes
+; ==============================================================================
 class PandoraInterface {
     __New() {
         This.SetVersion()
     }
 
     SetVersion() {
+        /*  Find and set version of Pandora on system.
+        */
         legacy_src := "C:\Program Files (x86)\Pandora\pandora.exe"
         winApp_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\pandora.lnk"
 
@@ -29,6 +36,8 @@ class PandoraInterface {
     }
 
     playPause() {
+        /*  Play or Pause current song.
+        */
         if WinExist(This.Window) {
             if (This.Version = "Legacy") {
                 ControlSend, , {Space}, % This.Window
@@ -41,6 +50,8 @@ class PandoraInterface {
     }
 
     next() {
+        /*  Skip current song.
+        */
         if WinExist(This.Window) {
             if (This.Version = "Legacy") {
                 ControlSend, , {Right}, % This.Window
@@ -53,19 +64,24 @@ class PandoraInterface {
     }
 
     runMin() {
-        ; Function to run then minimize Pandora.
+        /*  Run then minimize Pandora.
+        */
         Run, % This.Source
         Sleep, % This.WaitInterval
         WinMinimize, % This.Window
     }
 
     kill() {
+        /*  Kill the active Pandora window
+        */
         if WinExist(This.Window) {
             WinClose, % This.Window
         }
     }
 
     minMax() {
+        /*  Maximize or minimize the active Pandora window
+        */
         if (WinExist(This.Window) and WinActive(This.Window)) {
             WinMinimize, % This.Window
         } else if (WinExist(This.Window) and (!WinActive(This.Window))) {
@@ -76,6 +92,8 @@ class PandoraInterface {
     }
 
     reset() {
+        /*  Kill and then restart the active Pandora window
+        */
         if WinExist(This.Window) {
             WinClose, % This.Window
             WinWaitClose, % This.Window
@@ -85,31 +103,11 @@ class PandoraInterface {
     }
 }
 
-; Hotstrings in this module
-; ------------------------------------------------------------------------------
+; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
+; ==============================================================================
 ; The Pandora object is instantiated in the Auto-Execution section of Core.ahk
-
-; This hotkey plays/pauses the Windows Pandora client
-F7::  ; F11
-    pandora.playPause()
-Return
-
-; This hotkey skips to the next song on the Windows Pandora Client
-F8::  ; F12
-    pandora.Next()
-Return
-
-; This hotkey Maximizes or Minimize the Windows Pandora Client
-^F7::  ; CTRL-F11
-    pandora.minMax()
-Return
-
-; This hotkey resets (stops and starts) the Windows Pandora Client
-+F7::  ; Shift-F11
-    pandora.Reset()
-Return
-
-; This hotkey closes the Windows Pandora Client
-^!F7::  ; CTRL-ALT-F11
-    pandora.kill()
-Return
+  F7::pandora.playPause()   ; Plays/Pause the current song in the Pandora client
+  F8::pandora.Next()        ; Skip to current song in the Pandora Client
+ ^F7::pandora.minMax()      ; Maximize or Minimize the Pandora Client
+ +F7::pandora.Reset()       ; Reset (stops and starts) the Pandora Client
+^!F7::pandora.kill()        ; Close the Pandora Client

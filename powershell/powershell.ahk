@@ -1,6 +1,9 @@
-/*  This is retained as an example of using AHK to invoke a PowerShell command.
+/*  PowerShell functions, hotstrings, and hotkeys.
 */
 
+
+; Functions
+; ==============================================================================
 diff_folders(src, dst) {
     /*  This script was a first attempt to make it easier to deploy a folder of
         PowerShell scripts to a network folder. This script would check for

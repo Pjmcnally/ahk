@@ -1,4 +1,4 @@
-"""Silly test script for testing integration of AHK and Python."""
+"""Test script for testing integration of AHK and Python."""
 from textwrap import dedent
 
 

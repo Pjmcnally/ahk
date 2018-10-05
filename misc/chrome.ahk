@@ -1,9 +1,14 @@
+/*  Open items from my RSS reader (Feedly) with a hotkey.
+
+    The items are each opened in a background tab using a chrome extension:
+    https://chrome.google.com/webstore/detail/feedly-background-tab/gjlijkhcebalcchkhgaiflaooghmoegk?hl=en-US
+*/
 #IfWinActive ahk_exe chrome.exe  ; Only run in Chrome
 
-; Hotkey to open 10 items from my RSS reader with 1 key press. Works with Feedly
-; Background Tab found here: HTTPS://chrome.google.com/webstore/detail/feedly-background-tab/gjlijkhcebalcchkhgaiflaooghmoegk?hl=en-US
 
-open_comics(){
+; Functions
+; ==============================================================================
+open_feedly_items(){
     /*  This function will open x comics in Feedly. When executed the next digit
         entered will provide x.
     */
@@ -21,9 +26,9 @@ open_comics(){
 }
 
 
+; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
+; ==============================================================================
+^j::open_feedly_items()
 
-^j::
-    open_comics()
-Return
 
 #IfWinActive ; Clear IfWinActive

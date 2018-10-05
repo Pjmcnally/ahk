@@ -1,6 +1,11 @@
-; This file is where I do experimental or fun stuff in AutoHotkey.
+/*  This file is where I do experimental or fun stuff in AutoHotkey.
+*/
 
+; Functions
+; ==============================================================================
 genArray(len, start := 1, step := 1) {
+    /*  Generate an array of specified length
+    */
     array := []
     for x in range(start, len + 1, step) {
         array.Push(x)
@@ -11,8 +16,10 @@ genArray(len, start := 1, step := 1) {
 
 
 generateRandArrayFile(len, num) {
-    ; Function generates num random arrays of length len (1 to len) and writes
-    ; them to an output file named rand_array_<len>.txt
+    /*  Generate num random arrays of length len (1 to len)
+
+        Output saved to file named rand_array_<len>.txt
+    */
     array := genArray(len)
 
     file_name := "rand_array_" . len . ".txt"
@@ -31,8 +38,10 @@ generateRandArrayFile(len, num) {
 
 
 readRandArrayFile(name) {
-    ; Function to read my files of random arrays and count the number of time
-    ; each array appears.
+    /*  read file containing random arrays.
+
+        Count the number of time each array appears.
+    */
     array := {}
     Loop, Read, % name
     {
@@ -58,7 +67,8 @@ readRandArrayFile(name) {
 
 
 arrayAsStr(array) {
-    ; function to format array as string
+    /*  Format array as string
+    */
     str := "["
     for key, val in array {
         str := str . val . ", "
@@ -70,12 +80,15 @@ arrayAsStr(array) {
 
 
 genRandomArray(array) {
-    ; This function preserves the original array and returns a new one.
+    /*  Returns shuffled version of provided array.
 
-    ; I could rebuild this using the inside out implementation of Fischer-Yates
-    ; but that depends on frequent calls to the length of an array.
-    ; I am pretty sure that those calls in AutoHotkey are linear time.
-    ; I believe this implementation is faster.
+        Original array is unaffected.
+
+        I could rebuild this using the inside out implementation of Fischer-Yates
+        but that depends on frequent calls to the length of an array.
+        I am pretty sure that those calls in AutoHotkey are linear time.
+        I believe this implementation is faster.
+    */
 
     a := [array.clone()]  ; Copy of array so original is not changed
     shuffle(a)
@@ -84,7 +97,10 @@ genRandomArray(array) {
 
 
 shuffle(a) {
-    ; This is an implementation of the Fischer-Yates shuffle (in place)
+    /*  Shuffle array in place.
+
+        Implementation of the Fischer-Yates shuffle.
+    */
     i := a.length()  ; Arrays are 1-indexed so I don't need to -1 here.
     while (i > 1) {  ; Don't need to swap the last element with itself.
         Random, rand, 0.0, 1.0  ; Get random float between 0 and 1
@@ -96,9 +112,11 @@ shuffle(a) {
 }
 
 
-; Function to port over Range from Python to AutoHotkey.
-; Copied from HTTPS://autohotkey.com/boards/viewtopic.php?t=4303
 range(start, stop:="", step:=1) {
+    /*  Create Python style range function in AutoHotkey.
+
+        Copied from HTTPS://autohotkey.com/boards/viewtopic.php?t=4303
+    */
     static range := { _NewEnum: Func("_RangeNewEnum") }
     if !step
         throw "range(): Parameter 'step' must not be 0 or blank"
@@ -113,11 +131,15 @@ range(start, stop:="", step:=1) {
 }
 
 _RangeNewEnum(r) {
+    /*  Subfunction of range.
+    */
     static enum := { "Next": Func("_RangeEnumNext") }
     Return { base: enum, r: r, i: 0 }
 }
 
 _RangeEnumNext(enum, ByRef k, ByRef v:="") {
+    /*  Subfunction of range.
+    */
     stop := enum.r.stop, step := enum.r.step
     , k := enum.r.start + step*enum.i
     if (ret := step > 0 ? k < stop : k > stop)
