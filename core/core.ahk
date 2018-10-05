@@ -41,7 +41,7 @@ pandora := new PandoraInterface
 
 Return  ; End of Auto-Execute Section
 
-; Universal Functions:
+; Functions
 ; ==============================================================================
 get_highlighted(persist=TRUE, e=TRUE) {
     /*  Return whatever text is currently highlighted in the active window.
@@ -336,21 +336,20 @@ stop_double_space() {
     SoundBeep, 750, 500
 }
 
-; Universal Hotstrings:
+
+; Hotstrings
 ; ==============================================================================
-^+Space::  ; Assign Ctrl-Shift-Space as a hotkey to pause all active ahk processes
-    ; I cant KeyWait here or it won't work. Also it is unnecessary.
-    Pause, Toggle
-Return
+:?*:!  ::stop_double_space()  ; Beep after double space after !
+:?*:?  ::stop_double_space()  ; Beep after double space after ?
+:?*:.  ::stop_double_space()  ; Beep after double space after .
 
-^!Space::  ; Assign Ctrl-Alt-Spacebar to suspend all hotkeys
-    ; I cant KeyWait here or it won't work. Also it is unnecessary.
-    Suspend, Toggle
-Return
 
-^!r::  ; Assign Ctrl-Alt-R as a hotkey to reload active script.
-    Reload
-Return
+; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
+; ==============================================================================
+^+Space::Pause, Toggle  ; Pause all active ahk processes
+^!Space::Suspend, Toggle  ; Suspend all hotkeys
+^!r::Reload  ; Reload all scripts.
+^!+s::sort_files()  ; Sort files into left and right folder
 
 ^!u::  ; Ctrl-Alt-U to uppercase any highlighted text
     KeyWait ctrl
@@ -377,18 +376,8 @@ Return
     clip_func("string_underscore")
 Return
 
-:?*:!  ::  ; I am trying to break the habit of double spacing after a sentence.
-:?*:?  ::
-:?*:.  ::
-    stop_double_space()
-Return
 
-^!+s::  ; Ctrl-Alt-Shift-S to sort files
-    sort_files()
-return
-
-
-; Testing Hotstrings:
+; Testing Section:
 ; ==============================================================================
 test_func() {
     Return
