@@ -11,7 +11,6 @@
     m --> Jumps to new comment
 */
 
-#IfWinActive ahk_exe chrome.exe
 
 ; Functions
 ; ==============================================================================
@@ -68,6 +67,8 @@ format_db_for_jira() {
 ; ==============================================================================
 ^!v::format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
 ^!f::clip_func("format_jira_email")  ; Run "format_jira" func on selected text
+
+#IfWinActive ahk_exe chrome.exe
 
 !c::
     KeyWait Alt  ; Wait for release as alt will interfere with func sends
