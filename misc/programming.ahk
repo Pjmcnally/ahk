@@ -1,4 +1,5 @@
-; This ahk file contains my scripts that interact with Git.
+/*  Programming related functions, hotstrings, and hotkeys.
+*/
 
 #IfWinActive, ahk_group consoles ; Only run in consoles (specified in core.ahk)
 
