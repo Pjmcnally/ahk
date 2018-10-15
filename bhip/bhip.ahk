@@ -91,6 +91,7 @@ format_jira_email(str) {
 ; Time tracking hotkeys
 :co:mbhip::Task-136{Tab 3}* Monthly BHIP Meeting
 :co:mday::Task-121{Tab 3}* Daily Huddle
+:co:lws::Tech-1356{Tab 3}* Login to WorkSite DMS
 
 ; Signature/Ticket Hotstrings
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
