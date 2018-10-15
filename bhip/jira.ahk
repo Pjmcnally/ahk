@@ -60,16 +60,21 @@ format_db_for_jira() {
 
 ; Hotstrings
 ; ==============================================================================
-:?o:sr::Self resolved^{Enter}
-
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
 ^!v::format_db_for_jira()  ; Run format_db_for_jira on contents on clipboard
 ^!f::clip_func("format_jira_email")  ; Run "format_jira" func on selected text
 
+
 #IfWinActive ahk_exe chrome.exe
 
+; Chrome only Hotstrings
+; ==============================================================================
+:?o:sr::Self resolved^{Enter}
+
+; Chrome only Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
+; ==============================================================================
 !c::
     KeyWait Alt  ; Wait for release as alt will interfere with func sends
     close_issue()
