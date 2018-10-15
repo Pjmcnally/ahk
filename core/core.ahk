@@ -329,18 +329,16 @@ sort_files() {
 }
 
 stop_double_space() {
-    ; A_ThisLabel = ":?*:!  " or whichever hotstring was invoked.
-    ; SubString(..., 6, 2) Extracts the punctuation mark and 1 space
-    str := SubStr(A_ThisLabel, 6, 2)
-    SendRaw, % str  ; SendRaw so "!" isn't interpreted as "alt"
+    Send, {BackSpace}
     SoundBeep, 750, 500
 }
 
 ; Hotstrings
 ; ==============================================================================
-:X?*:!  ::stop_double_space()  ; Beep after double space after !
-:X?*:?  ::stop_double_space()  ; Beep after double space after ?
-:X?*:.  ::stop_double_space()  ; Beep after double space after .
+; X=Execute, ?=Within word, *=terminating char not required, B0=no backspace
+:X?*B0:!  ::stop_double_space()  ; Beep after double space after !
+:X?*B0:?  ::stop_double_space()  ; Beep after double space after ?
+:X?*B0:.  ::stop_double_space()  ; Beep after double space after .
 
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
