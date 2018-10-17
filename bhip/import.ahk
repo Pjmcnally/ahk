@@ -66,10 +66,10 @@ class UpdbInterface {
         y := This.CheckBox_yCoord + (num * This.yInterval)
 
         MouseClick, Left, x, y  ; Click in name box
-        Sleep, 200
+        Sleep, 500
 
         Send, % "^c"  ; ctrl-c to copy contents of box
-        Sleep, 200
+        Sleep, 1000
 
         return Clipboard
     }
