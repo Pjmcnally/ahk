@@ -349,27 +349,27 @@ stop_double_space() {
 ^!+s::sort_files()  ; Sort files into left and right folder
 
 ^!u::  ; Ctrl-Alt-U to uppercase any highlighted text
-    KeyWait ctrl
-    KeyWait alt
+    KeyWait, ctrl, L
+    KeyWait, alt, L
     clip_func("string_upper")
 Return
 
 ^!l::  ; Ctrl-Alt-L to lowercase all highlighted text
-    KeyWait ctrl
-    KeyWait alt
+    KeyWait, ctrl, L
+    KeyWait, alt, L
     clip_func("string_lower")
 Return
 
 ^!-:: ; Ctrl-Alt-Hyphen to Hyphenate all text
-    KeyWait ctrl
-    KeyWait alt
+    KeyWait, ctrl, L
+    KeyWait, alt, L
     clip_func("string_hyphenate")
 Return
 
 ^!+_:: ; Ctrl-Alt-Shift-Underscore to underscore all text
-    KeyWait ctrl
-    KeyWait alt
-    KeyWait shift
+    KeyWait, ctrl, L
+    KeyWait, alt, L
+    KeyWait, shift, L
     clip_func("string_underscore")
 Return
 

@@ -76,7 +76,7 @@ format_db_for_jira() {
 ; Chrome only Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
 !c::
-    KeyWait Alt  ; Wait for release as alt will interfere with func sends
+    KeyWait, Alt, L  ; Wait for release as alt will interfere with func sends
     close_issue()
 Return
 
