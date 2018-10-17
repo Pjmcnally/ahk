@@ -10,11 +10,21 @@ class UpdbInterface {
         This.Success := []
         This.Failed := []
 
-        ; Coordinates of checkboxes and names.
-        This.CheckBox_xCoord := 220  ; x coordinate of checkbox column
-        This.Name_xCoord := 325
-        This.CheckBox_yCoord := 300  ; y coordinate of item to check (calculated from given num)
-        This.yInterval := 31
+        ; Background color
+        This.Background := 0xFFFFFF
+
+        ; Coordinates of checkboxes and names
+        This.columns := {}
+        This.columns.y := 300
+        This.columns.y_interval := 31
+        This.columns.checkbox_x := 220
+        this.columns.name_x := 325
+
+        ; Coordinates of import button
+        This.import_button := {}
+        This.import_button.x := 2475
+        This.import_button.y := This.FindImportButtonY()
+        MouseMove, This.Import_button.x, This.Import_button.y
 
         ; Create log file
         This.CreateLogFile()
@@ -37,10 +47,44 @@ class UpdbInterface {
         This.LogFilePath := file_name
     }
 
+    FindImportButtonY() {
+        temp_y_coord := 1350
+        dot_color := This.Background
+
+        ; From the bottom of the screen find the bottom of the import button.
+        While (dot_color = This.Background) {
+            temp_y_coord -= 10
+
+            MouseMove, This.Import_button.x, temp_y_coord
+            Sleep, 500
+            MouseMove, 100, 100
+            Sleep, 200
+
+            PixelGetColor, dot_color, This.import_button.x, temp_y_coord
+        }
+        import_bottom := temp_y_coord
+        MsgBox, % import_bottom
+
+        ; From the bottom of the import button find the top
+        While (dot_color != This.Background) {
+            temp_y_coord -= 5
+            PixelGetColor, dot_color, This.import_button.x, temp_y_coord
+        }
+        import_top := temp_y_coord
+
+        MsgBox, % import_top
+        ; Return import_button_y to midpoint of top and bottom
+        Return (import_top + import_bottom) // 2
+    }
+
     ClickImport() {
         /*  Click button to begin import.
         */
-        MouseClick, Left, 2475, 865
+
+        live_import_button_y := 865
+        test_import_button_y := 650
+
+        MouseClick, Left, import_button_x, test_import_button_y
     }
 
     CheckBox(num) {
@@ -49,8 +93,8 @@ class UpdbInterface {
         ARGS:
             num (int): The number representing the item (0-18)
         */
-        x := This.CheckBox_xCoord
-        y := This.CheckBox_yCoord + (num * This.yInterval)
+        x := This.columns.checkbox_x
+        y := This.columns.y + (num * This.columns.y_interval)
 
         ; Click checkbox
         MouseClick, Left, x, y
@@ -62,8 +106,8 @@ class UpdbInterface {
         ARGS:
             num (int): The number representing the customer (0-18)
         */
-        x := This.Name_xCoord
-        y := This.CheckBox_yCoord + (num * This.yInterval)
+        x := This.columns.name_x
+        y := This.columns.y + (num * This.columns.y_interval)
 
         MouseClick, Left, x, y  ; Click in name box
         Sleep, 500
@@ -83,7 +127,7 @@ class UpdbInterface {
             WinActivate ahk_exe iexplore.exe
 
             PixelGetColor, dot_color, 50, 1300
-            if (dot_color = 0xFFFFFF) {
+            if (dot_color = This.Background) {
                 importing := False
             }
         }
@@ -193,7 +237,7 @@ class UpdbInterface {
     KeyWait, alt, L
 
     updb := New UpdbInterface
-    updb.MainLoop()
+    ; updb.MainLoop()
 return
 
 #IfWinActive
