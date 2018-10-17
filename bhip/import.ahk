@@ -138,9 +138,9 @@ class UpdbInterface {
                 ; True to persist clipboard, False to not skip error if no text
                 res := get_highlighted(persist:=True, e:=False)
                 try_count += 1
-            } else [
+            } else {
                 res := "ERROR: Unable to extract results"
-            ]
+            }
         }
 
         return res
