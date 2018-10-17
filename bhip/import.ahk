@@ -12,7 +12,7 @@ class UpdbInterface {
 
         ; Coordinates of checkboxes and names.
         This.CheckBox_xCoord := 220  ; x coordinate of checkbox column
-        This.Name_xInterval := 100
+        This.Name_xCoord := 325
         This.CheckBox_yCoord := 300  ; y coordinate of item to check (calculated from given num)
         This.yInterval := 31
 
@@ -62,7 +62,7 @@ class UpdbInterface {
         ARGS:
             num (int): The number representing the customer (0-18)
         */
-        x := This.CheckBox_xCoord + This.Name_xInterval
+        x := This.Name_xCoord
         y := This.CheckBox_yCoord + (num * This.yInterval)
 
         MouseClick, Left, x, y  ; Click in name box
