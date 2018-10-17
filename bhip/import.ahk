@@ -6,9 +6,15 @@
 class UpdbInterface {
     __New() {
         ; Items to process
-        This.Unprocessed := [17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1] ; , 0]
+        This.Unprocessed := [17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
         This.Success := []
         This.Failed := []
+
+        ; Coordinates of checkboxes and names.
+        This.CheckBox_xCoord := 220  ; x coordinate of checkbox column
+        This.Name_xInterval := 100
+        This.CheckBox_yCoord := 300  ; y coordinate of item to check (calculated from given num)
+        This.yInterval := 31
 
         ; Create log file
         This.CreateLogFile()
@@ -43,16 +49,29 @@ class UpdbInterface {
         ARGS:
             num (int): The number representing the item (0-18)
         */
-        ; x coordinate of checkbox column
-        x := 220
-
-        ; y coordinate of item to check (calculated from given num)
-        base_y := 300
-        y_interval := 31
-        y := base_y + (num * y_interval)
+        x := This.CheckBox_xCoord
+        y := This.CheckBox_yCoord + (num * This.yInterval)
 
         ; Click checkbox
         MouseClick, Left, x, y
+    }
+
+    GetName(num) {
+        /*  Get name of customer being imported.
+
+        ARGS:
+            num (int): The number representing the customer (0-18)
+        */
+        x := This.CheckBox_xCoord + This.Name_xInterval
+        y := This.CheckBox_yCoord + (num * This.yInterval)
+
+        MouseClick, Left, x, y  ; Click in name box
+        Sleep, 200
+
+        Send, % "^c"  ; ctrl-c to copy contents of box
+        Sleep, 200
+
+        return Clipboard
     }
 
     WaitForImport() {
@@ -77,12 +96,12 @@ class UpdbInterface {
             item (int): The number corresponding to a checkbox counting from the
             top down.
         */
+        customer := This.GetName()
         item_checked := False  ; Assume item not checked
         success := False
         try_count := 0
 
-
-        This.Log(Format("Importing item number {1}", item))
+        This.Log(Format("Importing item number {1}. Customer: {2}", item, customer))
         This.Log("============================================================")
         While (not success and try_count < 5) {
             try_count += 1
@@ -170,8 +189,13 @@ class UpdbInterface {
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
 ^!i::
+    KeyWait, ctrl, L
+    KeyWait, alt, L
+
     updb := New UpdbInterface
-    updb.MainLoop()
+    temp := updb.GetName(5)
+    MsgBox, % temp
+    ; updb.MainLoop()
 return
 
 #IfWinActive
