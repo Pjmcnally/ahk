@@ -43,7 +43,7 @@ Return  ; End of Auto-Execute Section
 
 ; Functions
 ; ==============================================================================
-get_highlighted(persist=TRUE, e=TRUE) {
+get_highlighted(persist=True, e=True) {
     /*  Return whatever text is currently highlighted in the active window.
 
         Args:

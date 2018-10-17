@@ -38,7 +38,7 @@ paste_as_sql_list() {
 
 ; Hotstrings
 ; ==============================================================================
-:Xo:bt::make_query(get_bt_query(), 8, false, "{UP 3}")
+:Xo:bt::make_query(get_bt_query(), 8, False, "{UP 3}")
 :Xo:pmc::make_query(get_pmc_query(), 8)
 
 
