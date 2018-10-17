@@ -115,13 +115,13 @@ class UpdbInterface {
 
             if success {
                 This.Log("Item Succeeded`r`n`r`n")
-                This.Success.Push(item)
+                This.Success.Push(customer)
             } else if (try_count <= 5) {
                 This.Log(Format("Item Failed: Try count at {1}", try_count))
                 This.Log("Retrying Item`r`n")
             } else {
                 This.Log("Item has failed 5 times. Abandoning item`r`n`r`n")
-                This.Failed.Push(item)
+                This.Failed.Push(customer)
                 This.CheckBox(item)  ; To uncheck the item.
             }
         }
@@ -193,9 +193,7 @@ class UpdbInterface {
     KeyWait, alt, L
 
     updb := New UpdbInterface
-    temp := updb.GetName(5)
-    MsgBox, % temp
-    ; updb.MainLoop()
+    updb.MainLoop()
 return
 
 #IfWinActive
