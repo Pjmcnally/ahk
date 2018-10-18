@@ -12,11 +12,10 @@ class UpdbInterface {
         This.Log("--> Configuring settings")
         This.Background := 0xFFFFFF  ; Normal Background color (not loading)
 
-        This.Log("----> Getting window size...")
-        This.window := This.FindWindowSize()
+        This.SetWindowSize()
+        This.SetImportButtonLocation()
 
-        This.Log("----> Finding import button...")
-        ; This.import_button := This.FindImportButton()
+
 
         This.Log("----> Finding check box and name columns...")
         ; This.columns := This.FindColumns()
@@ -43,30 +42,6 @@ class UpdbInterface {
 
 ; CLEANED UP FUNCTIONS
 ; ==============================================================================
-    FindWindowSize() {
-        /*  Activate and find the size of IE window.
-
-        Returns:
-            dict: A dictionary containing the following values:
-                x: X coord of top left corner of window relative to system
-                y: X coord of top left corner of window relative to system
-                width: Width of window in pixels
-                height: Height of window in pixes
-        */
-        WinActivate, ahk_class IEFrame
-        WinWaitActive, ahk_class IEFrame
-        WinGetPos, x, y, w, h, A  ; A for active window
-
-        res_hash := {}
-        res_hash.x := x
-        res_hash.y := y
-        res_hash.width := w
-        res_hash.height := h
-
-        Return res_hash
-    }
-
-
     Log(str) {
         /*  Add log entry to log file. All entries are followed by a CRLF.
         */
@@ -92,7 +67,44 @@ class UpdbInterface {
         This.Log(Format("Running UPDB Import starting at {1}", timeStr))
     }
 
+    SetWindowSize() {
+        /*  Gets and sets window size with logging.
+        */
+        This.Log("----> Getting window size...")
+        This.window := This.FindWindowSize()
+        This.Log("------> Window Height: " . This.window.height)
+        This.Log("------> Window Width: " . This.window.width)
+    }
 
+    FindWindowSize() {
+        /*  Activate and find the size of IE window.
+
+        Returns:
+            dict: A dictionary containing the following values:
+                x: X coord of top left corner of window relative to system
+                y: X coord of top left corner of window relative to system
+                width: Width of window in pixels
+                height: Height of window in pixes
+        */
+        WinActivate, ahk_class IEFrame
+        WinWaitActive, ahk_class IEFrame
+        WinGetPos, x, y, w, h, A  ; A for active window
+
+        res_hash := {}
+        res_hash.x := x
+        res_hash.y := y
+        res_hash.width := w
+        res_hash.height := h
+
+        Return res_hash
+    }
+
+    SetImportButtonLocation() {
+        This.Log("----> Finding import button...")
+        ; This.import_button := This.FindImportButton()
+        This.Log("------> Import button x: ")
+        This.Log("------> Import button y: ")
+    }
 
 
 ; ==============================================================================
