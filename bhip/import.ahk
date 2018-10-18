@@ -16,7 +16,7 @@ class UpdbInterface {
         This.window := This.FindWindowSize()
 
         This.Log("----> Finding import button...")
-        This.import_button := This.FindImportButton()
+        ; This.import_button := This.FindImportButton()
 
         This.Log("----> Finding check box and name columns...")
         ; This.columns := This.find_column()
