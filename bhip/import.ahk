@@ -6,8 +6,8 @@
 class UpdbInterface {
     __New() {
         ; Create log file
-        This.logFilePath := This.GetLogFilePath()
-        This.StartLogFile()
+        This.logFilePath := This.LogGeneratePath()
+        This.LogWriteStart()
 
         This.Log("--> Configuring settings")
         This.Background := 0xFFFFFF  ; Normal Background color (not loading)
@@ -19,7 +19,7 @@ class UpdbInterface {
         ; This.import_button := This.FindImportButton()
 
         This.Log("----> Finding check box and name columns...")
-        ; This.columns := This.find_column()
+        ; This.columns := This.FindColumns()
 
         ; ; Items to process
         ; This.customersThis.set_customer_names()
@@ -47,7 +47,7 @@ class UpdbInterface {
         /*  Activate and find the size of IE window.
 
         Returns:
-            (dict): A dictionary containing the following values:
+            dict: A dictionary containing the following values:
                 x: X coord of top left corner of window relative to system
                 y: X coord of top left corner of window relative to system
                 width: Width of window in pixels
@@ -66,17 +66,6 @@ class UpdbInterface {
         Return res_hash
     }
 
-    GetLogFilePath() {
-        /*  Create or get log file path.
-
-        Returns:
-            str: Path to log file location.
-        */
-        base_path := "C:\Users\Patrick\Desktop\"
-        file_name := Format("{1}UpdbImportLog_{2}-{3}-{4}.txt", base_path, A_YYYY, A_MM, A_DD)
-
-        Return file_name
-    }
 
     Log(str) {
         /*  Add log entry to log file. All entries are followed by a CRLF.
@@ -85,7 +74,18 @@ class UpdbInterface {
         FileAppend, % "`r`n", % This.LogFilePath
     }
 
-    StartLogFile() {
+    LogGeneratePath() {
+        /*  Create log file path.
+
+        Returns:
+            str: Path to log file location.
+        */
+        file_name := Format("{1}\UpdbImportLog_{2}-{3}-{4}.txt", A_Desktop, A_YYYY, A_MM, A_DD)
+
+        Return file_name
+    }
+
+    LogWriteStart() {
         /*  Write opening line to log file
         */
         FormatTime, timeStr, , yyyy-MM-dd HH:mm
