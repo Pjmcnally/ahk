@@ -81,8 +81,8 @@ class UpdbInterface {
 
         Returns:
             dict: A dictionary containing the following values:
-                x: X coord of top left corner of window relative to system
-                y: X coord of top left corner of window relative to system
+                x: x coord of top left corner of window relative to system
+                y: y coord of top left corner of window relative to system
                 width: Width of window in pixels
                 height: Height of window in pixes
         */
@@ -100,43 +100,58 @@ class UpdbInterface {
     }
 
     SetImportButtonLocation() {
+        /*  Gets and sets import button location with logging.
+        */
         This.Log("----> Finding import button...")
-        ; This.import_button := This.FindImportButton()
-        This.Log("------> Import button x: ")
-        This.Log("------> Import button y: ")
+        This.import_button := This.FindImportButton()
+        This.Log("------> Import button x: " . This.import_button.x)
+        This.Log("------> Import button y: " . This.import_button.y)
     }
+
+    FindImportButton() {
+        /*  Find the location of the import button
+
+        Returns:
+            dict: A dictionary containing the following values:
+                x: x coord of center of input button
+                y: y coord of center of input button
+        */
+        import_button := {}  ; Create dict to store import_button attributes
+        import_button.x := This.window.width - 100  ; Set x near left of screen
+        temp_y_coord := This.window.height - 100  ; Set y near bottom of screen
+        pixel_color := This.Background  ; Arbitrarily set pixel color to background
+
+        ; From the bottom of the screen find the bottom of the import button.
+        While (pixel_color = This.Background) {
+            If not WinActive("ahk_class IEFrame") {
+                WinActivate, ahk_class IEFrame
+                WinWaitActive, ahk_class IEFrame
+            }
+            temp_y_coord -= 10
+            PixelGetColor, pixel_color, import_button.x, temp_y_coord
+        }
+        temp_bottom := temp_y_coord
+
+        ; From the bottom of the import button find the top
+        While (pixel_color != This.Background) {
+            If not WinActive("ahk_class IEFrame") {
+                WinActivate, ahk_class IEFrame
+                WinWaitActive, ahk_class IEFrame
+            }
+            temp_y_coord -= 5
+            PixelGetColor, pixel_color, import_button.x, temp_y_coord
+        }
+        temp_top := temp_y_coord
+
+        ; Calculate vertical center of input button
+        import_button.y := (temp_top + temp_bottom) // 2
+
+        return import_button
+    }
+
 
 
 ; ==============================================================================
-    FindImportButton() {
-        temp_y_coord := 1350
-        dot_color := This.Background
-
-        ; From the bottom of the screen find the bottom of the import button.
-        While (dot_color = This.Background) {
-            temp_y_coord -= 10
-
-            MouseMove, This.Import_button.x, temp_y_coord
-            Sleep, 500
-            MouseMove, 100, 100
-            Sleep, 200
-
-            PixelGetColor, dot_color, This.import_button.x, temp_y_coord
-        }
-        import_bottom := temp_y_coord
-        MsgBox, % import_bottom
-
-        ; From the bottom of the import button find the top
-        While (dot_color != This.Background) {
-            temp_y_coord -= 5
-            PixelGetColor, dot_color, This.import_button.x, temp_y_coord
-        }
-        import_top := temp_y_coord
-
-        MsgBox, % import_top
-        ; Return import_button_y to midpoint of top and bottom
-        Return (import_top + import_bottom) // 2
-    }
 
     ClickImport() {
         /*  Click button to begin import.
