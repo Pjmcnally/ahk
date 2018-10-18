@@ -10,15 +10,14 @@ class UpdbInterface {
         This.LogWriteStart()
 
         This.Log("--> Configuring settings")
-        This.Background := 0xFFFFFF  ; Normal Background color (not loading)
+        This.Colors := {}
+        This.Colors.Background := 0xFFFFFF  ; Normal Background color (not loading)
+        This.Colors.LogBackground := 0xEBEBEB  ; Background color of import log
 
         This.SetWindowSize()
         This.SetImportButtonLocation()
-
-
-
-        This.Log("----> Finding check box and name columns...")
-        ; This.columns := This.FindColumns()
+        ; This.SetColumns()
+        ;This.SetCustomers()
 
         ; ; Items to process
         ; This.customersThis.set_customer_names()
@@ -26,18 +25,7 @@ class UpdbInterface {
         ; This.Success := []
         ; This.Failed := []
 
-        ; ; Coordinates of checkboxes and names
-        ; This.columns := {}
-        ; This.columns.y := 300
-        ; This.columns.y_interval := 31
-        ; This.columns.checkbox_x := 220
-        ; this.columns.name_x := 325
 
-        ; ; Coordinates of import button
-        ; This.import_button := {}
-        ; This.import_button.x := 2475
-        ; This.import_button.y := This.FindImportButtonY()
-        ; MouseMove, This.Import_button.x, This.Import_button.y
     }
 
 ; CLEANED UP FUNCTIONS
@@ -72,8 +60,8 @@ class UpdbInterface {
         */
         This.Log("----> Getting window size...")
         This.window := This.FindWindowSize()
-        This.Log("------> Window Height: " . This.window.height)
         This.Log("------> Window Width: " . This.window.width)
+        This.Log("------> Window Height: " . This.window.height)
     }
 
     FindWindowSize() {
@@ -119,10 +107,10 @@ class UpdbInterface {
         import_button := {}  ; Create dict to store import_button attributes
         import_button.x := This.window.width - 100  ; Set x near left of screen
         temp_y_coord := This.window.height - 100  ; Set y near bottom of screen
-        pixel_color := This.Background  ; Arbitrarily set pixel color to background
+        pixel_color := This.colors.background  ; Arbitrarily set pixel color to background
 
         ; From the bottom of the screen find the bottom of the import button.
-        While (pixel_color = This.Background) {
+        While (pixel_color = This.colors.background || pixel_color = This.colors.LogBackground) {
             If not WinActive("ahk_class IEFrame") {
                 WinActivate, ahk_class IEFrame
                 WinWaitActive, ahk_class IEFrame
@@ -133,7 +121,7 @@ class UpdbInterface {
         temp_bottom := temp_y_coord
 
         ; From the bottom of the import button find the top
-        While (pixel_color != This.Background) {
+        While (pixel_color != This.colors.background) {
             If not WinActive("ahk_class IEFrame") {
                 WinActivate, ahk_class IEFrame
                 WinWaitActive, ahk_class IEFrame
@@ -149,6 +137,22 @@ class UpdbInterface {
         return import_button
     }
 
+    SetColumns() {
+        This.Log("----> Finding check box and name columns...")
+        This.columns := This.FindColumns()
+        This.Log("------> Check box column found at ")
+    }
+
+    FindColumns() {
+        ; Coordinates of checkboxes and names
+        This.columns := {}
+        ; This.columns.y := 300
+        ; This.columns.y_interval := 31
+        ; This.columns.checkbox_x := 220
+        ; this.columns.name_x := 325
+        Return {}
+    }
+
 
 
 ; ==============================================================================
@@ -156,11 +160,7 @@ class UpdbInterface {
     ClickImport() {
         /*  Click button to begin import.
         */
-
-        live_import_button_y := 865
-        test_import_button_y := 650
-
-        MouseClick, Left, import_button_x, test_import_button_y
+        MouseClick, Left, This.import_button.x, This.import_button.y
     }
 
     CheckBox(num) {
