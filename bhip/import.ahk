@@ -5,7 +5,8 @@
 ; ==============================================================================
 class UpdbInterface {
     __New() {
-        ; Create log file
+        ; Create log viewer and log file
+        This.BuildGui()
         This.logFilePath := This.LogGeneratePath()
         This.LogWriteStart()
 
@@ -30,11 +31,17 @@ class UpdbInterface {
 
 ; CLEANED UP FUNCTIONS
 ; ==============================================================================
+    BuildGui() {
+        Static Console
+        Gui, Add, Edit, ReadOnly x10 y10 w500 h500 vConsole
+        Gui, Show, , test window
+    }
+
     Log(str) {
         /*  Add log entry to log file. All entries are followed by a CRLF.
         */
-        FileAppend, % str, % This.LogFilePath
-        FileAppend, % "`r`n", % This.LogFilePath
+        FileAppend, % str . "`r`n", % This.LogFilePath
+        Control, EditPaste, % str . "`r`n", Edit1, test window
     }
 
     LogGeneratePath() {
