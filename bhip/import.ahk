@@ -11,13 +11,10 @@ class UpdbInterface {
         This.LogWriteStart()
 
         This.Log("--> Configuring settings")
-        This.Colors := {}
-        This.Colors.Background := 0xFFFFFF  ; Normal Background color (not loading)
-        This.Colors.LogBackground := 0xEBEBEB  ; Background color of import log
-
+        This.SetColors()
         This.SetWindowSize()
         This.SetImportButtonLocation()
-        ; This.SetColumns()
+        This.SetColumns()
         ;This.SetCustomers()
 
         ; ; Items to process
@@ -60,6 +57,14 @@ class UpdbInterface {
         */
         FormatTime, timeStr, , yyyy-MM-dd HH:mm
         This.Log(Format("Running UPDB Import starting at {1}", timeStr))
+    }
+
+    SetColors() {
+        /*  Set color variables used throughout script.
+        */
+        This.Colors := {}
+        This.Colors.Background := 0xFFFFFF  ; Normal Background color (not loading)
+        This.Colors.LogBackground := 0xEBEBEB  ; Background color of import log
     }
 
     SetWindowSize() {
@@ -153,6 +158,15 @@ class UpdbInterface {
     FindColumns() {
         ; Coordinates of checkboxes and names
         This.columns := {}
+
+        ; At home:
+        ; x = 200 for checkboxes, 300 for names
+        ; y = 250 when full screen. 243 when not full screen
+
+        ; At work
+        ; x = 200 for checkboxes, 300 for names
+        ; y = 280 when full screen. 273 when not full screen
+
         ; This.columns.y := 300
         ; This.columns.y_interval := 31
         ; This.columns.checkbox_x := 220
