@@ -14,8 +14,7 @@ class UpdbInterface {
         This.SetColors()
         This.SetWindowSize()
         This.SetImportButtonLocation()
-        This.SetColumns()
-        ;This.SetCustomers()
+        This.SetCustomers()
 
         ; ; Items to process
         ; This.customersThis.set_customer_names()
@@ -30,6 +29,7 @@ class UpdbInterface {
 ; ==============================================================================
     BuildGui() {
         Static Console
+        Gui, +AlwaysOnTop
         Gui, Add, Edit, ReadOnly x10 y10 w500 h500 vConsole
         Gui, Show, , test window
     }
@@ -65,6 +65,7 @@ class UpdbInterface {
         This.Colors := {}
         This.Colors.Background := 0xFFFFFF  ; Normal Background color (not loading)
         This.Colors.LogBackground := 0xEBEBEB  ; Background color of import log
+        This.Colors.CheckBox := 0xFAF6F1
     }
 
     SetWindowSize() {
@@ -149,29 +150,67 @@ class UpdbInterface {
         return import_button
     }
 
-    SetColumns() {
-        This.Log("----> Finding check box and name columns...")
-        This.columns := This.FindColumns()
-        This.Log("------> Check box column found at ")
+    SetCustomers() {
+        This.Log("----> Finding Customers...")
+        This.customers := This.FindCustomers()
+        This.Log(Format("----> {1} customers found.", This.customers.Length()))
     }
 
-    FindColumns() {
-        ; Coordinates of checkboxes and names
-        This.columns := {}
+    FindCustomers() {
+        /*  Find customers by searching import page.
 
-        ; At home:
-        ; x = 200 for checkboxes, 300 for names
-        ; y = 250 when full screen. 243 when not full screen
+        Returns:
+            array: Contains customer objects. Each object has the following info:
+                short_name: The name of the customer
+                x: The x value of the customers checkbox
+                y: The y value of the customers checkbox
+        */
+        temp_y := 200  ; y value to start searching at.
+        name_x := 300  ; x value of name column (doesn't seem to change)
+        checkbox_x := 200  ; x value of checkbox column (doesn't seem to change)
 
-        ; At work
-        ; x = 200 for checkboxes, 300 for names
-        ; y = 280 when full screen. 273 when not full screen
+        customers := []  ; Customers list to be be returned
 
-        ; This.columns.y := 300
-        ; This.columns.y_interval := 31
-        ; This.columns.checkbox_x := 220
-        ; this.columns.name_x := 325
-        Return {}
+        ; Search for checkboxes from top of screen while above import button
+        while (temp_y < This.import_button.y) {
+            PixelGetColor, pixel_color, checkbox_x, temp_y
+            if (pixel_color = This.Colors.CheckBox) {
+                ; When a checkbox is found build a customer dictionary
+                new_customer := {}
+                new_customer.short_name := This.GetCustomerName(name_x, temp_y)
+                new_customer.x := checkbox_x
+                new_customer.y := temp_y
+                customers.push(new_customer)  ; Add customer to customers list
+
+                this.Log(Format("------> Customer: {1}, Found At: {2}, {3}"
+                    , new_customer.short_name
+                    , new_customer.x
+                    , new_customer.y))
+            }
+            temp_y += 1
+        }
+
+        Return customers
+    }
+
+    GetCustomerName(x, y) {
+        /*  Get name of customer to import.
+
+        ARGS:
+            num (int): The number representing the customer (0-18)
+        */
+        ClipBoard := ""  ; Clear clipboard
+        try_count := 0
+        While (not ClipBoard and try_count < 5) {
+            try_count += 1
+            MouseClick, Left, x, y  ; Click in name box
+            Sleep, 50  ; Brief pause to let click register
+
+            Send, % "^c"  ; ctrl-c to copy contents of box
+            ClipWait, 1  ; Wait up to 1 second for value.
+        }
+
+        return StrReplace(Clipboard, "`r`n")
     }
 
 
@@ -197,23 +236,7 @@ class UpdbInterface {
         MouseClick, Left, x, y
     }
 
-    GetName(num) {
-        /*  Get name of customer being imported.
 
-        ARGS:
-            num (int): The number representing the customer (0-18)
-        */
-        x := This.columns.name_x
-        y := This.columns.y + (num * This.columns.y_interval)
-
-        MouseClick, Left, x, y  ; Click in name box
-        Sleep, 500
-
-        Send, % "^c"  ; ctrl-c to copy contents of box
-        Sleep, 1000
-
-        return Clipboard
-    }
 
     WaitForImport() {
         /*  Wait for import to complete. Use color of screen to determine state.
