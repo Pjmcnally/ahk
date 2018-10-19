@@ -230,42 +230,41 @@ class UpdbInterface {
         }
     }
 
-    Import(item) {
+    Import(customer) {
         /*  Import specified item.
 
         ARGS:
-            item (int): The number corresponding to a checkbox counting from the
-            top down.
+            item (dict): An object containing customer attributes and info.
         */
-        customer := This.GetName()
-        item_checked := False  ; Assume item not checked
-        success := False
-        try_count := 0
+        customer.is_checked := False  ; Assume checkbox is not checked
+        customer.success := False
+        customer.try_count := 0
 
-        This.Log(Format("Importing item number {1}. Customer: {2}", item, customer))
+        This.Log(Format("Importing Customer: {1}", customer.short_name))
         This.Log("============================================================")
-        While (not success and try_count < 5) {
-            try_count += 1
-            if (not item_checked) {  ; After a failure item remains checked
-                This.CheckBox(item)
-                item_checked := True
+        While (not customer.success and customer.try_count < 5) {
+            customer.try_count += 1
+            if (not customer.is_checked) {  ; After a failure item remains checked
+                MouseClick, Left, customer.x, customer.y
+                customer.is_checked := True
             }
-            This.ClickImport()
+            MouseClick, Left, This.import_button.x, This.import_button.y
             This.WaitForImport()
-            success := this.CheckResults()
+            customer.success := this.CheckResults()
 
-            if success {
-                This.Log("Item Succeeded`r`n`r`n")
-                This.Success.Push(customer)
-            } else if (try_count <= 5) {
-                This.Log(Format("Item Failed: Try count at {1}", try_count))
-                This.Log("Retrying Item`r`n")
+            if customer.success {
+                This.Log("Item customer`r`n`r`n")
+                customer.success := True
+            } else if (customer.try_count <= 5) {
+                This.Log(Format("Customer Failed: Try count at {1}", customer.try_count))
+                This.Log("Retrying customer`r`n")
             } else {
-                This.Log("Item has failed 5 times. Abandoning item`r`n`r`n")
-                This.Failed.Push(customer)
-                This.CheckBox(item)  ; To uncheck the item.
+                This.Log("Customer has failed 5 times. Abandoning customer`r`n`r`n")
+                MouseClick, Left, customer.x, customer.y  ; To uncheck the customer.
             }
         }
+
+        return customer
     }
 
     CheckResults() {
