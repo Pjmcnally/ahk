@@ -28,9 +28,11 @@ class UpdbInterface {
 ; CLEANED UP FUNCTIONS
 ; ==============================================================================
     BuildGui() {
-        Static Console
+        Static Customers
+        Static LogWindow
         Gui, +AlwaysOnTop
-        Gui, Add, Edit, ReadOnly x10 y10 w500 h500 vConsole
+        Gui, Add, ListView, x10 y10 w200 h500 Grid Checked vCustomers, Import|Name
+        Gui, Add, Edit, ReadOnly x220 y10 w500 h500 vLogWindow
         Gui, Show, , test window
     }
 
@@ -153,7 +155,7 @@ class UpdbInterface {
     SetCustomers() {
         This.Log("----> Finding Customers...")
         This.customers := This.FindCustomers()
-        This.Log(Format("----> {1} customers found.", This.customers.Length()))
+        This.Log(Format("------> {1} customers found.", This.customers.Length()))
     }
 
     FindCustomers() {
@@ -182,10 +184,7 @@ class UpdbInterface {
                 new_customer.y := temp_y
                 customers.push(new_customer)  ; Add customer to customers list
 
-                this.Log(Format("------> Customer: {1}, Found At: {2}, {3}"
-                    , new_customer.short_name
-                    , new_customer.x
-                    , new_customer.y))
+                LV_Add("Check", , new_customer.short_name)
             }
             temp_y += 1
         }
