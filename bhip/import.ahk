@@ -215,28 +215,6 @@ class UpdbInterface {
 
 
 ; ==============================================================================
-
-    ClickImport() {
-        /*  Click button to begin import.
-        */
-        MouseClick, Left, This.import_button.x, This.import_button.y
-    }
-
-    CheckBox(num) {
-        /*  Check the box for a specified item.
-
-        ARGS:
-            num (int): The number representing the item (0-18)
-        */
-        x := This.columns.checkbox_x
-        y := This.columns.y + (num * This.columns.y_interval)
-
-        ; Click checkbox
-        MouseClick, Left, x, y
-    }
-
-
-
     WaitForImport() {
         /*  Wait for import to complete. Use color of screen to determine state.
         */
