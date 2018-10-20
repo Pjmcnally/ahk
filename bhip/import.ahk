@@ -383,3 +383,13 @@ class UpdbInterface {
     updb := New UpdbInterface
     ; updb.MainLoop()
 return
+
+ButtonAction() {
+    GuiControlGet, updb_status, , _button
+
+    if (updb_status = "Ready") {
+        updb.__Configure()
+    } else if (updb_status = "Import") {
+        updb.__MainLoop()
+    }
+}
