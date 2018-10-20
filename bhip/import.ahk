@@ -196,6 +196,7 @@ class UpdbInterface {
                 LV_Add("Check", , new_customer.short_name)
             }
             temp_y += 1
+            This.UpdateProgressBar(temp_y/This.window.height * 100)
         }
 
         Return customers
@@ -224,10 +225,10 @@ class UpdbInterface {
     SetImportButtonLocation() {
         /*  Gets and sets import button location with logging.
         */
-        This.Log("----> Finding import button...")
+        This.Log("Finding import button...")
         This.import_button := This.FindImportButton()
-        This.Log("------> Import button x: " . This.import_button.x)
-        This.Log("------> Import button y: " . This.import_button.y)
+        This.Log("--> Import button x: " . This.import_button.x)
+        This.Log("--> Import button y: " . This.import_button.y)
     }
 
     FindImportButton() {
@@ -298,13 +299,13 @@ class UpdbInterface {
             ; Check Import results and act accordingly.
             customer.success := this.CheckResults()
             if customer.success {
-                This.Log(customer.short_name . "import successful`r`n`r`n")
+                This.Log(customer.short_name . " import successful`r`n`r`n")
                 customer.success := True
             } else if (customer.try_count <= 5) {
-                This.Log(Format("Customer has failed {1} times. Retrying customer`r`n", customer.try_count))
+                This.Log(Format("Import failed {1} times. Retrying {2}`r`n", customer.try_count, customer.short_name))
             } else {
-                This.Log("Customer has failed 5 times. Abandoning customer`r`n`r`n")
-                MouseClick, Left, customer.x, customer.y  ; To uncheck the customer.
+                This.Log(Format("Import failed 5 times. Abandoning {1}`r`n`r`n", customer.short_name))
+                This.ClickLocation(customer.x, customer.y)  ; To uncheck the customer.
             }
         }
     }
