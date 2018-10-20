@@ -380,8 +380,7 @@ class UpdbInterface {
     KeyWait, ctrl, L
     KeyWait, alt, L
 
-    updb := New UpdbInterface
-    ; updb.MainLoop()
+    Global updb := New UpdbInterface
 return
 
 ButtonAction() {
