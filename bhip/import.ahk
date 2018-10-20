@@ -162,9 +162,9 @@ class UpdbInterface {
     }
 
     SetCustomers() {
-        This.Log("----> Finding Customers...")
+        This.Log("Finding Customers...")
         This.customers := This.FindCustomers()
-        This.Log(Format("------> {1} customers found.", This.customers.Length()))
+        This.Log(Format("--> {1} customers found.", This.customers.Length()))
     }
 
     FindCustomers() {
