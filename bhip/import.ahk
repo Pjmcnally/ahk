@@ -29,8 +29,31 @@ class UpdbInterface {
         GuiControl, Show, _button
     }
 
-; CLEANED UP FUNCTIONS
-; ==============================================================================
+    __MainLoop() {
+        /*  Import all items when executed. Log final results.
+        */
+        GuiControl, Hide, _button
+        For index, customer in This.customers {
+            This.UpdateStatus("Importing: " . customer.short_name)
+            This.Import(customer)
+            This.UpdateProgressBar(index / This.customers.MaxIndex() * 100)
+        }
+
+        This.log("`r`nThe following items were successfully imported:")
+        For index, customer in This.customers {
+            if customer.success {
+                This.Log(customer.short_name)
+            }
+        }
+
+        This.log("`r`nThe following items failed and were not imported:")
+        For index, customer in This.customers {
+            if not customer.success {
+                This.Log(customer.short_name)
+            }
+        }
+    }
+
     BuildGui() {
         Static Customers
         Static LogWindow
