@@ -73,6 +73,14 @@ class UpdbInterface {
         Gui, updb_gui:Show
     }
 
+    UpdateStatus(str) {
+        GuiControl, , current_action, % str
+    }
+
+    UpdateProgressBar(num) {
+        GuiControl, , prog_bar, % num
+    }
+
     Log(str) {
         /*  Add log entry to log file. All entries are followed by a CRLF.
         */
