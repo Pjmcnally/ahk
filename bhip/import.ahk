@@ -257,15 +257,14 @@ class UpdbInterface {
         spot_x := This.import_button.x - 100
         spot_y := This.import_button.y
         pause_interval := 2500
-        check_color := This.colors.background
 
         importing := True
         while importing {
             Sleep, pause_interval
-            WinActivate ahk_exe iexplore.exe
+            WinActivate, % This.window.title
 
             PixelGetColor, pixel_color, spot_x, spot_y
-            if (pixel_color = check_color) {
+            if (pixel_color = This.colors.background) {
                 importing := False
             }
         }
