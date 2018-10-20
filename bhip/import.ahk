@@ -9,6 +9,8 @@ class UpdbInterface {
         This.BuildGui()
         This.logFilePath := This.LogGeneratePath()
         This.LogWriteStart()
+        This.PreCheck()
+    }
 
         This.Log("--> Configuring settings")
         This.SetColors()
