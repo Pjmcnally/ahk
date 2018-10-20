@@ -55,13 +55,22 @@ class UpdbInterface {
     }
 
     BuildGui() {
-        Static Customers
-        Static LogWindow
-        Gui, +AlwaysOnTop
-        Gui, Add, ListView, x10 y10 w200 h500 Grid Checked vCustomers, Import|Name
-        Gui, Add, Edit, ReadOnly x220 y10 w500 h500 vLogWindow
-        Gui, Show, , test window
-        MsgBox, 4096, % "Ok to Continue", % "Position Gui and click ok to begin."
+        Global current_action   ; I really hate Global but am not sure how to do it otherwise
+        Global prog_bar         ; I really hate Global but am not sure how to do it otherwise
+        Global _button          ; I really hate Global but am not sure how to do it otherwise
+        Static customer_list
+        Static log_window
+        Gui, updb_gui:New, +AlwaysOnTop, UPDB Import Helper
+        Gui, updb_gui:Font, underline s12
+        Gui, updb_gui:Add, Text, x10 y10 w200, % "Current action: "
+        Gui, updb_gui:Add, Text, x220 y10, % "Current Progress:"
+        Gui, updb_gui:Font,  ; Reset font
+        Gui, updb_gui:Add, Text, x10 y35 r3 w200 vCurrent_action,
+        Gui, updb_gui:Add, Progress, x220 y35 w500 h40 cGreen BackgroundWhite +border vProg_bar
+        Gui, updb_gui:Add, ListView, x10 y80 w200 h500 Grid Checked vCustomer_list, Import|Name
+        Gui, updb_gui:Add, Edit, ReadOnly x220 y80 w500 h500 vLog_window
+        Gui, updb_gui:Add, Button, Default x10 w200 v_button gButtonAction, Ready
+        Gui, updb_gui:Show
     }
 
     Log(str) {
