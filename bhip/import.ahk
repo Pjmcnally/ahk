@@ -12,13 +12,21 @@ class UpdbInterface {
         This.PreCheck()
     }
 
-        This.Log("--> Configuring settings")
+    __Configure() {
+        GuiControl, Hide, _button
+        This.Log("`r`nConfiguring settings")
+        This.Log("====================")
+        This.UpdateStatus("Configuring Settings...")
         This.SetColors()
         This.SetWindowSize()
         This.SetCustomers()
         This.SetImportButtonLocation()
+        This.Log("Click 'Import' to begin.")
 
-        This.MainLoop()
+        This.UpdateProgressBar(0)
+        This.UpdateStatus("Waiting for User...")
+        GuiControl, , _button, Import
+        GuiControl, Show, _button
     }
 
 ; CLEANED UP FUNCTIONS
