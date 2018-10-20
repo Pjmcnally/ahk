@@ -212,7 +212,7 @@ class UpdbInterface {
         try_count := 0
         While (not ClipBoard and try_count < 5) {
             try_count += 1
-            MouseClick, Left, x, y  ; Click in name box
+            This.ClickLocation(x, y)  ; Click in name box
             Sleep, 50  ; Brief pause to let click register
 
             Send, % "^c"  ; ctrl-c to copy contents of box
@@ -287,12 +287,12 @@ class UpdbInterface {
         While (not customer.success and customer.try_count <= 5) {
             customer.try_count += 1
             if (not customer.is_checked) {  ; After a failure item remains checked
-                MouseClick, Left, customer.x, customer.y
+                This.ClickLocation(customer.x, customer.y)
                 customer.is_checked := True
             }
 
             ; Start import and wait for import to finish
-            MouseClick, Left, This.import_button.x, This.import_button.y
+            This.ClickLocation(This.import_button.x, This.import_button.y)
             This.WaitForImport()
             This.Log("Import Complete. Checking results...")
 
@@ -333,7 +333,7 @@ class UpdbInterface {
             x := This.import_button.x
             y := This.import_button.y + 100
 
-            MouseClick, Left, x, y  ; Click in results box
+            This.ClickLocation(x, y)  ; Click in results box
             Sleep, 200
 
             Send, % "^a"  ; ctrl-a to select all text
@@ -351,26 +351,10 @@ class UpdbInterface {
         return res
     }
 
-    MainLoop() {
-        /*  Import all items when executed. Log final results.
-        */
-        For index, customer in This.customers {
-            This.Import(customer)
-        }
-
-        This.log("`r`nThe following items were successfully imported:")
-        For index, customer in This.customers {
-            if customer.success {
-                This.Log(customer.short_name)
-            }
-        }
-
-        This.log("`r`nThe following items failed and were not imported:")
-        For index, customer in This.customers {
-            if not customer.success {
-                This.Log(customer.short_name)
-            }
-        }
+    ClickLocation(x, y) {
+        WinActivate, % This.window.title
+        WinWaitActive, % This.window.title
+        MouseClick, Left, x, y
     }
 }
 
