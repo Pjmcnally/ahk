@@ -128,10 +128,11 @@ class UpdbInterface {
     SetWindowSize() {
         /*  Gets and sets window size with logging.
         */
-        This.Log("----> Getting window size...")
+        This.Log("Getting window size...")
         This.window := This.FindWindowSize()
-        This.Log("------> Window Width: " . This.window.width)
-        This.Log("------> Window Height: " . This.window.height)
+        This.Log("--> Window Width: " . This.window.width)
+        This.Log("--> Window Height: " . This.window.height)
+        This.Log("--> Window Title: " . This.Window.title)
     }
 
     FindWindowSize() {
@@ -143,16 +144,19 @@ class UpdbInterface {
                 y: y coord of top left corner of window relative to system
                 width: Width of window in pixels
                 height: Height of window in pixes
+                title: Window Title
         */
         WinActivate, ahk_class IEFrame
         WinWaitActive, ahk_class IEFrame
         WinGetPos, x, y, w, h, A  ; A for active window
+        WinGetActiveTitle, title
 
         res_hash := {}
         res_hash.x := x
         res_hash.y := y
         res_hash.width := w
         res_hash.height := h
+        res_hash.title := title
 
         Return res_hash
     }
