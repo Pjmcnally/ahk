@@ -13,16 +13,10 @@ class UpdbInterface {
         This.Log("--> Configuring settings")
         This.SetColors()
         This.SetWindowSize()
-        This.SetImportButtonLocation()
         This.SetCustomers()
+        This.SetImportButtonLocation()
 
-        ; ; Items to process
-        ; This.customersThis.set_customer_names()
-        ; This.Unprocessed := [17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-        ; This.Success := []
-        ; This.Failed := []
-
-
+        This.MainLoop()
     }
 
 ; CLEANED UP FUNCTIONS
@@ -34,6 +28,7 @@ class UpdbInterface {
         Gui, Add, ListView, x10 y10 w200 h500 Grid Checked vCustomers, Import|Name
         Gui, Add, Edit, ReadOnly x220 y10 w500 h500 vLogWindow
         Gui, Show, , test window
+        MsgBox, 4096, % "Ok to Continue", % "Position Gui and click ok to begin."
     }
 
     Log(str) {
@@ -64,10 +59,10 @@ class UpdbInterface {
     SetColors() {
         /*  Set color variables used throughout script.
         */
-        This.Colors := {}
-        This.Colors.Background := 0xFFFFFF  ; Normal Background color (not loading)
-        This.Colors.LogBackground := 0xEBEBEB  ; Background color of import log
-        This.Colors.CheckBox := 0xFAF6F1
+        This.colors := {}
+        This.colors.background := "0xFFFFFF"  ; Normal background color (not loading)
+        This.colors.log_background := "0xEBEBEB"  ; Background color of import log
+        This.colors.checkbox := "0xFAF6F1"
     }
 
     SetWindowSize() {
@@ -102,56 +97,6 @@ class UpdbInterface {
         Return res_hash
     }
 
-    SetImportButtonLocation() {
-        /*  Gets and sets import button location with logging.
-        */
-        This.Log("----> Finding import button...")
-        This.import_button := This.FindImportButton()
-        This.Log("------> Import button x: " . This.import_button.x)
-        This.Log("------> Import button y: " . This.import_button.y)
-    }
-
-    FindImportButton() {
-        /*  Find the location of the import button
-
-        Returns:
-            dict: A dictionary containing the following values:
-                x: x coord of center of input button
-                y: y coord of center of input button
-        */
-        import_button := {}  ; Create dict to store import_button attributes
-        import_button.x := This.window.width - 100  ; Set x near left of screen
-        temp_y_coord := This.window.height - 100  ; Set y near bottom of screen
-        pixel_color := This.colors.background  ; Arbitrarily set pixel color to background
-
-        ; From the bottom of the screen find the bottom of the import button.
-        While (pixel_color = This.colors.background || pixel_color = This.colors.LogBackground) {
-            If not WinActive("ahk_class IEFrame") {
-                WinActivate, ahk_class IEFrame
-                WinWaitActive, ahk_class IEFrame
-            }
-            temp_y_coord -= 10
-            PixelGetColor, pixel_color, import_button.x, temp_y_coord
-        }
-        temp_bottom := temp_y_coord
-
-        ; From the bottom of the import button find the top
-        While (pixel_color != This.colors.background) {
-            If not WinActive("ahk_class IEFrame") {
-                WinActivate, ahk_class IEFrame
-                WinWaitActive, ahk_class IEFrame
-            }
-            temp_y_coord -= 5
-            PixelGetColor, pixel_color, import_button.x, temp_y_coord
-        }
-        temp_top := temp_y_coord
-
-        ; Calculate vertical center of input button
-        import_button.y := (temp_top + temp_bottom) // 2
-
-        return import_button
-    }
-
     SetCustomers() {
         This.Log("----> Finding Customers...")
         This.customers := This.FindCustomers()
@@ -174,7 +119,7 @@ class UpdbInterface {
         customers := []  ; Customers list to be be returned
 
         ; Search for checkboxes from top of screen while above import button
-        while (temp_y < This.import_button.y) {
+        while (temp_y < This.window.height) {
             PixelGetColor, pixel_color, checkbox_x, temp_y
             if (pixel_color = This.Colors.CheckBox) {
                 ; When a checkbox is found build a customer dictionary
@@ -212,19 +157,50 @@ class UpdbInterface {
         return StrReplace(Clipboard, "`r`n")
     }
 
+    SetImportButtonLocation() {
+        /*  Gets and sets import button location with logging.
+        */
+        This.Log("----> Finding import button...")
+        This.import_button := This.FindImportButton()
+        This.Log("------> Import button x: " . This.import_button.x)
+        This.Log("------> Import button y: " . This.import_button.y)
+    }
 
+    FindImportButton() {
+        /*  Find the location of the import button
+
+        Returns:
+            dict: A dictionary containing the following values:
+                x: x coord of center of input button
+                y: y coord of center of input button
+        */
+        import_button := {}  ; Create dict to store import_button attributes
+        import_button.x := This.window.width - 100  ; Set x near left of screen
+
+        last_customer := This.customers[This.customers.MaxIndex()]
+        import_button.y := last_customer.y + 40
+
+        return import_button
+    }
 
 ; ==============================================================================
     WaitForImport() {
         /*  Wait for import to complete. Use color of screen to determine state.
         */
+        ; Check a specific spot for color change
+        ; Spot is 100 pixels to the left of the import button
+        spot_x := This.import_button.x - 100
+        spot_y := This.import_button.y
+        pause_interval := 2500
+        check_color := This.colors.background
+
         importing := True
         while importing {
-            Sleep, 2500
+            Sleep, pause_interval
             WinActivate ahk_exe iexplore.exe
 
-            PixelGetColor, dot_color, 50, 1300
-            if (dot_color = This.Background) {
+            PixelGetColor, pixel_color, spot_x, spot_y
+            if (pixel_color = check_color) {
                 importing := False
             }
         }
@@ -236,35 +212,37 @@ class UpdbInterface {
         ARGS:
             item (dict): An object containing customer attributes and info.
         */
+        ; Setup new customer attributes
         customer.is_checked := False  ; Assume checkbox is not checked
         customer.success := False
         customer.try_count := 0
 
-        This.Log(Format("Importing Customer: {1}", customer.short_name))
+        This.Log(Format("`r`nImporting Customer: {1}", customer.short_name))
         This.Log("============================================================")
-        While (not customer.success and customer.try_count < 5) {
+        While (not customer.success and customer.try_count <= 5) {
             customer.try_count += 1
             if (not customer.is_checked) {  ; After a failure item remains checked
                 MouseClick, Left, customer.x, customer.y
                 customer.is_checked := True
             }
+
+            ; Start import and wait for import to finish
             MouseClick, Left, This.import_button.x, This.import_button.y
             This.WaitForImport()
-            customer.success := this.CheckResults()
+            This.Log("Import Complete. Checking results...")
 
+            ; Check Import results and act accordingly.
+            customer.success := this.CheckResults()
             if customer.success {
-                This.Log("Item customer`r`n`r`n")
+                This.Log(customer.short_name . "import successful`r`n`r`n")
                 customer.success := True
             } else if (customer.try_count <= 5) {
-                This.Log(Format("Customer Failed: Try count at {1}", customer.try_count))
-                This.Log("Retrying customer`r`n")
+                This.Log(Format("Customer has failed {1} times. Retrying customer`r`n", customer.try_count))
             } else {
                 This.Log("Customer has failed 5 times. Abandoning customer`r`n`r`n")
                 MouseClick, Left, customer.x, customer.y  ; To uncheck the customer.
             }
         }
-
-        return customer
     }
 
     CheckResults() {
@@ -287,7 +265,10 @@ class UpdbInterface {
         res := ""
 
         While (not res) {
-            MouseClick, Left, 1000, 1000  ; Click in results box
+            x := This.import_button.x
+            y := This.import_button.y + 100
+
+            MouseClick, Left, x, y  ; Click in results box
             Sleep, 200
 
             Send, % "^a"  ; ctrl-a to select all text
@@ -308,18 +289,22 @@ class UpdbInterface {
     MainLoop() {
         /*  Import all items when executed. Log final results.
         */
-        While (This.Unprocessed.Length() > 0) {
-            This.Import(This.Unprocessed.Pop())
+        For index, customer in This.customers {
+            This.Import(customer)
         }
 
         This.log("`r`nThe following items were successfully imported:")
-        For item, value in This.Succeeded {
-            This.Log(value)
+        For index, customer in This.customers {
+            if customer.success {
+                This.Log(customer.short_name)
+            }
         }
 
         This.log("`r`nThe following items failed and were not imported:")
-        For item, value in This.Failed {
-            This.Log(value)
+        For index, customer in This.customers {
+            if not customer.success {
+                This.Log(customer.short_name)
+            }
         }
     }
 }
