@@ -85,7 +85,7 @@ class UpdbInterface {
         /*  Add log entry to log file. All entries are followed by a CRLF.
         */
         FileAppend, % str . "`r`n", % This.LogFilePath
-        Control, EditPaste, % str . "`r`n", Edit1, test window
+        Control, EditPaste, % str . "`r`n", Edit1, UPDB Import Helper
     }
 
     LogGeneratePath() {
