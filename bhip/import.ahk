@@ -106,6 +106,16 @@ class UpdbInterface {
         This.Log(Format("Running UPDB Import starting at {1}", timeStr))
     }
 
+    PreCheck() {
+        This.UpdateStatus("Waiting for User...")
+        This.Log("`r`nUser Setup:")
+        This.log("====================")
+        This.log("Before beginning please move the GUI so it is not covering IP Tools.")
+        This.log("Please ensure that you are on the UPDB import screen in IP Tools.")
+        This.log("Please ensure that no customers are currently checked.")
+        This.log("Click 'Ready' when ready to proceed.")
+    }
+
     SetColors() {
         /*  Set color variables used throughout script.
         */
