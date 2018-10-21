@@ -21,7 +21,8 @@ class UpdbInterface {
         This.SetWindowSize()
         This.SetCustomers()
         This.SetImportButtonLocation()
-        This.Log("Click 'Import' to begin.")
+        This.Log("`r`nPlease select the customers you wish to import in this UI.")
+        This.Log(">> Click 'Import' to begin.")
 
         This.UpdateProgressBar(0)
         This.UpdateStatus("Waiting for User...")
@@ -114,7 +115,7 @@ class UpdbInterface {
         This.log("Before beginning please move the GUI so it is not covering IP Tools.")
         This.log("Please ensure that you are on the UPDB import screen in IP Tools.")
         This.log("Please ensure that no customers are currently checked.")
-        This.log("Click 'Ready' when ready to proceed.")
+        This.log(">> Click 'Ready' when ready to proceed.")
     }
 
     SetColors() {
