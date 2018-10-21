@@ -35,8 +35,8 @@ class UpdbInterface {
         */
         GuiControl, Hide, _button
         For index, customer in This.customers {
-            This.UpdateStatus("Importing: " . customer.short_name)
-            This.Import(customer)
+            ; Update UI to show status and increase progress bar
+            LV_Modify(index, , , customer.status, customer.short_name)
             This.UpdateProgressBar(index / This.customers.MaxIndex() * 100)
         }
 
@@ -69,7 +69,7 @@ class UpdbInterface {
         Gui, updb_gui:Font,  ; Reset font
         Gui, updb_gui:Add, Text, x10 y35 r3 w200 vCurrent_action,
         Gui, updb_gui:Add, Progress, x220 y35 w500 h40 cGreen BackgroundWhite +border vProg_bar
-        Gui, updb_gui:Add, ListView, x10 y80 w200 h500 Grid Checked vCustomer_list, Import|Name
+        Gui, updb_gui:Add, ListView, x10 y80 w200 h500 Grid Checked vCustomer_list, Import|Status|Name
         Gui, updb_gui:Add, Edit, ReadOnly x220 y80 w500 h500 vLog_window
         Gui, updb_gui:Add, Button, Default x10 w200 v_button gButtonAction, Ready
         Gui, updb_gui:Show
@@ -195,7 +195,7 @@ class UpdbInterface {
                 new_customer.y := temp_y
                 customers.push(new_customer)  ; Add customer to customers list
 
-                LV_Add("Check", , new_customer.short_name)
+                LV_Add("Check", , , new_customer.short_name)
             }
             temp_y += 1
             This.UpdateProgressBar(temp_y/This.window.height * 100)
