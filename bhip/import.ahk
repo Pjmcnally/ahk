@@ -39,6 +39,7 @@ class UpdbInterface {
             This.UpdateProgressBar(index / This.customers.MaxIndex() * 100)
         }
 
+        This.UpdateStatus("Importing Complete. Posting Results.")
         This.log("`r`nThe following items were successfully imported:")
         For index, customer in This.customers {
             if customer.success {
