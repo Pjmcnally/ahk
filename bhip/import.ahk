@@ -5,7 +5,8 @@
 ; ==============================================================================
 class UpdbInterface {
     __New() {
-        ; Create log viewer and log file
+        /*  Create new UpdbInterface Instance. Build GUI and prepare log file.
+        */
         This.BuildGui()
         This.logFilePath := This.LogGeneratePath()
         This.LogWriteStart()
@@ -13,6 +14,8 @@ class UpdbInterface {
     }
 
     __Configure() {
+        /*  Configure UpdbInterface for import run.
+        */
         GuiControl, Hide, _button
         This.Log("`r`nConfiguring settings")
         This.Log("====================")
@@ -21,16 +24,20 @@ class UpdbInterface {
         This.SetWindowSize()
         This.SetCustomers()
         This.SetImportButtonLocation()
+    }
+
+    __PrepareImport() {
+        /*  Prepare for Import run and wait for user input to begin.
+        */
+        This.UpdateProgressBar(0)
         This.Log("`r`nPlease select the customers you wish to import in this UI.")
         This.Log(">> Click 'Import' to begin.")
-
-        This.UpdateProgressBar(0)
         This.UpdateStatus("Waiting for User...")
         GuiControl, , _button, Import
         GuiControl, Show, _button
     }
 
-    __MainLoop() {
+    __ImportLoop() {
         /*  Import all items when executed. Log final results.
         */
         GuiControl, Hide, _button
@@ -40,6 +47,7 @@ class UpdbInterface {
             if (next_row_checked = index) {
                 This.Import(customer)
             } else {
+                This.Log(Format("`r`nSkipping Customer: {1}`r`n", customer.short_name))
                 customer.status := "Skip"
             }
 
@@ -129,7 +137,7 @@ class UpdbInterface {
         This.log("====================")
         This.log("Before beginning please move the GUI so it is not covering IP Tools.")
         This.log("Please ensure that you are on the UPDB import screen in IP Tools.")
-        This.log("Please ensure that no customers are currently checked.")
+        This.log("Please ensure that no customers are currently checked in IP Tools.")
         This.log(">> Click 'Ready' when ready to proceed.")
     }
 
@@ -389,7 +397,8 @@ ButtonAction() {
 
     if (updb_status = "Ready") {
         updb.__Configure()
+        updb.__PrepareImport()
     } else if (updb_status = "Import") {
-        updb.__MainLoop()
+        updb.__ImportLoop()
     }
 }
