@@ -30,7 +30,7 @@ class UpdbInterface {
         /*  Prepare for Import run and wait for user input to begin.
         */
         This.UpdateProgressBar(0)
-        This.Log("`r`nPlease select the customers you wish to import in this UI.")
+        This.Log("`r`nPlease select the customers you wish to import in the UPDB Import Helper.")
         This.Log(">> Click 'Import' to begin.")
         This.UpdateStatus("Waiting for User...")
         GuiControl, , _button, Import
@@ -141,8 +141,8 @@ class UpdbInterface {
         This.UpdateStatus("Waiting for User...")
         This.Log("`r`nUser Setup:")
         This.log("====================")
-        This.log("Before beginning please move the GUI so it is not covering IP Tools.")
-        This.log("Please ensure that you are on the UPDB import screen in IP Tools.")
+        This.log("Before beginning please move the UPDB Import Helper so it is not covering IP Tools.")
+        This.log("Please ensure that you are on the UPDB Import screen in IP Tools.")
         This.log("Please ensure that no customers are currently checked in IP Tools.")
         This.log(">> Click 'Ready' when ready to proceed.")
     }
