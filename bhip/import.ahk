@@ -38,7 +38,7 @@ class UpdbInterface {
     }
 
     __ImportLoop() {
-        /*  Import all items when executed. Log final results.
+        /*  Import all checked items. Log final results.
         */
         GuiControl, Hide, _button
         For index, customer in This.customers {
@@ -80,6 +80,8 @@ class UpdbInterface {
     }
 
     BuildGui() {
+        /*  Build Gui.
+        */
         Global current_action   ; I really hate Global but am not sure how to do it otherwise
         Global prog_bar         ; I really hate Global but am not sure how to do it otherwise
         Global _button          ; I really hate Global but am not sure how to do it otherwise
@@ -99,10 +101,14 @@ class UpdbInterface {
     }
 
     UpdateStatus(str) {
+        /*  Update status section of GUI
+        */
         GuiControl, , current_action, % str
     }
 
     UpdateProgressBar(num) {
+        /*  Update progress bar of GUI.
+        */
         GuiControl, , prog_bar, % num
     }
 
@@ -187,6 +193,8 @@ class UpdbInterface {
     }
 
     SetCustomers() {
+        /*  Finds customers with logging.
+        */
         This.Log("Finding Customers...")
         This.customers := This.FindCustomers()
         This.Log(Format("--> {1} customers found.", This.customers.Length()))
@@ -377,6 +385,8 @@ class UpdbInterface {
     }
 
     ClickLocation(x, y) {
+        /*  Activate window and click specific location
+        */
         WinActivate, % This.window.title
         WinWaitActive, % This.window.title
         MouseClick, Left, x, y
