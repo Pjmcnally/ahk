@@ -43,14 +43,21 @@ class UpdbInterface {
         This.UpdateStatus("Importing Complete. Posting Results.")
         This.log("`r`nThe following items were successfully imported:")
         For index, customer in This.customers {
-            if customer.success {
+            if customer.status = "Done" {
                 This.Log(customer.short_name)
             }
         }
 
         This.log("`r`nThe following items failed and were not imported:")
         For index, customer in This.customers {
-            if not customer.success {
+            if customer.status = "Fail" {
+                This.Log(customer.short_name)
+            }
+        }
+
+        This.log("`r`nThe following items were skipped and were not imported:")
+        For index, customer in This.customers {
+            if customer.status = "Skip" {
                 This.Log(customer.short_name)
             }
         }
@@ -282,6 +289,7 @@ class UpdbInterface {
         customer.success := False
         customer.try_count := 0
 
+        This.UpdateStatus("Importing: " . customer.short_name)
         This.Log(Format("`r`nImporting Customer: {1}", customer.short_name))
         This.Log("============================================================")
         While (not customer.success and customer.try_count <= 5) {
@@ -300,12 +308,13 @@ class UpdbInterface {
             customer.success := this.CheckResults()
             if customer.success {
                 This.Log(customer.short_name . " import successful`r`n`r`n")
-                customer.success := True
+                customer.status := "Done"
             } else if (customer.try_count <= 5) {
                 This.Log(Format("Import failed {1} times. Retrying {2}`r`n", customer.try_count, customer.short_name))
             } else {
-                This.Log(Format("Import failed 5 times. Abandoning {1}`r`n`r`n", customer.short_name))
                 This.ClickLocation(customer.x, customer.y)  ; To uncheck the customer.
+                This.Log(Format("Import failed 5 times. Abandoning {1}`r`n`r`n", customer.short_name))
+                customer.status := "Fail"
             }
         }
     }
