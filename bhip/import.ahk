@@ -248,7 +248,6 @@ class UpdbInterface {
         return import_button
     }
 
-; ==============================================================================
     WaitForImport() {
         /*  Wait for import to complete. Use color of screen to determine state.
         */
