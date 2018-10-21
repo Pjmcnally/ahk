@@ -35,6 +35,14 @@ class UpdbInterface {
         */
         GuiControl, Hide, _button
         For index, customer in This.customers {
+            ; Check if row is checked and if yes import.
+            next_row_checked := LV_GetNext(index - 1 , "Checked" )
+            if (next_row_checked = index) {
+                This.Import(customer)
+            } else {
+                customer.status := "Skip"
+            }
+
             ; Update UI to show status and increase progress bar
             LV_Modify(index, , , customer.status, customer.short_name)
             This.UpdateProgressBar(index / This.customers.MaxIndex() * 100)
