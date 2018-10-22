@@ -2,7 +2,8 @@
 */
 
 ; AutoExecute Section (When not imported)
-Global updb := New UpdbInterface
+; ==============================================================================
+Global _updb := New UpdbInterface
 
 ; Classes
 ; ==============================================================================
@@ -21,7 +22,7 @@ class UpdbInterface {
         */
         GuiControl, Hide, _button
         string =
-        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+        ( LTrim Join`r`n  ; Must specify `r`n for use with EditPaste
 
             Configuring settings
             ====================
@@ -40,7 +41,7 @@ class UpdbInterface {
         This.UpdateProgressBar(0)
         This.UpdateStatus("Waiting for User...")
         string =
-        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+        ( LTrim Join`r`n  ; Must specify `r`n for use with EditPaste
 
             Please select the customers you wish to import in the UPDB Import Helper."
             >> Click 'Import' to begin."
@@ -96,7 +97,7 @@ class UpdbInterface {
         }
 
         string =
-        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+        ( LTrim Join`r`n  ; Must specify `r`n for use with EditPaste
 
             The import is now complete.
             The log file for this import can be found at:
@@ -168,7 +169,7 @@ class UpdbInterface {
     PreCheck() {
         This.UpdateStatus("Waiting for User...")
         string =
-        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+        ( LTrim Join`r`n  ; Must specify `r`n for use with EditPaste
 
             User Setup:
             ====================
@@ -198,7 +199,7 @@ class UpdbInterface {
         This.Log("Getting window size...")
         This.window := This.FindWindowSize()
         string =
-        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+        ( LTrim Join`r`n  ; Must specify `r`n for use with EditPaste
             --> Window Width: {1}
             --> Window Height: {2}
             --> Window Title: {3}
@@ -302,7 +303,7 @@ class UpdbInterface {
         This.Log("Finding import button...")
         This.import_button := This.FindImportButton()
         string =
-        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+        ( LTrim Join`r`n  ; Must specify `r`n for use with EditPaste
             --> Import button x:
             --> Import button y:
         )
@@ -361,7 +362,7 @@ class UpdbInterface {
 
         ; Setup status string and values.
         base_str =
-        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+        ( LTrim Join`r`n  ; Must specify `r`n for use with EditPaste
             Importing: {1}
             Attempt number: {2}
             Attempt duration: {3}
@@ -521,21 +522,22 @@ class UpdbInterface {
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
+; Hotkey to activate when file is imported.
 ^!i::
     KeyWait, ctrl, L
     KeyWait, alt, L
 
-    Global updb := New UpdbInterface
+    Global _updb := New UpdbInterface
 return
 
 ButtonAction() {
     GuiControlGet, updb_status, , _button
 
     if (updb_status = "Ready") {
-        updb.__Configure()
-        updb.__PrepareImport()
+        _updb.__Configure()
+        _updb.__PrepareImport()
     } else if (updb_status = "Import") {
-        updb.__ImportLoop()
-        updb.__DisplayResults()
+        _updb.__ImportLoop()
+        _updb.__DisplayResults()
     }
 }
