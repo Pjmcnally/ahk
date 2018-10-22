@@ -541,3 +541,6 @@ ButtonAction() {
         _updb.__DisplayResults()
     }
 }
+
+GuiClose:
+ExitApp
