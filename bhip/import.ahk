@@ -17,8 +17,13 @@ class UpdbInterface {
         /*  Configure UpdbInterface for import run.
         */
         GuiControl, Hide, _button
-        This.Log("`r`nConfiguring settings")
-        This.Log("====================")
+        string =
+        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+
+            Configuring settings
+            ====================
+        )
+        This.Log(string)
         This.UpdateStatus("Configuring Settings...")
         This.SetColors()
         This.SetWindowSize()
@@ -30,9 +35,14 @@ class UpdbInterface {
         /*  Prepare for Import run and wait for user input to begin.
         */
         This.UpdateProgressBar(0)
-        This.Log("`r`nPlease select the customers you wish to import in the UPDB Import Helper.")
-        This.Log(">> Click 'Import' to begin.")
         This.UpdateStatus("Waiting for User...")
+        string =
+        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+
+            Please select the customers you wish to import in the UPDB Import Helper."
+            >> Click 'Import' to begin."
+        )
+        This.Log(string)
         GuiControl, , _button, Import
         GuiControl, Show, _button
     }
@@ -47,7 +57,7 @@ class UpdbInterface {
             if (next_row_checked = index) {
                 This.Import(customer)
             } else {
-                This.Log(Format("`r`nSkipping Customer: {1}`r`n", customer.short_name))
+                This.Log(Format("`r`nSkipping Customer: {1}", customer.short_name))
                 customer.status := "Skip"
             }
 
@@ -55,8 +65,12 @@ class UpdbInterface {
             LV_Modify(index, , , customer.status, customer.short_name)
             This.UpdateProgressBar(index / This.customers.MaxIndex() * 100)
         }
+    }
 
-        This.UpdateStatus("Importing Complete. Posting Results.")
+    __DisplayResults() {
+        /*  Display final results import process.
+        */
+        This.UpdateStatus("Importing Complete.`r`nPosting Results.")
         This.log("`r`nThe following items were successfully imported:")
         For index, customer in This.customers {
             if customer.status = "Done" {
@@ -77,6 +91,15 @@ class UpdbInterface {
                 This.Log(customer.short_name)
             }
         }
+
+        string =
+        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+
+            The import is now complete.
+            The log file for this import can be found at:
+            {1}
+        )
+        This.Log(Format(string, This.LogFilePath))
     }
 
     BuildGui() {
@@ -125,7 +148,9 @@ class UpdbInterface {
         Returns:
             str: Path to log file location.
         */
-        file_name := Format("{1}\UpdbImportLog_{2}-{3}-{4}.txt", A_Desktop, A_YYYY, A_MM, A_DD)
+        base := "{1}\UpdbImportLog_{2}-{3}-{4}.txt"
+        values := [A_Desktop, A_YYYY, A_MM, A_DD]
+        file_name := Format(base, values*)
 
         Return file_name
     }
@@ -139,12 +164,19 @@ class UpdbInterface {
 
     PreCheck() {
         This.UpdateStatus("Waiting for User...")
-        This.Log("`r`nUser Setup:")
-        This.log("====================")
-        This.log("Before beginning please move the UPDB Import Helper so it is not covering IP Tools.")
-        This.log("Please ensure that you are on the UPDB Import screen in IP Tools.")
-        This.log("Please ensure that no customers are currently checked in IP Tools.")
-        This.log(">> Click 'Ready' when ready to proceed.")
+        string =
+        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+
+            User Setup:
+            ====================
+            Before beginning please move the UPDB Import Helper so it is not covering IP Tools.
+            Please ensure that you are on the UPDB Import screen in IP Tools.
+            Please ensure that no customers are currently checked in IP Tools.
+            Please note you will not be able to use your computer while the import is in progress.
+
+            >> Click 'Ready' when ready to proceed.
+        )
+        This.Log(string)
     }
 
     SetColors() {
@@ -159,11 +191,17 @@ class UpdbInterface {
     SetWindowSize() {
         /*  Gets and sets window size with logging.
         */
+
         This.Log("Getting window size...")
         This.window := This.FindWindowSize()
-        This.Log("--> Window Width: " . This.window.width)
-        This.Log("--> Window Height: " . This.window.height)
-        This.Log("--> Window Title: " . This.Window.title)
+        string =
+        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+            --> Window Width: {1}
+            --> Window Height: {2}
+            --> Window Title: {3}
+        )
+        values := [This.window.width, This.window.height, This.Window.title]
+        This.Log(Format(string, values*))
     }
 
     FindWindowSize() {
@@ -204,7 +242,7 @@ class UpdbInterface {
         /*  Find customers by searching import page.
 
         Returns:
-            array: Contains customer objects. Each object has the following info:
+            array: Contains customer objects. Each object contains:
                 short_name: The name of the customer
                 x: The x value of the customers checkbox
                 y: The y value of the customers checkbox
@@ -260,8 +298,13 @@ class UpdbInterface {
         */
         This.Log("Finding import button...")
         This.import_button := This.FindImportButton()
-        This.Log("--> Import button x: " . This.import_button.x)
-        This.Log("--> Import button y: " . This.import_button.y)
+        string =
+        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+            --> Import button x:
+            --> Import button y:
+        )
+        values := [This.import_button.x, This.import_button.y]
+        This.Log(Format(string, values*))
     }
 
     FindImportButton() {
@@ -281,25 +324,68 @@ class UpdbInterface {
         return import_button
     }
 
-    WaitForImport() {
+    FormatDuration(milli) {
+    /*  A function to convert milliseconds to readable time.
+
+        Args:
+            milli (int): number of milliseconds
+        Returns:
+            Str: The formatted string in hh:mm:ss
+    */
+    sec := mod(milli //= 1000, 60)
+    min := mod(milli //= 60, 60)
+    hou := milli // 60
+    Return Format("{1:02d}:{2:02d}:{3:02d}", hou, min, sec)
+}
+
+    WaitForImport(customer) {
         /*  Wait for import to complete. Use color of screen to determine state.
+
+        Args:
+            (obj) customer: An object containing customer details
+
+        Returns:
+            Str: A string representation of the duration of the import.
         */
         ; Check a specific spot for color change
         ; Spot is 100 pixels to the left of the import button
         spot_x := This.import_button.x - 100
         spot_y := This.import_button.y
-        pause_interval := 2500
+
+        ; Setup time and pause variables.
+        import_start := A_TickCount
+        pause_interval := 1000
+
+        ; Setup status string and values.
+        base_str =
+        ( LTrim Join`r`n  ; Trims indentation and add line breaks between lines
+            Importing: {1}
+            Attempt number: {2}
+            Attempt duration: {3}
+        )
+        values := [customer.short_name, customer.try_count, ""]
 
         importing := True
         while importing {
+            ; Update duration calculation and values array.
+            duration := This.FormatDuration(A_TickCount - import_start)
+            values[3] := duration
+
+            ; Update status
+            This.UpdateStatus(Format(base_str, values* ))
+
+            ; Wait for import check if still importing
             Sleep, pause_interval
             WinActivate, % This.window.title
-
             PixelGetColor, pixel_color, spot_x, spot_y
+
+            ; If import complete set importing to false
             if (pixel_color = This.colors.background) {
                 importing := False
             }
         }
+
+        return duration
     }
 
     Import(customer) {
@@ -309,36 +395,57 @@ class UpdbInterface {
             item (dict): An object containing customer attributes and info.
         */
         ; Setup new customer attributes
+        max_tries := 5
         customer.is_checked := False  ; Assume checkbox is not checked
         customer.success := False
         customer.try_count := 0
 
-        This.UpdateStatus("Importing: " . customer.short_name)
         This.Log(Format("`r`nImporting Customer: {1}", customer.short_name))
         This.Log("============================================================")
-        While (not customer.success and customer.try_count <= 5) {
+        While (not customer.success and customer.try_count < max_tries) {
             customer.try_count += 1
-            if (not customer.is_checked) {  ; After a failure item remains checked
+
+            ; If customer was already checked (after a failure) leave alone.
+            if (not customer.is_checked) {
                 This.ClickLocation(customer.x, customer.y)
                 customer.is_checked := True
             }
 
             ; Start import and wait for import to finish
             This.ClickLocation(This.import_button.x, This.import_button.y)
-            This.WaitForImport()
-            This.Log("Import Complete. Checking results...")
+            duration := This.WaitForImport(customer)
 
             ; Check Import results and act accordingly.
-            customer.success := this.CheckResults()
-            if customer.success {
-                This.Log(customer.short_name . " import successful`r`n`r`n")
+            This.Log("Import Complete. Checking results...")
+            if This.CheckResults() {  ; Returns success as boolean
                 customer.status := "Done"
-            } else if (customer.try_count <= 5) {
-                This.Log(Format("Import failed {1} times. Retrying {2}`r`n", customer.try_count, customer.short_name))
-            } else {
-                This.ClickLocation(customer.x, customer.y)  ; To uncheck the customer.
-                This.Log(Format("Import failed 5 times. Abandoning {1}`r`n`r`n", customer.short_name))
+                base_str =
+                ( LTrim Join`r`n
+                    {1} import successful
+                    Import duration: {2}
+                )
+                values := [customer.short_name, duration]
+                This.Log(Format(base_str, values*))
+            } else if (customer.try_count >= max_tries) {
                 customer.status := "Fail"
+                This.ClickLocation(customer.x, customer.y)  ; Uncheck customer.
+                base_str =
+                ( LTrim Join`r`n
+                    Import failed {1} times.
+                    Import duration: {2}.
+                    Abandoning {3}.`r`n
+                )
+                values := [max_tries, duration, customer.short_name]
+                This.Log(Format(base_str, values*))
+            } else {
+                base_str =
+                ( LTrim Join`r`n
+                    Import failed {1} times.
+                    Import duration: {2}.
+                    Retrying {3}.`r`n
+                )
+                values := [customer.try_count, duration, customer.short_name]
+                This.Log(Format(base_str, values*))
             }
         }
     }
@@ -410,5 +517,6 @@ ButtonAction() {
         updb.__PrepareImport()
     } else if (updb_status = "Import") {
         updb.__ImportLoop()
+        updb.__DisplayResults()
     }
 }
