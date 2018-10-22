@@ -1,6 +1,9 @@
 /*  Automate process of importing the UPDB
 */
 
+; AutoExecute Section (When not imported)
+Global updb := New UpdbInterface
+
 ; Classes
 ; ==============================================================================
 class UpdbInterface {
@@ -105,8 +108,8 @@ class UpdbInterface {
     BuildGui() {
         /*  Build Gui.
         */
-        Global current_action   ; I really hate Global but am not sure how to do it otherwise
-        Global prog_bar         ; I really hate Global but am not sure how to do it otherwise
+        Global _current_action   ; I really hate Global but am not sure how to do it otherwise
+        Global _prog_bar         ; I really hate Global but am not sure how to do it otherwise
         Global _button          ; I really hate Global but am not sure how to do it otherwise
         Static customer_list
         Static log_window
@@ -115,8 +118,8 @@ class UpdbInterface {
         Gui, updb_gui:Add, Text, x10 y10 w200, % "Current action: "
         Gui, updb_gui:Add, Text, x220 y10, % "Current Progress:"
         Gui, updb_gui:Font,  ; Reset font
-        Gui, updb_gui:Add, Text, x10 y35 r3 w200 vCurrent_action,
-        Gui, updb_gui:Add, Progress, x220 y35 w500 h40 cGreen BackgroundWhite +border vProg_bar
+        Gui, updb_gui:Add, Text, x10 y35 r3 w200 v_Current_action,
+        Gui, updb_gui:Add, Progress, x220 y35 w500 h40 cGreen BackgroundWhite +border v_prog_bar
         Gui, updb_gui:Add, ListView, x10 y80 w200 h500 Grid Checked vCustomer_list, Import|Status|Name
         Gui, updb_gui:Add, Edit, ReadOnly x220 y80 w500 h500 vLog_window
         Gui, updb_gui:Add, Button, Default x10 w200 v_button gButtonAction, Ready
@@ -126,13 +129,13 @@ class UpdbInterface {
     UpdateStatus(str) {
         /*  Update status section of GUI
         */
-        GuiControl, , current_action, % str
+        GuiControl, , _current_action, % str
     }
 
     UpdateProgressBar(num) {
         /*  Update progress bar of GUI.
         */
-        GuiControl, , prog_bar, % num
+        GuiControl, , _prog_bar, % num
     }
 
     Log(str) {
