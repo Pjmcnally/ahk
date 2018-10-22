@@ -417,7 +417,7 @@ class UpdbInterface {
 
             ; Check Import results and act accordingly.
             This.Log("Import Complete. Checking results...")
-            customer.success = This.CheckResults()
+            customer.success := This.CheckResults()
 
             ; If import succeeded update status/log and exit function
             if customer.success {
