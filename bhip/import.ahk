@@ -473,23 +473,32 @@ class UpdbInterface {
     GetResults() {
         /*  Get results string by copying contents of output box of import.
         */
-        try_count = 0
+        x := This.import_button.x
+        y := This.import_button.y + 100
+
+        max_tries := 5
+        try_count := 0
         res := ""
 
         While (not res) {
-            x := This.import_button.x
-            y := This.import_button.y + 100
-
-            This.ClickLocation(x, y)  ; Click in results box
+            try_count += 1
+            ; Click in results box and wait for click to register
+            This.ClickLocation(x, y)
             Sleep, 200
 
-            Send, % "^a"  ; ctrl-a to select all text
+            ; Ctrl-a to select all text and wait for selection to occur
+            Send, % "^a"
             Sleep, 200
 
-            if (try_count < 5) {
-                ; True to persist clipboard, False to not skip error if no text
-                res := get_highlighted(persist:=True, e:=False)
-                try_count += 1
+            if (try_count <= max_tries) {
+                ; Clear clipboard and wait for clear.
+                Clipboard =
+                Sleep, 100
+
+                ; Send copy command and wait for results.
+                Send ^c
+                ClipWait, 1
+                res := clipboard
             } else {
                 res := "ERROR: Unable to extract results"
             }
