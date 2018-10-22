@@ -3,6 +3,7 @@
 
 ; AutoExecute Section (When not imported)
 ; ==============================================================================
+#SingleInstance, force  ; Set Single instance to prevent concurrent execution
 Global _updb := New UpdbInterface
 
 ; Classes
@@ -11,6 +12,9 @@ class UpdbInterface {
     __New() {
         /*  Create new UpdbInterface Instance. Build GUI and prepare log file.
         */
+        This.Version := "1.0.1"
+        This.Title := "UPDB Import Helper"
+        This.Title_str := Format("{1}  v{2}", This.Title, This.version)
         This.BuildGui()
         This.logFilePath := This.LogGeneratePath()
         This.LogWriteStart()
@@ -114,7 +118,7 @@ class UpdbInterface {
         Global _button          ; I really hate Global but am not sure how to do it otherwise
         Static customer_list
         Static log_window
-        Gui, updb_gui:New, +AlwaysOnTop, UPDB Import Helper
+        Gui, updb_gui:New, +AlwaysOnTop, % This.title_str
         Gui, updb_gui:Font, underline s12
         Gui, updb_gui:Add, Text, x10 y10 w200, % "Current action: "
         Gui, updb_gui:Add, Text, x220 y10, % "Current Progress:"
@@ -520,6 +524,8 @@ class UpdbInterface {
     }
 }
 
+
+
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
 ; Hotkey to activate when file is imported.
@@ -542,5 +548,11 @@ ButtonAction() {
     }
 }
 
-GuiClose:
-ExitApp
+updb_guiGuiClose:
+    ; Destroy GUI window
+    Gui, updb_gui:Destroy
+
+    ; If script is run as EXE exit script.
+    if (A_ScriptName = "UPDB Import Helper.exe") {
+        ExitApp
+    }
