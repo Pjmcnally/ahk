@@ -402,7 +402,7 @@ class UpdbInterface {
 
         This.Log(Format("`r`nImporting Customer: {1}", customer.short_name))
         This.Log("============================================================")
-        While (not customer.success and customer.try_count < max_tries) {
+        While (customer.try_count < max_tries) {
             customer.try_count += 1
 
             ; If customer was already checked (after a failure) leave alone.
@@ -417,7 +417,10 @@ class UpdbInterface {
 
             ; Check Import results and act accordingly.
             This.Log("Import Complete. Checking results...")
-            if This.CheckResults() {  ; Returns success as boolean
+            customer.success = This.CheckResults()
+
+            ; If import succeeded update status/log and exit function
+            if customer.success {
                 customer.status := "Done"
                 base_str =
                 ( LTrim Join`r`n
@@ -426,6 +429,8 @@ class UpdbInterface {
                 )
                 values := [customer.short_name, duration]
                 This.Log(Format(base_str, values*))
+                Return customer
+            ; If max try count met update status/log and exit function
             } else if (customer.try_count >= max_tries) {
                 customer.status := "Fail"
                 This.ClickLocation(customer.x, customer.y)  ; Uncheck customer.
@@ -437,6 +442,8 @@ class UpdbInterface {
                 )
                 values := [max_tries, duration, customer.short_name]
                 This.Log(Format(base_str, values*))
+                Return customer
+            ; Otherwise update status/log and try again.
             } else {
                 base_str =
                 ( LTrim Join`r`n
