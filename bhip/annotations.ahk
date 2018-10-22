@@ -6,7 +6,7 @@
 get_choice(title, prompt, array) {
     /*  Takes and array. Returns an element of the array chosen by the user.
     */
-    Static format_choice := % ""
+    Static FormatChoice := % ""
 
     ; Build string of choices from array
     l_box_string := ""
