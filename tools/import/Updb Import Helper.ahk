@@ -12,7 +12,7 @@ class UpdbInterface {
     __New() {
         /*  Create new UpdbInterface Instance. Build GUI and prepare log file.
         */
-        This.Version := "1.0.1"
+        This.Version := "1.0.2"
         This.Title := "UPDB Import Helper"
         This.Title_str := Format("{1}  v{2}", This.Title, This.version)
         This.BuildGui()
