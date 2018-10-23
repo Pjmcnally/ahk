@@ -224,7 +224,19 @@ class UpdbInterface {
                 title: Window Title
         */
         WinActivate, ahk_class IEFrame
-        WinWaitActive, ahk_class IEFrame
+        WinWaitActive, ahk_class IEFrame, , 3
+        if ErrorLevel {  ; If window not found report error and wait to reset.
+            string =
+            ( LTrim Join`r`n
+
+                IP Tools window not found. Please ensure that IE is running.
+                >> Please close this app and retry when ready
+            )
+            This.Log(string)
+            This.UpdateStatus("Waiting to close and reset.")
+            WinWaitClose, % This.Title  ; Wait for window to close
+        }
+
         WinGetPos, x, y, w, h, A  ; A for active window
         WinGetActiveTitle, title
 
