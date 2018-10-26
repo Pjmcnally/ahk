@@ -523,8 +523,8 @@ class UpdbInterface {
     GetResults() {
         /*  Get results string by copying contents of output box of import.
         */
-        x := This.import_button.x
-        y := This.import_button.y + 100
+        x := This.import_button.x + 300
+        y := This.import_button.y - 300
 
         max_tries := 5
         try_count := 0
