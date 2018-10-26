@@ -36,7 +36,7 @@ class UpdbInterface {
         This.SetColors()
         This.SetWindowSize()
         This.SetCustomers()
-        This.SetImportButtonLocation()
+        This.SetButtons()
     }
 
     __PrepareImport() {
@@ -268,8 +268,8 @@ class UpdbInterface {
                 y: The y value of the customers checkbox
         */
         temp_y := 200  ; y value to start searching at.
-        name_x := 300  ; x value of name column (doesn't seem to change)
-        checkbox_x := 200  ; x value of checkbox column (doesn't seem to change)
+        name_x := 281  ; x value of name column (doesn't seem to change)
+        checkbox_x := 181  ; x value of checkbox column (doesn't seem to change)
 
         customers := []  ; Customers list to be be returned
 
@@ -313,21 +313,27 @@ class UpdbInterface {
         return StrReplace(Clipboard, "`r`n")
     }
 
-    SetImportButtonLocation() {
-        /*  Gets and sets import button location with logging.
+    SetButtons() {
+        /*  Gets and sets the location of buttons with logging.
         */
-        This.Log("Finding import button...")
-        This.import_button := This.FindImportButton()
+
+        This.Log("Finding buttons...")
+        This.buttons := This.FindButtons()
+
         string =
         ( LTrim Join`r`n  ; Must specify `r`n for use with EditPaste
-            --> Import button x:
-            --> Import button y:
+            --> Found {1} at:
+            ----> x: {2}
+            ----> y: {3}
         )
-        values := [This.import_button.x, This.import_button.y]
-        This.Log(Format(string, values*))
+
+        For key, value in This.buttons {
+            values := [value.name, value.x, value.y]
+            This.Log(Format(string, values*))
+        }
     }
 
-    FindImportButton() {
+    FindButtons() {
         /*  Find the location of the import button
 
         Returns:
@@ -335,13 +341,39 @@ class UpdbInterface {
                 x: x coord of center of input button
                 y: y coord of center of input button
         */
-        import_button := {}  ; Create dict to store import_button attributes
-        import_button.x := This.window.width - 100  ; Set x near left of screen
+        button_dict := {}  ; Create dict to store import_button attributes
 
         last_customer := This.customers[This.customers.MaxIndex()]
-        import_button.y := last_customer.y + 40
+        button_row_y := last_customer.y + 40
 
-        return import_button
+        ; Set properties for "Select All" button
+        button_dict.select_all := {}
+        button_dict.select_all.name := "Select All button"
+        button_dict.select_all.x := last_customer.x + 20
+        button_dict.select_all.y := button_row_y
+
+        ; Set properties for "Unselect All" button
+        button_dict.unselect_all := {}
+        button_dict.unselect_all.name := "Unselect All button"
+        button_dict.unselect_all.x := last_customer.x + 100
+        button_dict.unselect_all.y := button_row_y
+
+        ; Find location of "Import Data" button
+        pixel_color := This.colors.background
+        temp_x := last_customer.x + 200
+        ; Search for import button
+        while (pixel_color = this.colors.background and temp_x < This.window.width) {
+            temp_x += 50
+            PixelGetColor, pixel_color, temp_x, button_row_y
+        }
+
+        ; Set properties for "Import Data" button
+        button_dict.import := {}
+        button_dict.import.name := "Import Data button"
+        button_dict.import.x := temp_x
+        button_dict.import.y := button_row_y
+
+        return button_dict
     }
 
     FormatDuration(milli) {
@@ -416,7 +448,6 @@ class UpdbInterface {
         */
         ; Setup new customer attributes
         max_tries := 5
-        customer.is_checked := False  ; Assume checkbox is not checked
         customer.success := False
         customer.try_count := 0
 
@@ -424,15 +455,10 @@ class UpdbInterface {
         This.Log("============================================================")
         While (customer.try_count < max_tries) {
             customer.try_count += 1
-
-            ; If customer was already checked (after a failure) leave alone.
-            if (not customer.is_checked) {
-                This.ClickLocation(customer.x, customer.y)
-                customer.is_checked := True
-            }
-
             ; Start import and wait for import to finish
-            This.ClickLocation(This.import_button.x, This.import_button.y)
+            This.ClickLocation(this.buttons.unselect_all.x, this.buttons.unselect_all.y)
+            This.ClickLocation(customer.x, customer.y)
+            This.ClickLocation(This.buttons.import.x, This.buttons.import.y)
             duration := This.WaitForImport(customer)
 
             ; Check Import results and act accordingly.
