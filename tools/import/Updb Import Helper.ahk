@@ -456,8 +456,12 @@ class UpdbInterface {
         While (customer.try_count < max_tries) {
             customer.try_count += 1
             ; Start import and wait for import to finish
+
+            ; Unselect all (Make sure starting clean)
             This.ClickLocation(this.buttons.unselect_all.x, this.buttons.unselect_all.y)
+            ; Check customer box
             This.ClickLocation(customer.x, customer.y)
+            ; Click import button to start import
             This.ClickLocation(This.buttons.import.x, This.buttons.import.y)
             duration := This.WaitForImport(customer)
 
