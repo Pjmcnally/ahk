@@ -39,7 +39,7 @@ python_test_func() {
     /*  Test function to try different methods of passing data.
     */
     func := "python_to_file"
-    py_file := "C:\Users\Patrick\Documents\programming\ahk\python\test.py"
+    py_file := "C:\Users\Patrick\Documents\programming\ahk\python\py_test.py"
     timer_wrapper(func, py_file)
     MsgBox, % %func%(py_file)
 }
