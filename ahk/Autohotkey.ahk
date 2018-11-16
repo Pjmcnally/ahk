@@ -3,5 +3,5 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir, %A_ScriptDir%\programming\ahk  ; Ensures a consistent starting directory. Set this to path of AHK folder.
 
-run core\autohotkey_main.ahk
+run ahk\autohotkey_main.ahk
 ExitApp
