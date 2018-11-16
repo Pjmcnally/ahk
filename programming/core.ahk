@@ -18,6 +18,10 @@
 :*:dmig::python manage.py migrate
 :*:dcol::python manage.py collectstatic --noinput --clear
 
+; PowerShell
+:*c:gctail::Get-Content -Path ^v -tail 1 -wait
+:*c:gctailsel::Get-Content -Path ^v -tail 1 -wait | Select-String
+
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
