@@ -11,8 +11,12 @@ System description: <Change as needed>
 
 ; Include Section
 ; ==============================================================================
-; Include Core Module (Must be included first for the Auto-Execute to work)
-#Include core.ahk
+; Include Core Module(s) (core.ahk must be first for the Auto-Execute to work)
+#Include core\core.ahk
+#Include core\clipboard.ahk
+#Include core\files.ahk
+#Include core\strings.ahk
+#include core\time.ahk
 
 ; Include Example
 ; #Include the_thing_I_want
