@@ -5,6 +5,25 @@
 
 ; Functions
 ; ==============================================================================
+send_outlook_email(subject, body, recipients := "") {
+    /*  Fill content into Outlook email.
+
+        Args:
+            subject (str): The subject of the email
+            body (str): The body of the email
+            recipients (str): Optional. Recipients of email.
+        Return:
+            None
+    */
+    if (recipients) {
+        Send, %recipients%{Tab 2}
+    }
+    Send, %subject%{Tab}
+    Send, % body
+
+    Return
+}
+
 fill_scrape_mail_date() {
         /*  Fill scrape start dates and mail start date into jobs screen.
 
