@@ -18,8 +18,12 @@ class PandoraInterface {
         legacy_src := "C:\Program Files (x86)\Pandora\pandora.exe"
         winApp_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\pandora.lnk"
 
+        This.x := This.getSysTopLeft()
+        This.y := 0
+
         ; Test for winApp version of Pandora Client and set config
         if (FileExist(winApp_src)) {
+            This.x -= 7  ; This solves invisible padding on the window.
             This.Version := "winApp"
             This.Source := winApp_src
             This.Window := "Pandora ahk_exe ApplicationFrameHost.exe"
@@ -33,6 +37,20 @@ class PandoraInterface {
         } else {
             MsgBox, % "Pandora not found. Unable to proceed."
         }
+    }
+
+    getSysTopLeft() {
+        ; Get count of monitors
+        SysGet, num_mons, MonitorCount
+
+        ; Loop over monitors. Find left most monitor.
+        x_coords := Array()
+        Loop, % num_mons {
+            SysGet, coords, MonitorWorkArea, % A_Index
+            x_coords.push(coordsLeft)
+        }
+
+        Return Min(x_coords*)
     }
 
     playPause() {
@@ -68,6 +86,7 @@ class PandoraInterface {
         */
         Run, % This.Source
         Sleep, % This.WaitInterval
+        WinMove, % This.Window, , % This.x, This.y
         WinMinimize, % This.Window
     }
 
