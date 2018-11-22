@@ -4,7 +4,7 @@
 ; Functions
 ; ==============================================================================
 ; Run on local system after merging a branch into master to other branches.
-get_dev_pull() {
+get_dev_remote() {
     str =
     ( LTrim
         workon devops_live
@@ -27,7 +27,7 @@ get_dev_pull() {
     Return str
 }
 
-get_dev_push() {
+get_dev_local() {
     str =
     ( LTrim
         workon DevOps
@@ -51,11 +51,11 @@ get_dev_push() {
 ; Hotstrings
 ; ==============================================================================
 ; Run on local system after merging a branch into master to other branches.
-:*:devpush::
-    paste_contents(get_dev_push())
+:*:devLocal::
+    paste_contents(get_dev_local())
 Return
 
 ; Run on remote system after updating all branches to pull down changes.
 :*:devpull::
-    paste_contents(get_dev_pull())
+    paste_contents(get_dev_remote())
 Return
