@@ -58,6 +58,12 @@ format_db_for_jira() {
     Return
 }
 
+at_message(array) {
+    For x, v in array {
+        Send, % v . ", "
+    }
+}
+
 ; Hotstrings
 ; ==============================================================================
 
@@ -72,6 +78,9 @@ format_db_for_jira() {
 ; Chrome only Hotstrings
 ; ==============================================================================
 :?o:sr::Self resolved^{Enter}
+:Xco:@devs::at_message(get_devs())
+:Xco:@ops::at_message(get_dev_ops())
+
 
 ; Chrome only Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
