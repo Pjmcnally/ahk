@@ -114,6 +114,10 @@ format_jira_email(str) {
 :co:mtech::Task-187{Tab 3}* Weekly technology meeting
 :co:tlws::Tech-1356{Tab 3}* Login to WorkSite DMS
 
+; Test matters
+:Xco:ustest::Send, % get_test_matter("us")
+:Xco:cntest::Send, % get_test_matter("cn")
+
 ; Signature/Ticket Hotstrings
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 :Xo:psig::SendLines(["Patrick McNally", "DevOps Support", get_my_bhip_email()])
