@@ -27,6 +27,8 @@ send_outlook_email(subject, body, recipients := "") {
 fill_scrape_mail_date() {
         /*  Fill scrape start dates and mail start date into jobs screen.
 
+        Set sort by Start Date before running.
+
         Args:
             None
         Return:
@@ -42,24 +44,20 @@ fill_scrape_mail_date() {
     if ErrorLevel
         Exit
     i = 0
-    box_height := 24
 
     While(i < num) {
-        if (Mod(i, 20) = 0) {
-            KeyWait, LButton, D
-            MouseGetPos, x, y
-        }
+        ; Make sure to sort by "Start Date Asc before starting. That way the
+        ; newly entered item will be "Sorted to the bottom" and the top box
+        ; will always be empty.
 
-        Sleep, 200
-        Send {Click, 2}
-        Sleep, 200
-        Send, % scrape_start
-        Click, 325, 1225, 2  ; Magic number for location of mail date box
-        Sleep, 200
-        Send, % mail_start
-
-        y += box_height
-        MouseMove, x, y
+        Click, 815, 425, 2  ; Click top square Start Date box.
+        Sleep, 400
+        Send, % scrape_start  ; Enter Date
+        Sleep, 400
+        Click, 325, 1210, 2  ; Click in MailDateStart box.
+        Sleep, 400
+        Send, % mail_start  ; Enter Date
+        Sleep, 400
 
         i += 1
     }
