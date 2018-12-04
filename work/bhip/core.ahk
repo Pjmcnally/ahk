@@ -27,7 +27,8 @@ send_outlook_email(subject, body, recipients := "") {
 fill_scrape_mail_date() {
         /*  Fill scrape start dates and mail start date into jobs screen.
 
-        Set sort by Start Date before running.
+        Filter to 1 result before running or the process won't work. Also set
+        filter to "Contains"
 
         Args:
             None
@@ -40,24 +41,40 @@ fill_scrape_mail_date() {
     InputBox, mail_start, % "Mail Start", % "Please enter mail start date"
     if ErrorLevel
         Exit
-    InputBox, num, % "Number?", % "Please enter the number of lines to fill"
-    if ErrorLevel
-        Exit
-    i = 0
+    InputBox, array_str, % "USPTO Customer Numbers", % "Add a comma separated list of USPTO Customer Numbers."
+    ; InputBox, num, % "Number?", % "Please enter the number of lines to fill"
+    ; if ErrorLevel
+    ;     Exit
 
-    While(i < num) {
+    array := StrSplit(array_str, ",", " ")
+    wait := 300
+
+    For i, val in array {
         ; Make sure to sort by "Start Date Asc before starting. That way the
         ; newly entered item will be "Sorted to the bottom" and the top box
         ; will always be empty.
 
-        Click, 815, 425, 2  ; Click top square Start Date box.
-        Sleep, 400
+        WinActivate, Black Hills IP - IP Tools - Internet Explorer
+        WinWaitActive, Black Hills IP - IP Tools - Internet Explorer
+
+        Click, 2538, 397, 1
+        Sleep, % wait
+        Click, 2500, 760, 1
+        Sleep, % wait
+        Send, % val
+        Sleep, % wait
+        Send, {Enter}
+        Sleep, % wait
+        Click, 765, 425, 2  ; Click top square Start Date box.
+        Sleep, % wait
+        Send, ^a
         Send, % scrape_start  ; Enter Date
-        Sleep, 400
+        Sleep, % wait
         Click, 325, 1210, 2  ; Click in MailDateStart box.
-        Sleep, 400
+        Sleep, % wait
+        Send, ^a
         Send, % mail_start  ; Enter Date
-        Sleep, 400
+        Sleep, % wait
 
         i += 1
     }
