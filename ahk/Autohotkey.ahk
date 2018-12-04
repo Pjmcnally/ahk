@@ -16,7 +16,8 @@ New-Item -ItemType SymbolicLink -Path {path to My Documents} -Name AutoHotkey.ah
 
 ; Sets working dir relative to ahk folder. Allows relative imports.
 ; Ensures a consistent starting directory. Set this to path of AHK folder.
-SetWorkingDir, %A_ScriptDir%\programming\ahk
+EnvGet, vHomePath, HOMEPATH
+SetWorkingDir, %vHomePath%\programming\ahk
 
 ; Executes main AHK file
 run ahk\autohotkey_main.ahk
