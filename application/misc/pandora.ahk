@@ -15,8 +15,11 @@ class PandoraInterface {
     SetVersion() {
         /*  Find and set version of Pandora on system.
         */
+        ; Exe source of standard install
         legacy_src := "C:\Program Files (x86)\Pandora\pandora.exe"
-        winApp_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\pandora.lnk"
+
+        ; The windows app version doesn't have an exe. Create this file by adding a link to a folder in the start menu.
+        winApp_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\Pandora.lnk"
 
         This.x := This.getSysTopLeft()
         This.y := 0
