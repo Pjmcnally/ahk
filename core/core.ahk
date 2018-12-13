@@ -86,11 +86,14 @@ HasVal(haystack, needle) {
     Return 0
 }
 
-SendWait(msg, wait:=0) {
+SendWait(msg, wait) {
     Send % msg
-    if (wait) {
-        Sleep % wait
-    }
+    Sleep % wait
+}
+
+ClickWait(x, y, num, wait) {
+    Click, %x%, %y%, %num%
+    Sleep, % wait
 }
 
 SendLines(iter, wait:=0) {
