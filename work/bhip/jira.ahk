@@ -58,6 +58,39 @@ format_db_for_jira() {
     Return
 }
 
+format_jira_email(str) {
+    /*  Reformat text sent into JIRA from Outlook email.
+
+        Outlook add extra line breaks to emails sent to JIRA.  Also, JETI tries
+        to process colors and adds {color} tags around all text (even black).
+        These "features" combine to make text very hard to read.
+
+        This function cleans up the text and makes it much more human readable.
+
+        Args:
+            str (str): The text to be cleaned up.
+        Return:
+            str: The cleaned text.
+    */
+
+    str := RegExReplace(str, "\xA0+", " ")  ; Replace all Non-breaking spaces with normal ones
+    str := RegExReplace(str, "s)\*?{color.*?}(.*?){color}\*?", "$1")  ; Remove all {color tags} and linked * tags leaving surrounding text.
+    str := RegexReplace(str, "(?<![\n\*])\*(.*?)\*", "$1")  ; Remove all * tags leaving surrounded text
+    str := RegExReplace(str, "\_(.*?)\_", "$1")  ; Remove all _ tags leaving surrounded text
+    str := RegexReplace(str, "\+(.*?)\+", "$1")  ; Remove all + tags leaving surrounded text
+    str := RegExReplace(str, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Convert double brackets to single.
+    str := RegExReplace(str, "(?:(\[)\s+|\s+(\]))", "$1$2")  ; Remove any spaces immediately inside of open bracket or before closing bracket
+    str := RegExReplace(str, "\[(.*?)\|\]", "$1")  ; Remove any link tags with no link content
+    str := RegExReplace(str, "m)^ *(.*?) *$", "$1")  ; Trim spaces from beginning and end of lines
+    str := RegExReplace(str, "(\r\n|\r|\n){2}", "`r`n")  ; Collapse any single empty lines.
+    str := RegExReplace(str, "(\r\n|\r|\n){3,}", "`r`n`r`n")  ; Reduce any stretch of multiple empty lines to 1 empty line.
+    str := RegExReplace(str, "m)^[fF](rom:.*)$", "----`r`n`r`nF$1")  ; Add ---- divider before next email
+    str := RegExReplace(str, get_bhip_sig_address())  ; Remove BHIP address block
+    str := RegExReplace(str, get_bhip_sig_conf())  ; Remove bhip conf statement
+
+    Return str
+}
+
 at_message(array) {
     For x, v in array {
         Send, % v . ", "
