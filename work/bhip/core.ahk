@@ -96,8 +96,7 @@ fill_scrape_mail_date() {
 :co:tlws::Tech-1356{Tab 3}* Login to WorkSite DMS
 
 ; Test matters
-:Xco:ustest::Send, % get_test_matter("us")
-:Xco:cntest::Send, % get_test_matter("cn")
+:Xco*:testmatter::Send, % get_test_matter()
 
 ; Signature/Ticket Hotstrings
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
