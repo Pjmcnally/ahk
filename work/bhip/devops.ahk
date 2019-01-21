@@ -10,16 +10,20 @@ get_dep_remote() {
         workon devops_live
         write-host "``r``nUpdating Live deploy`r`n===================="
         git checkout deploy
+        git fetch --all --prune
         git pull
         workon devops_test;
         write-host "``r``nUpdating Test master`r`n===================="
         git checkout master
+        git fetch --all --prune
         git pull
         write-host "``r``nUpdating Test test`r`n===================="
         git checkout test
+        git fetch --all --prune
         git pull
         write-host "``r``nUpdating Test deploy`r`n===================="
         git checkout deploy
+        git fetch --all --prune
         git pull
         Write-Host "`r`nReturning to Master`r`n===================="
         git checkout master
@@ -33,13 +37,16 @@ get_dep_local() {
         workon DevOps
         write-host "``r``nPulling changes to master`r`n===================="
         git checkout master
+        git fetch --all --prune
         git pull
         write-host "``r``nMerging master into test`r`n===================="
         git checkout test
+        git fetch --all --prune
         git merge master
         git push
         write-host "``r``nMerging master into deploy`r`n===================="
         git checkout deploy
+        git fetch --all --prune
         git merge master
         git push
         Write-Host "`r`nReturning to Master`r`n===================="
