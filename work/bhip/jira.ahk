@@ -110,9 +110,21 @@ at_message(array) {
 
 ; Chrome only Hotstrings
 ; ==============================================================================
-:?o:sr::Self resolved^{Enter}
+; Jira comment hotstrings
 :Xco:@devs::at_message(get_devs())
 :Xco:@ops::at_message(get_dev_ops())
+:?o:sr::Self resolved^{Enter}
+:o*:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
+:o*:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
+:o*:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
+
+; Time tracking hotkeys
+:co:mbhip::Task-136{Tab 3}* Monthly BHIP Meeting
+:co:mday::Task-121{Tab 3}* Daily Huddle
+:co:mver::Task-184{Tab 3}* Weekly verification and flexicapture meeting
+:co:mtech::Task-187{Tab 3}* Weekly technology meeting
+:co:tlws::Tech-1356{Tab 3}* Login to WorkSite DMS
+:co:tsteve::task-169{Tab 3}* Investigate and answer questions
 
 
 ; Chrome only Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
