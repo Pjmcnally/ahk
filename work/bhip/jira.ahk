@@ -124,7 +124,8 @@ at_message(array) {
 :co:mver::Task-184{Tab 3}* Weekly verification and flexicapture meeting
 :co:mtech::Task-187{Tab 3}* Weekly technology meeting
 :co:tlws::Tech-1356{Tab 3}* Login to WorkSite DMS
-:co:tsteve::task-169{Tab 3}* Investigate and answer questions
+:co:tsteve::task-169{Tab 3}* Investigate and resolve request
+:co:tann::task-206{Tab 3}* Investigate and resolve request
 
 
 ; Chrome only Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
