@@ -121,7 +121,7 @@ at_message(array) {
 ; Time tracking hotkeys
 :co:mbhip::Task-136{Tab 3}* Monthly BHIP Meeting
 :co:mday::Task-121{Tab 3}* Daily Huddle
-:co:mver::Task-184{Tab 3}* Weekly verification and flexicapture meeting
+:co:mver::Task-184{Tab 3}* Weekly verification and FlexiCapture meeting
 :co:mtech::Task-187{Tab 3}* Weekly technology meeting
 :co:tlws::Tech-1356{Tab 3}* Login to WorkSite DMS
 :co:tsteve::task-169{Tab 3}* Investigate and resolve request
