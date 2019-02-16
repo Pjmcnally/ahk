@@ -27,8 +27,13 @@ send_outlook_email(subject, body, recipients := "") {
 fill_scrape_mail_date() {
         /*  Fill scrape start dates and mail start date into jobs screen.
 
-        Filter to 1 result before running or the process won't work. Also set
-        filter to "Contains"
+        To use this set the Setting Summary filter to contains and enter some
+        value. It doesn't matter if no items are showing but there must not be
+        more than 1 screen worth of items as the scrolling bar throws off some
+        of the click references.
+
+        You may also need to update the StartDate box x position as it can be
+        influenced by credential name length.
 
         Args:
             None
@@ -48,6 +53,7 @@ fill_scrape_mail_date() {
 
     array := StrSplit(array_str, ",", " ")
     wait := 300
+    start_date_box_x_pos := 940
 
     For i, val in array {
         ; Make sure to sort by "Start Date Asc before starting. That way the
@@ -65,7 +71,7 @@ fill_scrape_mail_date() {
         Sleep, % wait
         Send, {Enter}
         Sleep, % wait
-        Click, 765, 425, 2  ; Click top square Start Date box.
+        Click, %start_date_box_x_pos%, 425, 2  ; Click top square Start Date box.
         Sleep, % wait
         Send, ^a
         Send, % scrape_start  ; Enter Date
