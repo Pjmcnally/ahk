@@ -35,6 +35,26 @@ paste_as_sql_list() {
     Return
 }
 
+ToggleComment() {
+    str := get_highlighted()
+    isComment := true
+
+    Loop, parse, str, `n, `r
+    {
+        if not (RegexMatch(A_LoopField, "^\s*--.*")) {
+            isComment := False
+            break
+        }
+    }
+
+    if isComment {
+        SEND, {control down}ku{control up}
+    } else {
+        SEND, {control down}kc{control up}
+    }
+
+}
+
 
 ; Hotstrings
 ; ==============================================================================
@@ -45,5 +65,6 @@ paste_as_sql_list() {
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
 ^!+l::paste_as_sql_list()
+^/::ToggleComment()
 
 #IfWinActive ; End SQL Hotstrings
