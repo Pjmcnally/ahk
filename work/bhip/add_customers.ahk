@@ -1,3 +1,7 @@
+/*  This was used as part of a 1 time operation to load some customers into
+the test system.
+*/
+
 get_customers_from_csv(file_path) {
     customers := []
     attributes := ["ClientNumber", "Name", "ShortName", "State", "RegNum", "Practitioner", "FileName", "Password"]
