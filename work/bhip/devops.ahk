@@ -3,8 +3,9 @@
 
 ; Functions
 ; ==============================================================================
-; Run on local system after merging a branch into master to other branches.
 get_dep_remote() {
+    /*  Run on remote system after updating all branches to pull down changes.
+    */
     str =
     ( LTrim
         workon devops_live
@@ -32,6 +33,8 @@ get_dep_remote() {
 }
 
 get_dep_local() {
+    /*  Run on local system after merging a branch into master.
+    */
     str =
     ( LTrim
         workon DevOps
@@ -55,14 +58,55 @@ get_dep_local() {
     Return str
 }
 
+test_credential() {
+    /*  Script to quickly run cred test for use when testing on multiple
+    systems.
+
+    Before you start create a file like this containing the needed values:
+    [values]
+    url=""
+    cert=""
+    username=""
+    password=""
+    guid=""
+    */
+
+    file := "C:\Users\Patrick\Desktop\test.txt"
+    elements := ["url", "cert", "username", "password", "guid"]
+    object := {}
+
+    for index, item in elements {
+        IniRead, value, % file, Values, % item
+        object[item] := value
+    }
+
+    Send, % object.url
+    Send, {Tab}
+    Send, % object.cert
+    Send, {Tab 2}
+    Send, % object.username
+    Send, {Tab}
+    SendRaw, % object.password
+    Send, {Tab}
+    Send, % object.guid
+    Send, {Tab 4}
+    Send, {Enter}
+}
+
 ; Hotstrings
 ; ==============================================================================
-; Run on local system after merging a branch into master to other branches.
 :*:depLocal::
     paste_contents(get_dep_local())
 Return
 
-; Run on remote system after updating all branches to pull down changes.
 :*:depRemote::
     paste_contents(get_dep_remote())
+Return
+
+:co:credtestgo::
+    test_credential()
+Return
+
+:co:credtestrun::
+    Send, % get_tester_path()
 Return
