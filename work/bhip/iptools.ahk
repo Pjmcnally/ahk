@@ -161,22 +161,22 @@ fill_scrape_mail_date() {
         WinActivate, Black Hills IP - IP Tools - Internet Explorer
         WinWaitActive, Black Hills IP - IP Tools - Internet Explorer
 
-        Click, 2538, 397, 1
+        Click, 2538, 397, 1  ; Click "filter button" for Setting Summary
         Sleep, % wait
-        Click, 2500, 760, 1
+        Click, 2500, 760, 1  ; Click to enter filter value
         Sleep, % wait
-        Send, % val
+        Send, % val  ; Send filter value
         Sleep, % wait
         Send, {Enter}
         Sleep, % wait
         Click, %start_date_box_x_pos%, 425, 2  ; Click top square Start Date box.
         Sleep, % wait
-        Send, ^a
+        Send, ^a  ; Highlight any previously entered text
         Send, % scrape_start  ; Enter Date
         Sleep, % wait
         Click, 325, 1210, 2  ; Click in MailDateStart box.
         Sleep, % wait
-        Send, ^a
+        Send, ^a  ; Highlight any previously entered text
         Send, % mail_start  ; Enter Date
         Sleep, % wait
 
