@@ -18,7 +18,7 @@ update_and_save_layout(country) {
     SendWait("f", wait)
     SendWait("a", wait)
     Sleep, 1000
-    navigate_to_layout_folder(country, wait)
+    SendWait("!n", wait)  ; Activate "file name" box
     Send, % name_string . "{Enter}"
     Sleep, 1000
 }
@@ -28,8 +28,9 @@ add_languages(country) {
     name_string := "Generic-" . country
     base_path := "E:\Dropbox\FlexiCapture\Layouts and Projects\" . country
     export_languages_path := base_path . "\ExportLanguages.txt"
-    layout_path := base_path . "\Layouts\" . name_string . "\" . name_string . ".fsp"
-
+    layouts_path := base_path . "\Layouts\" . name_string . "\"
+    fsp_path := layouts_path . name_string . ".fsp"
+    afl_path := layouts_path . name_string . ".afl"
 
     ; Create Export Languages file
     if (!FileExist(export_languages_path)) {
@@ -47,9 +48,9 @@ add_languages(country) {
     }
 
     ; Activate FlexiCapture and Open languages menu
-    Run, % layout_path
+    Run, % fsp_path
     WinWaitActive ahk_exe FlexiLayoutStudio.exe
-    Sleep, 1000
+    Sleep, % wait * 10
     SendWait("!l", wait)
     SendWait("{Up}", wait)
     SendWait("{Enter}", wait)
@@ -57,53 +58,40 @@ add_languages(country) {
     ; Pause to manually update languages
     MsgBox, % "Update languages as necessary.`r`n`r`nEnter to continue"
 
-    ; Close ExportLanguages file
+    ; Save and close ExportLanguages file
     WinActivate ahk_class Notepad++
     WinWaitActive ahk_class Notepad++
+    SendWait("^s", wait)
     SendWait("^w", wait)
 
-    ; Reactivate FlexiCapture to save and export
+    ; Reactivate FlexiCapture to save
     WinActivate ahk_exe FlexiLayoutStudio.exe
     WinWaitActive ahk_exe FlexiLayoutStudio.exe
-    SendWait("{Enter}", wait)
-    SendWait("^s", wait)
+    SendWait("{Enter}", wait)  ; Close any open windows
+    SendWait("^s", wait)  ; Save project
+
+    ; Activate export menu
     SendWait("{alt}", wait)
     SendWait("f", wait)
     SendWait("e", wait)
-    Sleep, 1000
-    navigate_to_layout_folder(country, wait)
-    SendWait("{Enter}", wait)
-    SendWait("^s", wait)
-    SendWait("!x", wait)
-    Sleep, 1000
+    Sleep, % wait * 5
+
+    ; Add file name and save
+    SendWait("!n", wait)  ; Activate "file name" box
+    SendWait(afl_path, wait * 2.5)  ; Enter new file name
+    SendWait("{Enter}", wait * 2.5)  ; Enter to save
+    SendWait("{Enter}", wait * 2.5)  ; Enter to clear "File already exists" warning
+    SendWait("^s", wait)  ; Save
+    SendWait("!x", wait)  ; Quit
+    Sleep, % wait * 5
 }
 
-navigate_to_layout_folder(country, wait) {
-    Click, 416, 48,  ; Click on "Up one level"
-    Sleep, % wait
-    Click, 416, 48,  ; Click on "Up one level"
-    Sleep, % wait
-    Click, 416, 48,  ; Click on "Up one level"
-    Sleep, % wait
-    Click, 300, 175  ; Click in main box
-    Sleep, % wait
-    SendWait(country, wait)
-    SendWait("{Enter}", wait)
-    Click, 150, 100, 2  ; Select first option - Layouts
-    Sleep, % wait
-    Click, 150, 100, 2  ; Select first option - Generic-??
-    Sleep, % wait
-    Click, 225, 425  ; Click in file name field
-    Sleep, % wait
-}
 
 main() {
-    ; Already done: ["AD", "AE", "AL", "AM", "AO", "AP", "AR", "AT", "AU", "BD", "BE", "BG", "BH", "BN", "BO", ]
-    countries := ["BX", "BY", "CA", "CH", "CL", "CO", "CR", "CU", "CY", "CZ", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FR", "GC", "GE", "GH", "GR", "GT", "GY", "HK", "HN", "HR", "HU", "IB", "ID", "IE", "IN", "IQ", "IR", "IT", "JO", "KE", "KG", "KH", "KW", "KZ", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "MG", "MK", "MN", "MO", "MT", "MX", "MZ", "NA", "NG", "NI", "NL", "NO", "NP", "NZ", "OA", "OM", "PA", "PE", "PH", "PK", "PL", "PO", "PR", "PT", "PY", "QA", "RO", "RS", "SA", "SE", "SG", "SI", "SK", "SL", "SM", "TH", "TJ", "TM", "TR", "TZ", "UA", "UG", "UK", "UY", "UZ", "VE", "VN", "WD", "WP", "ZA"]
+    ; Already done: []
+    countries := ["AD", "AE", "AL", "AM", "AO", "AP", "AR", "AT", "AU", "BD", "BE", "BG", "BH", "BN", "BO", "BX", "BY", "CA", "CH", "CL", "CO", "CR", "CU", "CY", "CZ", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FR", "GC", "GE", "GH", "GR", "GT", "GY", "HK", "HN", "HR", "HU", "IB", "ID", "IE", "IN", "IQ", "IR", "IT", "JO", "KE", "KG", "KH", "KW", "KZ", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "MG", "MK", "MN", "MO", "MT", "MX", "MZ", "NA", "NG", "NI", "NL", "NO", "NP", "NZ", "OA", "OM", "PA", "PE", "PH", "PK", "PL", "PO", "PR", "PT", "PY", "QA", "RO", "RS", "SA", "SE", "SG", "SI", "SK", "SL", "SM", "TH", "TJ", "TM", "TR", "TZ", "UA", "UG", "UK", "UY", "UZ", "VE", "VN", "WD", "WP", "ZA"]
     for i, v in countries {
         add_languages(v)
-
-        Return
     }
 }
 
