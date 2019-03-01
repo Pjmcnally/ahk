@@ -1,4 +1,15 @@
+/*  IP Tools functions, hotstrings, and hotkeys used at BHIP.
+*/
+
+
 setup_country(country) {
+    /*  This is a one time use function to create a mass export layouts and
+    templates for all missing countries in our system.
+
+    This could probably be re-structured and improved but because it is a one
+    time solution I am not worried about long term maintainability.
+    */
+
     wait := 200
     name_string := "Generic-" . country
 
@@ -64,6 +75,7 @@ setup_country(country) {
     ; Run and wait for FlexiCapture Layout
     Run, % fsp_path
     WinWaitActive ahk_exe FlexiLayoutStudio.exe
+    Sleep, % wait * 5  ; This wait is need or the command may not be received.
 
     ; Open languages menu
     SendWait("!l", wait)
@@ -181,11 +193,10 @@ setup_country(country) {
 
 
 main() {
-    ; Already done: []
-    countries := ["AD", "AE", "AL", "AM", "AO", "AP", "AR", "AT", "AU", "BD", "BE", "BG", "BH", "BN", "BO", "BX", "BY", "CA", "CH", "CL", "CO", "CR", "CU", "CY", "CZ", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FR", "GC", "GE", "GH", "GR", "GT", "GY", "HK", "HN", "HR", "HU", "IB", "ID", "IE", "IN", "IQ", "IR", "IT", "JO", "KE", "KG", "KH", "KW", "KZ", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "MG", "MK", "MN", "MO", "MT", "MX", "MZ", "NA", "NG", "NI", "NL", "NO", "NP", "NZ", "OA", "OM", "PA", "PE", "PH", "PK", "PL", "PO", "PR", "PT", "PY", "QA", "RO", "RS", "SA", "SE", "SG", "SI", "SK", "SL", "SM", "TH", "TJ", "TM", "TR", "TZ", "UA", "UG", "UK", "UY", "UZ", "VE", "VN", "WD", "WP", "ZA"]
+    ; Already done: ["AD", ]
+    countries := ["AE", "AL", "AM", "AO", "AP", "AR", "AT", "AU", "BD", "BE", "BG", "BH", "BN", "BO", "BX", "BY", "CA", "CH", "CL", "CO", "CR", "CU", "CY", "CZ", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FR", "GC", "GE", "GH", "GR", "GT", "GY", "HK", "HN", "HR", "HU", "IB", "ID", "IE", "IN", "IQ", "IR", "IT", "JO", "KE", "KG", "KH", "KW", "KZ", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "MG", "MK", "MN", "MO", "MT", "MX", "MZ", "NA", "NG", "NI", "NL", "NO", "NP", "NZ", "OA", "OM", "PA", "PE", "PH", "PK", "PL", "PO", "PR", "PT", "PY", "QA", "RO", "RS", "SA", "SE", "SG", "SI", "SK", "SL", "SM", "TH", "TJ", "TM", "TR", "TZ", "UA", "UG", "UK", "UY", "UZ", "VE", "VN", "WD", "WP", "ZA"]
     for i, v in countries {
         setup_country(v)
-        return
     }
 }
 
