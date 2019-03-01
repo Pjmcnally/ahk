@@ -32,6 +32,7 @@ setup_country(country) {
     fcdot_path := template_path . "\" . name_string . ".fcdot"
     doc_path := "E:\Dropbox\BHIP-Sys-Docs\Support\Test Doc For IPT Configuration.pdf"
     generic_layout := "E:\Dropbox\FlexiCapture\Layouts and Projects\Generic\Layouts\Generic.fsp"
+    country_code := "E:\Dropbox\BHIP-Share\JIRA\HELP\HELP-09055\Country by Country Code.txt"
 
     ; Create Export Languages file
     if (!FileExist(export_languages_path)) {
@@ -83,8 +84,11 @@ setup_country(country) {
     SendWait("{Up}", wait)
     SendWait("{Enter}", wait)
 
+    ; Get country value from country code file
+    iniRead, full_country_name, % country_code, % "List by code", % country
+
     ; Pause to manually update languages
-    MsgBox, % "Update languages as necessary.`r`n`r`nEnter to continue"
+    MsgBox, , % "Country: " . full_Country_name, % "Creating layout for: " . full_country_name . "`r`n`r`nUpdate languages as necessary."
 
     ; Save and close ExportLanguages file
     WinActivate ahk_class Notepad++
