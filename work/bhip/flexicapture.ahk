@@ -36,7 +36,7 @@ setup_country(country) {
 
     ; Create Export Languages file
     if (!FileExist(export_languages_path)) {
-        FileAppend, % "English,", % export_languages_path
+        FileAppend, % "English", % export_languages_path
     }
     Run, % export_languages_path
     WinActivate ahk_class Notepad++
@@ -77,7 +77,7 @@ setup_country(country) {
     ; Run and wait for FlexiCapture Layout
     Run, % fsp_path
     WinWaitActive ahk_exe FlexiLayoutStudio.exe
-    Sleep, % wait * 5  ; This wait is need or the command may not be received.
+    Sleep, % wait * 10  ; This wait is need or the command may not be received.
 
     ; Open languages menu
     SendWait("!l", wait)
