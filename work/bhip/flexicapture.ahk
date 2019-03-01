@@ -24,6 +24,7 @@ setup_country(country) {
     project_path := base_path . "\Projects\" . name_string
     template_path := project_path . "\Templates"
     results_path := "C:\Users\Patrick\Desktop\Results\" . country
+    FileCreateDir, % results_path
 
     ; File paths
     fsp_path := layouts_path . "\" . name_string . ".fsp"
@@ -184,8 +185,7 @@ setup_country(country) {
         MsgBox, % "ExportLanguages.txt doesn't exist. Fix before continuing."
     }
 
-    ; Create output folder and copy files
-    FileCreateDir, % results_path
+    ; Copy results files to results path
     FileCopy, % fcdot_path, % results_path
     FileCopy, % export_languages_path, % results_path
     Sleep, wait * 5
