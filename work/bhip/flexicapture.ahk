@@ -96,6 +96,13 @@ setup_country(country) {
     WinActivate ahk_exe FlexiLayoutStudio.exe
     WinWaitActive ahk_exe FlexiLayoutStudio.exe
     SendWait("{Enter}", wait)  ; Close any open windows
+    if (WinExist("Properties of " . name_string)) {
+        SoundBeep
+        MsgBox, % "Properties Window Still open"
+    }
+
+    WinActivate ahk_exe FlexiLayoutStudio.exe
+    WinWaitActive ahk_exe FlexiLayoutStudio.exe
     SendWait("^s", wait)  ; Save project
 
     ; Activate export menu
