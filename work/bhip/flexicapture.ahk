@@ -193,8 +193,8 @@ setup_country(country) {
 
 
 main() {
-    ; Already done: ["AD", ]
-    countries := ["AE", "AL", "AM", "AO", "AP", "AR", "AT", "AU", "BD", "BE", "BG", "BH", "BN", "BO", "BX", "BY", "CA", "CH", "CL", "CO", "CR", "CU", "CY", "CZ", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FR", "GC", "GE", "GH", "GR", "GT", "GY", "HK", "HN", "HR", "HU", "IB", "ID", "IE", "IN", "IQ", "IR", "IT", "JO", "KE", "KG", "KH", "KW", "KZ", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "MG", "MK", "MN", "MO", "MT", "MX", "MZ", "NA", "NG", "NI", "NL", "NO", "NP", "NZ", "OA", "OM", "PA", "PE", "PH", "PK", "PL", "PO", "PR", "PT", "PY", "QA", "RO", "RS", "SA", "SE", "SG", "SI", "SK", "SL", "SM", "TH", "TJ", "TM", "TR", "TZ", "UA", "UG", "UK", "UY", "UZ", "VE", "VN", "WD", "WP", "ZA"]
+    ; Already done: ["AD", "AE", "AL", "AM", "AO", "AP", "AR", "AT", "AU", "BD", "BE", "BG", "BH", "BN", "BO", "BX", "BY", "CA", "CH", "CL", "CO", ]
+    countries := ["CR", "CU", "CY", "CZ", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FJ", "FR", "GC", "GE", "GH", "GR", "GT", "GY", "HK", "HN", "HR", "HU", "IB", "ID", "IE", "IN", "IQ", "IR", "IT", "JO", "KE", "KG", "KH", "KW", "KZ", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "MG", "MK", "MN", "MO", "MT", "MX", "MZ", "NA", "NG", "NI", "NL", "NO", "NP", "NZ", "OA", "OM", "PA", "PE", "PH", "PK", "PL", "PO", "PR", "PT", "PY", "QA", "RO", "RS", "SA", "SE", "SG", "SI", "SK", "SL", "SM", "TH", "TJ", "TM", "TR", "TZ", "UA", "UG", "UK", "UY", "UZ", "VE", "VN", "WD", "WP", "ZA"]
     for i, v in countries {
         setup_country(v)
     }
