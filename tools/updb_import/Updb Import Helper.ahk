@@ -269,12 +269,15 @@ class UpdbInterface {
         */
         temp_y := 200  ; y value to start searching at.
         name_x := 281  ; x value of name column (doesn't seem to change)
-        checkbox_x := 181  ; x value of checkbox column (doesn't seem to change)
-
+        checkbox_x := 190  ; x value of checkbox column (doesn't seem to change)
         customers := []  ; Customers list to be be returned
 
+        ; Track consecutive empty space found to exit loop early.
+        empty_max := 30
+        empty := 0
+
         ; Search for checkboxes from top of screen while above import button
-        while (temp_y < This.window.height) {
+        while (temp_y < This.window.height and empty < empty_max) {
             PixelGetColor, pixel_color, checkbox_x, temp_y
             if (pixel_color = This.Colors.CheckBox) {
                 ; When a checkbox is found build a customer dictionary
@@ -287,6 +290,13 @@ class UpdbInterface {
                 LV_Add("Check", , , new_customer.short_name)
             }
             temp_y += 1
+
+            ; Track consecutive empty space found.
+            if (pixel_color = This.colors.background) {
+                empty += 1
+            } else {
+                empty := 0
+            }
             This.UpdateProgressBar(temp_y/This.window.height * 100)
         }
 
