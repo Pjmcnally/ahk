@@ -84,10 +84,11 @@ format_jira_email(str) {
     str := RegExReplace(str, "m)^ *(.*?) *$", "$1")  ; Trim spaces from beginning and end of lines
     str := RegExReplace(str, "(\r\n|\r|\n){2}", "`r`n")  ; Collapse any single empty lines.
     str := RegExReplace(str, "(\r\n|\r|\n){3,}", "`r`n`r`n")  ; Reduce any stretch of multiple empty lines to 1 empty line.
-    str := RegExReplace(str, "m)^[fF](rom:.*)$", "----`r`n`r`nF$1")  ; Add ---- divider before next email
+    str := RegExReplace(str, "m)^[fF](rom:.*)$", "----`r`n`r`nF$1")  ; Add ---- divider before each email
     str := RegExReplace(str, get_bhip_sig_address())  ; Remove BHIP address block
     str := RegExReplace(str, get_bhip_sig_conf())  ; Remove bhip conf statement
 
+    str := RegExReplace(str, "^----`r`n`r`n", "")  ; Remove first divider if string starts with divider
     Return str
 }
 
