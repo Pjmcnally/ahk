@@ -19,8 +19,8 @@ open_feedly_items(){
     i := 0
     num := (num = 0 ? 10 : num) ; If input is 0 set val to 10
     While (i < num) {
-        SendWait("j", 150)  ; "j" is the Feedly hotkey to open next item.
-        SendWait(",", 150)  ; "," is my hotkey to open the open Feedly item in a new tab.
+        SendWait("j", 50)  ; "j" is the Feedly hotkey to open next item.
+        SendWait(",", 50)  ; "," is my hotkey to open the open Feedly item in a new tab.
         i++
     }
 }
