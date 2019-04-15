@@ -84,16 +84,57 @@ format_jira_email(str) {
     str := RegExReplace(str, "m)^ *(.*?) *$", "$1")  ; Trim spaces from beginning and end of lines
     str := RegExReplace(str, "(\r\n|\r|\n){2}", "`r`n")  ; Collapse any single empty lines.
     str := RegExReplace(str, "(\r\n|\r|\n){3,}", "`r`n`r`n")  ; Reduce any stretch of multiple empty lines to 1 empty line.
-    str := RegExReplace(str, "m)^[fF](rom:.*)$", "----`r`n`r`nF$1")  ; Add ---- divider before next email
+    str := RegExReplace(str, "m)^[fF](rom:.*)$", "----`r`n`r`nF$1")  ; Add ---- divider before each email
     str := RegExReplace(str, get_bhip_sig_address())  ; Remove BHIP address block
     str := RegExReplace(str, get_bhip_sig_conf())  ; Remove bhip conf statement
 
+    str := RegExReplace(str, "^----`r`n`r`n", "")  ; Remove first divider if string starts with divider
     Return str
 }
 
 at_message(array) {
     For x, v in array {
         Send, % v . ", "
+    }
+}
+
+time_entry(ticket, message, start_time:="", end_time="") {
+    wait := 50
+
+    ; Clear current ticket number & enter new ticket number
+    SendWait("{Backspace}", wait)
+    SendWait("{Backspace}", wait)
+    SendWait(ticket, wait)
+
+    SendWait("{Tab}", wait)
+    if (start_time) {
+        if (string_lower(start_time) = "now") {
+            FormatTime, start_time, , % "hh:mm tt"
+        }
+        SendWait(start_time, wait)
+    }
+
+    SendWait("{Tab}", wait)
+    if (end_time) {
+        if (string_lower(end_time) = "now") {
+            FormatTime, end_time, , % "hh:mm tt"
+        }
+        SendWait(end_time, wait)
+    }
+
+    SendWait("{Tab}", wait)
+    SendWAit("^a", wait)
+    SendWait(message, 50)
+}
+
+tech_1356() {
+    ticket := "Tech-1356"
+    message := "* Login to WorkSite DMS"
+
+    if (A_Hour < 16) {
+        time_entry(ticket, message, "12:30 PM", "12:35 PM")
+    } else {
+        time_entry(ticket, message, "4:00 PM", "4:05 PM")
     }
 }
 
@@ -119,13 +160,13 @@ at_message(array) {
 :o*:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
 
 ; Time tracking hotkeys
-:co:mbhip::Task-136{Tab 3}* Monthly BHIP Meeting
-:co:mday::Task-121{Tab 3}* Daily Huddle
-:co:mver::Task-184{Tab 3}* Weekly verification and FlexiCapture meeting
-:co:mtech::Task-187{Tab 3}* Weekly technology meeting
-:co:tlws::Tech-1356{Tab 3}* Login to WorkSite DMS
-:co:tsteve::task-169{Tab 3}* Investigate and resolve request
-:co:tann::task-206{Tab 3}* Investigate and resolve request
+:coX:tlws::tech_1356()
+:coX:mday::time_entry("Task-121", "* Daily Huddle", "10:00 AM", "now")
+:coX:mbhip::time_entry("Task-136", "* Monthly BHIP Meeting")
+:coX:mver::time_entry("Task-184", "* Weekly verification and FlexiCapture meeting", "9:00 AM", "9:30 AM")
+:coX:mtech::time_entry("Task-187", "* Weekly technology meeting", "1:30 PM", "now")
+:coX:tsteve::time_entry("task-169", "* Investigate and resolve request")
+:coX:tann::time_entry("task-206", "* Investigate and resolve request")
 
 
 ; Chrome only Hotkeys || ^ = Ctrl, ! = Alt, + = Shift

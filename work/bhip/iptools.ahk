@@ -184,6 +184,62 @@ fill_scrape_mail_date() {
     }
 }
 
+skip_documents() {
+    wait := 400
+    file_path :=
+    skip_message :=
+
+    Loop, Read, % file_path
+    {
+        ; Fill in next matter number
+        KeyWait, ~, D
+        Click, 2375, 185
+        Sleep, wait
+        Send, ^a,
+        Sleep, wait
+        Send, {BackSpace}
+        Send, % A_LoopReadLine
+        KeyWait, ~
+
+        ; Remove any pending activities
+        KeyWait, ~, D
+        Click, 2070, 210  ; Select all pending activities
+        Sleep, wait
+        Click, 2225, 180  ; Click to select dropdown
+        Sleep, wait
+        Click, 2225, 280  ; Click to select "Remove"
+        Sleep, wait
+        Click, 2315, 180  ; Click "Go" to remove activity
+        Sleep, wait
+        Click, 50, 550  ; Select "New Documents Screen"
+        KeyWait, ~
+
+        ; Activate document screen and skip documents
+        KeyWait, ~, D
+        Click, 65, 1275  ; Select all pending documents
+        Sleep, wait
+        Click, 280, 580  ; Skip all pending documents
+        Sleep, wait
+        KeyWait, ~, D
+
+        ; Fill in Skipping box
+        KeyWait, ~, D
+        Send, % "O"
+        Sleep, wait
+        Send, % skip_message
+        Sleep, 500
+        Send, % "{Tab}"
+        Sleep, wait
+        Send, % "{Enter}"
+        KeyWait, ~
+
+        KeyWait, ~, D
+        Click, 520, 110
+        KeyWait, ~
+    }
+}
+
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
 ^!d::fill_scrape_mail_date()
+; ^!z::skip_documents()
