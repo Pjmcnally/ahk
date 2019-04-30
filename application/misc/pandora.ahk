@@ -19,6 +19,7 @@ class PandoraInterface {
         legacy_src := "C:\Program Files (x86)\Pandora\pandora.exe"
 
         ; The windows app version doesn't have an exe. Create this file by adding a link to a folder in the start menu.
+        ; Create the shortcut but running "Shell:AppsFolder", locating the Pandora item and create a shortcut.
         winApp_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\Pandora.lnk"
 
         This.x := This.getSysTopLeft()
