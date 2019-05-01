@@ -1,3 +1,8 @@
+/*  Core Clipboard functions.
+
+This module contains core clipboard functions that are used by other modules.
+This file should also be loaded as other files may fail to load without it.
+*/
 
 ; Functions
 ; ==============================================================================

@@ -1,3 +1,9 @@
+/*  Core string functions and hotkeys.
+
+This module contains core string functions and hotkeys. The functions defined
+here are used by other modules. This file should also be loaded as other files
+may fail to load without it.
+*/
 
 ; Functions
 ; ==============================================================================
