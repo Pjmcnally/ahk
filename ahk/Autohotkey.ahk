@@ -20,7 +20,7 @@ EnvGet, vHomePath, HOMEPATH
 SetWorkingDir, %vHomePath%\programming\ahk
 
 ; Executes main AHK file
-run ahk\autohotkey_main.ahk
+Run "C:\Program Files\AutoHotkey\AutoHotkey.exe" "ahk\autohotkey_main.ahk"
 
 ; Exits this AHK file
 ExitApp
