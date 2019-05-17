@@ -48,11 +48,10 @@ ToggleComment() {
     }
 
     if isComment {
-        SEND, {control down}ku{control up}
+        Send, ^k^u  ; Uncomment highlighted lines
     } else {
-        SEND, {control down}kc{control up}
+        Send, ^k^c  ; Comment highlighted lines
     }
-
 }
 
 
