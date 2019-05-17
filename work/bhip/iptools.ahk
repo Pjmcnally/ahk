@@ -151,7 +151,7 @@ fill_scrape_mail_date() {
 
     array := StrSplit(array_str, ",", " ")
     wait := 300
-    start_date_box_x_pos := 940
+    start_date_box_x_pos := 785
 
     For i, val in array {
         ; Make sure to sort by "Start Date Asc before starting. That way the
