@@ -8,12 +8,12 @@ get_dep_remote() {
     */
     str =
     ( LTrim
-        workon devops_live
+        workon DevOpsLive
         write-host "``r``nUpdating Live deploy`r`n===================="
         git checkout deploy
         git fetch --all --prune
         git pull
-        workon devops_test;
+        workon DevOpsTest;
         write-host "``r``nUpdating Test master`r`n===================="
         git checkout master
         git fetch --all --prune
