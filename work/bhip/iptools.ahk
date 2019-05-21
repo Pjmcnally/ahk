@@ -8,7 +8,7 @@ get_customers_from_csv(file_path) {
         query).
     */
     customers := []
-    attributes := ["ClientNumber", "Name", "ShortName", "State", "RegNum", "Practitioner", "FileName", "Password"]
+    attributes := ["ClientNumber", "Name", "ShortName", "State", "Host", "Description"] ; , "RegNum", "Practitioner", "FileName", "Password"]
 
     Loop, Read, % file_path
     {
@@ -22,12 +22,9 @@ get_customers_from_csv(file_path) {
     Return customers
 }
 
-add_customer(customer) {
+add_customer(customer, big_wait:=2500, small_wait:=500) {
     /*  Adds core customer information to IP Tools.
     */
-    big_wait := 2000  ; Use for page loads and transitions
-    small_wait := 500  ; Use between other operations
-
     ; Activate IE Window
     WinActivate, Black Hills IP - IP Tools - Internet Explorer
     WinWaitActive, Black Hills IP - IP Tools - Internet Explorer
@@ -42,7 +39,7 @@ add_customer(customer) {
     SendWait(customer.ClientNumber . "{Tab}", small_wait)
     SendWait(customer.Name . "{Tab}", small_wait)
     SendWait(customer.ShortName, small_wait)
-    ClickWait(465, 560, 1, small_wait)
+    ClickWait(450, 560, 1, small_wait)
     SendWait(customer.State . "{Tab}", small_wait)
 
     ; Add pricing info
@@ -70,18 +67,36 @@ add_customer(customer) {
     ClickWait(50, 1350, 1, small_wait)
 }
 
-add_credential(customer) {
+add_host_credential(customer, big_wait:=2500, small_wait:=500) {
     /*  Adds credential information to IP Tools
     */
-    big_wait := 2000  ; Use for page loads and transitions
-    small_wait := 500  ; Use between other operations
-
     ; Activate IE Window
     WinActivate, Black Hills IP - IP Tools - Internet Explorer
     WinWaitActive, Black Hills IP - IP Tools - Internet Explorer
 
     ClickWait(1005, 115, 1, big_wait)  ; Click Admin Tab
-    ClickWait(75, 590, 1, big_wait)  ; Click Credentials tab
+    ClickWait(75, 615, 1, big_wait)  ; Click Credentials tab
+    ClickWait(225, 1350, 1, big_wait)  ; Click "Add new Credential"
+
+    ; Enter Credential info
+    ClickWait(370, 230, 1, small_wait)  ; Click Customer name
+    SendWait(customer.Name . "{Enter}{Tab}", small_wait)
+    SendWait(customer.Host . "{Enter}{Tab}", small_wait)
+    SendWait(customer.Description . "{Enter}{Tab}", small_wait)
+
+    ClickWait(195, 610, 1, big_wait)  ; Click Save
+}
+
+add_uspto_credential(customer, big_wait:=2500, small_wait:=500) {
+    /*  Adds credential information to IP Tools
+    */
+    ; Activate IE Window
+    WinActivate, Black Hills IP - IP Tools - Internet Explorer
+    WinWaitActive, Black Hills IP - IP Tools - Internet Explorer
+    Sleep, % big_wait
+
+    ClickWait(1005, 115, 1, big_wait)  ; Click Admin Tab
+    ClickWait(75, 615, 1, big_wait)  ; Click Credentials tab
     ClickWait(225, 1350, 1, big_wait)  ; Click "Add new Credential"
 
     ; Enter Credential info
@@ -113,12 +128,16 @@ add_customers_to_iptools() {
 
         This was used once to bulk add customers to our test system.
     */
-    customer_file_path = ""
+    big_wait := 2500  ; Use for page loads and transitions
+    small_wait := 500  ; Use between other operations
+
+    customer_file_path := ""
     customers := get_customers_from_csv(customer_file_path)
 
     for index, customer in customers {
-        add_customer(customer)
-        add_credential(customer)
+        add_customer(customer, big_wait, small_wait)
+        ; add_uspto_credential(customer)
+        add_host_credential(customer, big_wait, small_wait)
     }
 }
 
@@ -242,4 +261,4 @@ skip_documents() {
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
 ^!d::fill_scrape_mail_date()
-; ^!z::skip_documents()
+; ^!z::add_customers_to_iptools()
