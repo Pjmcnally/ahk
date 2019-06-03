@@ -129,7 +129,7 @@ time_entry(ticket, message, start_time:="", end_time="") {
 
 tech_1356() {
     ticket := "Tech-1356"
-    message := "* Login to WorkSite DMS"
+    message := "* Login to AutoWeb processes"
 
     if (A_Hour < 16) {
         time_entry(ticket, message, "12:30 PM", "12:35 PM")
