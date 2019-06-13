@@ -160,7 +160,7 @@ tech_1356() {
 :o*:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
 
 ; Time tracking hotkeys
-:coX:tlws::tech_1356()
+:?coX:tlws::tech_1356()
 :coX:mday::time_entry("Task-121", "* Daily Huddle", "10:00 AM", "now")
 :coX:mbhip::time_entry("Task-136", "* Monthly BHIP Meeting")
 :coX:mver::time_entry("Task-184", "* Weekly verification and FlexiCapture meeting", "9:00 AM", "9:30 AM")
