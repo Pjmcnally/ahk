@@ -44,14 +44,14 @@ checkPoeMap() {
 Return
 #IfWinActive
 
-#IfWinActive, poe.ninja - Google Chrome
-^v::  ; Override ctrl-v for just this website only in Chrome
+#IfWinActive, poe.ninja - Mozilla Firefox
+^v::  ; Override ctrl-v for just this website only in Firefox
     checkPoePrice()
 Return
 #IfWinActive
 
-#IfWinActive, PoE Goods - Google Chrome
-^v::  ; Override ctrl-v for just this website only in Chrome
+#IfWinActive, PoE Goods - Mozilla firefox
+^v::  ; Override ctrl-v for just this website only in Firefox
     checkPoePrice()
 Return
 #IfWinActive
