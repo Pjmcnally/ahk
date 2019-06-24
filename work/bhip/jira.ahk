@@ -168,6 +168,7 @@ tech_1356() {
 :coX:tsteve::time_entry("task-169", "* Investigate and resolve request")
 :coX:tann::time_entry("task-206", "* Investigate and resolve request")
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
+:coX:iru::Send, % "* Investigate{Enter}Respond{Enter}Update"
 
 
 ; Chrome only Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
