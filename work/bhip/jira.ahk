@@ -154,7 +154,7 @@ tech_1356() {
 ; Jira comment hotstrings
 :Xco:@devs::at_message(get_devs())
 :Xco:@ops::at_message(get_dev_ops())
-:?o:sr::Self resolved^{Enter}
+:o:sr::Self resolved^{Enter}
 :o*:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
 :o*:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
 :o*:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
