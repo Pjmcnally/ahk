@@ -30,9 +30,10 @@ class PandoraInterface {
             This.x -= 7  ; This solves invisible padding on the window.
             This.Version := "winApp"
             This.Source := winApp_src
-            This.Window := "Pandora ahk_exe ApplicationFrameHost.exe"
-            This.WaitInterval := 5000
+            This.Window := "ahk_exe Pandora.exe"
+            This.WaitInterval := 3000
         ; Test for Legacy version of Pandora Client and set config
+        ; TODO: Remove this section - I no longer use the legacy app on any system.
         } else if (fileExist(legacy_src)) {
             This.Version := "Legacy"
             This.Source := legacy_src
@@ -90,8 +91,12 @@ class PandoraInterface {
         */
         Run, % This.Source
         Sleep, % This.WaitInterval
-        WinMove, % This.Window, , % This.x, This.y
+        WinMove, % This.Window, , % This.x, This.y, 500, 585
         WinMinimize, % This.Window
+
+        if (this.version = "winApp") {
+            this.playPause()
+        }
     }
 
     kill() {
