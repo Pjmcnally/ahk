@@ -15,11 +15,14 @@ class PandoraInterface {
     SetVersion() {
         /*  Find and set version of Pandora on system.
         */
-        ; Exe source of standard install
-        legacy_src := "C:\Program Files (x86)\Pandora\pandora.exe"
 
-        ; The windows app version doesn't have an exe. Create this file by adding a link to a folder in the start menu.
-        ; Create the shortcut but running "Shell:AppsFolder", locating the Pandora item and create a shortcut.
+        ; Because Pandora is now a Windows 10 App it cannot be run by just accessing the
+        ; exe. To resolve this issue create a shortcut and add that shortcut to the
+        ; start menu using the path below. To create the shortcut do the following:
+        ; 1. Windows + R
+        ; 2. Enter: shell:AppsFolder
+        ; 3. Right click Pandora and click Create Shortcut
+        ; 4. Create folder and copy shortcut to folder
         winApp_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\Pandora.lnk"
 
         This.x := This.getSysTopLeft()
@@ -31,14 +34,7 @@ class PandoraInterface {
             This.Version := "winApp"
             This.Source := winApp_src
             This.Window := "ahk_exe Pandora.exe"
-            This.WaitInterval := 3000
-        ; Test for Legacy version of Pandora Client and set config
-        ; TODO: Remove this section - I no longer use the legacy app on any system.
-        } else if (fileExist(legacy_src)) {
-            This.Version := "Legacy"
-            This.Source := legacy_src
-            This.Window := "ahk_exe Pandora.exe"
-            This.WaitInterval := 3000
+            This.WaitInterval := 4000
         } else {
             MsgBox, % "Pandora not found. Unable to proceed."
         }
@@ -62,11 +58,7 @@ class PandoraInterface {
         /*  Play or Pause current song.
         */
         if WinExist(This.Window) {
-            if (This.Version = "Legacy") {
-                ControlSend, , {Space}, % This.Window
-            } else if This.Version = "winApp" {
-                Send, {Media_Play_Pause}
-            }
+            Send, {Media_Play_Pause}
         } else {
             This.runMin()
         }
@@ -76,11 +68,7 @@ class PandoraInterface {
         /*  Skip current song.
         */
         if WinExist(This.Window) {
-            if (This.Version = "Legacy") {
-                ControlSend, , {Right}, % This.Window
-            } else if This.Version = "winApp" {
-                Send, {Media_Next}
-            }
+            Send, {Media_Next}
         } else {
             This.runMin()
         }
@@ -91,12 +79,10 @@ class PandoraInterface {
         */
         Run, % This.Source
         Sleep, % This.WaitInterval
+        this.playPause()  ; Doesn't start playing on startup... Not sure why.
         WinMove, % This.Window, , % This.x, This.y, 500, 585
         WinMinimize, % This.Window
 
-        if (this.version = "winApp") {
-            this.playPause()
-        }
     }
 
     kill() {
