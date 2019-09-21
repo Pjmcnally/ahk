@@ -119,6 +119,7 @@ class PandoraInterface {
             WinMinimize, % This.Window
         } else if (WinExist(This.Window) and (!WinActive(This.Window))) {
             WinActivate, % This.Window
+            This.SetPos()
         } else {
             This.runMin()
         }
