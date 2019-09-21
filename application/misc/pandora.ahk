@@ -25,16 +25,22 @@ class PandoraInterface {
         ; 4. Create folder and copy shortcut to folder
         winApp_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\Pandora.lnk"
 
-        This.x := This.getSysTopLeft()
-        This.y := 0
-
-        ; Test for winApp version of Pandora Client and set config
         if (FileExist(winApp_src)) {
-            This.x -= 7  ; This solves invisible padding on the window.
+            ; Set general attributes
             This.Version := "winApp"
             This.Source := winApp_src
             This.Window := "ahk_exe Pandora.exe"
-            This.WaitInterval := 4000
+
+            ; Set wait times
+            This.SmallWait := 1000
+            This.BigWait := 4000
+
+            ; Set positions and size attributes
+            ; This.x -= 7  ; This solves invisible padding on the window.
+            This.x := This.getSysTopLeft()
+            This.y := 0
+            This.Height := 585
+            This.Width := 500
         } else {
             MsgBox, % "Pandora not found. Unable to proceed."
         }
@@ -59,6 +65,7 @@ class PandoraInterface {
         */
         if WinExist(This.Window) {
             Send, {Media_Play_Pause}
+            This.setPos()
         } else {
             This.runMin()
         }
@@ -69,6 +76,7 @@ class PandoraInterface {
         */
         if WinExist(This.Window) {
             Send, {Media_Next}
+            This.setPos()
         } else {
             This.runMin()
         }
@@ -78,11 +86,22 @@ class PandoraInterface {
         /*  Run then minimize Pandora.
         */
         Run, % This.Source
-        Sleep, % This.WaitInterval
-        this.playPause()  ; Doesn't start playing on startup... Not sure why.
-        WinMove, % This.Window, , % This.x, This.y, 500, 585
+
+        ; Set window position and minimize
+        Sleep, % This.SmallWait
+        This.SetPos()
         WinMinimize, % This.Window
 
+        ; Start music
+        Sleep, % This.BigWait
+        This.playPause()
+    }
+
+    setPos() {
+        WinGetPos, tempX, tempY, tempW, tempH, % This.Window
+        if (tempX != This.x or tempY != this.y or tempW != this.Width or tempH != This.Height) {
+            WinMove, % This.Window, , % This.x, This.y, This.Width, This.Height
+        }
     }
 
     kill() {
