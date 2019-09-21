@@ -36,7 +36,6 @@ class PandoraInterface {
             This.BigWait := 4000
 
             ; Set positions and size attributes
-            ; This.x -= 7  ; This solves invisible padding on the window.
             This.x := This.getSysTopLeft()
             This.y := 0
             This.Height := 585
