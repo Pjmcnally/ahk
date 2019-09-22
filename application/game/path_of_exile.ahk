@@ -42,6 +42,10 @@ checkPoeMap() {
 ^+c::  ; Ctrl-Alt-C Check Map statuses
     checkPoeMap()
 Return
+
+^h::
+    Send {Enter}/hideout{Enter}
+Return
 #IfWinActive
 
 #IfWinActive, poe.ninja - Mozilla Firefox
