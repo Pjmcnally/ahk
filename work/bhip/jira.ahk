@@ -74,7 +74,7 @@ format_jira_email(str) {
     */
 
     str := RegExReplace(str, "\xA0+", " ")  ; Replace all Non-breaking spaces with normal ones
-    str := RegExReplace(str, "s)\*?{color:(?:#333333|black)}(.*?){color}\*?", "$1")  ; Remove all {color tags} that are making text black and linked * tags leaving surrounding text.
+    str := RegExReplace(str, "s)\*?{color:.*?}(.*?){color}\*?", "$1")  ; Remove all {color tags} that are making text black and linked * tags leaving surrounding text.
     str := RegexReplace(str, "(?<![\n\*])\*(.*?)\*", "$1")  ; Remove all * tags leaving surrounded text. Leave list formatting unmodified
     str := RegExReplace(str, "\_(.*?)\_", "$1")  ; Remove all _ tags leaving surrounded text
     str := RegexReplace(str, "\+(.*?)\+", "$1")  ; Remove all + tags leaving surrounded text
@@ -168,6 +168,7 @@ tech_1356() {
 :coX:tsteve::time_entry("task-169", "* Investigate and resolve request")
 :coX:tann::time_entry("task-206", "* Investigate and resolve request")
 :coX:ttom::time_entry("task-205", "* Send weekly status email to Tom")
+:coX:temail::time_entry("task-205", "* Manage general emails received by ")
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
 :coX:iru::Send, % "* Investigate{Enter}Respond{Enter}Update"
 
