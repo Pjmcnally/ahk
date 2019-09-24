@@ -169,6 +169,7 @@ tech_1356() {
 :coX:tann::time_entry("task-206", "* Investigate and resolve request")
 :coX:ttom::time_entry("task-205", "* Send weekly status email to Tom")
 :coX:temail::time_entry("task-205", "* Manage general emails received by ")
+:coX:ttest::time_entry("task-135", "* Clean up errors in Test")
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
 :coX:iru::Send, % "* Investigate{Enter}Respond{Enter}Update"
 
