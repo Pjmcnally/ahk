@@ -17,44 +17,26 @@ checkPoePrice() {
     Send, {Enter}
 }
 
-; checkPoeMap() {
-;     item := get_highlighted()
-;     map_properties := StrSplit(item, "`r", "`n")
 
-;     bad_statuses := ["Players are Cursed with Temporal Chains", "Players cannot Regenerate Life, Mana or Energy Shield"]
-;     bad_results := ""
-
-;     for index, elem in map_properties {
-;         if (HasVal(bad_statuses, elem)) {
-;             bad_results := bad_results . elem . "`r`n"
-;         }
-;     }
-
-;     if (StrLen(bad_results) > 0) {
-;         MsgBox, % "Re-Roll map:`r`n" . bad_results
-;     } else {
-;         MsgBox, , % "Run", % "Good to Go." , .5
-;     }
-; }
-
-; #IfWinActive, ahk_exe PathOfExile_x64Steam.exe
-; ^+c::  ; Ctrl-Alt-C Check Map statuses
-;     checkPoeMap()
-; Return
+#IfWinActive, ahk_exe PathOfExile_x64Steam.exe
+^r::
+    run "C:\Users\Patrick\Programming\PoE\Local\POE-TradeMacro-2.15.3\Run_TradeMacro.ahk"
+    run "C:\Users\Patrick\Programming\PoE\Local\POE-Trades-Companion-AHK-v-1-15-BETA_990\POE Trades Companion.ahk"
+Return
 
 ^h::
     Send {Enter}/hideout{Enter}
 Return
 #IfWinActive
 
-#IfWinActive, poe.ninja - Mozilla Firefox
-^v::  ; Override ctrl-v for just this website only in Firefox
-    checkPoePrice()
-Return
-#IfWinActive
-
-#IfWinActive, PoE Goods - Mozilla firefox
-^v::  ; Override ctrl-v for just this website only in Firefox
-    checkPoePrice()
-Return
+#IfWinExist, ahk_exe PathOfExile_x64Steam.exe
+^v::
+    if (WinActive("poe.ninja - Mozilla Firefox")
+        or WinActive("PoE Goods - Mozilla Firefox")
+        or WinActive("Trade - Path of Exile - Mozilla Firefox"))
+    {
+        checkPoePrice()
+    } else {
+        Send ^v
+    }
 #IfWinActive
