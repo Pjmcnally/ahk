@@ -32,7 +32,7 @@ class PandoraInterface {
             This.Window := "ahk_exe Pandora.exe"
 
             ; Set wait times
-            This.SmallWait := 1000
+            This.SmallWait := 100
             This.BigWait := 4000
 
             ; Set positions and size attributes
@@ -87,9 +87,8 @@ class PandoraInterface {
         Run, % This.Source
 
         ; Set window position and minimize
-        Sleep, % This.SmallWait
         This.SetPos()
-        WinMinimize, % This.Window
+        This.Minimize()
 
         ; Start music
         Sleep, % This.BigWait
@@ -97,9 +96,14 @@ class PandoraInterface {
     }
 
     setPos() {
+        ; Get original position
         WinGetPos, tempX, tempY, tempW, tempH, % This.Window
-        if (tempX != This.x or tempY != this.y or tempW != this.Width or tempH != This.Height) {
+
+        ; Loop until position fixed
+        while (tempX != This.x or tempY != this.y or tempW != this.Width or tempH != This.Height) {
             WinMove, % This.Window, , % This.x, This.y, This.Width, This.Height
+            Sleep, % This.SmallWait
+            WinGetPos, tempX, tempY, tempW, tempH, % This.Window
         }
     }
 
@@ -115,12 +119,26 @@ class PandoraInterface {
         /*  Maximize or minimize the active Pandora window
         */
         if (WinExist(This.Window) and WinActive(This.Window)) {
-            WinMinimize, % This.Window
+            This.minimize()
         } else if (WinExist(This.Window) and (!WinActive(This.Window))) {
-            WinActivate, % This.Window
-            This.SetPos()
+            This.maximize()
         } else {
             This.runMin()
+        }
+    }
+
+    minimize() {
+        while (WinActive(This.Window)) {
+            WinMinimize, % This.Window
+            Sleep, % This.SmallWait
+        }
+    }
+
+    maximize() {
+        while (not WinActive(This.Window)) {
+            WinActivate, % This.Window
+            This.setPos()
+            Sleep, % This.SmallWait
         }
     }
 
