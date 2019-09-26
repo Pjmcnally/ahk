@@ -36,7 +36,7 @@ class PandoraInterface {
             This.BigWait := 4000
 
             ; Set positions and size attributes
-            This.x := This.getSysTopLeft()
+            This.x := This.getSysTopLeft() - 8  ; -8 makes it position flush against the edge. Not sure why.
             This.y := 0
             This.Height := 585
             This.Width := 500
@@ -64,7 +64,6 @@ class PandoraInterface {
         */
         if WinExist(This.Window) {
             Send, {Media_Play_Pause}
-            This.setPos()
         } else {
             This.runMin()
         }
@@ -75,7 +74,6 @@ class PandoraInterface {
         */
         if WinExist(This.Window) {
             Send, {Media_Next}
-            This.setPos()
         } else {
             This.runMin()
         }
@@ -128,6 +126,7 @@ class PandoraInterface {
     }
 
     minimize() {
+        This.setPos()
         while (WinActive(This.Window)) {
             WinMinimize, % This.Window
             Sleep, % This.SmallWait
@@ -158,7 +157,7 @@ class PandoraInterface {
 ; ==============================================================================
 ; The Pandora object is instantiated in the Auto-Execution section of Core.ahk
   F7::pandora.playPause()   ; Plays/Pause the current song in the Pandora client
-  F8::pandora.Next()        ; Skip to current song in the Pandora Client
+  F8::pandora.next()        ; Skip to current song in the Pandora Client
  ^F7::pandora.minMax()      ; Maximize or Minimize the Pandora Client
- +F7::pandora.Reset()       ; Reset (stops and starts) the Pandora Client
+ +F7::pandora.setPos()      ; Resets position of the Pandora Client
 ^!F7::pandora.kill()        ; Close the Pandora Client
