@@ -165,6 +165,7 @@ tech_1356() {
 :coX:mbhip::time_entry("Task-136", "* Monthly BHIP Meeting")
 :coX:mver::time_entry("Task-184", "* Weekly verification and FlexiCapture meeting", "9:00 AM", "9:30 AM")
 :coX:mtech::time_entry("Task-187", "* Weekly technology meeting", "1:30 PM", "now")
+:coX:mtrans::time_entry("Task-318", "* Weekly DevOps transition meeting")
 :coX:tsteve::time_entry("task-169", "* Investigate and resolve request")
 :coX:tann::time_entry("task-206", "* Investigate and resolve request")
 :coX:ttom::time_entry("task-205", "* Send weekly status email to Tom")
