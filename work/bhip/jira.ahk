@@ -138,6 +138,15 @@ tech_1356() {
     }
 }
 
+stop_using_pm_in_the_morning() {
+    if (A_Hour < 12) {
+        MsgBox, 20, AM/PM, Are you sure you meant PM?
+
+        IfMsgBox, No
+            Send, {Backspace 2}AM{TAB}
+    }
+}
+
 ; Hotstrings
 ; ==============================================================================
 
@@ -173,6 +182,7 @@ tech_1356() {
 :coX:ttest::time_entry("task-135", "* Clean up errors in Test")
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
 :coX:iru::Send, % "* Investigate{Enter}Respond{Enter}Update"
+:X*B0:pm::stop_using_pm_in_the_morning()
 
 
 ; Chrome only Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
