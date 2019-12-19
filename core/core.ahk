@@ -36,8 +36,8 @@ GroupAdd, consoles, ahk_exe RDCMan.exe
 GroupAdd, consoles, ahk_exe Code.exe
 GroupAdd, consoles, ahk_exe WindowsTerminal.exe
 
+
 ; Code to initialize PandoraInterface Object
-; This requires pandora.ahk or will error. I may need to fix this...
 pandora := new PandoraInterface
 
 ; Set timer to check that I am not leaving Pandora running after I go home
