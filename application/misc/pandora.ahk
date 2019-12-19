@@ -35,6 +35,10 @@ class PandoraInterface {
             This.SmallWait := 100
             This.BigWait := 4000
 
+            ; Set time for idle checker
+            This.IdleCheckFreq := 300000 ; 5 minutes
+            This.IdlePeriod := 1800000  ; 30 minutes
+
             ; Set positions and size attributes
             This.x := This.getSysTopLeft() - 8  ; -8 makes it position flush against the edge. Not sure why.
             This.y := 0
@@ -151,7 +155,20 @@ class PandoraInterface {
 
         This.runMin()
     }
+
+    CheckIdle() {
+        if (A_TimeIdlePhysical > This.IdlePeriod) {
+            this.kill()
+        }
+    }
 }
+
+; This is required to use with the SetTimer function.
+; The timer is declared in the AutoExecute section of Core.ahk
+PandoraCheck:
+    pandora.CheckIdle()
+Return
+
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
