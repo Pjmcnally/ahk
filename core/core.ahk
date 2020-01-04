@@ -40,9 +40,6 @@ GroupAdd, consoles, ahk_exe WindowsTerminal.exe
 ; Code to initialize PandoraInterface Object
 pandora := new PandoraInterface
 
-; Set timer to check that I am not leaving Pandora running after I go home
-SetTimer, PandoraCheck, % pandora.IdleCheckFrequency,
-
 Return  ; End of Auto-Execute Section
 
 ; Functions

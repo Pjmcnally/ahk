@@ -46,6 +46,11 @@ class PandoraInterface {
         This.y := 0
         This.Height := 585
         This.Width := 500
+
+        ; Set timer attribute / Start timer
+        This.Timer := ObjBindMethod(this, "CheckIdle")
+        timer := this.Timer  ; Not sure why this line is necessary but it is.
+        SetTimer, % timer, % this.IdleCheckFrequency,
     }
 
     getSysTopLeft() {
@@ -70,6 +75,10 @@ class PandoraInterface {
         } else {
             This.runMin()
         }
+
+        ; Set/Update timer
+        timer := this.Timer
+        SetTimer, % timer, % this.IdleCheckFrequency,
     }
 
     next() {
@@ -156,18 +165,19 @@ class PandoraInterface {
     }
 
     CheckIdle() {
+        ; Check if idle period longer than desired. If yes kill Pandora
         if (A_TimeIdlePhysical > This.IdlePeriod) {
             this.kill()
+            Sleep, % this.BigWait
+        }
+
+        ; Check if Pandora not running. If yes, kill timer.
+        if (!(WinExist(this.Window))) {
+            timer := this.Timer
+            setTimer, % timer, OFF  ; Turn off timer
         }
     }
 }
-
-; This is required to use with the SetTimer function.
-; The timer is declared in the AutoExecute section of Core.ahk
-PandoraCheck:
-    pandora.CheckIdle()
-Return
-
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
