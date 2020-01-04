@@ -24,29 +24,28 @@ class PandoraInterface {
         ; 3. Right click Pandora and click Create Shortcut
         ; 4. Create folder and copy shortcut to folder
         winApp_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\Pandora.lnk"
-
-        if (FileExist(winApp_src)) {
-            ; Set general attributes
-            This.Version := "winApp"
-            This.Source := winApp_src
-            This.Window := "ahk_exe Pandora.exe"
-
-            ; Set wait times
-            This.SmallWait := 100
-            This.BigWait := 4000
-
-            ; Set time for idle checker
-            This.IdleCheckFreq := 300000 ; 5 minutes
-            This.IdlePeriod := 1800000  ; 30 minutes
-
-            ; Set positions and size attributes
-            This.x := This.getSysTopLeft() - 8  ; -8 makes it position flush against the edge. Not sure why.
-            This.y := 0
-            This.Height := 585
-            This.Width := 500
-        } else {
-            MsgBox, % "Pandora not found. Unable to proceed."
+        if (!(FileExist(winApp_src))) {
+            Throw "Pandora not found"
         }
+
+        ; Set general attributes
+        This.Version := "winApp"
+        This.Source := winApp_src
+        This.Window := "ahk_exe Pandora.exe"
+
+        ; Set wait times
+        This.SmallWait := 100
+        This.BigWait := 4000
+
+        ; Set time for idle checker
+        This.IdleCheckFreq := 300000 ; 5 minutes
+        This.IdlePeriod := 1800000  ; 30 minutes
+
+        ; Set positions and size attributes
+        This.x := This.getSysTopLeft() - 8  ; -8 makes it position flush against the edge. Not sure why.
+        This.y := 0
+        This.Height := 585
+        This.Width := 500
     }
 
     getSysTopLeft() {
