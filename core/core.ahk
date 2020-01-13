@@ -41,7 +41,7 @@ GroupAdd, consoles, ahk_exe WindowsTerminal.exe
 pandora := new PandoraInterface
 
 ; Set time to check if rcpclip is running
-SetTimer, check_rcpclip, 60000 ; Run every minute
+SetTimer, check_rdpclip, 60000 ; Run every minute
 
 Return  ; End of Auto-Execute Section
 

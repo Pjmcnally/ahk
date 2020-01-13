@@ -83,7 +83,7 @@ clip_func(func) {
     Return
 }
 
-check_rcpclip() {
+check_rdpclip() {
     /*  Test whether rdpclip is running and alerts user.
 
         This function tests whether rcpclip (the Windows utility that controls the
