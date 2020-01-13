@@ -40,6 +40,9 @@ GroupAdd, consoles, ahk_exe WindowsTerminal.exe
 ; Code to initialize PandoraInterface Object
 pandora := new PandoraInterface
 
+; Set time to check if rcpclip is running
+SetTimer, check_rcpclip, 60000 ; Run every minute
+
 Return  ; End of Auto-Execute Section
 
 ; Functions
@@ -107,6 +110,11 @@ SendLines(iter, wait:=0) {
 stop_double_space() {
     Send, {BackSpace}
     SoundBeep, 750, 500
+}
+
+process_exists(Name){
+    Process, Exist, %Name%
+    return ErrorLevel
 }
 
 

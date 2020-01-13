@@ -82,3 +82,27 @@ clip_func(func) {
 
     Return
 }
+
+check_rcpclip() {
+    /*  Test whether rdpclip is running and alerts user.
+
+        This function tests whether rcpclip (the Windows utility that controls the
+        clipboard) is running. If not it displays a window and asks the user if they
+        want to restart it.
+
+        Args:
+            None
+        Returns:
+            None
+    */
+
+    name := "rdpclip.exe"
+    path := "C:\Windows\System32\rdpclip.exe"
+
+    if (!WinExist("rdpclip Tracker") and !process_exists(name)) {
+        SoundBeep, 500, 500
+        MsgBox, 4, % "rdpclip Tracker", % "RdpClip is not running`n`nWould you like to restart it?"
+        IfMsgBox, Yes
+            Run, % path
+    }
+}
