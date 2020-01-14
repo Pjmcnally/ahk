@@ -8,6 +8,9 @@ be added to core.ahk.
 System description: <Change as needed>
 */
 
+; Auto-Execute Section (Any system specific Auto-Execute commands go here)
+; ==============================================================================
+
 
 ; Include Section
 ; ==============================================================================
@@ -21,7 +24,3 @@ System description: <Change as needed>
 ; Include Example
 ; #Include the_thing_I_want
 ; #Include misc\the_other_thing_I_want
-
-
-; Auto-Execute Section (Any system specific Auto-Execute commands go here)
-; ==============================================================================
