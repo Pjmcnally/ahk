@@ -83,26 +83,60 @@ clip_func(func) {
     Return
 }
 
-check_rdpclip() {
-    /*  Test whether rdpclip is running and alerts user.
+; Classes
+; ==============================================================================
+class RdpClipInterface {
+    static ProcName := "rdpclip.exe"
+    static Path := "C:\Windows\System32\rdpclip.exe"
+    static Delay := 2000
+    static TimerFrequency := 60000
 
-        This function tests whether rcpclip (the Windows utility that controls the
-        clipboard) is running. If not it displays a window and asks the user if they
-        want to restart it.
+    __New() {
+        ; Set timer attribute / Start timer
+        this.Timer := ObjBindMethod(this, "Check")
+        timer := this.Timer  ; Not sure why this line is necessary but it is.
+        SetTimer, % timer, % this.TimerFrequency,
+    }
 
-        Args:
-            None
-        Returns:
-            None
-    */
+    Restart() {
+        while (this.IsRunning()) {
+            Process, Close, % this.ProcName
+            Sleep, % this.Delay
+        }
 
-    name := "rdpclip.exe"
-    path := "C:\Windows\System32\rdpclip.exe"
+        while (!this.IsRunning()) {
+            Run, % this.Path
+            Sleep, % this.Delay
+        }
+    }
 
-    if (!WinExist("rdpclip Tracker") and !process_exists(name)) {
-        SoundBeep, 500, 500
-        MsgBox, 4, % "rdpclip Tracker", % "RdpClip is not running`n`nWould you like to restart it?"
-        IfMsgBox, Yes
-            Run, % path
+    IsRunning() {
+        Process, Exist, % this.ProcName
+        return ErrorLevel
+    }
+
+    Check() {
+        /*  Test whether rdpclip is running and alerts user.
+
+            This function tests whether rcpclip (the Windows utility that controls the
+            clipboard) is running. If not it displays a window and asks the user if they
+            want to restart it.
+
+            Args:
+                None
+            Returns:
+                None
+        */
+
+        if (!WinExist("rdpclip Tracker") and !this.IsRunning()) {
+            SoundBeep, 500, 500
+            MsgBox, 4, % "rdpclip Tracker", % "RdpClip is not running`n`nWould you like to restart it?"
+            IfMsgBox, Yes
+                Run, % this.Path
+        }
     }
 }
+
+^!c::  ; Ctrl-Alt-C
+    rdpClip.Restart()
+Return
