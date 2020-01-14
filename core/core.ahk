@@ -36,7 +36,6 @@ GroupAdd, consoles, ahk_exe RDCMan.exe
 GroupAdd, consoles, ahk_exe Code.exe
 GroupAdd, consoles, ahk_exe WindowsTerminal.exe
 
-
 ; Code to initialize PandoraInterface Object
 pandora := new PandoraInterface
 
