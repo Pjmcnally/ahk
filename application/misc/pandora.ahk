@@ -1,45 +1,38 @@
-/*  Create standard hotkey interface for Pandora.
+/*  Create module to allow media keys to control Pandora
 
-    I run Pandora on all of my computers. However, I run different versions
-    depending on the computer. This set of hotkeys allows me to use a standard
-    interface regardless of app or computer.
+    NOTE ABOUT SOURCE
+    -----------------
+    Because Pandora is now a Windows 10 App it cannot be run by just accessing the exe.
+    To resolve this issue create a shortcut and add that shortcut to the start menu
+    using the path below. To create the shortcut do the following:
+        1. Windows + R
+        2. Enter: shell:AppsFolder
+        3. Right click Pandora and click Create Shortcut
+        4. Create folder and copy shortcut to folder
 */
 
 ; Classes
 ; ==============================================================================
 class PandoraInterface {
+
+
+    ; Set general attributes
+    static Version := "winApp"
+    static Source := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\Pandora.lnk"
+    static Window := "ahk_exe Pandora.exe"
+
+    ; Set wait times
+    static SmallWait := 100
+    static BigWait := 4000
+
+    ; Set time for idle checker
+    static IdleCheckFreq := 300000 ; 5 minutes
+    static IdlePeriod := 1800000  ; 30 minutes
+
     __New() {
-        This.SetVersion()
-    }
-
-    SetVersion() {
-        /*  Find and set version of Pandora on system.
-        */
-
-        ; Because Pandora is now a Windows 10 App it cannot be run by just accessing the
-        ; exe. To resolve this issue create a shortcut and add that shortcut to the
-        ; start menu using the path below. To create the shortcut do the following:
-        ; 1. Windows + R
-        ; 2. Enter: shell:AppsFolder
-        ; 3. Right click Pandora and click Create Shortcut
-        ; 4. Create folder and copy shortcut to folder
-        winApp_src := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\Pandora.lnk"
-        if (!(FileExist(winApp_src))) {
-            Throw "Pandora not found"
+        if (!(FileExist(this.Source))) {
+            Throw "Pandora not found"  ; See NOTE ABOUT SOURCE in docstrings.
         }
-
-        ; Set general attributes
-        This.Version := "winApp"
-        This.Source := winApp_src
-        This.Window := "ahk_exe Pandora.exe"
-
-        ; Set wait times
-        This.SmallWait := 100
-        This.BigWait := 4000
-
-        ; Set time for idle checker
-        This.IdleCheckFreq := 300000 ; 5 minutes
-        This.IdlePeriod := 1800000  ; 30 minutes
 
         ; Set positions and size attributes
         This.x := This.getSysTopLeft() - 8  ; -8 makes it position flush against the edge. Not sure why.
