@@ -39,6 +39,8 @@ GroupAdd, consoles, ahk_exe WindowsTerminal.exe
 ; Code to initialize PandoraInterface Object
 pandora := new PandoraInterface
 
+check_update_ahk()
+
 Return  ; End of Auto-Execute Section
 
 ; Functions
@@ -113,6 +115,44 @@ process_exists(Name){
     return ErrorLevel
 }
 
+get_current_ahk_version_web() {
+    endpoint := "https://autohotkey.com/download/1.1/version.txt"
+
+    client := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+    client.Open("GET", endpoint, true)
+    client.Send()
+    client.WaitForResponse()
+
+    return client.ResponseText
+}
+
+download_current_ahk() {
+    endpoint := "https://www.autohotkey.com/download/ahk-install.exe"
+    Run, % endpoint
+}
+
+check_update_ahk() {
+    web_version := get_current_ahk_version_web()
+    local_version := A_AhkVersion
+
+    if (web_version != local_version) {
+        template =
+        (
+            A new version of AHK is available:
+
+            Web version: %web_version%
+            Your version: %local_version%
+
+            Would you like to download the new version?
+        )
+        msg_string := dedent(template, 12)
+
+        SoundBeep, 750, 500
+        MsgBox, 4, % "Update available", % msg_string
+        IfMsgBox, % "yes"
+            download_current_ahk()
+    }
+}
 
 ; Hotstrings
 ; ==============================================================================
