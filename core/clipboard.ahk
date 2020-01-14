@@ -118,7 +118,7 @@ class RdpClipInterface {
     Check() {
         /*  Test whether rdpclip is running and alerts user.
 
-            This function tests whether rcpclip (the Windows utility that controls the
+            This method tests whether rcpclip (the Windows utility that controls the
             clipboard) is running. If not it displays a window and asks the user if they
             want to restart it.
 
