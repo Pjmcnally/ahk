@@ -40,13 +40,6 @@ GroupAdd, consoles, ahk_exe WindowsTerminal.exe
 ; Code to initialize PandoraInterface Object
 pandora := new PandoraInterface
 
-; Set time to check if rcpclip is running
-; I would like to be able to put this in the AutoHotkey_Main file where system specific
-; configuration is supposed to happen. However, it doesn't work there for some reason.
-if (A_ComputerName = get_computer_name("work")) {
-    SetTimer, check_rdpclip, 60000 ; Run every minute
-}
-
 Return  ; End of Auto-Execute Section
 
 ; Functions
