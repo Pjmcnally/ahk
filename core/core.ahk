@@ -110,11 +110,6 @@ stop_double_space() {
     SoundBeep, 750, 500
 }
 
-process_exists(Name){
-    Process, Exist, %Name%
-    return ErrorLevel
-}
-
 get_current_ahk_version_web() {
     endpoint := "https://autohotkey.com/download/1.1/version.txt"
 
