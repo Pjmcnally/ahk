@@ -23,7 +23,7 @@ class PandoraInterface {
 
     ; Set wait times
     static SmallWait := 100
-    static BigWait := 4000
+    static BigWait := 8000
 
     ; Set time for idle checker
     static IdleCheckFreq := 300000 ; 5 minutes
