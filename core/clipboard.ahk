@@ -91,12 +91,12 @@ class RdpClipInterface {
     static Delay := 2000
     static TimerFrequency := 60000
 
-    __New() {
-        ; Set timer attribute / Start timer
-        this.Timer := ObjBindMethod(this, "Check")
-        timer := this.Timer  ; Not sure why this line is necessary but it is.
-        SetTimer, % timer, % this.TimerFrequency,
-    }
+    ; __New() {
+    ;     ; Set timer attribute / Start timer
+    ;     this.Timer := ObjBindMethod(this, "Check")
+    ;     timer := this.Timer  ; Not sure why this line is necessary but it is.
+    ;     SetTimer, % timer, % this.TimerFrequency,
+    ; }
 
     Restart() {
         while (this.IsRunning()) {
@@ -108,6 +108,9 @@ class RdpClipInterface {
             Run, % this.Path
             Sleep, % this.Delay
         }
+
+        SoundBeep, 500, 500
+        MsgBox, % "RdpClip has been restarted."
     }
 
     IsRunning() {
