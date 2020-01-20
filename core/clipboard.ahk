@@ -18,6 +18,7 @@ get_highlighted(persist=True, e=True) {
     if (persist) {
         ClipSaved := ClipboardAll
     }
+    Sleep, 100
     Clipboard =
     Sleep, 100
 
@@ -50,6 +51,7 @@ paste_contents(str) {
     */
     ClipSaved := ClipboardAll
     Clipboard := str
+    Sleep, 100
     Send, ^v
 
     ; This sleep is a bit weird. Without it, AutoHotkey will send a paste
