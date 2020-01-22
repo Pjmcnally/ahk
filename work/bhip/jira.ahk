@@ -143,8 +143,9 @@ stop_using_pm_in_the_morning() {
         MsgBox, 20, AM/PM, Are you sure you meant PM?
 
         IfMsgBox, No
-            Send, {Backspace 2}AM{TAB}
+            Send, {Backspace 2}AM
     }
+    Send, {TAB}
 }
 
 ; Hotstrings
