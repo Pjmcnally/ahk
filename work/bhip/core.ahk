@@ -5,7 +5,7 @@
 
 ; Functions
 ; ==============================================================================
-send_outlook_email(subject, body, recipients := "") {
+send_outlook_email(subject, body, recipients := "", cc_recipients := "") {
     /*  Fill content into Outlook email.
 
         Args:
@@ -15,11 +15,10 @@ send_outlook_email(subject, body, recipients := "") {
         Return:
             None
     */
-    if (recipients) {
-        Send, %recipients%{Tab 2}
-    }
+    Send, %recipients%{Tab}
+    Send, %cc_recipients%{Tab}
     Send, %subject%{Tab}
-    Send, % body
+    Send, %body%
 
     Return
 }

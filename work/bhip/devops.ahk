@@ -110,3 +110,7 @@ Return
 :co:credtestrun::
     Send, % get_tester_path()
 Return
+
+:coX:newcustnum::
+    send_new_cust_num_email()
+Return
