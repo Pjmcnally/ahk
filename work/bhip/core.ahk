@@ -15,6 +15,9 @@ send_outlook_email(subject, body, recipients := "", cc_recipients := "") {
         Return:
             None
     */
+    WinActivate, Untitled - Message (HTML)
+    WinWaitActive, Untitled - Message (HTML)
+
     Send, %recipients%{Tab}
     Send, %cc_recipients%{Tab}
     Send, %subject%{Tab}
