@@ -93,6 +93,35 @@ test_credential() {
     Send, {Enter}
 }
 
+update_password_loop(){
+    /*  Add docstring
+    */
+    Input, num, L1 T3, {Tab}{Enter}{Space}
+    If num is not Integer
+        Return
+
+    Send, ^v
+    if (num != 0) {
+        Send, %num%
+    }
+    Send, {Tab}
+
+    if (num = 5) {
+        num := ""
+    } else {
+        num += 1
+    }
+    Send, ^v
+    Send, %num%{Tab}
+    Send, ^v
+    Send, %num%{Tab}
+}
+
+
+; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
+; ==============================================================================
+^!p::update_password_loop()
+
 ; Hotstrings
 ; ==============================================================================
 :*:depLocal::
