@@ -15,15 +15,15 @@
 ; ==============================================================================
 class PandoraInterface {
 
-
     ; Set general attributes
     static Version := "winApp"
     static Source := "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Pandora\Pandora.lnk"
     static Window := "ahk_exe Pandora.exe"
+    static TempFile := A_WorkingDir . "\application\pandora\local.txt"
+    static PsFile := A_WorkingDir . "\application\pandora\IsWindowsPlayingSound.ps1"
 
     ; Set wait times
     static SmallWait := 100
-    static BigWait := 8000
 
     ; Set time for idle checker
     static IdleCheckFreq := 300000 ; 5 minutes
@@ -89,13 +89,22 @@ class PandoraInterface {
         */
         Run, % This.Source
 
+        ; Different way to start Pandora that doesn't require shortcut.
+        ; ComSpec references cmd.exe and "/c" specifies a command
+        ; Run, %ComSpec% /c start Pandora:,,Hide
+
         ; Set window position and minimize
         This.SetPos()
         This.Minimize()
 
-        ; Start music
-        Sleep, % This.BigWait
-        This.playPause()
+        ; Keep trying to start the music until sound is being played.
+        ; If some other program is making sound this will not work
+        sound := False
+        While (!sound) {
+            This.playPause()
+            sleep, % This.SmallWait
+            sound := This.CheckSoundOutput()
+        }
     }
 
     setPos() {
@@ -161,13 +170,26 @@ class PandoraInterface {
         ; Check if idle period longer than desired. If yes kill Pandora
         if (A_TimeIdlePhysical > This.IdlePeriod) {
             this.kill()
-            Sleep, % this.BigWait
+            Sleep, % 10000 ; Wait 10 seconds
         }
 
         ; Check if Pandora not running. If yes, kill timer.
         if (!(WinExist(this.Window))) {
             timer := this.Timer
             setTimer, % timer, OFF  ; Turn off timer
+        }
+    }
+
+    CheckSoundOutput() {
+        cmd :=  This.PsFile . " -Dest " . This.TempFile
+        RunWait, PowerShell.exe -Command %cmd%,, Hide
+
+        FileRead, result, % This.TempFile
+        result := Trim(result, " `t`r`n")
+        if (Trim(result) = "True") {
+            return True
+        } else {
+            return False
         }
     }
 }
