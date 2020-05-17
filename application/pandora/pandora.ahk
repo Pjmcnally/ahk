@@ -99,8 +99,11 @@ class PandoraInterface {
 
         ; Keep trying to start the music until sound is being played.
         ; If some other program is making sound this will not work
+        startTime := A_TickCount
+        maxRetryDur = 10000  ; Try for 10 seconds then give up
+
         sound := False
-        While (!sound) {
+        While (!sound and (A_TickCount - startTime < maxRetryDur)) {
             This.playPause()
             sleep, % This.SmallWait
             sound := This.CheckSoundOutput()
