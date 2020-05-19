@@ -95,18 +95,27 @@ class PandoraInterface {
 
         ; Set window position and minimize
         This.SetPos()
-        This.Minimize()
 
-        ; Keep trying to start the music until sound is being played.
-        ; If some other program is making sound this will not work
-        startTime := A_TickCount
-        maxRetryDur = 10000  ; Try for 10 seconds then give up
+        ; Check if sound already exists. If yes, don't minimize window to notify user
+        ; that playback will need to be started manually
+        sound := This.CheckSoundOutput()
+        if (!sound) {
+            This.Minimize()
 
-        sound := False
-        While (!sound and (A_TickCount - startTime < maxRetryDur)) {
-            This.playPause()
-            sleep, % This.SmallWait
-            sound := This.CheckSoundOutput()
+            ; Attempt to automatically start music playback. Keep trying to start the music
+            ; until sound is being played.
+            startTime := A_TickCount
+            maxRetryDur = 10000  ; Try for 10 seconds then give up
+
+            While (!sound and (A_TickCount - startTime < maxRetryDur)) {
+                This.playPause()
+                sleep, % This.SmallWait
+                sound := This.CheckSoundOutput()
+            }
+
+            if (sound = False) {
+                This.Maximize()  ; If audio fails to start maximize window.
+            }
         }
     }
 
