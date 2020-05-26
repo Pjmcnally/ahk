@@ -175,6 +175,7 @@ stop_using_pm_in_the_morning() {
 :coX:mbhip::time_entry("Task-136", "* Monthly BHIP Meeting")
 :coX:mtech::time_entry("Task-187", "* Weekly technology meeting", "1:30 PM", "now")
 :coX:mtrans::time_entry("Task-318", "* Weekly DevOps transition meeting")
+:coX:mtrain::time_entry("task-804", "* Weekly developer training meeting")
 :coX:tsteve::time_entry("task-169", "* Investigate and resolve request")
 :coX:tann::time_entry("task-206", "* Investigate and resolve request")
 :coX:ttom::time_entry("task-205", "* Send weekly status email to Tom")
