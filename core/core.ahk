@@ -149,6 +149,11 @@ check_update_ahk() {
     }
 }
 
+clear_and_send(str) {
+    Send, ^a
+    Send, % str
+}
+
 ; Hotstrings
 ; ==============================================================================
 ; X=Execute, ?=Within word, *=terminating char not required, B0=no backspace
