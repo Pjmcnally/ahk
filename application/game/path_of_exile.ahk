@@ -39,4 +39,35 @@ Return
 ^h::
     Send {Enter}/hideout{Enter}
 Return
+
+^s::  ; Ctrl-S
+    Input, var, T3 L1, {Space}{Tab}{Enter}
+    Switch var {
+        Case "c":
+            clear_and_send("Currency")
+        Case "d":
+            clear_and_send("Divination")
+        Case "e":
+            clear_and_send("Essence")
+        Case "g":
+            clear_and_send("Gem")
+        Case "m":
+            clear_and_send("Magic")
+        Case "o":
+            clear_and_send("Tane's Laboratory")
+        Case "p":
+            clear_and_send("Prophecy")
+        Case "r":
+            clear_and_send("Rare")
+        Case "s":
+            clear_and_send("Seed")
+        Case "u":
+            clear_and_send("Unique")
+        Case "v":
+            clear_and_send("Veiled")
+        Default:
+            clear_and_send("Nothing Selected")
+    }
+
+
 #IfWinActive
