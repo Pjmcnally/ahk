@@ -31,9 +31,9 @@
 ; #IfWinActive
 
 #IfWinActive, ahk_exe PathOfExile_x64Steam.exe
-^+r::  ; Ctrl-Shirt-R
-    run "C:\Users\Patrick\Programming\PoE\Local\POE-TradeMacro\Run_TradeMacro.ahk"
-    run "C:\Users\Patrick\Programming\PoE\Local\POE-Trades-Companion-AHK-v-1-15-BETA_990\POE Trades Companion.ahk"
+^+r::  ; Ctrl-Shift-R
+    run "Z:\Documents\Path of Building\POE-TradeMacro-2.16.0\Run_TradeMacro.ahk"
+    run "Z:\Documents\Path of Building\POE-Trades-Companion-AHK-v-1-15-BETA_9991\POE Trades Companion.ahk"
 Return
 
 ^h::
