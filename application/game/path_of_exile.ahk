@@ -53,6 +53,8 @@ Return
             clear_and_send("Gem")
         Case "m":
             clear_and_send("Magic")
+        Case "N":
+            clear_and_send("Normal")
         Case "o":
             clear_and_send("Tane's Laboratory")
         Case "p":
