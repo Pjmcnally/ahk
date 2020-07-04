@@ -1,34 +1,16 @@
-; All of the items below are now obsolete due to PoE Trade Macro
-; getItemName(str) {
-;     /*  Items can be copied in PoE by mousing over and pressing ctrl-c. The
-;         items name is always on the second line.
+logout() {
+    /* This is the older version. Potentially against the macro rules
+    BlockInput On
+    SendInput, {Esc}
+    WinGetPos,,,Width,Height,A
+    X := (Width / 2)
+    Y := Height * .44
+    MouseClick, Left, X, Y, 1, 1
+    BlockInput Off
+    */
 
-;         This function extracts the items name to be used in certain websites.
-;     */
-
-;     Array := StrSplit(str, "`r", "`n")
-;     Return Array[2]
-; }
-
-; checkPoePrice() {
-;     name := getItemName(clipboard)
-
-;     Send, ^a
-;     Send, % name
-;     Send, {Enter}
-; }
-
-; #IfWinExist, ahk_exe PathOfExile_x64Steam.exe
-; ^v::
-;     if (WinActive("poe.ninja - Mozilla Firefox")
-;         or WinActive("PoE Goods - Mozilla Firefox")
-;         or WinActive("Trade - Path of Exile - Mozilla Firefox"))
-;     {
-;         checkPoePrice()
-;     } else {
-;         Send ^v
-;     }
-; #IfWinActive
+    SendInput, {Enter}/exit{Enter}
+}
 
 #IfWinActive, ahk_exe PathOfExile_x64Steam.exe
 ^+r::  ; Ctrl-Shift-R
@@ -70,6 +52,8 @@ Return
         Default:
             clear_and_send("Nothing Selected")
     }
+return
 
+F9::logout()
 
 #IfWinActive
