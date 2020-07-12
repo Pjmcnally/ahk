@@ -52,7 +52,7 @@ Return
         Default:
             clear_and_send("Nothing Selected")
     }
-return
+Return
 
 F9::logout()
 
