@@ -28,7 +28,7 @@ upload_fip_report(report_filename) {
     SendWait("{Tab}", default_wait)  ; Hit "Tab" to select option
     SendWait("{Tab}", default_wait)  ; Hit "Tab" to navigate to "Go" button
     SendWait("{Space}", 2000)  ; Hit "Go" button
-    ClickWait("{Space}" default_wait)  ; Open file selection window
+    SendWait("{Space}", default_wait)  ; Open file selection window
     WinWaitActive Open  ; Wait for file selection window to be active
     Sleep, default_wait
     SendWait(report_filename, default_wait)  ; Enter file name
@@ -82,6 +82,7 @@ update_fip_password_loop(){
     Send, %num%{Tab}
     Send, ^v
     Send, %num%{Tab}
+    Send, {Space}
 }
 
 
