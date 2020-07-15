@@ -115,7 +115,7 @@ class UpdbInterface {
         */
         Global _current_action   ; I really hate Global but am not sure how to do it otherwise
         Global _prog_bar         ; I really hate Global but am not sure how to do it otherwise
-        Global _button          ; I really hate Global but am not sure how to do it otherwise
+        Global _button           ; I really hate Global but am not sure how to do it otherwise
         Static customer_list
         Static log_window
         Gui, updb_gui:New, +AlwaysOnTop, % This.title_str
