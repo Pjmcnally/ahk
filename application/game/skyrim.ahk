@@ -1,40 +1,42 @@
 class SkyrimInterface {
     __New() {
-        This.running := 0
         This.CurrentSkill := ""
-        This.skillTime := 1000
-        This.waitTime := 1000
+        This.skillTime := 0
+        This.waitTime := 0
+        This.running := 0
         This.Timer := ObjBindMethod(this, "UseSkill")
     }
 
-    StartTimer() {
+    StartLoop() {
+        This.Running := True
+
         timer := this.Timer  ; Not sure why this line is necessary but it is.
-        SetTimer, % timer, % this.waitTime,
+        freq := This.WaitTime + This.SkillTime  ; Calculate total time for loop
+
+        SetTimer, % timer, % freq,
+        This.UseSkill()
     }
 
-    StopTimer() {
+    StopLoop() {
+        This.Running := False
+
         timer := this.Timer
         setTimer, % timer, OFF  ; Turn off timer
     }
 
     ToggleSkill(skillName, skillTime, waitTime) {
         if (skillName != this.CurrentSkill) {
-            This.StopTime()  ; Kill old time
+            This.StopLoop()  ; Kill old time
 
-            This.skillTime := skillTime
-            This.waitTime := waitTime
+            This.SkillTime := skillTime
+            This.WaitTime := waitTime
             This.CurrentSkill := skillName
 
-            This.Running := True
-            This.UseSkill()
-            This.StartTimer()
+            This.StartLoop()
         } else if (This.Running) {
-            This.Running := False
-            This.StopTimer()
+            This.StopLoop()
         } else {
-            This.Running := True
-            This.UseSkill()
-            This.StartTimer()
+            This.StartLoop()
         }
     }
 
@@ -49,7 +51,8 @@ class SkyrimInterface {
 
 NumpadEnter::Send {Enter}
 Numpad1::skyrim.ToggleSkill("Transmute", 1000, 2500)
-Numpad2::skyrim.ToggleSkill("Detect Life", 18000, 15000)
+Numpad2::skyrim.ToggleSkill("Detect Life", 19000, 15000)
+Numpad3::skyrim.ToggleSkill("Muffle", 1000, 2500)
 
 
 #IfWinActive ; Disable previous active window
