@@ -1,6 +1,7 @@
 class SkyrimInterface {
     __New() {
         This.running := 0
+        This.CurrentSkill := ""
         This.skillTime := 1000
         This.waitTime := 1000
         This.Timer := ObjBindMethod(this, "UseSkill")
@@ -16,20 +17,28 @@ class SkyrimInterface {
         setTimer, % timer, OFF  ; Turn off timer
     }
 
-    ToggleSkill(skillTime, waitTime) {
-        This.running := !(This.running)
+    ToggleSkill(skillName, skillTime, waitTime) {
+        if (skillName != this.CurrentSkill) {
+            This.StopTime()  ; Kill old time
 
-        if (This.Running) {
             This.skillTime := skillTime
             This.waitTime := waitTime
+            This.CurrentSkill := skillName
 
+            This.Running := True
+            This.UseSkill()
             This.StartTimer()
-        } else {
+        } else if (This.Running) {
+            This.Running := False
             This.StopTimer()
+        } else {
+            This.Running := True
+            This.UseSkill()
+            This.StartTimer()
         }
     }
 
-    useSkill() {
+    UseSkill() {
         Click, down
         Sleep, % This.skillTime
         Click, up
@@ -39,8 +48,8 @@ class SkyrimInterface {
 #IfWinActive, ahk_exe SkyrimSE.exe
 
 NumpadEnter::Send {Enter}
-Numpad1::skyrim.UseSkill(1000, 2500)  ; Transmute
-Numpad2::skyrim.UseSkill(10000, 15000)  ; Detect Life
+Numpad1::skyrim.ToggleSkill("Transmute", 1000, 2500)
+Numpad2::skyrim.ToggleSkill("Detect Life", 18000, 15000)
 
 
 #IfWinActive ; Disable previous active window
