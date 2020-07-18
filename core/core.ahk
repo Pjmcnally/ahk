@@ -38,6 +38,7 @@ GroupAdd, consoles, ahk_exe WindowsTerminal.exe
 
 ; Code to initialize PandoraInterface Object
 pandora := new PandoraInterface
+skyrim := new SkyrimInterface
 
 check_update_ahk()
 
