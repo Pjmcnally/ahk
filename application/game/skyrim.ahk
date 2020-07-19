@@ -50,9 +50,9 @@ class SkyrimInterface {
 #IfWinActive, ahk_exe SkyrimSE.exe
 
 NumpadEnter::Send {Enter}
-Numpad1::skyrim.ToggleSkill("Transmute", 1000, 2500)
-Numpad2::skyrim.ToggleSkill("Detect Life", 19000, 15000)
-Numpad3::skyrim.ToggleSkill("Muffle", 1000, 2500)
+Numpad1::skyrim.ToggleSkill("Transmute", 1000, 1000)
+Numpad2::skyrim.ToggleSkill("Detect Life", 30000, 100)
+Numpad3::skyrim.ToggleSkill("Muffle", 1000, 1000)
 
 
 #IfWinActive ; Disable previous active window
