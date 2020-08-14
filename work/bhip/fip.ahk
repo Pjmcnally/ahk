@@ -64,7 +64,7 @@ get_report_name(report_filename) {
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
 ^!p::  ; Ctrl-Alt-p
-    Run,  C:\Users\PatrickMcNally\programming\ahk\tools\fip_pw_reset_tool\FIP Password Reset Tool.exe
+    Run,  % ".\tools\fip_pw_reset_tool\FIP Password Reset Tool.exe"
 return
 
 ^!+u::  ; Ctrl-Alt-Shift-U
