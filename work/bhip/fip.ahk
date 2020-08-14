@@ -60,36 +60,11 @@ get_report_name(report_filename) {
     return RegExReplace(report_filename, "\.[Zz]ip")
 }
 
-update_fip_password_loop(){
-    /*  Add docstring
-    */
-    Input, num, L1 T3, {Tab}{Enter}{Space}
-    If num is not Integer
-        Return
-
-    Send, ^v
-    if (num != 0) {
-        Send, %num%
-    }
-    Send, {Tab}
-
-    if (num = 5) {
-        num := ""
-    } else {
-        num += 1
-    }
-    Send, ^v
-    Send, %num%{Tab}
-    Send, ^v
-    Send, %num%{Tab}
-    Send, {Space}
-}
-
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
 ^!p::  ; Ctrl-Alt-p
-    update_fip_password_loop()
+    Run,  % ".\tools\fip_pw_reset_tool\FIP Password Reset Tool.exe"
 return
 
 ^!+u::  ; Ctrl-Alt-Shift-U
