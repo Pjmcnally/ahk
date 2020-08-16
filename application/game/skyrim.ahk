@@ -4,6 +4,7 @@ class SkyrimInterface {
         This.skillTime := 0
         This.waitTime := 0
         This.running := 0
+        This.mode := ""
         This.Timer := ObjBindMethod(this, "UseSkill")
     }
 
@@ -24,10 +25,11 @@ class SkyrimInterface {
         setTimer, % timer, OFF  ; Turn off timer
     }
 
-    ToggleSkill(skillName, skillTime, waitTime) {
+    ToggleSkill(mode, skillName, skillTime, waitTime) {
         if (skillName != this.CurrentSkill) {
             This.StopLoop()  ; Kill old time
 
+            This.Mode := mode
             This.SkillTime := skillTime
             This.WaitTime := waitTime
             This.CurrentSkill := skillName
@@ -41,18 +43,26 @@ class SkyrimInterface {
     }
 
     UseSkill() {
-        Click, down
-        Sleep, % This.skillTime
-        Click, up
+        if (This.Mode == "Spell") {
+            Click, down
+            Sleep, % This.skillTime
+            Click, up
+        }
+        else if (This.Mode == "Craft") {
+            Send, {Enter}
+            Sleep, % This.skillTime
+            Send, {Enter}
+        }
     }
 }
 
 #IfWinActive, ahk_exe SkyrimSE.exe
 
 NumpadEnter::Send {Enter}
-Numpad1::skyrim.ToggleSkill("Transmute", 1000, 1000)
-Numpad2::skyrim.ToggleSkill("Detect Life", 30000, 100)
-Numpad3::skyrim.ToggleSkill("Muffle", 1000, 1000)
+Numpad1::skyrim.ToggleSkill("Spell", "Transmute", 1000, 1000)
+Numpad2::skyrim.ToggleSkill("Spell", "Detect Life", 30000, 100)
+Numpad3::skyrim.ToggleSkill("Spell", "Muffle", 1000, 1000)
+Numpad4::skyrim.ToggleSkill("Craft", "Misc", 100, 100)
 
 
 #IfWinActive ; Disable previous active window
