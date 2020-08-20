@@ -37,8 +37,8 @@ class PandoraInterface {
         ; Set positions and size attributes
         This.x := This.getSysTopLeft() - 8  ; -8 makes it position flush against the edge. Not sure why.
         This.y := 0
-        This.Height := 585
-        This.Width := 500
+        This.Height := 655
+        This.Width := 860
 
         ; Set timer attribute / Start timer
         This.Timer := ObjBindMethod(this, "CheckIdle")
