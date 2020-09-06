@@ -127,10 +127,14 @@ download_current_ahk() {
 }
 
 check_update_ahk() {
+    try {
     web_version := get_current_ahk_version_web()
+    } catch e {
+        web_version := ""
+    }
     local_version := A_AhkVersion
 
-    if (web_version != local_version) {
+    if (web_version and (web_version != local_version)) {
         template =
         (
             A new version of AHK is available:
