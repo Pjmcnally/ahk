@@ -204,6 +204,19 @@ class PandoraInterface {
             return False
         }
     }
+
+    GetPlayButtonState() {
+        ; Experimental function to get play/paused state by measuring pixel color.
+        ; 0x994022 ; Color when playing
+        ; 0xFFFFFF ; Color when paused
+
+        WinGetPos, X, Y, Width, Height, % This.Window
+
+        button_x := (Width // 2) + X + 7
+        button_y := (Height - 35) + Y
+
+        PixelGetColor, OutputVar, button_x, button_y
+    }
 }
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
