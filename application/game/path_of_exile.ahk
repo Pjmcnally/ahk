@@ -39,7 +39,7 @@ class PoEInterface {
         SendInput, {Enter}/exit{Enter}
     }
 
-    click_repeat() {
+    clickRepeat() {
         while GetKeyState("control") {
             Random delay, 100, 150
             Sleep, % delay
@@ -86,6 +86,23 @@ class PoEInterface {
     enterHideout() {
         Send {Enter}/hideout{Enter}
     }
+
+    checkMap() {
+        badMods := ["Monsters reflect \d{2}. of Physical", "Players cannot Regenerate Life, Mana or Energy Shield", "Unidentified"]
+        modsFound := ""
+
+        if (InStr(Clipboard, "Map Tier")) {
+            for index, mod in badMods {
+                if RegExMatch(Clipboard, mod) {
+                    modsFound := modsFound . mod . "`r`n"
+                }
+            }
+
+            if (StrLen(modsFound)) {
+                MsgBox, % "Beware, map contains bad mod(s)." . "`r`n`r`n" . modsFound
+            }
+        }
+    }
 }
 
 #IfWinActive, ahk_exe PathOfExile_x64Steam.exe
@@ -97,13 +114,11 @@ Return
 F9::poe.logout()
 ^h::poe.enterHideout()
 ^s::poe.searchStash()
-^z::poe.click_repeat()
+^z::poe.clickRepeat()
+~^c::poe.checkMap()
 
 ; Flask Macro hotkeys
 ~RButton::poe.activateRightClick()  ; pass-thru and call class method
 ~RButton up::poe.deactivateRightClick()  ; pass-thru and call class method
-4::
-f::
-    poe.useFlasks()
-Return
+f::poe.useFlasks()
 #IfWinActive
