@@ -87,34 +87,22 @@ class PandoraInterface {
     runMin() {
         /*  Run then minimize Pandora.
         */
+        WinGetActiveTitle, previouslyActive
         Run, % This.Source
-
-        ; Different way to start Pandora that doesn't require shortcut.
-        ; ComSpec references cmd.exe and "/c" specifies a command
-        ; Run, %ComSpec% /c start Pandora:,,Hide
-
-        ; Set window position and minimize
         This.SetPos()
+        WinActivate, % previouslyActive
 
-        ; Check if sound already exists. If yes, don't minimize window to notify user
-        ; that playback will need to be started manually
-        sound := This.CheckSoundOutput()
-        if (!sound) {
-            This.Minimize()
-
-            ; Attempt to automatically start music playback. Keep trying to start the music
-            ; until sound is being played.
+        ; Check if Pandora is Logged in and ready to go
+        if (This.CheckLoggedIn()) {
             startTime := A_TickCount
             maxRetryDur = 10000  ; Try for 10 seconds then give up
-
-            While (!sound and (A_TickCount - startTime < maxRetryDur)) {
+            while ((A_TickCount - startTime < maxRetryDur) and (not This.IsPlaying())) {
                 This.playPause()
-                sleep, % This.SmallWait
-                sound := This.CheckSoundOutput()
+                sleep, 500
             }
 
-            if (sound = False) {
-                This.Maximize()  ; If audio fails to start maximize window.
+            if (This.IsPlaying()) {
+                WinMinimize, % This.Window
             }
         }
     }
@@ -153,9 +141,11 @@ class PandoraInterface {
 
     minimize() {
         This.setPos()
-        while (WinActive(This.Window)) {
+        WinGet, state, MinMax, % This.Window
+        while (state != -1) {
             WinMinimize, % This.Window
             Sleep, % This.SmallWait
+            WinGet, state, MinMax, % This.Window
         }
     }
 
@@ -192,30 +182,37 @@ class PandoraInterface {
         }
     }
 
-    CheckSoundOutput() {
-        cmd :=  This.PsFile . " -Dest " . This.TempFile
-        RunWait, PowerShell.exe -Command %cmd%,, Hide
-
-        FileRead, result, % This.TempFile
-        result := Trim(result, " `t`r`n")
-        if (Trim(result) = "True") {
-            return True
-        } else {
-            return False
-        }
-    }
-
-    GetPlayButtonState() {
-        ; Experimental function to get play/paused state by measuring pixel color.
+    IsPlaying() {
         ; 0x994022 ; Color when playing
         ; 0xFFFFFF ; Color when paused
 
+        prevCoordMode := A_CoordModePixel
+        CoordMode Pixel, Screen
+
         WinGetPos, X, Y, Width, Height, % This.Window
-
-        button_x := (Width // 2) + X + 7
-        button_y := (Height - 35) + Y
-
+        button_x := (Width // 2) + X
+        button_y := (Height - 40) + Y
         PixelGetColor, OutputVar, button_x, button_y
+
+        CoordMode Pixel, % prevCoordMode
+        return (OutputVar = 0x994022)
+    }
+
+    CheckLoggedIn() {
+        ; Check if Pandora is already logged in.
+        StartTime := A_TickCount
+        MaxWaitTime := 3000
+        loggedIn := False
+        While (A_TickCount - StartTime < MaxWaitTime) {
+            WinGetTitle, title, % This.Window
+            if (InStr(title, "Now Playing")) {
+                loggedIn := True
+                break
+            }
+            Sleep, % This.SmallWait
+        }
+
+        return loggedIn
     }
 }
 
