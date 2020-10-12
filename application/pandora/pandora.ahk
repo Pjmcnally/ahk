@@ -207,17 +207,37 @@ class PandoraInterface {
         }
     }
 
-    GetPlayButtonState() {
-        ; Experimental function to get play/paused state by measuring pixel color.
+    IsPlaying() {
         ; 0x994022 ; Color when playing
         ; 0xFFFFFF ; Color when paused
 
+        prevCoordMode := A_CoordModePixel
+        CoordMode Pixel, Screen
+
         WinGetPos, X, Y, Width, Height, % This.Window
-
-        button_x := (Width // 2) + X + 7
-        button_y := (Height - 35) + Y
-
+        button_x := (Width // 2) + X
+        button_y := (Height - 40) + Y
         PixelGetColor, OutputVar, button_x, button_y
+
+        CoordMode Pixel, % prevCoordMode
+        return (OutputVar = 0x994022)
+    }
+
+    CheckLoggedIn() {
+        ; Check if Pandora is already logged in.
+        StartTime := A_TickCount
+        MaxWaitTime := 3000
+        loggedIn := False
+        While (A_TickCount - StartTime < MaxWaitTime) {
+            WinGetTitle, title, % This.Window
+            if (InStr(title, "Now Playing")) {
+                loggedIn := True
+                break
+            }
+            Sleep, % This.SmallWait
+        }
+
+        return loggedIn
     }
 }
 
