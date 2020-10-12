@@ -153,9 +153,11 @@ class PandoraInterface {
 
     minimize() {
         This.setPos()
-        while (WinActive(This.Window)) {
+        WinGet, state, MinMax, % This.Window
+        while (state != -1) {
             WinMinimize, % This.Window
             Sleep, % This.SmallWait
+            WinGet, state, MinMax, % This.Window
         }
     }
 
