@@ -87,34 +87,22 @@ class PandoraInterface {
     runMin() {
         /*  Run then minimize Pandora.
         */
+        WinGetActiveTitle, previouslyActive
         Run, % This.Source
-
-        ; Different way to start Pandora that doesn't require shortcut.
-        ; ComSpec references cmd.exe and "/c" specifies a command
-        ; Run, %ComSpec% /c start Pandora:,,Hide
-
-        ; Set window position and minimize
         This.SetPos()
+        WinActivate, % previouslyActive
 
-        ; Check if sound already exists. If yes, don't minimize window to notify user
-        ; that playback will need to be started manually
-        sound := This.CheckSoundOutput()
-        if (!sound) {
-            This.Minimize()
-
-            ; Attempt to automatically start music playback. Keep trying to start the music
-            ; until sound is being played.
+        ; Check if Pandora is Logged in and ready to go
+        if (This.CheckLoggedIn()) {
             startTime := A_TickCount
             maxRetryDur = 10000  ; Try for 10 seconds then give up
-
-            While (!sound and (A_TickCount - startTime < maxRetryDur)) {
+            while ((A_TickCount - startTime < maxRetryDur) and (not This.IsPlaying())) {
                 This.playPause()
-                sleep, % This.SmallWait
-                sound := This.CheckSoundOutput()
+                sleep, 500
             }
 
-            if (sound = False) {
-                This.Maximize()  ; If audio fails to start maximize window.
+            if (This.IsPlaying()) {
+                WinMinimize, % This.Window
             }
         }
     }
@@ -191,19 +179,6 @@ class PandoraInterface {
         if (!(WinExist(this.Window))) {
             timer := this.Timer
             setTimer, % timer, OFF  ; Turn off timer
-        }
-    }
-
-    CheckSoundOutput() {
-        cmd :=  This.PsFile . " -Dest " . This.TempFile
-        RunWait, PowerShell.exe -Command %cmd%,, Hide
-
-        FileRead, result, % This.TempFile
-        result := Trim(result, " `t`r`n")
-        if (Trim(result) = "True") {
-            return True
-        } else {
-            return False
         }
     }
 
