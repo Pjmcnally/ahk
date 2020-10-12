@@ -115,7 +115,7 @@ F9::poe.logout()
 ^h::poe.enterHideout()
 ^s::poe.searchStash()
 ^z::poe.clickRepeat()
-~^c::poe.checkMap()
+; ~^c::poe.checkMap()
 
 ; Flask Macro hotkeys
 ~RButton::poe.activateRightClick()  ; pass-thru and call class method
