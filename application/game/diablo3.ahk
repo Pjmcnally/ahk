@@ -32,11 +32,7 @@ class Diablo3Skill {
     }
 
     Toggle() {
-        if(this.Active) {
-            this.disable()
-        } else {
-            this.enable()
-        }
+        (this.Active) ? this.disable() : this.enable()
     }
 
     Enable() {
@@ -57,7 +53,7 @@ class Diablo3Skill {
     }
 
     UseSkill() {
-        if(WinActive(this.Window)) {
+        if (WinActive(this.Window)) {
             Send, % this.Letter
         }
     }
@@ -69,5 +65,4 @@ class Diablo3Skill {
 9::D3.Toggle("e")
 0::D3.Toggle("r")
 ~b::D3.DisableAll()
-; This should always be at the bottom
 #IfWinActive ; End #IfWinActive for Diablo 3
