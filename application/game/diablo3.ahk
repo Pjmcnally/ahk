@@ -1,58 +1,68 @@
-/*  This is a gear switcher I made for Diablo 3.  It allows be to quickly switch
-    from 1 set of gear to another.
-*/
+class Diablo3Interface {
+    Static SkillKeys := ["q", "w", "e", "r"]
+    Static TimerFreq := 1000  ; milliseconds
 
-; As of Diablo patch 2.5 (season 10) This will be obsolete. As they are
-; introducing this functionality in game with a better interface.
+    __New() {
+        this.Skills := {}
+
+        for i, skill in this.SkillKeys {
+            this.Skills[skill] := new Diablo3Skill(skill, this.TimerFreq)
+        }
+    }
+
+    Toggle(skillLetter) {
+        this.Skills[skillLetter].Toggle()
+    }
+
+    DisableAll() {
+        for key, val in this.Skills {
+            val.Disable()
+        }
+    }
+}
+
+class Diablo3Skill {
+    Static Window := "Diablo III"
+
+    __New(SkillLetter, freq) {
+        this.Active := false
+        this.Letter := SkillLetter
+        this.TimerFreq := freq
+        This.Timer := ObjBindMethod(this, "UseSkill")
+    }
+
+    Toggle() {
+        (this.Active) ? this.disable() : this.enable()
+    }
+
+    Enable() {
+        this.Active := True
+        this.UseSkill()  ; Trigger immediately
+
+        ; Activate timer
+        timer := this.Timer  ; Not sure why this line is necessary but it is.
+        SetTimer, % timer, % this.TimerFreq,
+    }
+
+    Disable() {
+        this.Active := false
+
+        ; Deactivate time
+        timer := this.Timer
+        setTimer, % timer, OFF
+    }
+
+    UseSkill() {
+        if (WinActive(this.Window)) {
+            Send, % this.Letter
+        }
+    }
+}
 
 #IfWinActive, Diablo III
-F1:: ;Gear Switcher
-    BlockInput, On
-    SetMouseDelay, 20
-    ; Rings
-    Click 261, 587, down
-    Click 1644, 388, up
-    Click 268, 646, down
-    Click 1831, 384, up
-    ; Amulet
-    Click 320, 593, down
-    Click 1812, 231, up
-    ; Belt
-    Click 324, 657, down
-    Click 1742, 348, up
-    ; Main hand
-    Click 377, 622, down
-    Click 1641, 477, up
-    ; Off hand
-    Click 434, 621, down
-    Click 1836, 473, up
-    ; Return off-hand
-    Click 1428, 610, down
-    Click 434, 621, up
-    ; Helm
-    Click 91, 738, down
-    Click 1737, 198, up
-    ; Shoulders
-    Click 148, 738, down
-    Click 1661, 225, up
-    ; Chest
-    Click 205, 738, down
-    Click 1736, 280, up
-    ; Gloves
-    Click 262, 738, down
-    Click 1638, 316, up
-    ; Bracers
-    Click 319, 738, down
-    Click 1836, 317, up
-    ; Pants
-    Click 376, 738, down
-    Click 1737, 411, up
-    ; Boots
-    Click 433, 738, down
-    Click 1739, 483, up
-    send, {Space}
-    BlockInput, Off
-Return
-
-; This should always be at the bottom
+7::D3.Toggle("q")
+8::D3.Toggle("w")
+9::D3.Toggle("e")
+0::D3.Toggle("r")
+~b::D3.DisableAll()
 #IfWinActive ; End #IfWinActive for Diablo 3
