@@ -1,6 +1,9 @@
 finish_build() {
-    ; Update local database
-    Run, % get_update_database_url()
+    ; Update local database (conditional on additional input)
+    Input, var, T2 L1, {Space}{Tab}{Enter}
+    if (var = "y") {
+        Run, % get_update_database_url() ,, Min
+    }
 
     ; Update plugin server
     pluginServerPath := get_dev_path() . "\pluginServer"
