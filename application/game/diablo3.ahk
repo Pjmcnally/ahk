@@ -27,7 +27,6 @@ class Diablo3Skill {
     __New(SkillLetter, freq) {
         this.Active := false
         this.Letter := SkillLetter
-        this.Timer := ; initialize timer to null
         this.TimerFreq := freq
         This.Timer := ObjBindMethod(this, "UseSkill")
     }
