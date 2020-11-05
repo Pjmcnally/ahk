@@ -1,7 +1,6 @@
-finish_build() {
-    ; Update local database (conditional on additional input)
-    Input, var, T2 L1, {Space}{Tab}{Enter}
-    if (var = "y") {
+finish_build(update_database) {
+    ; Run database update process
+    if (update_database) {
         Run, % get_update_database_url() ,, Min
     }
 
@@ -14,4 +13,5 @@ finish_build() {
     FileRecycle, %pluginServerPath%\Logs\*
 }
 
-^!+F6::finish_build()
+!^F6::finish_build(false)
+^!+F6::finish_build(true)
