@@ -10,8 +10,8 @@ class Diablo3Interface {
         }
     }
 
-    Toggle(skillLetter) {
-        this.Skills[skillLetter].Toggle()
+    Toggle(skillLetter, freq:="") {
+        this.Skills[skillLetter].Toggle(freq)
     }
 
     DisableAll() {
@@ -31,17 +31,21 @@ class Diablo3Skill {
         This.Timer := ObjBindMethod(this, "UseSkill")
     }
 
-    Toggle() {
-        (this.Active) ? this.disable() : this.enable()
+    Toggle(freq) {
+        (this.Active) ? this.disable() : this.enable(freq)
     }
 
-    Enable() {
+    Enable(freq) {
+        if (!freq) {
+            freq := this.TimerFreq
+        }
+
         this.Active := True
         this.UseSkill()  ; Trigger immediately
 
         ; Activate timer
         timer := this.Timer  ; Not sure why this line is necessary but it is.
-        SetTimer, % timer, % this.TimerFreq,
+        SetTimer, % timer, % freq,
     }
 
     Disable() {
