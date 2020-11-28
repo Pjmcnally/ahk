@@ -69,4 +69,5 @@ class Diablo3Skill {
 9::D3.Toggle("e")
 0::D3.Toggle("r")
 ~b::D3.DisableAll()
+c::Send {Enter}
 #IfWinActive ; End #IfWinActive for Diablo 3
