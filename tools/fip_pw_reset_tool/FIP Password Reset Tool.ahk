@@ -15,7 +15,13 @@ class FipPwToolInterface {
     __New() {
         /*  Create new FipPwToolInterface Instance, build and display GUI.
         */
-        This.Version := "0.5.0"
+        ; I don't like the global but I can't get it to work any other way. These
+        ; globals refer to Gui items that need global references to be read or updated.
+        Global CurrentAttemptDisplay
+        Global PasswordTextBox
+        Global LoopsTextBox
+
+        This.Version := "0.6.0"
         This.Title := "FIP PW Reset Tool"
         This.Title_str := Format("{1}  v{2}", This.Title, This.version)
         This.CurrentAttempt := 0
@@ -25,20 +31,17 @@ class FipPwToolInterface {
     BuildGui() {
         /*  Build Gui.
         */
-        ; I don't like the global but I can't get it to work any other way. These
-        ; globals refer to Gui items that need global references to be read or updated.
-        Global CurrentAttemptDisplay
-        Global PasswordTextBox
-
         Gui, tool_gui:New, +AlwaysOnTop, % This.title_str
         Gui, tool_gui:Font, s12
         Gui, tool_gui:Add, Text, x10 y20, Password:
         Gui, tool_gui:Add, Edit, x85 y15 w205 vPasswordTextBox
+        Gui, tool_gui:Add, Text, x10 y50, Loops:
+        Gui, tool_gui:Add, Edit, x85 y45 w205 vLoopsTextBox
         Gui, tool_gui:Font, s100
-        Gui, tool_gui:Add, Text, x110 y70 vCurrentAttemptDisplay, % This.CurrentAttempt
+        Gui, tool_gui:Add, Text, x80 y80 w150 0x1000 vCurrentAttemptDisplay, % This.CurrentAttempt
         Gui, tool_gui:Font, s12
-        Gui, tool_gui:Add, Button, Default x80 y130 w20 gDecreaseValue, -
-        Gui, tool_gui:Add, Button, Default x200 y130 w20 gIncreaseValue, +
+        Gui, tool_gui:Add, Button, Default x40 y130 w20 gDecreaseValue, -
+        Gui, tool_gui:Add, Button, Default x240 y130 w20 gIncreaseValue, +
         Gui, tool_gui:Add, Button, Default x50 y250 w200 gUpdatePassword, Update Password
         Gui, tool_gui:Show, w300 h300
     }
@@ -48,18 +51,15 @@ class FipPwToolInterface {
     }
 
     IncreaseValue() {
-        This.CurrentAttempt := Mod(This.CurrentAttempt + 1, 6)
+        This.CurrentAttempt := Mod(This.CurrentAttempt + 1, This.GetLoopCount() + 1)
         This.UpdateValue()
     }
 
     DecreaseValue() {
-        min := 0
-        max := 5
-
         This.CurrentAttempt -= 1
 
-        if (this.CurrentAttempt < min) {
-            this.CurrentAttempt := max
+        if (this.CurrentAttempt < 0) {
+            this.CurrentAttempt := This.GetLoopCount()
         }
         This.UpdateValue()
     }
@@ -68,6 +68,12 @@ class FipPwToolInterface {
         ; Get base password from text input box
         GuiControlGet, pass, , PasswordTextBox
         return pass
+    }
+
+    GetLoopCount() {
+        ; Get base password from text input box
+        GuiControlGet, loopCount, , LoopsTextBox
+        return loopCount
     }
 
     GetCurrentPassword() {
@@ -81,7 +87,7 @@ class FipPwToolInterface {
 
     GetNextPassword() {
         ; Build new password for attempt
-        if (This.CurrentAttempt == 5) {
+        if (This.CurrentAttempt == This.GetLoopCount()) {
             return This.GetBasePassword()
         } else {
             return This.GetBasePassword() . (This.CurrentAttempt + 1)
