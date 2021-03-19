@@ -26,7 +26,7 @@ f_date(date:="", format:="MM-dd-yyyy") {
 
         Args:
             date (str): Optional. If not provided will default to current date & time. Otherwise, specify all or the leading part of a timestamp in the YYYYMMDDHH24MISS format
-            format (str): Optional. If not provided will default to MM-dd-yyyy. Provide any format (as string)  https://autohotkey.com/docs/commands/FormatTime.html
+            format (str): Optional. If not provided will default to MM-dd-yyyy. Provide any format (as string)  https://www.autohotkey.com/docs/commands/FormatTime.htm
         Returns:
             str: Date in specified format
     */
