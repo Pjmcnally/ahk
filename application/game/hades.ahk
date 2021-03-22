@@ -93,3 +93,9 @@ class HadesInterface {
 
 ^b::hades.copyCurrentSaveToBackup()
 ^!b::hades.restoreMostRecentSave()
+
+#IfWinActive, ahk_exe Hades.exe
+
+Joy10::hades.copyCurrentSaveToBackup()
+
+#IfWinActive
