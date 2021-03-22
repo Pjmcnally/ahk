@@ -98,4 +98,9 @@ class HadesInterface {
 
 Joy10::hades.copyCurrentSaveToBackup()
 
-#IfWinActive
+#IfWinActive  ; Reset IfWinActive
+#IfWinNotExist, ahk_exe Hades.exe
+
+Joy10::hades.restoreMostRecentSave()
+
+#ifWinNotExist  ; Reset IfWinNotExist
