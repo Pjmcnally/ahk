@@ -183,3 +183,5 @@ test_func() {
 ^!t::  ; Ctrl-Alt-T for temp function/hotkeys (one-offs uses or testing)
     MsgBox, % test_func()
 Return
+
+; this is a test
