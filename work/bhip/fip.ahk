@@ -19,16 +19,16 @@ upload_fip_reports() {
 }
 
 upload_fip_report(report_filename) {
-    default_wait := 500
+    default_wait := 1000
     name := get_report_name(report_filename)
     Sleep, % default_wait
 
     SendWait("{Tab 8}", default_wait)  ; Navigate to Import Report drop down
     SendWait("{down 2}", default_wait)  ; Select "Import Report"
-    SendWait("{Tab}", default_wait)  ; Hit "Tab" to select option
-    SendWait("{Tab}", default_wait)  ; Hit "Tab" to navigate to "Go" button
-    SendWait("{Space}", 2000)  ; Hit "Go" button
-    SendWait("{Space}", default_wait)  ; Open file selection window
+    SendWait("{Enter}", default_wait)  ; Hit "Tab" to select option
+    ; SendWait("{Tab 2}", default_wait)  ; Hit "Tab" to navigate to "Go" button
+    ; SendWait("{Space}", 2000)  ; Hit "Go" button
+    ; SendWait("{Space}", default_wait)  ; Open file selection window
     WinWaitActive Open  ; Wait for file selection window to be active
     Sleep, default_wait
     SendWait(report_filename, default_wait)  ; Enter file name
