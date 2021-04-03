@@ -59,6 +59,9 @@ class Diablo3Skill {
     UseSkill() {
         if (WinActive(this.Window)) {
             Send, % this.Letter
+
+            Random, delay, 100, 300
+            Sleep, % delay
         }
     }
 }
