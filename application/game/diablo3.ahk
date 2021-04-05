@@ -71,8 +71,10 @@ class Diablo3Skill {
 8::D3.Toggle("w")
 9::D3.Toggle("e", 4000)
 0::D3.Toggle("r")
+c::Send {Enter}
+
+; Disable all Hotkeys
 ~Space::D3.DisableAll()
 ~m::D3.DisableAll()
 ~b::D3.DisableAll()
-c::Send {Enter}
 #IfWinActive ; End #IfWinActive for Diablo 3
