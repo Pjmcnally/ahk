@@ -69,8 +69,10 @@ class Diablo3Skill {
 #IfWinActive, Diablo III
 7::D3.Toggle("q")
 8::D3.Toggle("w")
-9::D3.Toggle("e")
+9::D3.Toggle("e", 4000)
 0::D3.Toggle("r")
+~Space::D3.DisableAll()
+~m::D3.DisableAll()
 ~b::D3.DisableAll()
 c::Send {Enter}
 #IfWinActive ; End #IfWinActive for Diablo 3
