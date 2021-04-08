@@ -168,6 +168,7 @@ clear_and_send(str) {
 ^+Space::Pause, Toggle  ; Pause all active ahk processes
 ^!Space::Suspend, Toggle  ; Suspend all hotkeys
 ^!r::Reload  ; Reload all scripts.
+^!w::Run AutoHotkey "C:\Program Files\AutoHotkey\WindowSpy.ahk"
 ^!+s::sort_files()  ; Sort files into left and right folder
 
 
