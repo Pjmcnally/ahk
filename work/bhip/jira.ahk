@@ -14,26 +14,6 @@
 
 ; Functions
 ; ==============================================================================
-close_issue() {
-    /*  Close active issue in JIRA.
-    */
-    wait := 250
-
-    if (WinActive("TECH")) {
-        close_command := "Close"
-    } else if (WinActive("HELP")){
-        close_command := "Resolve this issue"
-    } else if (WinActive("TASK")){
-        close_command := "Done"
-    }
-
-    SendWait(., wait)
-    SendWait(close_command, wait)
-    SendWait("{Enter}", wait)
-    SendWait("{shift down}{tab 2}{shift up}", wait)
-    Send, {Enter}
-}
-
 format_db_for_jira() {
     /*  Format content copied out of MSSMS as a table for JIRA and paste results.
     */
@@ -157,14 +137,6 @@ stop_using_pm_in_the_morning() {
 :o*:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
 :o*:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
 :o*:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
-
-
-; Chrome only Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
-; ==============================================================================
-!c::
-    KeyWait, Alt, L  ; Wait for release as alt will interfere with func sends
-    close_issue()
-Return
 
 #IfWinActive  ; Clear IfWinActive
 
