@@ -127,17 +127,6 @@ time_entry(ticket, message, start_time:="", end_time="") {
     SendWait(message, 50)
 }
 
-tech_1356() {
-    ticket := "Tech-1356"
-    message := "* Login to AutoWeb processes"
-
-    if (A_Hour < 16) {
-        time_entry(ticket, message, "12:30 PM", "12:35 PM")
-    } else {
-        time_entry(ticket, message, "4:00 PM", "4:05 PM")
-    }
-}
-
 stop_using_pm_in_the_morning() {
     if (A_Hour < 12) {
         MsgBox, 20, AM/PM, Are you sure you meant PM?
@@ -169,8 +158,19 @@ stop_using_pm_in_the_morning() {
 :o*:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
 :o*:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
 
+
+; Chrome only Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
+; ==============================================================================
+!c::
+    KeyWait, Alt, L  ; Wait for release as alt will interfere with func sends
+    close_issue()
+Return
+
+#IfWinActive  ; Clear IfWinActive
+
+#IfWinActive Timetracker - IP Tools DevApps - Google Chrome
+
 ; Time tracking hotkeys
-:?coX:tlws::tech_1356()
 :coX:mday::time_entry("Task-121", "* Daily Huddle", "10:00 AM", "10:30 AM")
 :coX:mbhip::time_entry("Task-136", "* Monthly BHIP Meeting")
 :coX:mtech::time_entry("Task-187", "* Weekly technology meeting", "1:30 PM", "now")
@@ -184,13 +184,5 @@ stop_using_pm_in_the_morning() {
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
 :coX:iru::Send, % "* Investigate{Enter}Respond{Enter}Update"
 :B0oX:pm::stop_using_pm_in_the_morning()
-
-
-; Chrome only Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
-; ==============================================================================
-!c::
-    KeyWait, Alt, L  ; Wait for release as alt will interfere with func sends
-    close_issue()
-Return
 
 #IfWinActive  ; Clear IfWinActive
