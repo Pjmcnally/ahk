@@ -140,9 +140,9 @@ stop_using_pm_in_the_morning() {
 
 #IfWinActive  ; Clear IfWinActive
 
+; Time tracking hotkeys
 #IfWinActive Timetracker - IP Tools DevApps - Google Chrome
 
-; Time tracking hotkeys
 :coX:mday::time_entry("Task-121", "* Daily Huddle", "10:00 AM", "10:30 AM")
 :coX:mbhip::time_entry("Task-136", "* Monthly BHIP Meeting")
 :coX:mtech::time_entry("Task-187", "* Weekly technology meeting", "1:30 PM", "now")
