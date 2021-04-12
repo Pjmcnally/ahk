@@ -65,3 +65,8 @@ sort_files() {
 
     Return
 }
+
+
+; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
+; ==============================================================================
+; ^!+s::sort_files()  ; Sort files into left and right folder

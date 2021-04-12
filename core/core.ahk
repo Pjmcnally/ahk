@@ -169,7 +169,7 @@ clear_and_send(str) {
 ^!Space::Suspend, Toggle  ; Suspend all hotkeys
 ^!r::Reload  ; Reload all scripts.
 ^!w::Run AutoHotkey "C:\Program Files\AutoHotkey\WindowSpy.ahk"
-^!+s::sort_files()  ; Sort files into left and right folder
+^!b::Run ms-settings:bluetooth
 
 
 ; Testing Section:
@@ -181,5 +181,3 @@ test_func() {
 ^!t::  ; Ctrl-Alt-T for temp function/hotkeys (one-offs uses or testing)
     MsgBox, % test_func()
 Return
-
-; this is a test
