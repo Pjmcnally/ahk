@@ -6,56 +6,81 @@
 get_dep_remote() {
     /*  Run on remote system after updating all branches to pull down changes.
     */
+
+    ; Join with "; " so command is on one line for Windows Terminal
     str =
-    ( LTrim
+    (LTrim Join;`s
         workon DevOpsLive
-        write-host "``r``nUpdating Live deploy`r`n===================="
+        Write-Host
+        Write-Host "Updating Live deploy"
+        Write-Host "===================="
         git checkout deploy
         git fetch --all --prune
         git pull
         workon DevOpsTest;
-        write-host "``r``nUpdating Test master`r`n===================="
+        Write-Host
+        Write-Host "Updating Test master"
+        Write-Host "===================="
         git checkout master
         git fetch --all --prune
         git pull
-        write-host "``r``nUpdating Test test`r`n===================="
+        Write-Host
+        Write-Host "Updating Test test"
+        Write-Host "=================="
         git checkout test
         git fetch --all --prune
         git pull
-        write-host "``r``nUpdating Test deploy`r`n===================="
+        Write-Host
+        Write-Host "Updating Test deploy"
+        Write-Host "===================="
         git checkout deploy
         git fetch --all --prune
         git pull
-        Write-Host "`r`nReturning to Master`r`n===================="
+        Write-Host
+        Write-Host "Returning to Master"
+        Write-Host "==================="
         git checkout master
     )
+
+    ; Collapse to one line to work with new multi-line paste function of Windows Terminal
     Return str
 }
 
 get_dep_local() {
     /*  Run on local system after merging a branch into master.
     */
+
+    ; Join with "; " so command is on one line for Windows Terminal
     str =
-    ( LTrim
+    (LTrim Join;`s
         workon DevOps
-        write-host "``r``nPulling changes to master`r`n===================="
+        Write-Host
+        Write-Host "Pulling changes to master"
+        Write-Host "========================="
         git checkout master
         git fetch --all --prune
         git pull
-        write-host "``r``nMerging master into test`r`n===================="
+        Write-Host
+        Write-Host "Merging master into test"
+        Write-Host "========================"
         git checkout test
         git fetch --all --prune
         git merge master
         git push
-        write-host "``r``nMerging master into deploy`r`n===================="
+        Write-Host
+        Write-Host "Merging master into deploy"
+        Write-Host "=========================="
         git checkout deploy
         git fetch --all --prune
         git merge master
         git push
-        Write-Host "`r`nReturning to Master`r`n===================="
+        Write-Host
+        Write-Host "Returning to Master"
+        Write-Host "==================="
         git checkout master
     )
-    Return str
+
+    return str
 }
 
 test_credential() {
