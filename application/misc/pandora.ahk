@@ -72,7 +72,7 @@ class PandoraInterface extends WindowInterface {
         */
         WinGetActiveTitle, previouslyActive
         Run, % This.Source
-        This.SetPos()
+        This.SetPos(true)
         WinActivate, % previouslyActive
 
         ; Check if Pandora is Logged in and ready to go
@@ -177,16 +177,22 @@ Class WindowInterface {
         Return Min(x_coords*)
     }
 
-    setPos() {
-        ; Get original position
+    setPos(wait) {
+        if (wait or WinExist(This.Window)) {
+            while (not This.CheckPos()) {
+                WinActivate, % This.Window
+                WinMove, % This.Window, , % This.x, This.y, This.Width, This.Height
+                Sleep, % This.SmallWait
+            }
+        }
+    }
+
+    checkPos() {
+        ; Get current position
         WinGetPos, tempX, tempY, tempW, tempH, % This.Window
 
-        ; Loop until position fixed
-        while (tempX != This.x or tempY != this.y or tempW != this.Width or tempH != This.Height) {
-            WinMove, % This.Window, , % This.x, This.y, This.Width, This.Height
-            Sleep, % This.SmallWait
-            WinGetPos, tempX, tempY, tempW, tempH, % This.Window
-        }
+        ; Check if position is correct
+        return (tempX == This.x and tempY == this.y and tempW == this.Width and tempH == This.Height)
     }
 
     kill() {
@@ -210,7 +216,7 @@ Class WindowInterface {
     }
 
     minimize() {
-        This.setPos()
+        This.setPos(false)
         WinGet, state, MinMax, % This.Window
         while (state != -1) {
             WinMinimize, % This.Window
@@ -222,7 +228,7 @@ Class WindowInterface {
     maximize() {
         while (not WinActive(This.Window)) {
             WinActivate, % This.Window
-            This.setPos()
+            This.setPos(false)
             Sleep, % This.SmallWait
         }
     }
@@ -239,8 +245,7 @@ class WindowManagerInterface {
 
     ResetPos() {
         for key, window in This.WindowList {
-            msgBox, % window.Name
-            window.SetPos()
+            window.SetPos(false)
         }
     }
 }
