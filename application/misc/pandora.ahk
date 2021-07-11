@@ -103,7 +103,7 @@ class PandoraInterface extends WindowInterface {
 
     CheckIdle() {
         ; Check if idle period longer than desired. If yes kill Pandora
-        if (A_TimeIdlePhysical > This.IdlePeriod) {
+        if (A_TimeIdle > This.IdlePeriod) {
             this.kill()
             Sleep, % 10000 ; Wait 10 seconds
         }
