@@ -74,6 +74,7 @@ class PandoraInterface extends WindowInterface {
         Run, % This.Source
         This.SetPos(true)
         WinActivate, % previouslyActive
+        WinSet, AlwaysOnTop, On, % This.Window
 
         ; Check if Pandora is Logged in and ready to go
         if (This.CheckLoggedIn()) {
@@ -88,6 +89,8 @@ class PandoraInterface extends WindowInterface {
                 WinMinimize, % This.Window
             }
         }
+
+        WinSet, AlwaysOnTop, Off, % This.Window
     }
 
     reset() {

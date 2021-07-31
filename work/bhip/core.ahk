@@ -38,5 +38,8 @@ send_outlook_email(subject, body, recipients := "", cc_recipients := "") {
 :co:ifq::If there are any questions or there is anything more I can do to help please let me know.
 :Xo:psig::SendLines(["Patrick McNally", "DevOps Support", get_my_bhip_email()])
 
+; Excel Hotstring
+:co:xdate::yyyy/mm/dd hh:mm AM/PM
+
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================

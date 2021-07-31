@@ -56,7 +56,7 @@ format_jira_email(str) {
     str := RegExReplace(str, "\xA0+", " ")  ; Replace all Non-breaking spaces with normal ones
     str := RegExReplace(str, "s)\*?{color:.*?}(.*?){color}\*?", "$1")  ; Remove all {color tags} that are making text black and linked * tags leaving surrounding text.
     str := RegexReplace(str, "(?<![\n\*])\*(.*?)\*", "$1")  ; Remove all * tags leaving surrounded text. Leave list formatting unmodified
-    str := RegExReplace(str, "\_(.*?)\_", "$1")  ; Remove all _ tags leaving surrounded text
+    ; str := RegExReplace(str, "\_(.*?)\_", "$1")  ; Remove all _ tags leaving surrounded text
     str := RegexReplace(str, "\+(.*?)\+", "$1")  ; Remove all + tags leaving surrounded text
     str := RegExReplace(str, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Convert double brackets to single.
     str := RegExReplace(str, "(?:(\[)\s+|\s+(\]))", "$1$2")  ; Remove any spaces immediately inside of open bracket or before closing bracket
@@ -143,7 +143,7 @@ stop_using_pm_in_the_morning() {
 ; Time tracking hotkeys
 #IfWinActive Timetracker - IP Tools DevApps - Google Chrome
 
-:coX:mday::time_entry("Task-121", "* Daily Huddle", "10:00 AM", "10:30 AM")
+:coX:mday::time_entry("Task-121", "* Daily Huddle", "10:00 AM", "10:15 AM")
 :coX:mbhip::time_entry("Task-136", "* Monthly BHIP Meeting")
 :coX:mtech::time_entry("Task-187", "* Weekly technology meeting", "1:30 PM", "now")
 :coX:mdevops::time_entry("Task-318", "* Weekly DevOps meeting")
