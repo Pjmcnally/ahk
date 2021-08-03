@@ -110,12 +110,17 @@ stop_double_space() {
 get_current_ahk_version_web() {
     endpoint := "https://autohotkey.com/download/1.1/version.txt"
 
-    client := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-    client.Open("GET", endpoint, true)
-    client.Send()
-    client.WaitForResponse()
+    Try {
+        client := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+        client.Open("GET", endpoint, true)
+        client.Send()
+        client.WaitForResponse()
 
-    return client.ResponseText
+        return client.ResponseText
+    }
+    Catch {
+        return ""
+    }
 }
 
 download_current_ahk() {
@@ -124,12 +129,8 @@ download_current_ahk() {
 }
 
 check_update_ahk() {
-    try {
-    web_version := get_current_ahk_version_web()
-    } catch e {
-        web_version := ""
-    }
     local_version := A_AhkVersion
+    web_version := get_current_ahk_version_web()
 
     if (web_version and (web_version != local_version)) {
         template =
