@@ -89,6 +89,12 @@ class HadesInterface {
             throw "Invalid mode"
         }
     }
+
+    shootAndReload() {
+        Send, {r down}
+        sleep 50
+        Send, {r up}
+    }
 }
 
 ^!+b::hades.restoreMostRecentSave()
@@ -96,6 +102,7 @@ class HadesInterface {
 
 #IfWinActive, ahk_exe Hades.exe
 
+; Joy3::hades.shootAndReload()  ; This is only used when I am using Hestia
 Joy10::hades.copyCurrentSaveToBackup()
 
 #IfWinActive  ; Reset IfWinActive
