@@ -60,7 +60,7 @@ ToggleComment() {
 :Xo:bt::make_query(get_bt_query(), 8, False, "{UP 3}")
 :Xo:pmc::make_query(get_pmc_query(), 8)
 :o:alxml::
-    SendRaw, % "CAST(OldValues as xml).value('(/row/@<ATTRIBUTE>)[1]', 'varchar(50)'"
+    SendRaw, % "CAST(OldValues as xml).value('(/row/@<ATTRIBUTE>)[1]', 'varchar(50)')"
 Return
 
 
