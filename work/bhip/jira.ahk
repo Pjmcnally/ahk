@@ -143,16 +143,22 @@ stop_using_pm_in_the_morning() {
 ; Time tracking hotkeys
 #IfWinActive Timetracker - IP Tools DevApps - Google Chrome
 
+; Meetings
 :coX:mday::time_entry("Task-121", "* Daily Huddle", "10:00 AM", "10:15 AM")
 :coX:mbhip::time_entry("Task-136", "* Monthly BHIP Meeting")
 :coX:mtech::time_entry("Task-187", "* Weekly technology meeting", "11:00 AM", "12:00 PM")
 :coX:mdevops::time_entry("Task-318", "* Weekly DevOps meeting")
 :coX:mtrain::time_entry("task-804", "* Weekly developer training meeting")
+:coX:mprio::time_entry("task-108", "* Monthly developer priority meeting")
+
+; Tasks
 :coX:tsteve::time_entry("task-169", "* Investigate and resolve request")
 :coX:tann::time_entry("task-206", "* Investigate and resolve request")
-:coX:ttom::time_entry("task-205", "* Send weekly status email to Tom")
+:coX:ttom::time_entry("task-1183", "* Investigate and resolve request")
 :coX:temail::time_entry("task-205", "* Manage general emails received by ")
 :coX:ttest::time_entry("task-135", "* Clean up errors in Test")
+
+; Misc shortcuts
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
 :coX:iru::Send, % "* Investigate{Enter}Respond{Enter}Update"
 :B0oX:pm::stop_using_pm_in_the_morning()
