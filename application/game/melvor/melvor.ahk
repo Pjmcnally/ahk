@@ -13,7 +13,7 @@ class MelvorInterface {
     }
 
     MineLoop() {
-        ore_priority := ["Dragonite", "Runite", "Adamantite", "Coal"]
+        ore_priority := ["Mithril", "Coal"]
 
         while(true) {
             WinActivate ahk_exe Melvor Idle.exe
@@ -39,6 +39,10 @@ class MelvorInterface {
         ore := this.data["mining"][name]
         x := ore["x"] + 150
         y := ore["y"] - 127
+
+        ; msgBox, % this.GetColor(x, y)
+        MouseMove % x, % y
+        Sleep, 100
         return this.GetColor(x, y) == this.color_active
     }
 
@@ -55,6 +59,9 @@ class MelvorInterface {
         ore := this.data["mining"][name]
         x := ore["x"]
         y := ore["y"]
+
+        MouseMove % x, % y
+        Sleep, 100
         return this.GetColor(x, y) == this.color_available
     }
 
