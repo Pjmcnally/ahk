@@ -13,7 +13,7 @@ class MelvorInterface {
     }
 
     MineLoop() {
-        ore_priority := ["Mithril", "Coal"]
+        ore_priority := ["Mithril", "Coal", "Dragonite"]
 
         while(true) {
             WinActivate ahk_exe Melvor Idle.exe
@@ -65,10 +65,19 @@ class MelvorInterface {
         return this.GetColor(x, y) == this.color_available
     }
 
+    KeepAwake() {
+        while (true) {
+            Random, x, 500, 1000
+            MouseMove, x, x
+            Sleep, 10000
+        }
+    }
+
 }
 
 
 #IfWinActive, Melvor Idle
-1::melvor.MineLoop()
+; 1::melvor.MineLoop()
+2::melvor.KeepAwake()
 
 #IfWinActive ; End #IfWinActive for Diablo 3
