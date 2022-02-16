@@ -38,6 +38,18 @@ format_db_for_jira() {
     Return
 }
 
+wrap_clipboard_text(pretext="", mode="code") {
+    if (pretext) {
+        Send, % pretext . "{Enter}"
+    }
+
+    Send, % "{{}" . mode . "{}}{Enter}"
+    Send, % "^v"
+    Sleep, 100
+    ; TODO add check and only add new line if clipboard text doesn't end with a newline
+    Send, % "{Enter}{{}" . mode . "{}}"
+}
+
 format_jira_email(str) {
     /*  Reformat text sent into JIRA from Outlook email.
 
@@ -126,7 +138,7 @@ stop_using_pm_in_the_morning() {
 ^!f::clip_func("format_jira_email")  ; Run "format_jira" func on selected text
 
 
-#IfWinActive ahk_exe chrome.exe
+#IfWinActive ahk_exe chrome.exe || ahk_exe firefox.exe
 
 ; Chrome only Hotstrings
 ; ==============================================================================
@@ -134,14 +146,14 @@ stop_using_pm_in_the_morning() {
 :Xco:@devs::at_message(get_devs())
 :Xco:@ops::at_message(get_dev_ops())
 :o:sr::Self resolved^{Enter}
-:o*:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
-:o*:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
-:o*:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
+:o*x:{f::wrap_clipboard_text("From error log:")
+:o*x:{c::wrap_clipboard_text()
+:o*x:{q::wrap_clipboard_text(,"quote")
 
 #IfWinActive  ; Clear IfWinActive
 
 ; Time tracking hotkeys
-#IfWinActive Timetracker - IP Tools DevApps - Google Chrome
+#IfWinActive Timetracker - IP Tools DevApps
 
 ; Meetings
 :coX:mday::time_entry("Task-121", "* Daily Huddle", "10:00 AM", "10:15 AM")
@@ -152,9 +164,9 @@ stop_using_pm_in_the_morning() {
 :coX:mprio::time_entry("task-108", "* Monthly developer priority meeting")
 
 ; Tasks
-:coX:tsteve::time_entry("task-169", "* Investigate and resolve request")
-:coX:tann::time_entry("task-206", "* Investigate and resolve request")
-:coX:ttom::time_entry("task-1183", "* Investigate and resolve request")
+:coX:tsteve::time_entry("task-169", "* Investigate and resolve request")    ; Questions from Steve
+:coX:tann::time_entry("task-206", "* Investigate and resolve request")      ; Questions from Ann
+:coX:ttom::time_entry("task-1183", "* Investigate and resolve request")     ; Questions from Tom
 :coX:temail::time_entry("task-205", "* Manage general emails received by ")
 :coX:ttest::time_entry("task-135", "* Clean up errors in Test")
 
