@@ -1,3 +1,6 @@
+; This file has been rendered obsolete by mods. They do the job better and don't take
+; all computer inputs while doing it.
+
 class MelvorInterface {
     __New() {
         CoordMode, Pixel, Client
@@ -7,11 +10,9 @@ class MelvorInterface {
         this.color_available := 0x6767E5
         this.color_active := 0xE5AC5C
 
-        /*
-        this.DataFile := "application\game\melvor\melvor_data.json"
-        FileRead, json_data, % this.DataFile
-        this.data := JSON.Load(json_data)
-        */
+;        this.DataFile := "application\game\melvor\melvor_data.json"
+;        FileRead, json_data, % this.DataFile
+;        this.data := JSON.Load(json_data)
 
         ; Mastery upgrade data
         this.mastery_column_a := 920
@@ -27,7 +28,7 @@ class MelvorInterface {
     }
 
     MineLoop() {
-        ore_priority := ["Mithril", "Coal", "Dragonite"]
+        ore_priority := ["Runite", "Adamantite", "Mithril"]
 
         while(true) {
             WinActivate ahk_exe Melvor Idle.exe
@@ -155,7 +156,7 @@ class MelvorInterface {
 
 #IfWinActive, Melvor Idle
 
-^1::melvor.MineLoop()
+; ^1::melvor.MineLoop()
 ^2::melvor.KeepAwake()
 ^3::melvor.EnableUpgradeAllMastery()
 ^4::melvor.EnableUpgradeCursorMastery()
