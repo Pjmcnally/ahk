@@ -171,6 +171,7 @@ clear_and_send(str) {
 ^!r::Reload  ; Reload all scripts.
 ^!w::Run AutoHotkey "C:\Program Files\AutoHotkey\WindowSpy.ahk"
 ^!b::Run ms-settings:bluetooth
+^!c::Run "calc"  ; Windows calculator
 
 
 ; Testing Section:
