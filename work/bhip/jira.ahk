@@ -38,6 +38,23 @@ format_db_for_jira() {
     Return
 }
 
+wrap_clipboard_text(pretext="", mode="code") {
+    if (pretext) {
+        Send, % pretext . "{Enter}"
+    }
+
+    Send, % "{{}" . mode . "{}}{Enter}"
+
+    ; Trim clipboard contents and paste
+    CLIPBOARD := trim(CLIPBOARD, "`r`n`t ")  ; Trim new line, tab, and space
+    Sleep, 100  ; Sometimes a small delay is required when updating the clipboard.
+    Send, % "^v"
+    Sleep, 100
+
+    ; TODO add check and only add new line if clipboard text doesn't end with a newline
+    Send, % "{Enter}{{}" . mode . "{}}"
+}
+
 format_jira_email(str) {
     /*  Reformat text sent into JIRA from Outlook email.
 
@@ -126,22 +143,22 @@ stop_using_pm_in_the_morning() {
 ^!f::clip_func("format_jira_email")  ; Run "format_jira" func on selected text
 
 
-#IfWinActive ahk_exe chrome.exe
+#IfWinActive ahk_exe chrome.exe || ahk_exe firefox.exe
 
-; Chrome only Hotstrings
+; Chrome & Firefox Hotstrings
 ; ==============================================================================
 ; Jira comment hotstrings
 :Xco:@devs::at_message(get_devs())
 :Xco:@ops::at_message(get_dev_ops())
 :o:sr::Self resolved^{Enter}
-:o*:{f::From error log:{Enter}{{}code{}}{Enter}^v{Enter}{{}code{}}
-:o*:{c::{{}code{}}{Enter}^v{Enter}{{}code{}}
-:o*:{q::{{}quote{}}{Enter}^v{Enter}{{}quote{}}
+:o*X:{f::wrap_clipboard_text("From error log:")
+:o*X:{c::wrap_clipboard_text()
+:o*X:{q::wrap_clipboard_text(,"quote")
 
 #IfWinActive  ; Clear IfWinActive
 
 ; Time tracking hotkeys
-#IfWinActive Timetracker - IP Tools DevApps - Google Chrome
+#IfWinActive Timetracker - IP Tools DevApps
 
 ; Meetings
 :coX:mday::time_entry("Task-121", "* Daily Huddle", "10:00 AM", "10:15 AM")
@@ -150,13 +167,17 @@ stop_using_pm_in_the_morning() {
 :coX:mdevops::time_entry("Task-318", "* Weekly DevOps meeting")
 :coX:mtrain::time_entry("task-804", "* Weekly developer training meeting")
 :coX:mprio::time_entry("task-108", "* Monthly developer priority meeting")
+:coX:mwpf::time_entry("task-1231", "* Weekly WPF Testing Meeting")
 
 ; Tasks
-:coX:tsteve::time_entry("task-169", "* Investigate and resolve request")
-:coX:tann::time_entry("task-206", "* Investigate and resolve request")
-:coX:ttom::time_entry("task-1183", "* Investigate and resolve request")
+:coX:tsteve::time_entry("task-169", "* Investigate and resolve request")    ; Questions from Steve
+:coX:tann::time_entry("task-206", "* Investigate and resolve request")      ; Questions from Ann
+:coX:ttom::time_entry("task-1183", "* Investigate and resolve request")     ; Questions from Tom
+:coX:tadam::time_entry("TASK-1223", "* Investigate and resolve request")    ; Questions from Adam
+:coX:tkarl::time_entry("TASK-1244", "* Investigate and resolve request")    ; Questions from Karl J
 :coX:temail::time_entry("task-205", "* Manage general emails received by ")
 :coX:ttest::time_entry("task-135", "* Clean up errors in Test")
+:coX:twpf::time_entry("task-1231", "* WPF Testing")
 
 ; Misc shortcuts
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
