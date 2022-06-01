@@ -178,6 +178,7 @@ stop_using_pm_in_the_morning() {
 :coX:temail::time_entry("task-205", "* Manage general emails received by ")
 :coX:ttest::time_entry("task-135", "* Clean up errors in Test")
 :coX:twpf::time_entry("task-1231", "* WPF Testing")
+:coX:ttrain::time_entry("task-1257", "* Misc. Training")
 
 ; Misc shortcuts
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
