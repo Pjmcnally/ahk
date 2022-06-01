@@ -57,5 +57,5 @@ class MelvorInterface {
 #IfWinActive, Melvor Idle
 ^1::melvor.KeepAwake()
 ^2::melvor.RandomClick()
-Space::melvor.ToggleFastClick()
+; Space::melvor.ToggleFastClick()
 #IfWinActive ; End #IfWinActive
