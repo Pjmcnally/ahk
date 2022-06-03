@@ -163,6 +163,7 @@ clear_and_send(str) {
 :X?*B0:?  ::stop_double_space()  ; Beep after double space after ?
 :X?*B0:.  ::stop_double_space()  ; Beep after double space after .
 :Xco:%ld::Send % f_date("", "yyyy-MM-dd hh:mm tt")
+:Xco:%sd::Send % f_date("", "yyyy-MM-dd")
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
