@@ -21,12 +21,12 @@ milli_to_hhmmss(milli) {
     Return Format("{1:02d}:{2:02d}:{3:02d}.{4:03d}", hou, min, sec, mil)
 }
 
-f_date(date:="", format:="MM-dd-yyyy") {
+f_date(date:="", format:="yyyy-MM-dd") {
     /*  Function to return formatted date.
 
         Args:
             date (str): Optional. If not provided will default to current date & time. Otherwise, specify all or the leading part of a timestamp in the YYYYMMDDHH24MISS format
-            format (str): Optional. If not provided will default to MM-dd-yyyy. Provide any format (as string)  https://www.autohotkey.com/docs/commands/FormatTime.htm
+            format (str): Optional. If not provided will default to yyyy-MM-dd. Provide any format (as string)  https://www.autohotkey.com/docs/commands/FormatTime.htm
         Returns:
             str: Date in specified format
     */
