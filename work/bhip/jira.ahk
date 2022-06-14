@@ -161,24 +161,25 @@ stop_using_pm_in_the_morning() {
 #IfWinActive Timetracker - IP Tools DevApps
 
 ; Meetings
-:coX:mday::time_entry("Task-121", "* Daily Huddle", "10:00 AM", "10:15 AM")
-:coX:mbhip::time_entry("Task-136", "* Monthly BHIP Meeting")
-:coX:mtech::time_entry("Task-187", "* Weekly technology meeting", "11:00 AM", "12:00 PM")
-:coX:mdevops::time_entry("Task-318", "* Weekly DevOps meeting")
-:coX:mtrain::time_entry("task-804", "* Weekly developer training meeting")
-:coX:mprio::time_entry("task-108", "* Monthly developer priority meeting")
-:coX:mwpf::time_entry("task-1231", "* Weekly WPF Testing Meeting")
+:coX:mday::time_entry("TASK-121", "* Daily Huddle", "10:00 AM", "10:15 AM")
+:coX:mbhip::time_entry("TASK-136", "* Monthly BHIP Meeting")
+:coX:mtech::time_entry("TASK-187", "* Weekly technology meeting", "11:00 AM", "12:00 PM")
+:coX:mdevops::time_entry("TASK-318", "* Weekly DevOps meeting")
+:coX:mtrain::time_entry("TASK-804", "* Weekly developer training meeting")
+:coX:mprio::time_entry("TASK-108", "* Monthly developer priority meeting")
+:coX:mwpf::time_entry("TASK-1231", "* Weekly WPF Testing Meeting")
 
 ; Tasks
-:coX:tsteve::time_entry("task-169", "* Investigate and resolve request")    ; Questions from Steve
-:coX:tann::time_entry("task-206", "* Investigate and resolve request")      ; Questions from Ann
-:coX:ttom::time_entry("task-1183", "* Investigate and resolve request")     ; Questions from Tom
+:coX:tsteve::time_entry("TASK-169", "* Investigate and resolve request")    ; Questions from Steve
+:coX:tann::time_entry("TASK-206", "* Investigate and resolve request")      ; Questions from Ann
+:coX:ttom::time_entry("TASK-1183", "* Investigate and resolve request")     ; Questions from Tom
 :coX:tadam::time_entry("TASK-1223", "* Investigate and resolve request")    ; Questions from Adam
 :coX:tkarl::time_entry("TASK-1244", "* Investigate and resolve request")    ; Questions from Karl J
-:coX:temail::time_entry("task-205", "* Manage general emails received by ")
-:coX:ttest::time_entry("task-135", "* Clean up errors in Test")
-:coX:twpf::time_entry("task-1231", "* WPF Testing")
-:coX:ttrain::time_entry("task-1257", "* Misc. Training")
+:coX:tclayton::time_entry("TASK-1288", "* Training w/Clayton{Enter}Misc. Issues")
+:coX:temail::time_entry("TASK-205", "* Manage general emails received by ")
+:coX:ttest::time_entry("TASK-135", "* Clean up errors in Test")
+:coX:twpf::time_entry("TASK-1231", "* WPF Testing")
+:coX:ttrain::time_entry("TASK-1257", "* Misc. Training")
 
 ; Misc shortcuts
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
