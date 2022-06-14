@@ -32,7 +32,6 @@ SetTitleMatchMode, 2                ; 2: A window's title can contain WinTitle a
 GroupAdd, consoles, ahk_exe pwsh.exe
 GroupAdd, consoles, ahk_exe powershell.exe
 GroupAdd, consoles, ahk_exe powershell_ise.exe
-GroupAdd, consoles, ahk_exe RDCMan.exe
 GroupAdd, consoles, ahk_exe Code.exe
 GroupAdd, consoles, ahk_exe WindowsTerminal.exe
 
@@ -162,7 +161,8 @@ clear_and_send(str) {
 :X?*B0:!  ::stop_double_space()  ; Beep after double space after !
 :X?*B0:?  ::stop_double_space()  ; Beep after double space after ?
 :X?*B0:.  ::stop_double_space()  ; Beep after double space after .
-
+:Xco:%ld::Send % f_date("", "yyyy-MM-dd hh:mm tt")
+:Xco:%sd::Send % f_date("", "yyyy-MM-dd")
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
