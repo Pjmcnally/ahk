@@ -125,7 +125,7 @@ time_entry(ticket, message, start_time:="", end_time="") {
 }
 
 stop_using_pm_in_the_morning() {
-    if (A_Hour < 12) {
+    if (A_Hour > 6 and A_Hour < 12) {
         MsgBox, 20, AM/PM, Are you sure you meant PM?
 
         IfMsgBox, No
@@ -184,6 +184,7 @@ stop_using_pm_in_the_morning() {
 ; Misc shortcuts
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
 :coX:iru::Send, % "* Investigate{Enter}Respond{Enter}Update"
+:coX:rc::Send, % "* Review{Enter}Close"
 :B0oX:pm::stop_using_pm_in_the_morning()
 
 #IfWinActive  ; Clear IfWinActive
