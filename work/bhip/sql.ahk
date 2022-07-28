@@ -1,6 +1,6 @@
 /*  SQL functions, hotstrings, and hotkeys used at BHIP.
 */
-#IfWinActive ahk_exe Ssms.exe
+#IfWinActive ahk_exe Ssms.exe || ahk_exe azuredatastudio.exe
 
 ; Functions
 ; ==============================================================================
