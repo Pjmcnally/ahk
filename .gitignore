@@ -7,7 +7,7 @@ autohotkey_main.ahk
 local/
 local*
 
-# External files so I don't duplicate other peopels modules
+# External files so I don't duplicate other peoples modules
 external/
 
 # VS Code stuff
