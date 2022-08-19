@@ -27,7 +27,7 @@ merchantRpgLoop(loops := 0) {
             checkAndCompleteTask(task_x, task_y, wait)
         }
 
-        scrollDown(2, wait)
+        scrollDown(5, wait)
         for index, task_y in task_y_array_4 {
             checkAndCompleteTask(task_x, task_y, wait)
         }
@@ -94,15 +94,13 @@ checkTaskRestart(x, y) {
 clickFast(num) {
     i := 1
     while i < num {
-        ClickWait("", "", 1, 10)
+        ClickWait("", "", 1, 5)
 
         i += 1
     }
 }
 
-
-
 #IfWinActive, ahk_exe Merchant.exe
 ^1::merchantRpgLoop()
-^2::clickFast(200)
+^2::clickFast(502)
 #IfWinActive ; End #IfWinActive
