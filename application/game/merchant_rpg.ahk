@@ -7,7 +7,7 @@ merchantRpgLoop(loops := 0) {
     task_y_array_1 := [215, 365, 515, 665, 815]
     task_y_array_2 := [285, 435, 585, 735, 885]
     task_y_array_3 := [220, 370, 520, 670, 820]
-    task_y_array_4 := [710]
+    task_y_array_4 := [715]
 
 
     i := 0
