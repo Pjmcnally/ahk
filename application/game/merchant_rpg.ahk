@@ -7,6 +7,7 @@ merchantRpgLoop(loops := 0) {
     task_y_array_1 := [215, 365, 515, 665, 815]
     task_y_array_2 := [285, 435, 585, 735, 885]
     task_y_array_3 := [220, 370, 520, 670, 820]
+    task_y_array_4 := [710]
 
 
     i := 0
@@ -23,6 +24,11 @@ merchantRpgLoop(loops := 0) {
 
         scrollDown(6, wait)
         for index, task_y in task_y_array_3 {
+            checkAndCompleteTask(task_x, task_y, wait)
+        }
+
+        scrollDown(2, wait)
+        for index, task_y in task_y_array_4 {
             checkAndCompleteTask(task_x, task_y, wait)
         }
 
@@ -67,7 +73,7 @@ resetUi(wait) {
     MouseMove 275, 425
 
     i := 0
-    while i < 12 {
+    while i < 20 {
         SendWait("{WheelUp}", 100)
         i += 1
     }
@@ -98,5 +104,5 @@ clickFast(num) {
 
 #IfWinActive, ahk_exe Merchant.exe
 ^1::merchantRpgLoop()
-^2::clickFast(502)
+^2::clickFast(200)
 #IfWinActive ; End #IfWinActive
