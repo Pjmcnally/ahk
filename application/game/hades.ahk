@@ -57,6 +57,9 @@ class HadesInterface {
         } catch e {
             this.Log.WriteError("Error occurred while copying files", e, true)
         }
+
+        Sleep, 2000
+        run steam://rungameid/1145360  ; Run Hades
     }
 
     getMostRecentBackup() {
