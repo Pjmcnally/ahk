@@ -93,7 +93,8 @@ class HadesInterface {
         }
     }
 
-    shootAndReload() {
+    gunReload() {
+        ; This used the keyboard binding instead of gamepad. Both work at the same time.
         Send, {r down}
         sleep 50
         Send, {r up}
@@ -104,8 +105,8 @@ class HadesInterface {
 ; Joy10::hades.restoreMostRecentSave()
 
 #IfWinActive, ahk_exe Hades.exe
-
-; Joy3::hades.shootAndReload()  ; This is only used when I am using Hestia
+Joy4::hades.gunReload()  ; Other guns - Special and reload
+; Joy3::hades.gunReload()  ; Hestia - Shoot and reload
 Joy10::hades.copyCurrentSaveToBackup()
 
 #IfWinActive  ; Reset IfWinActive
