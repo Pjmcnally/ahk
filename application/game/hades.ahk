@@ -106,7 +106,7 @@ class HadesInterface {
 
 #IfWinActive, ahk_exe Hades.exe
 ; Joy3::hades.gunReload()  ; Hestia - Shoot and reload
-Joy4::hades.gunReload()  ; Other guns - Special and reload
+; Joy4::hades.gunReload()  ; Other guns - Special and reload
 Joy10::hades.copyCurrentSaveToBackup()
 
 #IfWinActive  ; Reset IfWinActive

@@ -118,16 +118,17 @@ clearShop() {
 }
 
 craftBasic(itemArray) {
-    wait := 100
+    wait := 150
 
     x := GetMiddleX()
+    conf_x := (260 + getMiddleX())
     yVals := [220, 370, 520, 670]
 
     ; Clear previously completed
     for i, y in yVals {
-        if (checkTaskComplete(x, y)) {
-            clickWait(x, y, 1, wait)
-            clickWait(x, y, 1, wait)
+        if (checkTaskComplete(conf_x, y)) {
+            clickWait(conf_x, y, 1, wait)
+            clickWait(conf_x, y, 1, wait)
         }
     }
 
@@ -135,12 +136,14 @@ craftBasic(itemArray) {
     for i, item in itemArray {
         y := yVals[item]
 
-        clickWait(x, y, 1, wait)
-        clickWait(350, 500, 1, wait)  ; Select item to craft (2nd item in list)
-        clickWait(600, 1000, 1, wait)  ; Click "confirm" button
+        clickWait(conf_x, y, 1, wait)
+        clickWait(x, 500, 1, wait)  ; Select item to craft (2nd item in list)
+        clickWait(conf_x, 1000, 1, wait)  ; Click "confirm" button
     }
 
-    advanceTime("00:05:00")
+    advanceTime("00:15:00")
+    Sleep, % wait
+    resetTime()
 }
 
 advanceTime(duration) {
@@ -161,31 +164,10 @@ getMiddleY() {
     return Floor(height/2)
 }
 
-powerLevel() {
-    wait := 250
-    longWait := 1000
-
-    task_x_offSet := 260
-    task_x := task_x_offSet + getMiddleX()
-    task_y_array := [255, 400, 555, 700, 850]
-
-    while (true) {
-        resetTime()
-        sleep, % longWait
-
-        for index, task_y in task_y_array {
-            checkAndCompleteTask(task_x, task_y, wait)
-        }
-
-        advanceTime("01:00:00")
-        sleep, % longWait
-    }
-}
-
 #IfWinActive, ahk_exe Merchant.exe
 *1::enableHeroLoop()
 *2::clickFast(502)
-*3::craftBasic([1, 2, 3, 4])
+*3::craftBasic([2])
 *4::stockShop(12)
 *5::clearShop()
 *6::advanceTime("23:59:00")
@@ -193,6 +175,5 @@ powerLevel() {
 *8::advanceTime("00:30:00")
 *9::advanceTime("00:05:00")
 *0::resetTime()
-*-::powerLevel()
 
 #IfWinActive ; End #IfWinActive
