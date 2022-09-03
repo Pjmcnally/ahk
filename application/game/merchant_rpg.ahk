@@ -1,5 +1,5 @@
-enableHeroLoop() {
-    delay := 12000 ; 12 seconds
+enableHeroLoop(delay) {
+    delay := delay * 1000
     SetTimer, heroLoop, % delay
 
     heroLoop()  ; Execute immediately
@@ -13,29 +13,28 @@ heroLoop() {
 
     ; These values all assume app is 1020 px high
     task_y_array_1 := [215, 365, 515, 665, 815]
-    task_y_array_2 := [285, 435, 585, 735, 885]
-    task_y_array_3 := [220, 370, 520, 670, 820]
-    task_y_array_4 := [555, 695, 845]
-
     scrollUi("Up", 20, wait)
     for index, task_y in task_y_array_1 {
         checkAndCompleteTask(task_x, task_y, wait)
     }
 
+    task_y_array_2 := [285, 435, 585, 735, 885]
     scrollUi("Down", 5, wait)
     for index, task_y in task_y_array_2 {
         checkAndCompleteTask(task_x, task_y, wait)
     }
 
-    scrollUi("Down", 6, wait)
-    for index, task_y in task_y_array_3 {
-        checkAndCompleteTask(task_x, task_y, wait)
-    }
+    ; task_y_array_3 := [220, 370, 520, 670, 820]
+    ; scrollUi("Down", 6, wait)
+    ; for index, task_y in task_y_array_3 {
+    ;     checkAndCompleteTask(task_x, task_y, wait)
+    ; }
 
-    scrollUi("Down", 5, wait)
-    for index, task_y in task_y_array_4 {
-        checkAndCompleteTask(task_x, task_y, wait)
-    }
+    ; task_y_array_4 := [555, 695, 845]
+    ; scrollUi("Down", 5, wait)
+    ; for index, task_y in task_y_array_4 {
+    ;     checkAndCompleteTask(task_x, task_y, wait)
+    ; }
 }
 
 checkAndCompleteTask(x, y, wait) {
@@ -46,8 +45,10 @@ checkAndCompleteTask(x, y, wait) {
         ClickWait(x, y, 1, wait)
 
         if (checkTaskRestart(conf_x, conf_y)) {
+            Sleep, % wait
             ClickWait(conf_x, conf_y, 1, wait)
         } else {
+            Sleep, % wait
             Send {Escape}
         }
 
@@ -69,14 +70,16 @@ scrollUi(mode, num, wait) {
 }
 
 checkTaskComplete(x, y) {
+    Sleep, 100
     PixelGetColor, c_val, x, y
-
+    Sleep, 100
     return (c_val = 0x171761)
 }
 
 checkTaskRestart(x, y) {
+    Sleep, 100
     PixelGetColor, c_val, x, y
-
+    Sleep, 100
     return c_val = 0x7088A5 OR c_val = 0x3998CA
 }
 
@@ -117,41 +120,48 @@ clearShop() {
     }
 }
 
-craftBasic(itemArray) {
-    wait := 150
+craftBasic(itemArray, loops := 1) {
+    wait := 250
 
     x := GetMiddleX()
     conf_x := (260 + getMiddleX())
     yVals := [220, 370, 520, 670]
 
-    ; Clear previously completed
-    for i, y in yVals {
-        if (checkTaskComplete(conf_x, y)) {
-            clickWait(conf_x, y, 1, wait)
-            clickWait(conf_x, y, 1, wait)
+    loopCount := 0
+    while (loopCount < loops) {
+        ; Clear previously completed
+        for i, y in yVals {
+            if (checkTaskComplete(conf_x, y)) {
+                clickWait(conf_x, y, 1, wait)
+                clickWait(conf_x, y, 1, wait)
+            }
         }
+
+        ; Start new crafts
+        for i, item in itemArray {
+            y := yVals[item]
+
+            clickWait(conf_x, y, 1, wait)
+            clickWait(x, 500, 1, wait)  ; Select item to craft (2nd item in list)
+            clickWait(conf_x, 1000, 1, wait)  ; Click "confirm" button
+        }
+
+        advanceTime("00:15:00")
+        Sleep, % wait
+        resetTime()
+        Sleep, 2500
+
+        loopCount += 1
     }
 
-    ; Start new crafts
-    for i, item in itemArray {
-        y := yVals[item]
-
-        clickWait(conf_x, y, 1, wait)
-        clickWait(x, 500, 1, wait)  ; Select item to craft (2nd item in list)
-        clickWait(conf_x, 1000, 1, wait)  ; Click "confirm" button
-    }
-
-    advanceTime("00:15:00")
-    Sleep, % wait
-    resetTime()
 }
 
 advanceTime(duration) {
-    RunWait *RunAs Powershell.exe -NoProfile -NoLogo -Command "& {Set-Date -Adjust %duration% }", , hide
+    Run *RunAs Powershell.exe -NoProfile -NoLogo -Command "& {Set-Date -Adjust %duration% }", , hide
 }
 
 resetTime() {
-    RunWait *RunAs Powershell.exe -NoProfile -NoLogo -Command "& {W32tm /resync /force}", , hide
+    Run *RunAs Powershell.exe -NoProfile -NoLogo -Command "& {W32tm /resync /force}", , hide
 }
 
 getMiddleX() {
@@ -165,9 +175,9 @@ getMiddleY() {
 }
 
 #IfWinActive, ahk_exe Merchant.exe
-*1::enableHeroLoop()
+*1::enableHeroLoop(5)
 *2::clickFast(502)
-*3::craftBasic([2])
+*3::craftBasic([3], 48)
 *4::stockShop(12)
 *5::clearShop()
 *6::advanceTime("23:59:00")
