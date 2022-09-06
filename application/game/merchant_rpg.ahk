@@ -1,3 +1,13 @@
+; Auto-Execute Section (All core Auto-Execute commands should go here)
+; ==============================================================================
+#SingleInstance, Force              ; Automatically replaces old script with new if the same script file is rune twice
+#NoEnv                              ; Avoids checking empty variables to see if they are environment variables (recommended for all new scripts).
+#Warn                               ; Enable warnings to assist with detecting common errors. (More explicit)
+#Hotstring EndChars `n `t           ; Limits hotstring ending characters to {Enter}{Tab}{Space}
+SendMode Input                      ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir, %A_ScriptDir%\..     ; Ensures a consistent starting directory. Relative path to AHK folder from core.ahk.
+SetTitleMatchMode, 2                ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
+
 enableHeroLoop(delay) {
     delay := delay * 1000
     SetTimer, heroLoop, % delay
@@ -8,30 +18,35 @@ enableHeroLoop(delay) {
 heroLoop() {
     wait := 250
 
+    ; Advance and reset time
+    advanceTime("23:00:00")
+    Sleep, % wait
+    resetTime()
+
+    scrollUi("Up", 20)
     task_x_offSet := 260
     task_x := task_x_offSet + getMiddleX()
 
     ; These values all assume app is 1020 px high
     task_y_array_1 := [215, 365, 515, 665, 815]
-    scrollUi("Up", 20, wait)
     for index, task_y in task_y_array_1 {
         checkAndCompleteTask(task_x, task_y, wait)
     }
 
     task_y_array_2 := [285, 435, 585, 735, 885]
-    scrollUi("Down", 5, wait)
+    scrollUi("Down", 5)
     for index, task_y in task_y_array_2 {
         checkAndCompleteTask(task_x, task_y, wait)
     }
 
     ; task_y_array_3 := [220, 370, 520, 670, 820]
-    ; scrollUi("Down", 6, wait)
+    ; scrollUi("Down", 6)
     ; for index, task_y in task_y_array_3 {
     ;     checkAndCompleteTask(task_x, task_y, wait)
     ; }
 
     ; task_y_array_4 := [555, 695, 845]
-    ; scrollUi("Down", 5, wait)
+    ; scrollUi("Down", 5)
     ; for index, task_y in task_y_array_4 {
     ;     checkAndCompleteTask(task_x, task_y, wait)
     ; }
@@ -57,7 +72,7 @@ checkAndCompleteTask(x, y, wait) {
     }
 }
 
-scrollUi(mode, num, wait) {
+scrollUi(mode, num) {
     ; Center mouse or scroll doesn't work
     MouseMove getMiddleX(), getMiddleY()
 
@@ -70,16 +85,12 @@ scrollUi(mode, num, wait) {
 }
 
 checkTaskComplete(x, y) {
-    Sleep, 100
     PixelGetColor, c_val, x, y
-    Sleep, 100
     return (c_val = 0x171761)
 }
 
 checkTaskRestart(x, y) {
-    Sleep, 100
     PixelGetColor, c_val, x, y
-    Sleep, 100
     return c_val = 0x7088A5 OR c_val = 0x3998CA
 }
 
@@ -100,7 +111,7 @@ stockShop(itemCount) {
     conf_y := 1000  ; To Do base off GetMiddleY()
 
     i := 0
-    While (i <= itemCount) {
+    While (i < itemCount) {
         ClickWait(x, y, 1, wait)
         ClickWait(conf_x, conf_y, 2, wait)
 
@@ -120,8 +131,37 @@ clearShop() {
     }
 }
 
+stockSellLoop(loopCount) {
+    wait := 100
+    MouseGetPos , x, y ; Get original x,y
+
+    i := 0
+    while (i < loopCount) {
+        MouseMove, % x, % y
+        stockShop(12)
+
+        ; Advance and reset time
+        advanceTime("23:00:00")
+        Sleep, % wait
+        resetTime()
+        Sleep, 2500
+
+        ; Clear shop
+        SendWait("{Escape}", wait)
+        ClickWait(1050, 975, 1, wait)
+        clearShop()
+
+        ; Navigate back to Stock
+        SendWait("{Escape}", wait)
+        ClickWait(875, 975, 1, wait)
+
+        i += 1
+    }
+
+}
+
 craftBasic(itemArray, loops := 1) {
-    wait := 250
+    wait := 100
 
     x := GetMiddleX()
     conf_x := (260 + getMiddleX())
@@ -153,7 +193,6 @@ craftBasic(itemArray, loops := 1) {
 
         loopCount += 1
     }
-
 }
 
 advanceTime(duration) {
@@ -174,16 +213,29 @@ getMiddleY() {
     return Floor(height/2)
 }
 
+ClickWait(x, y, num, wait) {
+    Click, %x%, %y%, %num%
+    Sleep, % wait
+}
+
+SendWait(msg, wait) {
+    Send % msg
+    Sleep % wait
+}
+
 #IfWinActive, ahk_exe Merchant.exe
-*1::enableHeroLoop(5)
+*1::enableHeroLoop(10)
 *2::clickFast(502)
-*3::craftBasic([3], 48)
-*4::stockShop(12)
+*3::craftBasic([1, 2, 3, 4], 16)  ; 16 x 4 = current max
+*4::stockShop(6)
 *5::clearShop()
 *6::advanceTime("23:59:00")
 *7::advanceTime("02:00:00")
 *8::advanceTime("00:30:00")
 *9::advanceTime("00:05:00")
 *0::resetTime()
+*-::stockSellLoop(5)
 
 #IfWinActive ; End #IfWinActive
+
+^!r::Reload  ; Reload all scripts.
