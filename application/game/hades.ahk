@@ -95,6 +95,8 @@ class HadesInterface {
 
     gunReload() {
         ; This used the keyboard binding instead of gamepad. Both work at the same time.
+        KeyWait, Joy3
+
         Send, {r down}
         sleep 50
         Send, {r up}
