@@ -8,36 +8,42 @@ SendMode Input                      ; Recommended for new scripts due to its sup
 SetWorkingDir, %A_ScriptDir%\..     ; Ensures a consistent starting directory. Relative path to AHK folder from core.ahk.
 SetTitleMatchMode, 2                ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
 
-enableHeroLoop(delay) {
-    delay := delay * 1000
-    SetTimer, heroLoop, % delay
+; Change Icon so I can keep it separate from my normal scripts.
+Menu, Tray, Icon, % "D:\SteamLibrary\SteamApps\common\Merchant\merchant.exe"
 
-    heroLoop()  ; Execute immediately
+enableHeroLoop(delay, skipTime) {
+    delay := delay * 1000
+    func := Func("heroLoop").Bind(skipTime)
+    SetTimer, % func, % delay
+
+    heroLoop(skipTime)  ; Execute immediately
 }
 
-heroLoop() {
+heroLoop(skipTime) {
     wait := 250
 
-    ; Advance and reset time
-    advanceTime("23:00:00")
-    Sleep, % wait
-    resetTime()
+    if (skipTime) {
+        ; Advance and reset time
+        advanceTime("24:00:00")
+        Sleep, % wait
+        resetTime()
+        Sleep, % 1000
+    }
 
-    scrollUi("Up", 20)
     task_x_offSet := 260
     task_x := task_x_offSet + getMiddleX()
 
-    ; These values all assume app is 1020 px high
+    ; scrollUi("Up", 20)
     task_y_array_1 := [215, 365, 515, 665, 815]
     for index, task_y in task_y_array_1 {
         checkAndCompleteTask(task_x, task_y, wait)
     }
 
-    task_y_array_2 := [285, 435, 585, 735, 885]
-    scrollUi("Down", 5)
-    for index, task_y in task_y_array_2 {
-        checkAndCompleteTask(task_x, task_y, wait)
-    }
+    ; task_y_array_2 := [285, 435, 585, 735, 885]
+    ; scrollUi("Down", 5)
+    ; for index, task_y in task_y_array_2 {
+    ;     checkAndCompleteTask(task_x, task_y, wait)
+    ; }
 
     ; task_y_array_3 := [220, 370, 520, 670, 820]
     ; scrollUi("Down", 6)
@@ -45,7 +51,7 @@ heroLoop() {
     ;     checkAndCompleteTask(task_x, task_y, wait)
     ; }
 
-    ; task_y_array_4 := [555, 695, 845]
+    ; task_y_array_4 := [555, 700, 850]
     ; scrollUi("Down", 5)
     ; for index, task_y in task_y_array_4 {
     ;     checkAndCompleteTask(task_x, task_y, wait)
@@ -224,18 +230,18 @@ SendWait(msg, wait) {
 }
 
 #IfWinActive, ahk_exe Merchant.exe
-*1::enableHeroLoop(10)
-*2::clickFast(502)
-*3::craftBasic([1, 2, 3, 4], 16)  ; 16 x 4 = current max
-*4::stockShop(6)
-*5::clearShop()
-*6::advanceTime("23:59:00")
-*7::advanceTime("02:00:00")
-*8::advanceTime("00:30:00")
-*9::advanceTime("00:05:00")
-*0::resetTime()
-*-::stockSellLoop(5)
-
+1::enableHeroLoop(15, False)
+^1::enableHeroLoop(7, True)
+2::clickFast(502)
+3::craftBasic([1, 2, 3, 4], 16)  ; 16 x 4 = current max
+4::stockShop(12)
+5::clearShop()
+6::advanceTime("30:00:00:00")
+7::advanceTime("02:00:00")
+8::advanceTime("00:30:00")
+9::advanceTime("00:05:00")
+0::resetTime()
+-::stockSellLoop(5)
 #IfWinActive ; End #IfWinActive
 
-^!r::Reload  ; Reload all scripts.
+^!m::Reload  ; Reload all scripts.
