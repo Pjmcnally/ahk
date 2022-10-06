@@ -110,5 +110,6 @@ class HadesInterface {
 ; Joy3::hades.gunReload()  ; Hestia - Shoot and reload
 ; Joy4::hades.gunReload()  ; Other guns - Special and reload
 Joy10::hades.copyCurrentSaveToBackup()
+Space::hades.copyCurrentSaveToBackup()
 
 #IfWinActive  ; Reset IfWinActive
