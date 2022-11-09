@@ -6,8 +6,8 @@ class MelvorInterface {
         CoordMode, Pixel, Client
         CoordMode, Mouse, Client
 
-        ; this.FastClickActive := false
-        ; this.FastClickTimer := ObjBindMethod(this, "FastClick")
+        this.FastClickActive := false
+        this.FastClickTimer := ObjBindMethod(this, "FastClick")
     }
 
     KeepAwake() {
@@ -22,7 +22,6 @@ class MelvorInterface {
         Click
     }
 
-    /*
     ToggleFastClick() {
         timer := this.FastClickTimer  ; Not sure why this line is necessary but it is.
 
@@ -39,7 +38,6 @@ class MelvorInterface {
         ; Update FastClickActive to its opposite
         this.FastClickActive := !this.FastClickActive
     }
-    */
 
     RandomClick() {
         MouseGetPos x, y
@@ -59,5 +57,8 @@ class MelvorInterface {
 #IfWinActive, Melvor Idle
 ^1::melvor.KeepAwake()
 ^2::melvor.RandomClick()
-; Space::melvor.ToggleFastClick()
+^Space::melvor.ToggleFastClick()
+
+^i::Send, % "game.bank.addItemByID()"
+^g::Send, % "game.gp.add()"
 #IfWinActive ; End #IfWinActive
