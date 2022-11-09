@@ -135,7 +135,7 @@ stop_using_pm_in_the_morning() {
     Send, {TAB}
 }
 
-; Hotstrings
+; HotStrings
 ; ==============================================================================
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
@@ -146,9 +146,9 @@ stop_using_pm_in_the_morning() {
 
 #IfWinActive ahk_exe chrome.exe || ahk_exe firefox.exe
 
-; Chrome & Firefox Hotstrings
+; Chrome & Firefox HotStrings
 ; ==============================================================================
-; Jira comment hotstrings
+; Jira comment HotStrings
 :Xco:@devs::at_message(get_devs())
 :Xco:@ops::at_message(get_dev_ops())
 :o:sr::Self resolved^{Enter}

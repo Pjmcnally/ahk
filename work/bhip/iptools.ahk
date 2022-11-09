@@ -1,6 +1,3 @@
-/*  IP Tools functions, hotstrings, and hotkeys used at BHIP.
-*/
-
 ; Functions
 ; ==============================================================================
 get_customers_from_csv(file_path) {
