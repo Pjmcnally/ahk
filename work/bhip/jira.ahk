@@ -71,10 +71,10 @@ format_jira_email(str) {
     */
 
     str := RegExReplace(str, "\xA0+", " ")  ; Replace all Non-breaking spaces with normal ones
-    str := RegExReplace(str, "s)\*?{color:.*?}(.*?){color}\*?", "$1")  ; Remove all {color tags} that are making text black and linked * tags leaving surrounding text.
+    str := RegExReplace(str, "s)\{color:(?:black|windowtext)\}(.*?)\{color\}", "$1")  ; Remove all {color tags} that are making text black and linked * tags leaving surrounding text.
     ; str := RegexReplace(str, "(?<![\n\*])\*(.*?)\*", "$1")  ; Remove all * tags leaving surrounded text. Leave list formatting unmodified
     ; str := RegExReplace(str, "\_(.*?)\_", "$1")  ; Remove all _ tags leaving surrounded text
-    str := RegexReplace(str, "\+(.*?)\+", "$1")  ; Remove all + tags leaving surrounded text
+    ; str := RegexReplace(str, "\+(.*?)\+", "$1")  ; Remove all + tags leaving surrounded text
     str := RegExReplace(str, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Convert double brackets to single.
     str := RegExReplace(str, "(?:(\[)\s+|\s+(\]))", "$1$2")  ; Remove any spaces immediately inside of open bracket or before closing bracket
     str := RegExReplace(str, "\[(.*?)\|\]", "$1")  ; Remove any link tags with no link content
@@ -87,6 +87,7 @@ format_jira_email(str) {
     str := RegExReplace(str, get_bhip_sig_conf())  ; Remove bhip conf statement
 
     str := RegExReplace(str, "^----`r`n`r`n", "")  ; Remove first divider if string starts with divider
+    str := RegExReplace(str, "s)\{color:[^\}]*\}\{color\}", "")  ; Remove all empty {color} tags.
     Return str
 }
 
@@ -169,6 +170,7 @@ stop_using_pm_in_the_morning() {
 :coX:mtrain::time_entry("TASK-804", "* Weekly developer training meeting")
 :coX:mprio::time_entry("TASK-108", "* Monthly developer priority meeting")
 :coX:mwpf::time_entry("TASK-1231", "* Weekly WPF Testing Meeting")
+:coX:monb::time_entry("TASK-1484", "* Daily Onboarding Standup", "1:00 PM", "1:15 PM")
 
 ; Tasks
 :coX:tsteve::time_entry("TASK-169", "* Investigate and resolve request")    ; Questions from Steve

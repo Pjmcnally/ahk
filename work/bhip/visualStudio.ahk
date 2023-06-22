@@ -13,5 +13,7 @@ finish_build(update_database) {
     FileRecycle, %pluginServerPath%\Logs\*
 }
 
+; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
+; ==============================================================================
 !^F6::finish_build(false)
 ^!+F6::finish_build(true)
