@@ -180,8 +180,8 @@ stop_using_pm_in_the_morning() {
 :coX:temail::time_entry("TASK-205", "* Manage general emails received by ")
 :coX:ttest::time_entry("TASK-135", "* Clean up errors in Test")
 :coX:ttrain::time_entry("TASK-173", "* Misc. Training")
-:coX:tupdate::time_entry("TASK-1501", "Weekly update report for Grace")
-:coX:tdoc::time_entry("TASK-150", "Update documentation for ")
+:coX:tweek::time_entry("TASK-1501", "* Weekly update report for Grace")
+:coX:tdoc::time_entry("TASK-150", "* Update documentation for ")
 
 ; Misc shortcuts
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
