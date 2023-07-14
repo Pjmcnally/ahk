@@ -169,20 +169,19 @@ stop_using_pm_in_the_morning() {
 :coX:mdevops::time_entry("TASK-318", "* Weekly DevOps meeting")
 :coX:mtrain::time_entry("TASK-804", "* Weekly developer training meeting")
 :coX:mprio::time_entry("TASK-108", "* Monthly developer priority meeting")
-:coX:mwpf::time_entry("TASK-1231", "* Weekly WPF Testing Meeting")
 :coX:monb::time_entry("TASK-1484", "* Daily Onboarding Standup", "1:00 PM", "1:15 PM")
+:coX:mddock::time_entry("TASK-1521", "Daily Docketing Huddle", "9:50 AM", "10:00 AM")
 
 ; Tasks
 :coX:tsteve::time_entry("TASK-169", "* Investigate and resolve request")    ; Questions from Steve
-:coX:tann::time_entry("TASK-206", "* Investigate and resolve request")      ; Questions from Ann
 :coX:ttom::time_entry("TASK-1183", "* Investigate and resolve request")     ; Questions from Tom
 :coX:tadam::time_entry("TASK-1223", "* Investigate and resolve request")    ; Questions from Adam
 :coX:tkarl::time_entry("TASK-1244", "* Investigate and resolve request")    ; Questions from Karl J
-:coX:tclayton::time_entry("TASK-1288", "* Training w/Clayton{Enter}Misc. Issues")
 :coX:temail::time_entry("TASK-205", "* Manage general emails received by ")
 :coX:ttest::time_entry("TASK-135", "* Clean up errors in Test")
-:coX:twpf::time_entry("TASK-1231", "* WPF Testing")
-:coX:ttrain::time_entry("TASK-1257", "* Misc. Training")
+:coX:ttrain::time_entry("TASK-173", "* Misc. Training")
+:coX:tupdate::time_entry("TASK-1501", "Weekly update report for Grace")
+:coX:tdoc::time_entry("TASK-150", "Update documentation for ")
 
 ; Misc shortcuts
 :coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
