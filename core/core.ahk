@@ -20,10 +20,6 @@ modules that this module is imported.
 
 ; Auto-Execute Section (All core Auto-Execute commands should go here)
 ; ==============================================================================
-#SingleInstance, Force              ; Automatically replaces old script with new if the same script file is rune twice
-#NoEnv                              ; Avoids checking empty variables to see if they are environment variables (recommended for all new scripts).
-#Warn                               ; Enable warnings to assist with detecting common errors. (More explicit)
-#Hotstring EndChars `n `t           ; Limits hotstring ending characters to {Enter}{Tab}{Space}
 SendMode Input                      ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir, %A_ScriptDir%\..     ; Ensures a consistent starting directory. Relative path to AHK folder from core.ahk.
 SetTitleMatchMode, 2                ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
