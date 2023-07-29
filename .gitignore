@@ -1,7 +1,8 @@
 # gitignore file
 
 # Ignore main config file for each system
-autohotkey_main.ahk
+ahk_v1_main.ahk
+ahk_v2_main.ahk
 
 # local files not to be committed
 local/
