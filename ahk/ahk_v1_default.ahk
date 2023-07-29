@@ -5,6 +5,12 @@ This module functions as a hub to include other AHK files and runs any system
 specific Auto-Execute commands.  Core/Universal Auto-Execute commands should
 be added to core.ahk.
 
+To run this file add it to your "Startup" folder.
+    Press Window+R
+    Enter "shell:startup"
+    Click "OK"
+    Copy shortcut of this file to the opened folder
+
 System description: <Change as needed>
 */
 
@@ -19,16 +25,24 @@ System description: <Change as needed>
 ; Auto-Execute Section (Any system specific Auto-Execute commands go here)
 ; ==============================================================================
 
-
 ; Include Section
 ; ==============================================================================
 ; Include Core Module(s) (core.ahk must be first for the Auto-Execute to work)
-#Include core\core.ahk
-#Include core\clipboard.ahk
-#Include core\files.ahk
-#Include core\strings.ahk
-#include core\time.ahk
+#Include %A_ScriptDir%\..\core\core.ahk
+#Include %A_ScriptDir%\..\core\clipboard.ahk
+#Include %A_ScriptDir%\..\core\files.ahk
+#Include %A_ScriptDir%\..\core\logging.ahk
+#Include %A_ScriptDir%\..\core\strings.ahk
+#include %A_ScriptDir%\..\core\time.ahk
 
-; Include Example
-; #Include the_thing_I_want
-; #Include misc\the_other_thing_I_want
+; Import Application specific Module(s)
+
+; Include Programming Modules
+
+; Include Work Modules
+
+; Include External Modules
+
+; Debug Section
+; ==============================================================================
+; Add any commands you are debugging here. Then Run AutoHotkey.ahk in debug mode.
