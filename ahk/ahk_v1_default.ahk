@@ -1,11 +1,11 @@
 /*
-Main ahk script executed on this computer.
+Main ahk script.
 
-This module functions as a hub to include other AHK files and runs any system
-specific Auto-Execute commands.  Core/Universal Auto-Execute commands should
+This script functions as a hub to include other AHK files and runs any system
+specific Auto-Execute commands. Core/Universal Auto-Execute commands should
 be added to core.ahk.
 
-To run this file add it to your "Startup" folder.
+To run this file on system Start add it to your "Startup" folder.
     Press Window+R
     Enter "shell:startup"
     Click "OK"
