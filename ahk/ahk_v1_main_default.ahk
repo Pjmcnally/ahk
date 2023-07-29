@@ -8,6 +8,14 @@ be added to core.ahk.
 System description: <Change as needed>
 */
 
+; Directives
+; ==============================================================================
+#Requires AutoHotkey v1
+#SingleInstance, Force              ; Automatically replaces old script with new if the same script file is rune twice
+#NoEnv                              ; Avoids checking empty variables to see if they are environment variables (recommended for all new scripts).
+#Warn All                           ; Enable warnings to assist with detecting common errors. (More explicit)
+#Hotstring EndChars `n `t           ; Limits hotstring ending characters to {Enter}{Tab}{Space}
+
 ; Auto-Execute Section (Any system specific Auto-Execute commands go here)
 ; ==============================================================================
 
