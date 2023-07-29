@@ -59,6 +59,6 @@ class MelvorInterface {
 ^2::melvor.RandomClick()
 ^Space::melvor.ToggleFastClick()
 
-^i::Send, % "game.bank.addItemByID("""", , true, true, false)"
+^i::Send, % "game.bank.addItemByID("""", , true, true, false){Left 23}"
 ^g::Send, % "game.gp.add()"
 #IfWinActive ; End #IfWinActive
