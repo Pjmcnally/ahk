@@ -3,14 +3,14 @@
 This module contains three parts: Auto-Execute, Universal Functions, and
 Universal hotstrings.
 
-It is key to note that autohotkey_main.ahk is system specific where core.ahk is
+It is key to note that ahk_v1_<System>.ahk is system specific where core.ahk is
 universal. Core.ahk contains settings, hotstrings, and functions that are
 desired across all other modules and used across all systems.
 
 The Auto-Execute section sets global parameters across all other modules
-imported by autohotkey_main. These settings are essentially universal. If
+imported by ahk_v1_<System>.ahk. These settings are essentially universal. If
 there are system specific Auto-Execute commands those should be added to
-the Auto-Execute section of autohotkey_main.ahk.
+the Auto-Execute section of ahk_v1_<System>.ahk.
 
 The other sections are Universal Functions and Universal Hotstrings. These are
 core hotstrings and functions that are needed on all systems. These functions
