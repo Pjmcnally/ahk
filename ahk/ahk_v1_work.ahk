@@ -42,8 +42,6 @@ windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_e
 
 ; Include Programming Modules
 #Include %A_ScriptDir%\..\programming\core.ahk
-#Include %A_ScriptDir%\..\programming\python.ahk
-#Include %A_ScriptDir%\..\programming\powershell.ahk
 
 ; Include Work Modules
 #Include %A_ScriptDir%\..\work\bhip\local.ahk
