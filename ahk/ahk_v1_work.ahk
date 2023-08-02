@@ -24,11 +24,8 @@ System description: Personal Desktop
 
 ; Auto-Execute Section (Any system specific Auto-Execute commands go here)
 ; ==============================================================================
-brotatoSaveArchive := New SaveArchive("Brotato", A_AppData . "\Brotato\76561197989542288\")
-hadesSaveArchive := New SaveArchive("Hades", A_MyDocuments . "\Saved Games\Hades\")
-melvor := New MelvorInterface()
 pandora := New PandoraInterface()
-windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_exe Signal.exe"), New WindowInterface("Microsoft To Do"), New WindowInterface("Pocket Casts Desktop")])
+windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_exe slack.exe"), New WindowInterface("ahk_exe Teams.exe")])
 
 ; Include Section
 ; ==============================================================================
@@ -41,11 +38,6 @@ windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_e
 #Include %A_ScriptDir%\..\core\time.ahk
 
 ; Include Application specific Modules
-#Include %A_ScriptDir%\..\application\game\brotato.ahk
-#Include %A_ScriptDir%\..\application\game\hades.ahk
-#Include %A_ScriptDir%\..\application\game\hexcells.ahk
-#Include %A_ScriptDir%\..\application\game\melvor.ahk
-#Include %A_ScriptDir%\..\application\misc\firefox.ahk
 #Include %A_ScriptDir%\..\application\misc\pandora.ahk
 
 ; Include Programming Modules
@@ -54,12 +46,19 @@ windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_e
 #Include %A_ScriptDir%\..\programming\powershell.ahk
 
 ; Include Work Modules
+#Include %A_ScriptDir%\..\work\bhip\local.ahk
+#Include %A_ScriptDir%\..\work\bhip\core.ahk
+#Include %A_ScriptDir%\..\work\bhip\devops.ahk
+#Include %A_ScriptDir%\..\work\bhip\fip.ahk
+#Include %A_ScriptDir%\..\work\bhip\flexicapture.ahk
+#Include %A_ScriptDir%\..\work\bhip\iptools.ahk
+#Include %A_ScriptDir%\..\work\bhip\jira.ahk
+#Include %A_ScriptDir%\..\work\bhip\sql.ahk
+#Include %A_ScriptDir%\..\work\bhip\visualStudio.ahk
 
 ; Include External Modules
-; #Include %A_ScriptDir%\..\external\json.ahk
 
 ; Include Classes
-#Include %A_ScriptDir%\..\classes\save_archive.ahk
 
 ; Debug Section
 ; ==============================================================================
