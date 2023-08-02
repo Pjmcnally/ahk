@@ -47,4 +47,4 @@ python_test_func() {
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
-!^p::python_test_func()
+^!p::python_test_func()
