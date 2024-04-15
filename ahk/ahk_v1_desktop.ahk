@@ -24,7 +24,8 @@ System description: Personal Desktop
 
 ; Auto-Execute Section (Any system specific Auto-Execute commands go here)
 ; ==============================================================================
-brotatoSaveArchive := New SaveArchive("Brotato", A_AppData . "\Brotato\76561197989542288\")
+; brotatoSaveArchive := New SaveArchive("Brotato", A_AppData . "\Brotato\76561197989542288\")
+d3 := New diabloInterface("Diablo III")
 hadesSaveArchive := New SaveArchive("Hades", A_MyDocuments . "\Saved Games\Hades\")
 melvor := New MelvorInterface()
 pandora := New PandoraInterface()
@@ -41,9 +42,11 @@ windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_e
 #include %A_ScriptDir%\..\core\time.ahk
 
 ; Import Application specific Module(s)
-#Include %A_ScriptDir%\..\application\game\brotato.ahk
+#Include %A_ScriptDir%\..\application\game\diablo3.ahk
+#Include %A_ScriptDir%\..\application\game\diabloInterface.ahk
 #Include %A_ScriptDir%\..\application\game\hades.ahk
 #Include %A_ScriptDir%\..\application\game\hexcells.ahk
+#Include %A_ScriptDir%\..\application\game\last_epoch.ahk
 #Include %A_ScriptDir%\..\application\game\melvor.ahk
 #Include %A_ScriptDir%\..\application\misc\firefox.ahk
 #Include %A_ScriptDir%\..\application\misc\pandora.ahk
