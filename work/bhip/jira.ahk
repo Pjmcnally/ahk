@@ -170,7 +170,7 @@ stop_using_pm_in_the_morning() {
 :coX:mtrain::time_entry("TASK-804", "* Weekly developer training meeting")
 :coX:mprio::time_entry("TASK-108", "* Monthly developer priority meeting")
 :coX:monb::time_entry("TASK-1484", "* Daily Onboarding Standup", "1:00 PM", "1:15 PM")
-:coX:mddock::time_entry("TASK-1521", "Daily Docketing Huddle", "9:50 AM", "10:00 AM")
+:coX:mdock::time_entry("TASK-1521", "Daily Docketing Huddle", "9:50 AM", "10:00 AM")
 
 ; Tasks
 :coX:tsteve::time_entry("TASK-169", "* Investigate and resolve request")    ; Questions from Steve
