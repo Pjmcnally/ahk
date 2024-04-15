@@ -59,6 +59,8 @@ class MelvorInterface {
 ^2::melvor.RandomClick()
 ^Space::melvor.ToggleFastClick()
 
-^i::Send, % "game.bank.addItemByID("""", , true, true, false){Left 23}"
 ^g::Send, % "game.gp.add()"
+^i::Send, % "game.bank.addItemByID('" . Trim(CLIPBOARD) . "', , true, true, false){Left 20}"
+^p::Send, % "game.petManager.unlockPetByID('" . Trim(CLIPBOARD) . "');"
+^t::Send, % "game.testForOffline(){Left 1}"
 #IfWinActive ; End #IfWinActive
