@@ -50,6 +50,7 @@ windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_e
 #Include %A_ScriptDir%\..\application\game\melvor.ahk
 #Include %A_ScriptDir%\..\application\misc\firefox.ahk
 #Include %A_ScriptDir%\..\application\misc\pandora.ahk
+#Include %A_ScriptDir%\..\application\misc\vlc.ahk
 
 ; Include Programming Modules
 #Include %A_ScriptDir%\..\programming\core.ahk
