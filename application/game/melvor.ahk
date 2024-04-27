@@ -1,11 +1,11 @@
-; This file has been rendered obsolete by mods. They do the job better and don't take
-; all computer inputs while doing it.
-
 class MelvorInterface {
     __New() {
         CoordMode, Pixel, Client
         CoordMode, Mouse, Client
+        this.MouseX := 0
+        this.MouseY := 0
 
+        this.disableOnMove := true
         this.FastClickActive := false
         this.FastClickTimer := ObjBindMethod(this, "FastClick")
     }
@@ -19,20 +19,30 @@ class MelvorInterface {
     }
 
     FastClick() {
-        Click
+        MouseGetPos, x, y
+        if (!this.disableOnMove) or (this.disableOnMove and x = this.MouseX and y = this.MouseY) {
+            Click
+        } else {
+            this.ToggleFastClick(false)
+        }
+
     }
 
-    ToggleFastClick() {
+    ToggleFastClick(disableOnMove, clickDelay) {
+        this.disableOnMove := disableOnMove
         timer := this.FastClickTimer  ; Not sure why this line is necessary but it is.
 
         if (this.FastClickActive) {
             ; deactivate timer
             SetTimer, % timer, OFF,
         } else {
+            MouseGetPos, tempX, tempY
+            this.MouseX := tempX
+            this.MouseY := tempY
             this.FastClick()  ; Trigger immediately
 
             ; Activate timer
-            SetTimer, % timer, % 10,
+            SetTimer, % timer, % clickDelay,
         }
 
         ; Update FastClickActive to its opposite
@@ -57,10 +67,16 @@ class MelvorInterface {
 #IfWinActive, Melvor Idle
 ^1::melvor.KeepAwake()
 ^2::melvor.RandomClick()
-^Space::melvor.ToggleFastClick()
+^Space::melvor.ToggleFastClick(true, 1000)
+^!Space::melvor.ToggleFastClick(false, 1000)
 
 ^g::Send, % "game.gp.add()"
 ^i::Send, % "game.bank.addItemByID('" . Trim(CLIPBOARD) . "', , true, true, false){Left 20}"
 ^p::Send, % "game.petManager.unlockPetByID('" . Trim(CLIPBOARD) . "');"
 ^t::Send, % "game.testForOffline(){Left 1}"
 #IfWinActive ; End #IfWinActive
+
+/*
+For discovering marks
+for (let i = 0; i < 61; i += 1) {game.summoning.discoverMark(game.summoning.actions.getObjectByID('melvorTotH:LightningSpirit'));}
+*/
