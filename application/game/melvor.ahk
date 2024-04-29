@@ -19,13 +19,15 @@ class MelvorInterface {
     }
 
     FastClick() {
-        MouseGetPos, x, y
-        if (!this.disableOnMove) or (this.disableOnMove and x = this.MouseX and y = this.MouseY) {
-            Click
-        } else {
-            this.ToggleFastClick(false)
+        if WinActive("Melvor Idle") {
+            MouseGetPos, x, y
+            if (!this.disableOnMove) or (this.disableOnMove and x = this.MouseX and y = this.MouseY) {
+                Click
+                return
+            }
         }
 
+        this.ToggleFastClick(false)
     }
 
     ToggleFastClick(disableOnMove, clickDelay) {
@@ -67,8 +69,8 @@ class MelvorInterface {
 #IfWinActive, Melvor Idle
 ^1::melvor.KeepAwake()
 ^2::melvor.RandomClick()
-^Space::melvor.ToggleFastClick(true, 1000)
-^!Space::melvor.ToggleFastClick(false, 1000)
+^Space::melvor.ToggleFastClick(true, 250)
+^!Space::melvor.ToggleFastClick(false, 250)
 
 ^g::Send, % "game.gp.add()"
 ^i::Send, % "game.bank.addItemByID('" . Trim(CLIPBOARD) . "', , true, true, false){Left 20}"
