@@ -47,7 +47,7 @@ numlock_trick(key) {
 }
 
 #IfWinActive, Last Epoch
-!-::merge_lootfilter()
+; !-::merge_lootfilter()
 !7::numlock_trick("Numpad1")
 !8::numlock_trick("Numpad2")
 !9::numlock_trick("Numpad3")

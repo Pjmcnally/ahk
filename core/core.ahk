@@ -163,8 +163,8 @@ clear_and_send(str) {
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
 ; ==============================================================================
-^+Space::Pause, Toggle  ; Pause all active ahk processes
-^!Space::Suspend, Toggle  ; Suspend all hotkeys
+; ^+Space::Pause, Toggle  ; Pause all active ahk processes
+; ^!Space::Suspend, Toggle  ; Suspend all hotkeys
 ^!r::Reload  ; Reload all scripts.
 ^!w::Run AutoHotkey "C:\Program Files\AutoHotkey\WindowSpy.ahk"
 ^!b::Run ms-settings:bluetooth

@@ -19,15 +19,13 @@ System description: Personal Desktop
 #Requires AutoHotkey v1
 #SingleInstance, Force              ; Automatically replaces old script with new if the same script file is rune twice
 #NoEnv                              ; Avoids checking empty variables to see if they are environment variables (recommended for all new scripts).
-#Warn All                           ; Enable warnings to assist with detecting common errors. (More explicit)
+#Warn                               ; Enable warnings to assist with detecting common errors. (More explicit)
 #Hotstring EndChars `n `t           ; Limits hotstring ending characters to {Enter}{Tab}{Space}
 
 ; Auto-Execute Section (Any system specific Auto-Execute commands go here)
 ; ==============================================================================
-; brotatoSaveArchive := New SaveArchive("Brotato", A_AppData . "\Brotato\76561197989542288\")
-d3 := New diabloInterface("Diablo III")
-hadesSaveArchive := New SaveArchive("Hades", A_MyDocuments . "\Saved Games\Hades\")
-melvor := New MelvorInterface()
+d4 := New diabloInterface("Diablo IV")
+melvor := New MiscClickInterface("Melvor Idle")
 pandora := New PandoraInterface()
 windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_exe Signal.exe"), New WindowInterface("Microsoft To Do"), New WindowInterface("Pocket Casts Desktop")])
 
@@ -42,11 +40,8 @@ windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_e
 #Include %A_ScriptDir%\..\core\time.ahk
 
 ; Import Application specific Module(s)
-#Include %A_ScriptDir%\..\application\game\diablo3.ahk
-#Include %A_ScriptDir%\..\application\game\diabloInterface.ahk
-#Include %A_ScriptDir%\..\application\game\hades.ahk
+#Include %A_ScriptDir%\..\application\game\diablo4.ahk
 #Include %A_ScriptDir%\..\application\game\hexcells.ahk
-#Include %A_ScriptDir%\..\application\game\last_epoch.ahk
 #Include %A_ScriptDir%\..\application\game\melvor.ahk
 #Include %A_ScriptDir%\..\application\misc\firefox.ahk
 #Include %A_ScriptDir%\..\application\misc\pandora.ahk
@@ -63,6 +58,8 @@ windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_e
 ; #Include %A_ScriptDir%\..\external\json.ahk
 
 ; Include Classes
+#Include %A_ScriptDir%\..\classes\diabloInterface.ahk
+#Include %A_ScriptDir%\..\classes\miscClickInterface.ahk
 #Include %A_ScriptDir%\..\classes\save_archive.ahk
 
 ; Debug Section

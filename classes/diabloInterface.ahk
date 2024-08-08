@@ -10,10 +10,10 @@ class DiabloInterface {
         }
     }
 
-    GetSkill(key) {
+    GetSkill(key, preReqKey:="") {
         ; If skill isn't found initialize it
         if (!(this.Skills.hasKey(key))) {
-            this.Skills[key] := new DiabloSkill(key, this.Window)
+            this.Skills[key] := new DiabloSkill(key, this.Window, preReqKey)
         }
 
         return this.Skills[key]
@@ -21,12 +21,13 @@ class DiabloInterface {
 }
 
 class DiabloSkill {
-    __New(key, window) {
+    __New(key, window, preReqKey) {
         this.Active := false
         this.Key := key
         this.DefaultFreq := 1000
         this.Timer := ObjBindMethod(this, "UseSkill")
         this.Window := window
+        this.PreReqKey := preReqKey
     }
 
     Toggle(freq) {
@@ -61,7 +62,10 @@ class DiabloSkill {
 
     UseSkill() {
         if (WinActive(this.Window)) {
-            Send, % this.Key
+            if (!this.PreReqKey || GetKeyState(this.PreReqKey)) {
+                Send, % this.Key
+            }
+
         }
     }
 }
