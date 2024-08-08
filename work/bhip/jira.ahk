@@ -163,20 +163,29 @@ stop_using_pm_in_the_morning() {
 #IfWinActive Timetracker - IP Tools DevApps
 
 ; Meetings
-:coX:mday::time_entry("TASK-121", "* Daily Huddle", "10:00 AM", "10:15 AM")
-:coX:mbhip::time_entry("TASK-136", "* Monthly BHIP Meeting")
-:coX:mtech::time_entry("TASK-187", "* Weekly technology meeting", "11:30 AM", "12:00 PM")
-:coX:mdevops::time_entry("TASK-318", "* Weekly DevOps meeting")
-:coX:mtrain::time_entry("TASK-804", "* Weekly developer training meeting")
-:coX:mprio::time_entry("TASK-108", "* Monthly developer priority meeting")
+; Daily
+:coX:mday::time_entry("TASK-121", "* Daily Huddle", "10:00 AM", "10:30 AM")
 :coX:monb::time_entry("TASK-1484", "* Daily Onboarding Standup", "1:00 PM", "1:15 PM")
-:coX:mdock::time_entry("TASK-1521", "Daily Docketing Huddle", "9:50 AM", "10:00 AM")
+; Monday
+:coX:malldev::time_entry("TASK-108", "* Weekly All Dev Meeting", "10:30 AM", "11:00 AM")
+; Tuesdays
+:coX:mdevcheck::time_entry("Task-108", "* Weekly Dev Check-In", "9:00 AM", "9:30 AM")
+:coX:mtech::time_entry("TASK-187", "* Weekly technology meeting", "9:30 AM", "10:00 AM")
+:coX:mtrain::time_entry("TASK-804", "* Weekly developer training meeting", "10:30 AM", "11:00 AM")
+; Thursday
+:coX:msupp::time_entry("TASK-108", "* Weekly Support Ticket Review", "9:00 AM", "9:30 AM")
+; Friday
+:coX:mdevops::time_entry("TASK-318", "* Weekly DevOps meeting", "9:30 AM", "10:00 AM")
+; Monthly
+:coX:mbhip::time_entry("TASK-136", "* Monthly BHIP Meeting")
+:coX:mmprio::time_entry("TASK-108", "* Monthly developer priority meeting")
 
 ; Tasks
 :coX:tsteve::time_entry("TASK-169", "* Investigate and resolve request")    ; Questions from Steve
 :coX:ttom::time_entry("TASK-1183", "* Investigate and resolve request")     ; Questions from Tom
 :coX:tadam::time_entry("TASK-1223", "* Investigate and resolve request")    ; Questions from Adam
 :coX:tkarl::time_entry("TASK-1244", "* Investigate and resolve request")    ; Questions from Karl J
+:coX:tgrace::time_entry("TASK-1581", "* Investigate and resolve request")   ; Questions from Grace
 :coX:temail::time_entry("TASK-205", "* Manage general emails received by ")
 :coX:ttest::time_entry("TASK-135", "* Clean up errors in Test")
 :coX:ttrain::time_entry("TASK-173", "* Misc. Training")

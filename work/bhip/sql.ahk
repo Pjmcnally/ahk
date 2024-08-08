@@ -62,9 +62,17 @@ ToggleComment() {
 :o:alxml::
     SendRaw, % "[OldValue] = CAST(OldValues as xml).value('(/row/@<ATTRIBUTE>)[1]', 'varchar(50)'),"
     Send, {Enter}
-    SendRaw, % "[NewValue] = CAST(NewValues as xml).value('(/row/@<ATTRIBUTE>)[1]', 'varchar(50)')"
+    SendRaw, % "[NewValue] = CAST(NewValues as xml).value('(/row/@<ATTRIBUTE>)[1]', 'varchar(50)'),"
 Return
-
+:o:suidl::'3eae7805-be3f-42cc-b36f-b05f00d3c29b'
+:o:suidt::'ef4ac40d-9bc6-4a24-8dd5-b18400e21dda'
+:o:glfix::
+    Send, ^h                            ; Hotkey for Find and Replace
+    Send, ^a                            ; Select all
+    SendRaw, ^(\s*)([a-f0-9\-]{36})$    ; Overwrite with regex pattern
+    Send, {Tab}^a                       ; move to next field and select all
+    SendRaw,        $1'$2',                    ; overwrite with results
+Return
 
 
 ; Hotkeys || ^ = Ctrl, ! = Alt, + = Shift
