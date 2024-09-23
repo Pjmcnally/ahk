@@ -31,9 +31,6 @@ send_outlook_email(subject, body, recipients := "", cc_recipients := "") {
 ; Miscellaneous
 :co:b1::BACKLOG 001!o
 
-; Test matters
-:Xco*:testmatter::Send, % get_test_matter()
-
 ; Signature/Ticket Hotstrings
 :co:ifq::If there are any questions, or if there is anything more we can do to help, please let us know.
 :Xo:psig::SendLines(["Patrick McNally", "IP Technology Specialist 3", get_my_bhip_email()])

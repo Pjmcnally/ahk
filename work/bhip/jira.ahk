@@ -1,4 +1,5 @@
-/*  JIRA functions, hotstrings, and hotkeys used at BHIP.
+/*
+JIRA functions, hotstrings, and hotkeys used at BHIP.
 
     Details on JIRA shortcuts (used below)
 
@@ -15,7 +16,7 @@
 ; Functions
 ; ==============================================================================
 format_db_for_jira() {
-    /*  Format content copied out of MSSMS as a table for JIRA and paste results.
+    /* Format content copied out of MSSMS as a table for JIRA and paste results.
     */
     res := ""
     CrLf := "`r`n"
@@ -38,25 +39,28 @@ format_db_for_jira() {
     Return
 }
 
-wrap_clipboard_text(pretext="", mode="code") {
+wrap_clipboard_text(pretext="", mode="") {
     if (pretext) {
         Send, % pretext . "{Enter}"
     }
 
-    Send, % "{{}" . mode . "{}}{Enter}"
+    if (mode == "code") {
+        Send, % "``````"
+    }
+    else if (mode == "quote") {
+        Send, % "`> "
+    }
 
     ; Trim clipboard contents and paste
     CLIPBOARD := trim(CLIPBOARD, "`r`n`t ")  ; Trim new line, tab, and space
     Sleep, 100  ; Sometimes a small delay is required when updating the clipboard.
     Send, % "^v"
     Sleep, 100
-
-    ; TODO add check and only add new line if clipboard text doesn't end with a newline
-    Send, % "{Enter}{{}" . mode . "{}}"
 }
 
 format_jira_email(str) {
-    /*  Reformat text sent into JIRA from Outlook email.
+    /*
+        Reformat text sent into JIRA from Outlook email.
 
         Outlook add extra line breaks to emails sent to JIRA.  Also, JETI tries
         to process colors and adds {color} tags around all text (even black).
@@ -71,8 +75,8 @@ format_jira_email(str) {
     */
 
     str := RegExReplace(str, "\xA0+", " ")  ; Replace all Non-breaking spaces with normal ones
-    str := RegExReplace(str, "s)\{color:(?:black|windowtext)\}(.*?)\{color\}", "$1")  ; Remove all {color tags} that are making text black and linked * tags leaving surrounding text.
-    ; str := RegexReplace(str, "(?<![\n\*])\*(.*?)\*", "$1")  ; Remove all * tags leaving surrounded text. Leave list formatting unmodified
+    str := RegExReplace(str, "s)\{color:(?:black|windowtext)\}(.*?)\{color\}", "$1")  ; Remove all {color tags} that are making text black and linked tags leaving surrounding text.
+    ; str := RegexReplace(str, "(?<![\n\*])\*(.*?)\*", "$1")  ; Remove all tags leaving surrounded text. Leave list formatting unmodified
     ; str := RegExReplace(str, "\_(.*?)\_", "$1")  ; Remove all _ tags leaving surrounded text
     ; str := RegexReplace(str, "\+(.*?)\+", "$1")  ; Remove all + tags leaving surrounded text
     str := RegExReplace(str, "\[{2,}(.*?)\]{2,}", "[$1]")  ; Convert double brackets to single.
@@ -100,10 +104,14 @@ at_message(array) {
 time_entry(ticket, message, start_time:="", end_time="") {
     wait := 50
 
-    ; Clear current ticket number & enter new ticket number
-    SendWait("{Backspace}", wait)
-    SendWait("{Backspace}", wait)
-    SendWait(ticket, wait)
+    ; Enter and select new ticket number
+    SendWait(ticket, 1000)
+    SendWait("{Enter}", wait)
+
+    ; Enter Message
+    SendWait("{Tab}", wait)
+    SendWAit("^a", wait)
+    SendWait(message, wait)
 
     SendWait("{Tab}", wait)
     if (start_time) {
@@ -120,10 +128,7 @@ time_entry(ticket, message, start_time:="", end_time="") {
         }
         SendWait(end_time, wait)
     }
-
-    SendWait("{Tab}", wait)
-    SendWAit("^a", wait)
-    SendWait(message, 50)
+    SendWait("{Tab 2}", wait)
 }
 
 stop_using_pm_in_the_morning() {
@@ -154,39 +159,48 @@ stop_using_pm_in_the_morning() {
 :Xco:@ops::at_message(get_dev_ops())
 :o:sr::Self resolved^{Enter}
 :o*X:{f::wrap_clipboard_text("From error log:")
-:o*X:{c::wrap_clipboard_text()
+:o*X:{c::wrap_clipboard_text(,"code")
 :o*X:{q::wrap_clipboard_text(,"quote")
 
 #IfWinActive  ; Clear IfWinActive
 
 ; Time tracking hotkeys
-#IfWinActive Timetracker - IP Tools DevApps
+#IfWinActive TimeTracker
 
 ; Meetings
-:coX:mday::time_entry("TASK-121", "* Daily Huddle", "10:00 AM", "10:15 AM")
-:coX:mbhip::time_entry("TASK-136", "* Monthly BHIP Meeting")
-:coX:mtech::time_entry("TASK-187", "* Weekly technology meeting", "11:30 AM", "12:00 PM")
-:coX:mdevops::time_entry("TASK-318", "* Weekly DevOps meeting")
-:coX:mtrain::time_entry("TASK-804", "* Weekly developer training meeting")
-:coX:mprio::time_entry("TASK-108", "* Monthly developer priority meeting")
-:coX:monb::time_entry("TASK-1484", "* Daily Onboarding Standup", "1:00 PM", "1:15 PM")
-:coX:mdock::time_entry("TASK-1521", "Daily Docketing Huddle", "9:50 AM", "10:00 AM")
+; Daily
+:coX:mday::time_entry("TASK-121", "Daily Huddle", "10:00 AM", "10:30 AM")
+:coX:monb::time_entry("TASK-1484", "Daily Onboarding Standup", "1:00 PM", "1:15 PM")
+; Monday
+:coX:malldev::time_entry("TASK-108", "Weekly All Dev Meeting", "10:30 AM", "11:00 AM")
+; Tuesdays
+:coX:mdevcheck::time_entry("Task-108", "Weekly Dev Check-In", "9:00 AM", "9:30 AM")
+:coX:mtech::time_entry("TASK-187", "Weekly technology meeting", "9:30 AM", "10:00 AM")
+:coX:mtrain::time_entry("TASK-804", "Weekly developer training meeting", "10:30 AM", "11:00 AM")
+; Thursday
+:coX:msupp::time_entry("TASK-108", "Weekly Support Ticket Review", "9:00 AM", "9:30 AM")
+; Friday
+:coX:mdevops::time_entry("TASK-318", "Weekly DevOps meeting", "9:30 AM", "10:00 AM")
+; Monthly
+:coX:mbhip::time_entry("TASK-136", "Monthly BHIP Meeting")
+:coX:mmprio::time_entry("TASK-108", "Monthly developer priority meeting")
 
 ; Tasks
-:coX:tsteve::time_entry("TASK-169", "* Investigate and resolve request")    ; Questions from Steve
-:coX:ttom::time_entry("TASK-1183", "* Investigate and resolve request")     ; Questions from Tom
-:coX:tadam::time_entry("TASK-1223", "* Investigate and resolve request")    ; Questions from Adam
-:coX:tkarl::time_entry("TASK-1244", "* Investigate and resolve request")    ; Questions from Karl J
-:coX:temail::time_entry("TASK-205", "* Manage general emails received by ")
-:coX:ttest::time_entry("TASK-135", "* Clean up errors in Test")
-:coX:ttrain::time_entry("TASK-173", "* Misc. Training")
-:coX:tweek::time_entry("TASK-1501", "* Weekly update report for Grace")
-:coX:tdoc::time_entry("TASK-150", "* Update documentation for ")
+:coX:tsteve::time_entry("TASK-169", "Investigate and resolve request")    ; Questions from Steve
+:coX:ttom::time_entry("TASK-1183", "Investigate and resolve request")     ; Questions from Tom
+:coX:tadam::time_entry("TASK-1223", "Investigate and resolve request")    ; Questions from Adam
+:coX:tkarl::time_entry("TASK-1244", "Investigate and resolve request")    ; Questions from Karl J
+:coX:tgrace::time_entry("TASK-1581", "Investigate and resolve request")   ; Questions from Grace
+:coX:temail::time_entry("TASK-205", "Manage general emails received by ")
+:coX:ttest::time_entry("TASK-135", "Clean up errors in Test")
+:coX:ttrain::time_entry("TASK-173", "Misc. Training")
+:coX:tweek::time_entry("TASK-1501", "Weekly update report for Grace")
+:coX:tdoc::time_entry("TASK-150", "Update documentation for ")
 
 ; Misc shortcuts
-:coX:irc::Send, % "* Investigate{Enter}Resolve{Enter}Close"
-:coX:iru::Send, % "* Investigate{Enter}Respond{Enter}Update"
-:coX:rc::Send, % "* Review{Enter}Close"
+:coX:irc::Send, % "Investigate, Resolve, Close"
+:coX:iru::Send, % "Investigate, Respond, Update"
+:coX:rc::Send, % "Review, Close"
 :B0oX:pm::stop_using_pm_in_the_morning()
 
 #IfWinActive  ; Clear IfWinActive
