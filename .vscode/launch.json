@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "autohotkey",
+            "type": "ahk",
             "request": "launch",
             "name": "AutoHotkey v1 Debugger",
             "program": "C:\\Users\\Patrick\\Programming\\ahk\\ahk\\ahk_v1_desktop.ahk",
