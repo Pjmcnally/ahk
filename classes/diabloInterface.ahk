@@ -8,6 +8,8 @@ class DiabloInterface {
         for key, val in this.Skills {
             val.Disable()
         }
+
+        Send {Numpad0 Up}
     }
 
     GetSkill(key, preReqKey:="") {
