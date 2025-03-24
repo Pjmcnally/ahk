@@ -8,7 +8,7 @@
 9::D4.GetSkill("{Numpad2}").Enable(250)  ; W
 0::D4.GetSkill("{Numpad4}").Enable(250)  ; R
 
--::
+-::  ; Start all
     Send {Numpad0 Down}
     ; D4.GetSkill("{Numpad0}").Enable(100)  ; RMouse
     D4.GetSkill("{Numpad1}").Enable(250)  ; Q

@@ -24,9 +24,12 @@ System description: Personal Desktop
 
 ; Auto-Execute Section (Any system specific Auto-Execute commands go here)
 ; ==============================================================================
+d3 := New diabloInterface("Diablo III")
 d4 := New diabloInterface("Diablo IV")
+hades := New SaveArchive("Hades II", "C:\Users\Patrick\Saved Games\Hades II")
 melvor := New MiscClickInterface("Melvor Idle")
 pandora := New PandoraInterface()
+perfectTower := New MiscClickInterface("The Perfect Tower II")
 windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_exe Signal.exe"), New WindowInterface("Microsoft To Do"), New WindowInterface("Pocket Casts Desktop")])
 
 ; Include Section
@@ -40,9 +43,14 @@ windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_e
 #Include %A_ScriptDir%\..\core\time.ahk
 
 ; Import Application specific Module(s)
+#Include %A_ScriptDir%\..\application\game\child_of_light.ahk
+#Include %A_ScriptDir%\..\application\game\diablo3.ahk
 #Include %A_ScriptDir%\..\application\game\diablo4.ahk
+#Include %A_ScriptDir%\..\application\game\hades_2.ahk
 #Include %A_ScriptDir%\..\application\game\hexcells.ahk
+#Include %A_ScriptDir%\..\application\game\increlution.ahk
 #Include %A_ScriptDir%\..\application\game\melvor.ahk
+#Include %A_ScriptDir%\..\application\game\perfect_tower.ahk
 #Include %A_ScriptDir%\..\application\misc\firefox.ahk
 #Include %A_ScriptDir%\..\application\misc\pandora.ahk
 #Include %A_ScriptDir%\..\application\misc\vlc.ahk

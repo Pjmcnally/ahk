@@ -4,7 +4,7 @@ class MiscClickInterface {
         CoordMode, Mouse, Client
         this.MouseX := 0
         this.MouseY := 0
-        this.allowedPositionVarience := 0
+        this.allowedPositionVariance := 0
         this.window := window
 
         this.disableOnMove := true
@@ -24,10 +24,10 @@ class MiscClickInterface {
         if WinActive(this.window) {
             MouseGetPos, x, y
             if (!this.disableOnMove) {
-                Click, Right
+                Click
                 return
-            } else if (abs(x - this.MouseX) < this.allowedPositionVarience and abs(y - this.MouseY) < this.allowedPositionVarience) {
-                Click, Right
+            } else if (abs(x - this.MouseX) < this.allowedPositionVariance and abs(y - this.MouseY) < this.allowedPositionVariance) {
+                Click
                 return
             }
         }
@@ -35,23 +35,23 @@ class MiscClickInterface {
         this.ToggleFastClick(false)
     }
 
-    ToggleFastClick(disableOnMove, clickDelay := 1000, allowedPositionVarience := 100) {
+    ToggleFastClick(disableOnMove, clickDelay := 1000, allowedPositionVariance := 100) {
         if (this.FastClickActive) {
             this.DeactivateFastClick()
         } else {
-            this.ActivateFastClick(disableOnMove, clickDelay, allowedPositionVarience)
+            this.ActivateFastClick(disableOnMove, clickDelay, allowedPositionVariance)
         }
     }
 
-    ActivateFastClick(disableOnMove, clickDelay, allowedPositionVarience) {
+    ActivateFastClick(disableOnMove, clickDelay, allowedPositionVariance) {
         this.FastClickActive := true
         this.disableOnMove := disableOnMove
 
         MouseGetPos, tempX, tempY
         this.MouseX := tempX
         this.MouseY := tempY
-        this.allowedPositionVarience := allowedPositionVarience
-        Click, Right
+        this.allowedPositionVariance := allowedPositionVariance
+        Click
 
         ; Activate timer
         timer := this.FastClickTimer  ; Not sure why this line is necessary but it is.
