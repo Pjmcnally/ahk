@@ -18,10 +18,13 @@ gather_cook(trigger, sequence, count := 0) {
             break
         }
     }
+
+    MouseMove, X, Y, 0 ; Restore mouse to original position after loop
     Return
 }
 
 XButton1::gather_cook("XButton1", [0, 2, 4])  ; herring, bread, cake
 XButton2::gather_cook("XButton2", [0, 1], 20)
+F5::gather_cook("F5", [0, 1, 0, 1, 0, 1, 2], 14)
 
 #IfWinActive
