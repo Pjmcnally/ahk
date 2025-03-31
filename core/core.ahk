@@ -21,6 +21,7 @@ modules that this module is imported.
 ; Auto-Execute Section (All core Auto-Execute commands should go here)
 ; ==============================================================================
 SendMode Input                      ; Recommended for new scripts due to its superior speed and reliability.
+CoordMode, Mouse, Client            ; Uses consistent CoordMode across all scripts
 SetBatchLines -1                    ; Remove default 10 ms pause from script execution.
 SetTitleMatchMode, 2                ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
 SetWorkingDir, %A_ScriptDir%\..     ; Ensures a consistent starting directory. Relative path to AHK folder from core.ahk.
