@@ -23,8 +23,8 @@ gather_cook(trigger, sequence, count := 0) {
     Return
 }
 
-XButton1::gather_cook("XButton1", [0, 2, 4])  ; herring, bread, cake
+XButton1::gather_cook("XButton1", [0, 1, 2], 20)
 XButton2::gather_cook("XButton2", [0, 1], 20)
-F5::gather_cook("F5", [0, 1, 0, 1, 0, 1, 2], 14)
+F5::gather_cook("F5", [0, 1, 0, 1, 0, 1, 0, 1, 2, 3], 14)
 
 #IfWinActive

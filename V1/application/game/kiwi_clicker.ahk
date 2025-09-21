@@ -1,18 +1,20 @@
 #IfWinActive ahk_exe Kiwi Clicker.exe
 
-; ##Standard 1cook 1raw queue
-upgrade_all(loop_count:=1, loop_delay:=5000) {
+upgrade_all(loop_count:=1, loop_delay:=1000, send_delay:=25) {
     keys := ["q", "w", "e", "r", "t"]
     upgrade_max = "4"
 
     loop, % loop_count {
-        keys := shuffle(keys)
         for i, key in keys {
-            SendWait(key, 50)
-            SendWait(upgrade_max, 50)
+            SendWait(key, send_delay)  ; Open upgrade window
+            SendWait(upgrade_max, send_delay)  ; By max upgrade
+            SendWait(key, send_delay)  ; Close upgrade window
         }
 
-        Send, % keys[keys.Count()] ; Resend last element to close open tab
+        ; Rotate list
+        last_key := keys.Pop()
+        keys.InsertAt(1, last_key)
+
         Sleep, % loop_delay
     }
 
@@ -28,20 +30,25 @@ shuffle(a) {
         temp := a[i], a[i] := a[j], a[j] := temp  ; swap values at i and j in array
         i -= 1
     }
-    Return a
+    Return
 }
 
-auto_play() {
+auto_play(is_archery, loop_size) {
+    if (!is_archery) {
+        repeat_keys()
+    }
+
+
     loop {
         WinActivate, ahk_exe Kiwi Clicker.exe
         WinWaitActive, , , , 5,
-        MouseMove, 2060, 980, 1  ; Speed Up Target
-        upgrade_all(75, 1000)
+        ; MouseMove, 2050, 1035, 1  ; Speed Up Target
+        upgrade_all(loop_size)
 
         WinActivate, ahk_exe Kiwi Clicker.exe
         WinWaitActive, , , , 5,
-        MouseMove, 1500, 450, 1
-        MoveMouseSlowly(2250, 450, 100000)
+        MouseMove, 1500, 475, 1
+        MoveMouseSlowly(2250, 475, 100000)
 
         WinActivate, ahk_exe Kiwi Clicker.exe
         WinWaitActive, , , , 5,
@@ -73,7 +80,23 @@ transcend() {
     SendWait("g", 100)
 }
 
-F5::upgrade_all(75, 1000)
-F6::auto_play()
+fast_key(key) {
+    Send, % key
+}
+
+repeat_keys() {
+    fast_space := Func("Fast_Key").Bind("{Space}")
+    SetTimer, % fast_space, 10
+
+    fast_s := Func("Fast_Key").Bind("s")
+    SetTimer, % fast_s, 10
+
+    ; fast_click := Func("Fast_Key").Bind("{LButton}")
+    ; SetTimer, % fast_click, 10
+}
+
+MButton::Reload
+XButton1::auto_play(true, 60)
+XButton2::upgrade_all(60)
 
 #IfWinActive

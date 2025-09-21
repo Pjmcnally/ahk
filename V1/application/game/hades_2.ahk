@@ -3,9 +3,9 @@
 ; Joy10::hadesSaveArchive.restoreMostRecentSave()
 ; Joy3::gunReload()  ; Hestia - Shoot and reload
 ; Joy4::gunReload()  ; Other guns - Special and reload
-Joy10::hades.copyCurrentSaveToBackup()
-Space::hades.copyCurrentSaveToBackup()
+Joy10::hades_2.copyCurrentSaveToBackup()
+Space::hades_2.copyCurrentSaveToBackup()
 
 #IfWinActive  ; Reset IfWinActive
 
-^!+b::hades.restoreMostRecentSave()
+^!+b::hades_2.restoreMostRecentSave()
