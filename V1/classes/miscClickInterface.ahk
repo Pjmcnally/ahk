@@ -22,6 +22,7 @@ class MiscClickInterface {
 
     FastClick() {
         if WinActive(this.window) {
+            ToolTip, Clicking
             MouseGetPos, x, y
             if (!this.disableOnMove) {
                 Click
@@ -44,6 +45,7 @@ class MiscClickInterface {
     }
 
     ActivateFastClick(disableOnMove, clickDelay, allowedPositionVariance) {
+        Tooltip, Clicking
         this.FastClickActive := true
         this.disableOnMove := disableOnMove
 
@@ -59,6 +61,7 @@ class MiscClickInterface {
     }
 
     DeactivateFastClick() {
+        ToolTip,
         this.FastClickActive := false
 
         ; deactivate timer
