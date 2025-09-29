@@ -44,10 +44,10 @@ scratch := New ScratchInterface("ScratchInc.exe")
 
 ; Import Application specific Module(s)
 #Include %A_ScriptDir%\..\application\game\child_of_light.ahk
+#Include %A_ScriptDir%\..\application\game\fallout_4.ahk
 #Include %A_ScriptDir%\..\application\game\hades_2.ahk
 #Include %A_ScriptDir%\..\application\game\hexcells.ahk
 #Include %A_ScriptDir%\..\application\game\increlution.ahk
-#Include %A_ScriptDir%\..\application\game\fallout_4.ahk
 #Include %A_ScriptDir%\..\application\misc\firefox.ahk
 #Include %A_ScriptDir%\..\application\misc\pandora.ahk
 #Include %A_ScriptDir%\..\application\game\scratch_inc\scratch_inc.ahk
