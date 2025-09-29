@@ -48,10 +48,10 @@ scratch := New ScratchInterface("ScratchInc.exe")
 #Include %A_ScriptDir%\..\application\game\hades_2.ahk
 #Include %A_ScriptDir%\..\application\game\hexcells.ahk
 #Include %A_ScriptDir%\..\application\game\increlution.ahk
-#Include %A_ScriptDir%\..\application\misc\firefox.ahk
-#Include %A_ScriptDir%\..\application\misc\pandora.ahk
 #Include %A_ScriptDir%\..\application\game\scratch_inc\scratch_inc.ahk
 #Include %A_ScriptDir%\..\application\game\space_idle.ahk
+#Include %A_ScriptDir%\..\application\misc\firefox.ahk
+#Include %A_ScriptDir%\..\application\misc\pandora.ahk
 #Include %A_ScriptDir%\..\application\misc\vlc.ahk
 
 ; Include Programming Modules
