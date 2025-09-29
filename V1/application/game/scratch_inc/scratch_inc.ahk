@@ -115,7 +115,7 @@ class LoyaltyMenu Extends Menu {
     buttonMaxColor := "0x3D1B77"
     upgradeReadyX := 90
     upgradeReadyY := 485
-    upgradeReadyColor := "0xA956E0"
+    upgradeReadyColor := "0xA955E0"
 
     buttonList := [
         ; Ordered by priority
@@ -156,9 +156,8 @@ class StoreMenu Extends Menu {
     upgradeReadyX := 93
     upgradeReadyY := 653
     upgradeReadyColor := "0x5FD44A"
-
+    prestigeActive := 1
     yMod := 0
-    prestigeActive := True
 
     buttonList := [
         ; Ordered by priority
@@ -171,13 +170,19 @@ class StoreMenu Extends Menu {
 
 
     checkPrestigeAvailable() {
-        PixelSearch, outX, outY, 2495, 100, 2505, 200, "0x55A946", 0, RGB Fast
-
-        if (ErrorLevel = 1 or ErrorLevel = 2) {
-            return False
-        } else {
+        ImageSearch, outX, outY, 2495, 100, 2509, 200, *50 %A_ScriptDir%\..\application\game\scratch_inc\StoreMenuPrestige_2.png
+        if (ErrorLevel = 0)
             return True
-        }
+
+        ImageSearch, outX, outY, 2495, 100, 2509, 200, *50 %A_ScriptDir%\..\application\game\scratch_inc\StoreMenuPrestige_3.png
+        if (ErrorLevel = 0)
+            return True
+
+        ImageSearch, outX, outY, 2495, 100, 2509, 200, *50 %A_ScriptDir%\..\application\game\scratch_inc\StoreMenuPrestige_4.png
+        If (ErrorLevel = 0)
+            return True
+
+        return False
     }
 
     activate() {
@@ -194,11 +199,19 @@ class CorporationMenu Extends Menu {
     openCoordY := 835
     closeCoordX := 1475
     closeCoordY := 65
+    upgradeReadyX := 94
+    upgradeReadyY := 823
+    upgradeReadyColor := "0xA9A9A9"
 
     yMod := 0
     prestigeActive := True
 
-    buttonList := []
+    buttonList := [
+        ; Ordered by Priority
+        , New Button(1230, 440, "0x000000", "0x2D2D35", True, "5x Points")
+        , New Button(1440, 440, "0x000000", "0x2D2D35", True, "Increase Grid")
+        , New Button(1440, 670, "0x000000", "0x2D2D35", True, "Increase Store Income")]
+
     prestigeButtonList := [New Button(1390, 265, "0x000000", "0x000000", True, "Prestige Corporation")]
 
     checkPrestigeAvailable() {
@@ -211,6 +224,7 @@ class CorporationMenu Extends Menu {
 
     activate() {
         this.TryPrestige()
+        this.TryUpgrade()
     }
 }
 
@@ -224,9 +238,9 @@ class MonopolyMenu Extends Menu {
     prestigeButtonList := [New Button(1380, 255, "0x071020", "0x2D2D35", True, "Prestige Monopoly")]
 
     checkPrestigeAvailable() {
-        readyColor := "0x1F3551"
-        PixelGetColor, readyTest1, 2516, 313, RGB
-        PixelGetColor, readyTest2, 2512, 247, RGB
+        readyColor := "0x1F1E32"
+        PixelGetColor, readyTest1, 2515, 313, RGB
+        PixelGetColor, readyTest2, 2515, 247, RGB
 
         return (readyTest1 = readyColor or readyTest2 = readyColor)
     }
@@ -321,8 +335,9 @@ class Button {
         ClickWait(this.coordX, this.CoordY + yMod, 1, delay)
     }
 
-    activateFull(yMod:=0) {
-        while this.CheckActive(yMod) {
+    activateFull(yMod:=0, maxWait:=1000) {
+        startTime := A_TickCount
+        while this.CheckActive(yMod) and (A_TickCount < (startTime + maxWait)) {
             this.activate(0, yMod)
         }
     }
@@ -331,13 +346,12 @@ class Button {
 
 F5::scratch.playGame()
 F6::
-    PixelSearch, outX12311, outY123151, 2495, 100, 2505, 200, "0x54A546", 5, RGB Fast
-
-    if (ErrorLevel = 1 or ErrorLevel = 2) {
-        MsgBox, % ErrorLevel
-    } else {
-        MsgBox, Found
-    }
+    MsgBox, % A_TickCount
+    return
+F7::
+    ; PixelGetColor, readyTest1, 2516, 313, RGB
+    PixelGetColor, readyTest2xxx, 94, 823, RGB
+    MsgBox, % readyTest2xxx
 F9::Reload
 
 #IfWinActive
