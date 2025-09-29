@@ -1,4 +1,3 @@
-
 #IfWinActive ahk_exe adventure-capitalist.exe
 
 1::adCap.KeepAwake()
