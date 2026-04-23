@@ -5,12 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "ahk",
+            "type": "autohotkey",
             "request": "launch",
             "name": "AutoHotkey v1 Debugger",
-            "program": "C:\\Users\\Patrick\\Programming\\ahk\\ahk\\ahk_v1_desktop.ahk",
-            "stopOnEntry": true,
-            "runtime": "C:\\Program Files\\AutoHotkey\\v1.1.37.02\\AutoHotkeyU64.exe"
+            "program": "C:/Users/Patrick/Programming/ahk/V1/ahk/ahk_v1_desktop.ahk",
+            "stopOnEntry": false,
+            "runtime":  "C:/Program Files/AutoHotkey/v1.1.37.01/AutoHotkeyU64.exe"
         }
     ]
 }
