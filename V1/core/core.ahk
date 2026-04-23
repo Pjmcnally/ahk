@@ -177,7 +177,7 @@ clear_and_send(str) {
 ^!w::Run AutoHotkey "C:\Program Files\AutoHotkey\WindowSpy.ahk"
 ^!b::Run ms-settings:bluetooth
 ^!c::Run "calc"  ; Windows calculator
-
+XButton1::QuickClick.ToggleFastClick(true, 10, 0)
 
 ; Testing Section:
 ; ==============================================================================
@@ -192,7 +192,10 @@ Return
 
 ^!+q::
     while (true) {
-        Click
-        Sleep, 25
+        Click, Down
+        Sleep 50
+        Click, Up
+        Sleep 50
+
     }
 Return
