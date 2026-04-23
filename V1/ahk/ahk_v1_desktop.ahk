@@ -24,16 +24,24 @@ System description: Personal Desktop
 
 ; Auto-Execute Section (Any system specific Auto-Execute commands go here)
 ; ==============================================================================
-;d3 := New diabloInterface("Diablo III")
+; global A := New bigA()
+d3 := New diabloInterface("Diablo III")
 ;d4 := New diabloInterface("Diablo IV")
-hades_2 := New SaveArchive("Hades II", "C:\Users\Patrick\Saved Games\Hades II")
-; pandora := New PandoraInterface()
+pandora := New PandoraInterface()
 ;windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_exe Signal.exe"), New WindowInterface("Microsoft To Do"), New WindowInterface("Pocket Casts Desktop")])
-quickClick := New MiscClickInterface("firefox")
-scratch := New ScratchInterface("ScratchInc.exe")
+quickClick := New MiscClickInterface()
 
 ; Include Section
 ; ==============================================================================
+; Include Classes
+#Include %A_ScriptDir%\..\classes\bigA.ahk
+#Include %A_ScriptDir%\..\classes\button.ahk
+#Include %A_ScriptDir%\..\classes\diabloInterface.ahk
+#Include %A_ScriptDir%\..\classes\miscClickInterface.ahk
+#Include %A_ScriptDir%\..\classes\save_archive.ahk
+#Include %A_ScriptDir%\..\classes\screen.ahk
+#Include %A_ScriptDir%\..\classes\setting.ahk
+
 ; Include Core Modules (core.ahk must be first for the Auto-Execute to work)
 #Include %A_ScriptDir%\..\core\core.ahk
 #Include %A_ScriptDir%\..\core\clipboard.ahk
@@ -44,12 +52,11 @@ scratch := New ScratchInterface("ScratchInc.exe")
 
 ; Import Application specific Module(s)
 #Include %A_ScriptDir%\..\application\game\child_of_light.ahk
-#Include %A_ScriptDir%\..\application\game\fallout_4.ahk
-#Include %A_ScriptDir%\..\application\game\hades_2.ahk
+#Include %A_ScriptDir%\..\application\game\cyberpunk_2077.ahk
+#Include %A_ScriptDir%\..\application\game\diablo3.ahk
 #Include %A_ScriptDir%\..\application\game\hexcells.ahk
-#Include %A_ScriptDir%\..\application\game\increlution.ahk
-#Include %A_ScriptDir%\..\application\game\scratch_inc\scratch_inc.ahk
-#Include %A_ScriptDir%\..\application\game\space_idle.ahk
+#Include %A_ScriptDir%\..\application\game\rocky_idle.ahk
+#Include %A_ScriptDir%\..\application\game\yet_another_incremental_game_about_coding.ahk
 #Include %A_ScriptDir%\..\application\misc\firefox.ahk
 #Include %A_ScriptDir%\..\application\misc\pandora.ahk
 #Include %A_ScriptDir%\..\application\misc\vlc.ahk
@@ -65,11 +72,6 @@ scratch := New ScratchInterface("ScratchInc.exe")
 ; #Include %A_ScriptDir%\..\external\json.ahk
 ; #Include %A_ScriptDir%\..\external\FindText.ahk
 ; #Include %A_ScriptDir%\..\external\OCR.ahk
-
-; Include Classes
-#Include %A_ScriptDir%\..\classes\diabloInterface.ahk
-#Include %A_ScriptDir%\..\classes\miscClickInterface.ahk
-#Include %A_ScriptDir%\..\classes\save_archive.ahk
 
 ; Debug Section
 ; ==============================================================================
