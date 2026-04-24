@@ -177,23 +177,28 @@ return
         SendWait("{WheelUp 15}", 1000) ; Scroll to top of screen (otherwise all click positions will be wrong.)
 
         ; Farm bushes
-        ClickWait(735, 195, 1, 1000)    ; Activate Bushes
+        ClickWait(735, 195, 1, 1000)    ; Activate Bushes View
         ClickWait(965, 760, 1, 2000)    ; Claim All
-        ; Pick one. Comment out all others.
-        ;ClickWait(1065, 955, 1, 1000)   ; Plant Gooseberries
-        ClickWait(1365, 955, 1, 1000)   ; Plant Blueberries
-        ;ClickWait(770, 1335, 1, 1000)   ; Plant Strawberries
-        ;ClickWait(1065, 1335, 1, 1000)   ; Plant Blackberries
-        ;ClickWait(1365, 1335, 1, 1000)   ; Plant Salmonberry
+        ; Randomly select and click bush
+        bushList := [[1065, 955, 1, 1000]     ; Plant Gooseberries
+            , [1365, 955, 1, 1000]          ; Plant Blueberries
+            , [770, 1335, 1, 1000]          ; Plant Strawberries
+            , [1065, 1335, 1, 1000]         ; Plant Blackberries
+            , [1365, 1335, 1, 1000]]        ; Plant Salmonberry
+        Random, RandBush, 1, % bushList.Length()
+        ClickWait(bushList[randBush]*)
 
         ; Farm Trees
         ClickWait(1215, 195, 1, 1000)   ; Activate Bushes
         ClickWait(965, 576, 1, 2000)    ; Claim All
         ; Pick one. Comment out all others.
-        ClickWait(770, 775, 1, 1000)    ; Plant Pine Tree
-        ; ClickWait(1075, 775, 1, 1000)   ; Plant Ebony Tree
-        ; ClickWait(1365, 775, 1, 1000)   ; Plant Eucalyptus Tree
-        ; ClickWait(770, 1160, 1, 1000)   ; Plant Baobab Tree
+        treeList := [[770, 775, 1, 1000]    ; Plant Pine Tree
+            , [1075, 775, 1, 1000]          ; Plant Ebony Tree
+            , [1365, 775, 1, 1000]          ; Plant Eucalyptus Tree
+            , [770, 1160, 1, 1000]]         ; Plant Baobab Tree
+        Random, RandTree, 1, % treeList.Length()
+        ClickWait(treeList[randTree]*)
+
         ; Activate boosts
         ClickWait(2250, 25, 1, 1000)    ; Activate skill boost
         ClickWait(2250, 25, 1, 1000)    ; Activate skill boost
