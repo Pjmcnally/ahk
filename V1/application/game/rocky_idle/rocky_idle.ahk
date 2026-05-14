@@ -44,7 +44,7 @@ test() {
     static rockyObj := New rockyIdle
 
     newTaskInfo := rockyObj.NewTaskAvailable()
-    msgbox, % newTaskInfo.Found
+    msgBox, % newTaskInfo.Found
 }
 
 class rockyIdle {
