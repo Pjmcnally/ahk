@@ -24,7 +24,6 @@ System description: Personal Desktop
 
 ; Auto-Execute Section (Any system specific Auto-Execute commands go here)
 ; ==============================================================================
-; global A := New bigA()
 d3 := New diabloInterface("Diablo III")
 ;d4 := New diabloInterface("Diablo IV")
 pandora := New PandoraInterface()
@@ -55,7 +54,7 @@ quickClick := New MiscClickInterface()
 #Include %A_ScriptDir%\..\application\game\cyberpunk_2077.ahk
 #Include %A_ScriptDir%\..\application\game\diablo3.ahk
 #Include %A_ScriptDir%\..\application\game\hexcells.ahk
-#Include %A_ScriptDir%\..\application\game\rocky_idle.ahk
+#Include %A_ScriptDir%\..\application\game\rocky_idle\rocky_idle.ahk
 #Include %A_ScriptDir%\..\application\game\yet_another_incremental_game_about_coding.ahk
 #Include %A_ScriptDir%\..\application\misc\firefox.ahk
 #Include %A_ScriptDir%\..\application\misc\pandora.ahk
