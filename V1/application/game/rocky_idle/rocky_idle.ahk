@@ -1,39 +1,18 @@
 #IfWinActive ahk_exe Rocky Idle.exe
 
-autoPlay(taskList, maxTaskCount := 0) {
+autoPlay(taskList) {
     static rockyObj := New rockyIdle
-    taskCount := 0
+    rockyObj.slayerTaskCount := 0
 
-    while WinActive("Rocky Idle") and (taskCount < maxTaskCount or maxTaskCount = 0) {
+    while WinActive("Rocky Idle") {
         rockyObj.ActivateBoosts()
 
         if BigA.Includes(taskList, "Slayer") {
-            ToolTip, % "Running AutoSlayer - Navigating to Slayer Page", 10, 10
-            rockyObj.GoToSlayerPage()
-
-            ToolTip, % "Running AutoSlayer - Checking for new task", 10, 10
-            newTaskInfo := rockyObj.NewTaskAvailable()
-            if (newTaskInfo.found) {
-                ToolTip, % "Running AutoSlayer - Getting New Task", 10, 10
-                rockyObj.GetNewTask(newTaskInfo)
-                ToolTip, % "Running AutoSlayer - Getting New Minion", 10, 10
-                rockyObj.GetTaskMinion()
-                taskCount += 1
-            }
-
-            ToolTip, % "Running AutoSlayer - Waiting for task completion - Task: " . taskCount, 10, 10
-            Sleep, 2000
+            rockyObj.RunSlayer()
         }
 
         if BigA.Includes(taskList, "Farming") {
-            ToolTip, % "Running Farming Loop - Activating Screen", 10, 10
-            rockyObj.GoToFarmingPage()
-
-            ToolTip, % "Running Farming Loop - Farming Bushes", 10, 10
-            rockyObj.FarmBushes()
-
-            ToolTip, % "Running Farming Loop - Farming Trees", 10, 10
-            rockyObj.FarmTrees()
+            rockyObj.RunFarm()
         }
     }
 
@@ -47,6 +26,10 @@ test() {
 }
 
 class rockyIdle {
+    __New() {
+        this.slayerTaskCount := 0
+    }
+
     temp() {
         ;     this.screens := {main: New Screen({name: "Main"
         ;         , activateButton: "" ; New Button({<FILL IN>})
@@ -122,45 +105,77 @@ class rockyIdle {
         }
     }
 
+    GetRandomFile(directoryPath) {
+        fileList := []
+        Loop, Files, %directoryPath%\*.*
+        {
+            fileList.Push(A_LoopFileFullPath)
+        }
+        Random, randomIndex, 1, fileList.Length
+        return fileList[randomIndex]
+    }
+
+    RunFarm() {
+        ToolTip, % "Farming: Harvesting Crops", 10, 10
+        this.HarvestFarm()
+
+        ; ToolTip, % "Farming: Planting Bushes", 10, 10
+        ; this.PlantBushes()
+
+        ; ToolTip, % "Farming: Planting Trees", 10, 10
+        ; this.PlantTrees()
+    }
+
+    HarvestFarm() {
+        readyResults := this.ClickImageByName(2320, 250, 2550, 765, "done.png")
+        if (readyResults.Success) {
+            this.GoToFarmingPage()
+            ; claimResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png")
+        }
+    }
+
+    PlantBushes() {
+        ; Check if Bushes already planted
+        findResults := this.FindImageByName(2310, 160, 2550, 1005, "bushes.png")
+        if (!findResults.Success) {
+            this.GoToFarmingPage()
+            randomBush := this.GetRandomFile("%A_ScriptDir%\..\application\game\rocky_idle\images\Bushes\Active")
+            this.clickImage(525, 800, 1425, 1365, randomBush)
+        }
+    }
+
+    PlantTrees() {
+        ; Check if Bushes already planted
+        findResults := this.FindImageByName(2310, 160, 2550, 1005, "treess.png")
+        if (!findResults.Success) {
+            this.GoToFarmingPage()
+            randomBush := this.GetRandomFile("%A_ScriptDir%\..\application\game\rocky_idle\images\Trees\Active")
+            this.clickImage(525, 800, 1425, 1365, randomTree)
+        }
+    }
+
     GoToFarmingPage() {
         ClickWait(55, 545, 1, 1000)     ; Activate farming screen
         ClickWait(1250, 685, 0, 1000)   ; Activate scrollable section of screen
         SendWait("{WheelUp 15}", 1000) ; Scroll to top of screen (otherwise all click positions will be wrong.)
     }
 
-    FarmBushes() {
-        ; Farm bushes
-        ; findResults := this.FindImage(x1, y1, x2, y2, )
-        ClickWait(735, 195, 1, 1000)    ; Activate Bushes View
-        ClickWait(965, 760, 1, 2000)    ; Claim All
+    RunSlayer() {
+        ToolTip, % "AutoSlayer: Navigating to Slayer Page", 10, 10
+        this.GoToSlayerPage()
 
-        ; Randomly select and click bush
-        bushList := [[1065, 955, 1, 1000]     ; Plant Gooseberries
-            , [1365, 955, 1, 1000]          ; Plant Blueberries
-            , [770, 1335, 1, 1000]          ; Plant Strawberries
-            , [1065, 1335, 1, 1000]         ; Plant Blackberries
-            , [1365, 1335, 1, 1000]]        ; Plant Salmonberry
-        Random, RandBush, 1, % bushList.Length()
+        ToolTip, % "AutoSlayer: Checking for new task", 10, 10
+        newTaskInfo := this.NewTaskAvailable()
+        if (newTaskInfo.found) {
+            ToolTip, % "AutoSlayer: Getting New Task", 10, 10
+            this.GetNewTask(newTaskInfo)
+            ToolTip, % "AutoSlayer: Getting New Minion", 10, 10
+            this.GetTaskMinion()
+            this.slayerTaskCount += 1
+        }
 
-        ClickWait(bushList[randBush]*)
-    }
-
-    FarmTrees() {
-        ; Farm Trees
-        ClickWait(1215, 195, 1, 1000)   ; Activate Bushes
-        ClickWait(965, 576, 1, 2000)    ; Claim All
-
-        ; Pick one. Comment out all others.
-        /* Unused trees
-              [770, 775, 1, 1000]           ; Plant Pine Tree
-            , [1075, 775, 1, 1000]          ; Plant Ebony Tree
-            , [1365, 775, 1, 1000]          ; Plant Eucalyptus Tree
-            , [770, 1160, 1, 1000]          ; Plant Baobab Tree
-        */
-        treeList := [[1075, 1160, 1, 1000]]        ; Plant Canary Tree
-        Random, RandTree, 1, % treeList.Length()
-
-        ClickWait(treeList[randTree]*)
+        ToolTip, % "AutoSlayer: Waiting for task completion - Task: " . this.slayerTaskCount, 10, 10
+        Sleep, 2000
     }
 
     GetNewTask(newTaskInfo) {
@@ -194,17 +209,21 @@ class rockyIdle {
     }
 
     NewTaskAvailable() {
-        return this.findImage(530, 1250, 840, 1350, "getTask.png")
+        return this.findImageByName(530, 1250, 840, 1350, "getTask.png")
     }
 
     ActivateCombatBoost() {
-        this.ClickImage(2205, 0, 2280, 110, "combatBoost.png")
-        this.ClickWait(0, 0, 0, 1000) ; Move mouse to neutral position to not block next action
+        result := this.ClickImageByName(2205, 0, 2280, 110, "combatBoost.png")
+        if (result.success) {
+            ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
+        }
     }
 
     ActivateSkillBoost() {
-        this.ClickImage(2205, 0, 2280, 110, "skillBoost.png")
-        this.ClickWait(0, 0, 0, 1000) ; Move mouse to neutral position to not block next action
+        result := this.ClickImageByName(2205, 0, 2280, 110, "skillBoost.png")
+        if (result.success) {
+            ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
+        }
     }
 
     ActivateBoosts() {
@@ -215,24 +234,32 @@ class rockyIdle {
         this.ActivateSkillBoost()
     }
 
-    ClickImage(x1, y1, x2, y2, imageName, retryCount := 0, throwError := false) {
-        results := this.FindImage(x1, y1, x2, y2, imageName, retryCount, throwError)
+    ClickImage(x1, y1, x2, y2, imagePath, retryCount := 0, throwError := false) {
+        results := this.FindImage(x1, y1, x2, y2, imagePath, retryCount, throwError)
         if (results.found) {
             ClickWait(results.x, results.y, 1, 100)
         }
+
+        return results
     }
 
-    FindImage(x1, y1, x2, y2, imageName, retryCount := 0, throwError := false) {
+    ClickImageByName(x1, y1, x2, y2, imageName, retryCount := 0, throwError := false) {
+        results := this.FindImageByName(x1, y1, x2, y2, imageName, retryCount, throwError)
+        if (results.found) {
+            ClickWait(results.x, results.y, 1, 100)
+        }
+
+        return results
+    }
+
+    FindImage(x1, y1, x2, y2, imagePath, retryCount := 0, throwError := false) {
         outX :=
         outY :=
-
-        baseImagePath := "%A_ScriptDir%\..\application\game\rocky_idle\"
-        fullImagePath := baseImagePath . imageName
+        success := false
 
         errorCount := 0
-        success := false
         while errorCount <= retryCount and !success {
-            ImageSearch, outX, outY, x1, y1, x2, y2, *5 %fullImagePath%
+            ImageSearch, outX, outY, x1, y1, x2, y2, *5 %imagePath%
             if ErrorLevel {
                 errorCount += 1
             }
@@ -245,10 +272,17 @@ class rockyIdle {
 
         if (errorCount >= retryCount and throwError ) {
             SoundBeep
-            MsgBox, % "ERROR: Image not found: " . imageName
+            MsgBox, % "ERROR: Image not found: " . imagePath
         }
 
         return {found: success, x: outX, y: outY}
+    }
+
+    FindImageByName(x1, y1, x2, y2, imageName, retryCount := 0, throwError := false) {
+        baseImagePath := A_ScriptDir . "\..\application\game\rocky_idle\images"
+        fullImagePath := baseImagePath . "\" . imageName
+
+        return this.FindImage(x1, y1, x2, y2, fullImagePath, retryCount, throwError)
     }
 }
 
