@@ -43,8 +43,7 @@ autoPlay(taskList, maxTaskCount := 0) {
 test() {
     static rockyObj := New rockyIdle
 
-    newTaskInfo := rockyObj.NewTaskAvailable()
-    msgBox, % newTaskInfo.Found
+    rockyObj.ActivateBoosts()
 }
 
 class rockyIdle {
@@ -200,12 +199,12 @@ class rockyIdle {
 
     ActivateCombatBoost() {
         this.ClickImage(2205, 0, 2280, 110, "combatBoost.png")
-        Sleep, 1000
+        this.ClickWait(0, 0, 0, 1000) ; Move mouse to neutral position to not block next action
     }
 
     ActivateSkillBoost() {
         this.ClickImage(2205, 0, 2280, 110, "skillBoost.png")
-        Sleep, 1000
+        this.ClickWait(0, 0, 0, 1000) ; Move mouse to neutral position to not block next action
     }
 
     ActivateBoosts() {
