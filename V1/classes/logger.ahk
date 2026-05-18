@@ -29,9 +29,13 @@ Class Logger {
         this.WriteLine(text, "WARN")
     }
 
-    WriteError(text, e, notify) {
+    WriteError(text, e := "", notify := false) {
         this.WriteLine(text, "ERROR")
-        this.WriteErrorDetail(e)
+
+        if (e) {
+            this.WriteErrorDetail(e)
+        }
+
         if (notify) {
             SoundPlay, *16  ; https://www.autohotkey.com/docs/commands/SoundPlay.htm
             MsgBox, % text
@@ -40,7 +44,11 @@ Class Logger {
 
     WriteFatal(text, e, notify) {
         this.WriteLine(text, "FATAL")
-        this.WriteErrorDetail(e)
+
+        if (e) {
+            this.WriteErrorDetail(e)
+        }
+
         if (notify) {
             SoundPlay, *16  ; https://www.autohotkey.com/docs/commands/SoundPlay.htm
             MsgBox, % text

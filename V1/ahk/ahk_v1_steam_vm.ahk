@@ -33,14 +33,15 @@ System description: Personal Desktop
 #Include %A_ScriptDir%\..\classes\button.ahk
 #Include %A_ScriptDir%\..\classes\screen.ahk
 #Include %A_ScriptDir%\..\classes\setting.ahk
+#Include %A_ScriptDir%\..\classes\logger.ahk
 
 ; Include Core Modules (core.ahk must be first for the Auto-Execute to work)
 #Include %A_ScriptDir%\..\core\core.ahk
 #Include %A_ScriptDir%\..\core\clipboard.ahk
 #Include %A_ScriptDir%\..\core\files.ahk
-#Include %A_ScriptDir%\..\core\logging.ahk
 #Include %A_ScriptDir%\..\core\strings.ahk
 #Include %A_ScriptDir%\..\core\time.ahk
+
 
 ; Import Application specific Module(s)
 #Include %A_ScriptDir%\..\application\game\rocky_idle\rocky_idle.ahk

@@ -1,7 +1,8 @@
 #IfWinActive ahk_exe Rocky Idle.exe
 
 autoPlay(taskList) {
-    static rockyObj := New rockyIdle
+    static rockyObj := New rockyIdle()
+    rockyObj.displayToolTip()
     rockyObj.slayerTaskCount := 0
 
     while WinActive("Rocky Idle") {
@@ -16,7 +17,7 @@ autoPlay(taskList) {
         }
     }
 
-    ToolTip ; Clear ToolTip
+    rockyObj.hideToolTip()
 }
 
 test() {
@@ -26,8 +27,12 @@ test() {
 }
 
 class rockyIdle {
+    static logger := New Logger("C:\Users\Patrick\Downloads\RockyIdle_logs\" . f_date() . ".log")
+
     __New() {
         this.slayerTaskCount := 0
+        this.slayerTaskStartTick := 0
+        this.slayerTaskTimeout := 2 * 60 * 1000 ; 2 minutes (in milliseconds)
     }
 
     temp() {
@@ -75,111 +80,164 @@ class rockyIdle {
         ;         , topY: 1330
         ;         , botY: 225
         ;         , clickLocation: []
-        ;         , showToolTip: false
         ;         , searchColor: "0x3D8015"})}
-
+        ;
         ;     ; Set time for Rocky Idle Window active check
         ;     This.CheckWindowActiveFreq := 100 ; .1 seconds
-
+        ;
         ;     ; Set timer attribute / Start timer
         ;     This.Timer := ObjBindMethod(this, "CheckWindowActive")
         ;     timer := this.Timer  ; Not sure why this line is necessary but it is.
         ;     SetTimer, % timer, % this.CheckWindowActiveFreq,
-
-        ; displayToolTips() {
-        ;     for key, val in this.buttons {
-        ;         val.displayToolTip()
-        ;     }
-        ; }
-
-        ; hideToolTips() {
-        ;     for key, val in this.buttons {
-        ;         val.hideToolTip()
+        ;
+        ; CheckWindowActive() {
+        ;     if !(WinActive("Rocky Idle")) {
+        ;         this.hideToolTips()
         ;     }
         ; }
     }
 
-    CheckWindowActive() {
-        if !(WinActive("Rocky Idle")) {
-            this.hideToolTips()
-        }
+    displayToolTip() {
+        ToolTip, % "Automation Active. See log file for full detail: " . this.logger.Path, 10, 10
+    }
+
+    hideToolTip() {
+        ToolTip
     }
 
     GetRandomFile(directoryPath) {
+        this.logger.Write("Getting random file from: " . directoryPath)
         fileList := []
         Loop, Files, %directoryPath%\*.*
         {
             fileList.Push(A_LoopFileFullPath)
         }
-        Random, randomIndex, 1, fileList.Length
-        return fileList[randomIndex]
+
+        count := files.Length
+        this.logger.Write("Total Files Found: " . count)
+
+        Random, randomIndex, 1, count
+        selectedFile := fileList[randomIndex]
+        this.logger.Write("Selected file: " . selectedFile)
+
+        return selectedFile
     }
 
     RunFarm() {
-        ToolTip, % "Farming: Harvesting Crops", 10, 10
+        this.logger.write("AutoFarm process started")
         this.HarvestFarm()
-
-        ; ToolTip, % "Farming: Planting Bushes", 10, 10
-        ; this.PlantBushes()
-
-        ; ToolTip, % "Farming: Planting Trees", 10, 10
-        ; this.PlantTrees()
+        this.PlantBushes()
+        this.PlantTrees()
+        this.logger.Write("AutoFarm process complete")
     }
 
     HarvestFarm() {
-        readyResults := this.ClickImageByName(2320, 250, 2550, 765, "done.png")
-        if (readyResults.Success) {
-            this.GoToFarmingPage()
-            ; claimResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png")
+        this.logger.write("Checking for available harvests.")
+        Loop {
+            readyResults := this.ClickImageByName(2320, 250, 2550, 765, "done.png")
+            if (readyResults.Success) {
+                this.logger.Write("Claiming available harvest.")
+                claimResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png")
+
+                this.plantFarm()
+            }
+        } until (!readyResults.success)
+    }
+
+    PlantFarm(type := "") {
+        if (type = "") {
+            this.logger.Write("Type unknown. Finding active type.")
+            bushPageActive := this.FindImageByName(500, 150, 1430, 250, "bushPageActive.png")
+            treePageActive := this.FindImageByName(500, 150, 1430, 250, "treePageActive.png")
+        }
+
+        if (type = "Bush" or bushPageActive.Success) {
+            this.PlantBushes()
+        } else if (type = "Tree" or treePageActive.Success) {
+            this.PlantTrees()
+        } else {
+            this.logger.WriteError("No type specified or found")
+        }
+    }
+
+    CheckInactiveFarm(type) {
+        this.logger.Write("Checking sidebar for missing type: " . type)
+        findResults := this.FindImageByName(2310, 160, 2550, 1005, type . ".png")
+
+        this.logger.Write("Type " . type . " not found in sidebar. Planting " . type)
+        this.GoToFarmingPage(type)
+        this.PlantFarm(type)
+    }
+
+
+    GoToFarmingPage(type := "") {
+        this.logger.Write("Activating farming page")
+        ClickWait(55, 545, 1, 1000)     ; Activate farming screen
+
+        this.logger.Write("Scrolling to top of page")
+        ClickWait(1250, 685, 0, 1000)   ; Activate scrollable section of screen
+        SendWait("{WheelUp 15}", 1000) ; Scroll to top of screen (otherwise all click positions will be wrong.)
+
+        if (type = "bush") {
+            this.WriteLog("Access page for type: " . type)
+            clickWait(760, 200, 1, 1000)
+        } else if (type = "tree") {
+            this.WriteLog("Access page for type: " . type)
+            clickWait(1225, 200, 1, 1000)
         }
     }
 
     PlantBushes() {
-        ; Check if Bushes already planted
-        findResults := this.FindImageByName(2310, 160, 2550, 1005, "bushes.png")
-        if (!findResults.Success) {
-            this.GoToFarmingPage()
-            randomBush := this.GetRandomFile("%A_ScriptDir%\..\application\game\rocky_idle\images\Bushes\Active")
-            this.clickImage(525, 800, 1425, 1365, randomBush)
-        }
+        this.logger.Write("Planting Bushes.")
+        randomBush := this.GetRandomFile("%A_ScriptDir%\..\application\game\rocky_idle\images\Bushes\Active")
+        this.clickImage(525, 800, 1425, 1365, randomBush)
     }
 
     PlantTrees() {
-        ; Check if Bushes already planted
-        findResults := this.FindImageByName(2310, 160, 2550, 1005, "treess.png")
-        if (!findResults.Success) {
-            this.GoToFarmingPage()
-            randomBush := this.GetRandomFile("%A_ScriptDir%\..\application\game\rocky_idle\images\Trees\Active")
-            this.clickImage(525, 800, 1425, 1365, randomTree)
-        }
+        this.logger.Write("Planting Trees.")
+        randomTree := this.GetRandomFile("%A_ScriptDir%\..\application\game\rocky_idle\images\Trees\Active")
+        this.clickImage(525, 800, 1425, 1365, randomTree)
     }
 
-    GoToFarmingPage() {
-        ClickWait(55, 545, 1, 1000)     ; Activate farming screen
-        ClickWait(1250, 685, 0, 1000)   ; Activate scrollable section of screen
-        SendWait("{WheelUp 15}", 1000) ; Scroll to top of screen (otherwise all click positions will be wrong.)
-    }
 
     RunSlayer() {
-        ToolTip, % "AutoSlayer: Navigating to Slayer Page", 10, 10
+        this.logger.Write("Starting AutoSlayer process")
         this.GoToSlayerPage()
 
-        ToolTip, % "AutoSlayer: Checking for new task", 10, 10
         newTaskInfo := this.NewTaskAvailable()
-        if (newTaskInfo.found) {
-            ToolTip, % "AutoSlayer: Getting New Task", 10, 10
-            this.GetNewTask(newTaskInfo)
-            ToolTip, % "AutoSlayer: Getting New Minion", 10, 10
-            this.GetTaskMinion()
-            this.slayerTaskCount += 1
+        if (newTaskInfo.success) {
+            this.GetNewSlayerTask(newTaskInfo)
+            this.AccessSlayerTask()
+            this.GetSlayerTaskMinion()
+        } else {
+            this.CheckForStaleSlayerTask()
         }
-
-        ToolTip, % "AutoSlayer: Waiting for task completion - Task: " . this.slayerTaskCount, 10, 10
         Sleep, 2000
+        this.logger.Write("AutoSlayer process complete")
     }
 
-    GetNewTask(newTaskInfo) {
+    CheckForStaleSlayerTask() {
+        currentTick := A_TickCount
+        currentTaskDuration := A_TickCount - this.slayerTaskStartTick
+
+        this.logger.Write("Checking For Stale Task")
+        this.logger.Write("Current tick: " . currentTick)
+        this.logger.Write("Slayer task start tick: " . this.slayerTaskStartTick)
+        this.logger.Write("Current task duration: " . currentTaskDuration)
+        this.logger.Write("Slayer task timeout: " . this.slayerTaskTimeout)
+
+        if (currentTaskDuration > this.slayerTaskTimeout) {
+            this.logger.WriteWarn("Current task running longer than timeout. Replacing Stale Minion")
+            this.GoToSlayerPage()
+            this.GetSlayerTaskMinion()
+        }
+    }
+
+    GetNewSlayerTask(newTaskInfo) {
+        this.logger.Write("Getting new slayer task.")
         ClickWait(newTaskInfo.x, newTaskInfo.y, 1, 100)
+        this.slayerTaskCount += 1
+        this.logger.Write("Slayer task count: " . this.slayerTaskCount)
         Sleep, 1000
 
         if this.GetScreenshot {
@@ -189,19 +247,22 @@ class rockyIdle {
     }
 
     GoToSlayerPage() {
+        this.logger.Write("Accessing slayer page")
         ClickWait(100, 675, 1, 100)
         Sleep, 100
     }
 
-    getTaskMinion() {
-        this.AccessSlayerTask()
-
+    GetSlayerTaskMinion() {
+        this.logger.Write("Selecting slayer minion to fight.")
         Send, {WheelDown 15}
-        Sleep, 500 ; Wait for scrolling to complete
-        this.ClickImage(500, 1, 2035, 1360, "fight.png")
+        Sleep, 1000 ; Wait for scrolling to complete
+        this.ClickImageByName(500, 1, 2035, 1360, "fight.png")
+        this.slayerTaskStartTic := A_TickCount
+        this.logger.Write("Slayer task started at tick: " . A_TickCount)
     }
 
     AccessSlayerTask() {
+        this.logger.Write("Clicking 'Get Task'")
         taskX := 765
         taskY := 235
         ClickWait(taskX, taskY, 1, 100)
@@ -209,10 +270,12 @@ class rockyIdle {
     }
 
     NewTaskAvailable() {
+        this.logger.Write("Checking if new slayer task available")
         return this.findImageByName(530, 1250, 840, 1350, "getTask.png")
     }
 
     ActivateCombatBoost() {
+        this.logger.Write("Activating combat boost")
         result := this.ClickImageByName(2205, 0, 2280, 110, "combatBoost.png")
         if (result.success) {
             ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
@@ -220,6 +283,7 @@ class rockyIdle {
     }
 
     ActivateSkillBoost() {
+        this.logger.Write("Activating skill boost")
         result := this.ClickImageByName(2205, 0, 2280, 110, "skillBoost.png")
         if (result.success) {
             ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
@@ -227,71 +291,73 @@ class rockyIdle {
     }
 
     ActivateBoosts() {
-        ToolTip, % "Activating combat boost if available", 10, 10
         this.ActivateCombatBoost()
-
-        ToolTip, % "Activating skill boost if available", 10, 10
         this.ActivateSkillBoost()
     }
 
-    ClickImage(x1, y1, x2, y2, imagePath, retryCount := 0, throwError := false) {
-        results := this.FindImage(x1, y1, x2, y2, imagePath, retryCount, throwError)
-        if (results.found) {
+    ClickImage(x1, y1, x2, y2, imagePath, attemptCount := 1, throwError := false) {
+        results := this.FindImage(x1, y1, x2, y2, imagePath, attemptCount, throwError)
+        if (results.success) {
+            this.logger.Write("Clicking image at X: " . results.x . " Y: " . results.y)
             ClickWait(results.x, results.y, 1, 100)
         }
 
         return results
     }
 
-    ClickImageByName(x1, y1, x2, y2, imageName, retryCount := 0, throwError := false) {
-        results := this.FindImageByName(x1, y1, x2, y2, imageName, retryCount, throwError)
-        if (results.found) {
+    ClickImageByName(x1, y1, x2, y2, imageName, attemptCount := 1, throwError := false) {
+        results := this.FindImageByName(x1, y1, x2, y2, imageName, attemptCount, throwError)
+        if (results.success) {
+            this.logger.Write("Clicking image at X: " . results.x . " Y: " . results.y)
             ClickWait(results.x, results.y, 1, 100)
         }
 
         return results
     }
 
-    FindImage(x1, y1, x2, y2, imagePath, retryCount := 0, throwError := false) {
+    FindImage(x1, y1, x2, y2, imagePath, maxTryCount := 1, throwError := false) {
+        this.logger.Write("Searching for image by path: " . imagePath)
+        this.logger.Write("Searching area X1: " . x1 . " Y1: " . y1 . " X2: " . x2 . " Y2: " . y2)
+
         outX :=
         outY :=
         success := false
 
-        errorCount := 0
-        while errorCount <= retryCount and !success {
+        attemptCount := 1
+        while ((attemptCount <= maxTryCount) and !success) {
+            this.logger.Write("Attempt: " . attemptCount)
             ImageSearch, outX, outY, x1, y1, x2, y2, *5 %imagePath%
             if ErrorLevel {
-                errorCount += 1
+                attemptCount += 1
+                this.logger.WriteWarn("Image not found")
             }
             else {
+                this.logger.Write("Image found at X: " . outX . " Y: " . outY)
                 success := true
             }
 
             Sleep, 250
         }
 
-        if (errorCount >= retryCount and throwError ) {
-            SoundBeep
-            MsgBox, % "ERROR: Image not found: " . imagePath
+        if (!success and throwError) {
+            this.logger.WriteError("Image not found after [ " . attemptCount . " ] attempts")
         }
 
-        return {found: success, x: outX, y: outY}
+        return {success: success, x: outX, y: outY}
     }
 
-    FindImageByName(x1, y1, x2, y2, imageName, retryCount := 0, throwError := false) {
+    FindImageByName(x1, y1, x2, y2, imageName, attemptCount := 1, throwError := false) {
+        this.logger.Write("Searching for image by name: " . imageName)
         baseImagePath := A_ScriptDir . "\..\application\game\rocky_idle\images"
         fullImagePath := baseImagePath . "\" . imageName
 
-        return this.FindImage(x1, y1, x2, y2, fullImagePath, retryCount, throwError)
+        return this.FindImage(x1, y1, x2, y2, fullImagePath, attemptCount, throwError)
     }
 }
 
-t::test()
-; Alt-t
-!t::autoPlay(["Slayer"])
-; Shift-Alt-t
-!+t::autoPlay(["Farming"])
-; Shift-Alt-Ctrl-t
-!+^t::autoPlay(["Slayer", "Farming"])
+F1::autoPlay([])
+F2::autoPlay(["Slayer"])
+F3::autoPlay(["Farming"])
+F4::autoPlay(["Slayer", "Farming"])
 
 #IfWinActive ; Clear IfWinActive
