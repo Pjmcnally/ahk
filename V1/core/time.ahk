@@ -14,6 +14,20 @@ milli_to_hhmmss(milli) {
         Returns:
             Str: The formatted string in hh:mm:ss.mil
     */
+    sec := mod(milli //= 1000, 60)
+    min := mod(milli //= 60, 60)
+    hou := milli // 60
+    Return Format("{1:02d}:{2:02d}:{3:02d}", hou, min, sec)
+}
+
+milli_to_hhmmssfff(milli) {
+    /*  A function to convert milliseconds to readable time.
+
+        Args:
+            milli (int): number of milliseconds
+        Returns:
+            Str: The formatted string in hh:mm:ss.mil
+    */
     mil := mod(milli, 1000)
     sec := mod(milli //= 1000, 60)
     min := mod(milli //= 60, 60)

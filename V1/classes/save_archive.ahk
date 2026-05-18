@@ -11,7 +11,7 @@ class SaveArchive {
         this.RootGameFolder := this.RootBackupFolder . gameName
         this.BackupFolder :=  this.RootGameFolder . "\Saves\"
         this.LogFolder := this.RootGameFolder . "\Logs\"
-        this.LogName := this.GameName . "InterfaceLog.txt"
+        this.LogName := this.GameName . "_InterfaceLog.txt"
         logFilePath := this.LogFolder . this.LogName
         this.Log := New Logger(logFilePath)
 
@@ -25,7 +25,7 @@ class SaveArchive {
 
     copyCurrentSaveToBackup() {
         this.Log.Write("--> Copying current save to backup")
-        dest_fold_path := this.BackupFolder . "\Hades_" . f_date("", this.DateTimePattern)
+        dest_fold_path := this.BackupFolder . this.GameName . "_" . f_date("", this.DateTimePattern)
         this.Log.Write("----> Copying " . this.SaveGameFolder . " to " . dest_fold_path)
 
         try {
@@ -40,7 +40,7 @@ class SaveArchive {
     moveCurrentSaveToTemp() {
         this.Log.Write("----> Moving current save to Temp")
         dest_fold_path := this.SaveGameFolder . "_Temp_" . f_date("", this.DateTimePattern)
-        this.Log.Write("------> Copying " . this.SaveGameFolder . " to " . dest_fold_path)
+        this.Log.Write("------> Moving " . this.SaveGameFolder . " to " . dest_fold_path)
 
         try {
             FileMoveDir, % this.SaveGameFolder, % dest_fold_path, R
@@ -60,7 +60,7 @@ class SaveArchive {
         this.moveCurrentSaveToTemp()
         mostRecentFile := this.getMostRecentBackup()
 
-        fullPath := this.BackupFolder . "\" . mostRecentFile
+        fullPath := this.BackupFolder .  mostRecentFile
         this.Log.Write("----> Copying Backup From " . fullPath . " to " . this.SaveGameFolder)
         try {
             FileCopyDir, % fullPath, % this.SaveGameFolder, True
@@ -70,14 +70,15 @@ class SaveArchive {
         }
 
         Sleep, 2000
-        run steam://rungameid/1145360  ; Run Hades
+        ; run steam://rungameid/1145360  ; Run Hades
+        run steam://rungameid/1145350  ; Run Hades 2
     }
 
     getMostRecentBackup() {
         this.Log.Write("----> Getting most recent save from backup")
         mostRecentBackup :=
 
-        regexPattern := "^Hades_" . this.DateTimeRegex . "$"
+        regexPattern := "^" . this.GameName . "_" . this.DateTimeRegex . "$"
         Loop, Files, % this.BackupFolder . "\*", D
         {
             ; Filter to only folders that match the correct pattern

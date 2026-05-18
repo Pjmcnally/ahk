@@ -21,6 +21,9 @@ modules that this module is imported.
 ; Auto-Execute Section (All core Auto-Execute commands should go here)
 ; ==============================================================================
 SendMode Input                      ; Recommended for new scripts due to its superior speed and reliability.
+CoordMode, Mouse, Client            ; Uses consistent CoordMode across all scripts
+CoordMode, Pixel, Client            ; Uses consistent CoordMode across all scripts
+CoordMode, ToolTip, Client          ; Uses consistent CoordMode across all scripts
 SetBatchLines -1                    ; Remove default 10 ms pause from script execution.
 SetTitleMatchMode, 2                ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
 SetWorkingDir, %A_ScriptDir%\..     ; Ensures a consistent starting directory. Relative path to AHK folder from core.ahk.
@@ -32,7 +35,7 @@ GroupAdd, consoles, ahk_exe powershell_ise.exe
 GroupAdd, consoles, ahk_exe Code.exe
 GroupAdd, consoles, ahk_exe WindowsTerminal.exe
 
-check_update_ahk()
+; check_update_ahk()
 
 Return  ; End of Auto-Execute Section
 
@@ -81,8 +84,13 @@ HasVal(haystack, needle) {
     Return 0
 }
 
-SendWait(msg, wait) {
-    Send % msg
+SendWait(msg, wait, r:=false) {
+    if r {
+        SendRaw % msg
+    } else {
+        Send % msg
+    }
+
     Sleep % wait
 }
 
@@ -91,9 +99,9 @@ ClickWait(x, y, num, wait) {
     Sleep, % wait
 }
 
-SendLines(iter, wait:=0) {
+SendLines(iter, wait:=0, r:=false) {
     For index, value in iter {
-        SendWait(value, wait)
+        SendWait(value, wait, r)
         SendWait("{Enter}", wait)
     }
 }
@@ -169,14 +177,25 @@ clear_and_send(str) {
 ^!w::Run AutoHotkey "C:\Program Files\AutoHotkey\WindowSpy.ahk"
 ^!b::Run ms-settings:bluetooth
 ^!c::Run "calc"  ; Windows calculator
-
+XButton1::QuickClick.ToggleFastClick(true, 10, 0)
 
 ; Testing Section:
 ; ==============================================================================
 test_func() {
-    Return
+    Return "Nothing"
 }
+
 
 ^!t::  ; Ctrl-Alt-T for temp function/hotkeys (one-offs uses or testing)
     MsgBox, % test_func()
+Return
+
+^!+q::
+    while (true) {
+        Click, Down
+        Sleep 50
+        Click, Up
+        Sleep 50
+
+    }
 Return

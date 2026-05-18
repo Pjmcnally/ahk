@@ -6,3 +6,6 @@ local*
 
 # External files so I don't duplicate other peoples modules
 external/
+
+# Specific Files
+*.lnk
