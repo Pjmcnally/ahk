@@ -8,16 +8,19 @@ get_dep_remote() {
     */
 
     ; Join with "; " so command is on one line for Windows Terminal
+    livePath := get_script_path("Live")
+    testPath := get_script_path("Test")
+
     str =
     (LTrim Join;`s
-        workon DevOpsLive
+        cd "%livePath%"
         Write-Host
         Write-Host "Updating Live deploy"
         Write-Host "===================="
         git checkout deploy
         git fetch --all --prune
         git pull
-        workon DevOpsTest;
+        cd "%testPath%"
         Write-Host
         Write-Host "Updating Test master"
         Write-Host "===================="
@@ -53,7 +56,7 @@ get_dep_local() {
     ; Join with "; " so command is on one line for Windows Terminal
     str =
     (LTrim Join;`s
-        workon DevOps
+        cd "~\Programming\DevOps"
         Write-Host
         Write-Host "Pulling changes to master"
         Write-Host "========================="

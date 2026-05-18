@@ -20,11 +20,12 @@ format_db_for_jira() {
     */
     res := ""
     CrLf := "`r`n"
+    div_char := "|"
     str := Clipboard
+    headerBreak := "---"
 
     Loop, parse, str, `n, `r
     {
-        div_char := (A_Index == 1) ? "||" : "|"  ; || in header. | elsewhere.
         Loop, Parse, A_LoopField, `t
         {
             If (A_Index == 1) {  ; If first elem precede with div char
@@ -33,6 +34,18 @@ format_db_for_jira() {
             res := res . A_LoopField . div_char
         }
         res := res . CrLf
+
+        ; Add requires 2nd line to designate table. Should look like: |---|---|---|...
+        if (A_Index == 1) { ; Only do this after the first (header) line.
+            Loop, Parse, A_LoopField, `t
+            {
+                If (A_Index == 1) {  ; If first elem precede with div char
+                    res := res . div_char
+                }
+                res := res . headerBreak . div_char
+            }
+            res := res . CrLf
+        }
     }
 
     paste_contents(res)
@@ -128,7 +141,7 @@ time_entry(ticket, message, start_time:="", end_time="") {
         }
         SendWait(end_time, wait)
     }
-    SendWait("{Tab 2}", wait)
+    SendWait("{Tab 3}", wait)
 }
 
 stop_using_pm_in_the_morning() {
@@ -172,6 +185,7 @@ stop_using_pm_in_the_morning() {
 :coX:mday::time_entry("TASK-121", "Daily Huddle", "10:00 AM", "10:30 AM")
 :coX:monb::time_entry("TASK-1484", "Daily Onboarding Standup", "1:00 PM", "1:15 PM")
 ; Monday
+:coX:mplan::time_entry("Task-121", "Weekly Planning Meeting", "9:30 AM", "10:00 AM")
 :coX:malldev::time_entry("TASK-108", "Weekly All Dev Meeting", "10:30 AM", "11:00 AM")
 ; Tuesdays
 :coX:mdevcheck::time_entry("Task-108", "Weekly Dev Check-In", "9:00 AM", "9:30 AM")
@@ -191,10 +205,10 @@ stop_using_pm_in_the_morning() {
 :coX:tadam::time_entry("TASK-1223", "Investigate and resolve request")    ; Questions from Adam
 :coX:tkarl::time_entry("TASK-1244", "Investigate and resolve request")    ; Questions from Karl J
 :coX:tgrace::time_entry("TASK-1581", "Investigate and resolve request")   ; Questions from Grace
+:coX:tjim::time_entry("TASK-1884", "Investigate and resolve request")   ; Questions from Jim H
 :coX:temail::time_entry("TASK-205", "Manage general emails received by ")
 :coX:ttest::time_entry("TASK-135", "Clean up errors in Test")
 :coX:ttrain::time_entry("TASK-173", "Misc. Training")
-:coX:tweek::time_entry("TASK-1501", "Weekly update report for Grace")
 :coX:tdoc::time_entry("TASK-150", "Update documentation for ")
 
 ; Misc shortcuts
