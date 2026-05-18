@@ -29,7 +29,7 @@ send_outlook_email(subject, body, recipients := "", cc_recipients := "") {
 ; Hotstrings
 ; ==============================================================================
 ; Miscellaneous
-:co:b1::BACKLOG 001!o
+:co:b1::BACKLOG 001
 
 ; Signature/Ticket Hotstrings
 :co:ifq::If there are any questions, or if there is anything more we can do to help, please let us know.
