@@ -286,7 +286,7 @@ class rockyIdle {
 
     FindImageByName(x1, y1, x2, y2, imageName, attemptCount := 1, throwError := false) {
         this.logger.Write("Searching for image by name: " . imageName)
-        baseImagePath := A_ScriptDir . "\..\application\game\rocky_idle\images"
+        baseImagePath := A_WorkingDir . "Game\RockyIdle\Images"
         fullImagePath := baseImagePath . "\" . imageName
 
         return this.FindImage(x1, y1, x2, y2, fullImagePath, attemptCount, throwError)
