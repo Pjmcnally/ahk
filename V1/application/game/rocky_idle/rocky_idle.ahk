@@ -35,68 +35,6 @@ class rockyIdle {
         this.slayerTaskTimeout := 2 * 60 * 1000 ; 2 minutes (in milliseconds)
     }
 
-    temp() {
-        ;     this.screens := {main: New Screen({name: "Main"
-        ;         , activateButton: "" ; New Button({<FILL IN>})
-        ;         , buttonList: ""})} ; { New Button ({<FILL IN>}) }
-        ;     this.buttons := {skillBoostButton: New Button({ name: "SkillBoostButton"
-        ;         , leftX: 2225
-        ;         , rightX: 2270
-        ;         , topY: 10
-        ;         , botY: 55
-        ;         , clickLocation: [2250, 25]
-        ;         , searchColor: "0x2F53A8"})
-        ;     , slayerBoostButton: New Button({ name: "SlayerBoostButton"
-        ;         , leftX: 2225
-        ;         , rightX: 2270
-        ;         , topY: 60
-        ;         , botY: 105
-        ;         , clickLocation: [2250, 75]
-        ;         , searchColor: "0x2F53A8"})
-        ;     , newTaskButton: New Button({ name: "newTaskButton"
-        ;         , leftX: 535
-        ;         , rightX: 835
-        ;         , topY: 1255
-        ;         , botY: 1315
-        ;         , clickLocation: [675, 1285]
-        ;         , searchColor: "0x3D8015"})
-        ;     , slayerButton: New Button({ name: "SlayerButton"
-        ;         , leftX: 10
-        ;         , rightX: 120
-        ;         , topY: 655
-        ;         , botY: 690
-        ;         , clickLocation: [70, 670]
-        ;         , searchColor: ""})
-        ;     , slayerCurrentTaskButton: New Button({ name: "SlayerCurrentTaskButton"
-        ;         , leftX: 740
-        ;         , rightX: 780
-        ;         , topY: 225
-        ;         , botY: 255
-        ;         , clickLocation: [760, 240]
-        ;         , searchColor: ""})
-        ;     , slayerSelectEnemyButton: New Button({ name: "SlayerSelectEnemyButton"
-        ;         , leftX: 550
-        ;         , rightX: 1270
-        ;         , topY: 1330
-        ;         , botY: 225
-        ;         , clickLocation: []
-        ;         , searchColor: "0x3D8015"})}
-        ;
-        ;     ; Set time for Rocky Idle Window active check
-        ;     This.CheckWindowActiveFreq := 100 ; .1 seconds
-        ;
-        ;     ; Set timer attribute / Start timer
-        ;     This.Timer := ObjBindMethod(this, "CheckWindowActive")
-        ;     timer := this.Timer  ; Not sure why this line is necessary but it is.
-        ;     SetTimer, % timer, % this.CheckWindowActiveFreq,
-        ;
-        ; CheckWindowActive() {
-        ;     if !(WinActive("Rocky Idle")) {
-        ;         this.hideToolTips()
-        ;     }
-        ; }
-    }
-
     displayToolTip() {
         ToolTip, % "Automation Active. See log file for full detail: " . this.logger.Path, 10, 10
     }
