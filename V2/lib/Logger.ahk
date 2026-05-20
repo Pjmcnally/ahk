@@ -1,5 +1,6 @@
 ﻿Class Logger {
     __New(path) {
+        this.Path := path
         this.DateFormat := "yyyy/MM/dd HH:mm:ss"
         this.DefaultLogLevel := "INFO"
         this.FileObject := FileOpen(path, "a", "UTF-8-RAW")
