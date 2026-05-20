@@ -6,7 +6,7 @@
     }
 
     WriteLine(text, level) {
-        timeString := FormatTime("", this.DateFormat)
+        timeString := FormatTime(A_Now, this.DateFormat)
         logLevel := Format("{:-5}", level)
         output := timeString . " " . logLevel . " " . text . "`r`n"
 

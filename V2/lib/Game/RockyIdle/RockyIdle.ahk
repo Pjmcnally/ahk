@@ -34,7 +34,7 @@ test() {
 
 class rockyIdle {
     __New() {
-        this.logger := Logger("C:\Users\Patrick\Downloads\RockyIdle_logs\" . FormatTime("yyyy-MM-dd") . ".log")
+        this.logger := Logger("C:\Users\Patrick\Downloads\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log")
         this.slayerTaskCount := 0
         this.slayerTaskStartTick := 0
         this.slayerTaskTimeout := 2 * 60 * 1000 ; 2 minutes (in milliseconds)
