@@ -33,6 +33,8 @@ send_outlook_email(subject, body, recipients := "", cc_recipients := "") {
 
 ; Signature/Ticket Hotstrings
 :co:ifq::If there are any questions, or if there is anything more we can do to help, please let us know.
+:co:ifqwe::If there are any questions, or if there is anything more we can do to help, please let us know.
+:co:ifqme::If there are any questions, or if there is anything more I can do to help, please let me know.
 :Xo:psig::SendLines(["Patrick McNally", "IP Technology Specialist 3", get_my_bhip_email()])
 
 ; Excel Hotstring
