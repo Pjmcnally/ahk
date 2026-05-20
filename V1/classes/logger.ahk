@@ -1,7 +1,7 @@
 Class Logger {
     __New(path) {
         this.Path := path
-        this.DateFormat := "yyyy/MM/dd HH:mm:ss"
+        this.DateFormat := "yyyy-MM-dd HH:mm:ss"
         this.DefaultLogLevel := "INFO"
     }
 
