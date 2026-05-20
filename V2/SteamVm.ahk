@@ -21,6 +21,7 @@ System description: Personal Desktop
 #Warn All                           ; Enable warnings to assist with detecting common errors. (More explicit)
 #HotString EndChars `n `t           ; Limits hotstring ending characters to {Enter}{Tab}{Space}
 SetWorkingDir A_ScriptDir           ; Ensures consistent location for all relative references
+FileEncoding "UTF-8-RAW"                ; Set default file encoding to UTF-8 (without BOM)
 
 ; Auto-Execute Section (Any system specific Auto-Execute commands go here)
 ; ==============================================================================

@@ -27,7 +27,7 @@ autoPlay(taskList) {
         throw
     } finally {
         if(isobject(rockyObj)) {
-            rockyObj.hideToolTip()
+            rockyObj.Dispose()
         }
     }
 }
@@ -50,7 +50,7 @@ class rockyIdle {
         this.slayerTaskCount := 0
         this.slayerTaskStartTick := 0
         this.slayerTaskTimeout := 2 * 60 * 1000 ; 2 minutes (in milliseconds)
-        this.baseImagePath := A_WorkingDir . "\Game\RockyIdle\Images"
+        this.baseImagePath := A_WorkingDir . "\lib\Game\RockyIdle\Images"
     }
 
     displayToolTip() {
@@ -278,7 +278,7 @@ class rockyIdle {
         while ((attemptCount <= maxTryCount) and !success) {
             this.logger.Write("Attempt: " . attemptCount)
 
-            if (ImageSearch(&outX, &outY, x1, y1, x2, y2, "*5 " imagePath)) {
+            if (ImageSearch(&outX, &outY, x1, y1, x2, y2, "*5 " . imagePath)) {
                 this.logger.Write("Image found at X: " . outX . " Y: " . outY)
                 success := true
             } else {
@@ -301,6 +301,14 @@ class rockyIdle {
         fullImagePath := this.baseImagePath . "\" . imageName
 
         return this.FindImage(x1, y1, x2, y2, fullImagePath, attemptCount, throwError)
+    }
+
+    Dispose() {
+        this.hideToolTip()
+
+        if (isobject(this.logger)) {
+            this.logger.Dispose()
+        }
     }
 }
 

@@ -1,8 +1,8 @@
 ﻿Class Logger {
     __New(path) {
-        this.Path := path
         this.DateFormat := "yyyy/MM/dd HH:mm:ss"
         this.DefaultLogLevel := "INFO"
+        this.FileObject := FileOpen(path, "a", "UTF-8-RAW")
     }
 
     WriteLine(text, level) {
@@ -10,7 +10,8 @@
         logLevel := Format("{:-5}", level)
         output := timeString . " " . logLevel . " " . text . "`r`n"
 
-        FileAppend(output, this.Path)
+        this.FileObject.Write(output)
+        this.FileObject.Read(0) ; Flush the file buffer to ensure the log is written to disk immediately
     }
 
     Write(text) {
@@ -67,6 +68,12 @@
         }
         if (e.File or e.Line) {
             this.WriteLine(e.File . " " . e.Line, "ERROR")
+        }
+    }
+
+    Dispose() {
+        if (this.FileObject) {
+            this.FileObject.Close()
         }
     }
 }
