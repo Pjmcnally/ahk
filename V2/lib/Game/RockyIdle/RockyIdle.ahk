@@ -7,23 +7,29 @@
 #HotIf WinActive("ahk_exe Rocky Idle.exe", )
 
 autoPlay(taskList) {
-    static rockyObj := rockyIdle()
-    rockyObj.displayToolTip()
-    rockyObj.slayerTaskCount := 0
+    try {
+        static rockyObj := rockyIdle()
+        rockyObj.displayToolTip()
+        rockyObj.slayerTaskCount := 0
 
-    while WinActive("Rocky Idle") {
-        rockyObj.ActivateBoosts()
+        while WinActive("Rocky Idle") {
+            rockyObj.ActivateBoosts()
 
-        if taskList.Includes("Slayer") {
-            rockyObj.RunSlayer()
+            if taskList.Includes("Slayer") {
+                rockyObj.RunSlayer()
+            }
+
+            if taskList.Includes("Farming") {
+                rockyObj.RunFarm()
+            }
         }
-
-        if taskList.Includes("Farming") {
-            rockyObj.RunFarm()
+    } catch {
+        throw
+    } finally {
+        if(isobject(rockyObj)) {
+            rockyObj.hideToolTip()
         }
     }
-
-    rockyObj.hideToolTip()
 }
 
 test() {
@@ -34,10 +40,17 @@ test() {
 
 class rockyIdle {
     __New() {
-        this.logger := Logger("C:\Users\Patrick\Downloads\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log")
+        try {
+            this.logger := Logger("C:\Users\Patrick\Downloads\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log")
+        } catch {
+            MsgBox("Failed to initialize logger. Error: " . Error.Message)
+            throw
+        }
+
         this.slayerTaskCount := 0
         this.slayerTaskStartTick := 0
         this.slayerTaskTimeout := 2 * 60 * 1000 ; 2 minutes (in milliseconds)
+        this.baseImagePath := A_WorkingDir . "\Game\RockyIdle\Images"
     }
 
     displayToolTip() {
@@ -132,13 +145,13 @@ class rockyIdle {
 
     PlantBushes() {
         this.logger.Write("Planting Bushes.")
-        randomBush := this.GetRandomFile("%A_ScriptDir%\..\application\game\rocky_idle\images\Bushes\Active")
+        randomBush := this.GetRandomFile(this.baseImagePath . "\Bushes\Active")
         this.clickImage(525, 800, 1425, 1365, randomBush)
     }
 
     PlantTrees() {
         this.logger.Write("Planting Trees.")
-        randomTree := this.GetRandomFile("%A_ScriptDir%\..\application\game\rocky_idle\images\Trees\Active")
+        randomTree := this.GetRandomFile(this.baseImagePath . "\Trees\Active")
         this.clickImage(525, 800, 1425, 1365, randomTree)
     }
 
@@ -257,21 +270,20 @@ class rockyIdle {
         this.logger.Write("Searching for image by path: " . imagePath)
         this.logger.Write("Searching area X1: " . x1 . " Y1: " . y1 . " X2: " . x2 . " Y2: " . y2)
 
-        outX := ""
-        outY := ""
+        outX := unset
+        outY := unset
         success := false
 
         attemptCount := 1
         while ((attemptCount <= maxTryCount) and !success) {
             this.logger.Write("Attempt: " . attemptCount)
-            ErrorLevel := !ImageSearch(&outX, &outY, x1, y1, x2, y2, "*5 " imagePath)
-            if ErrorLevel {
-                attemptCount += 1
-                this.logger.WriteWarn("Image not found")
-            }
-            else {
+
+            if (ImageSearch(&outX, &outY, x1, y1, x2, y2, "*5 " imagePath)) {
                 this.logger.Write("Image found at X: " . outX . " Y: " . outY)
                 success := true
+            } else {
+                attemptCount += 1
+                this.logger.WriteWarn("Image not found")
             }
 
             Sleep(250)
@@ -286,8 +298,7 @@ class rockyIdle {
 
     FindImageByName(x1, y1, x2, y2, imageName, attemptCount := 1, throwError := false) {
         this.logger.Write("Searching for image by name: " . imageName)
-        baseImagePath := A_WorkingDir . "Game\RockyIdle\Images"
-        fullImagePath := baseImagePath . "\" . imageName
+        fullImagePath := this.baseImagePath . "\" . imageName
 
         return this.FindImage(x1, y1, x2, y2, fullImagePath, attemptCount, throwError)
     }
