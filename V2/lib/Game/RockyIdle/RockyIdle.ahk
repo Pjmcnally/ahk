@@ -32,12 +32,6 @@ autoPlay(taskList) {
     }
 }
 
-test() {
-    static rockyObj := rockyIdle()
-
-    rockyObj.ActivateBoosts()
-}
-
 class rockyIdle {
     __New() {
         try {
