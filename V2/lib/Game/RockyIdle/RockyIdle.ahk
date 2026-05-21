@@ -26,7 +26,7 @@ autoPlay(taskList) {
     } catch {
         throw
     } finally {
-        if(isobject(rockyObj)) {
+        if(IsSet(rockyObj) and IsObject(rockyObj)) {
             rockyObj.Dispose()
         }
     }
@@ -82,15 +82,20 @@ class rockyIdle {
 
     HarvestFarm() {
         this.logger.WriteInfo("Checking for available harvests.")
-        Loop{
-            readyResults := this.ClickImageByName(2320, 250, 2550, 765, "done.png")
-            if (readyResults.Success) {
-                this.logger.WriteInfo("Claiming available harvest.")
-                claimResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png", 1500)
 
-                this.plantFarm()
-            }
-        } until (!readyResults.success)
+        this.GoToFarmingPage("Bush")
+        this.Logger.WriteInfo("Checking for harvestable bushes.")
+        harvestBushesResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png", 1500)
+        if (harvestBushesResults.Success) {
+            this.plantFarm("Bush")
+        }
+
+        this.GoToFarmingPage("Tree")
+        this.logger.WriteInfo("Checking for harvestable trees.")
+        harvestTreesResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png", 1500)
+        if (harvestTreesResults.Success) {
+            this.plantFarm("Tree")
+        }
     }
 
     PlantFarm(type := "") {
@@ -114,13 +119,13 @@ class rockyIdle {
             return
         }
 
-        this.logger.WriteDebug("Checking sidebar for missing type: " . type)
+        this.logger.WriteInfo("Checking sidebar for missing type: " . type)
         findResults := this.FindImageByName(2310, 160, 2550, 1005, type . "SidebarActive.png")
 
         if (findResults.Success) {
-            this.logger.WriteDebug("Type " . type . " found in sidebar. No action needed.")
+            this.logger.WriteInfo("Type " . type . " found in sidebar. No action needed.")
         } else {
-            this.logger.WriteDebug("Type " . type . " not found in sidebar. Planting " . type)
+            this.logger.WriteInfo("Type " . type . " not found in sidebar. Planting " . type)
             this.GoToFarmingPage(type)
             this.PlantFarm(type)
         }
@@ -227,18 +232,24 @@ class rockyIdle {
     }
 
     ActivateCombatBoost() {
-        this.logger.WriteInfo("Activating combat boost")
+        this.logger.WriteInfo("Checking Combat Boost")
         result := this.ClickImageByName(2205, 0, 2280, 110, "combatBoost.png")
         if (result.success) {
+            this.logger.WriteInfo("Activating combat boost")
             ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
+        } else {
+            this.logger.WriteInfo("Combat boost not found. It may already be active or unavailable.")
         }
     }
 
     ActivateSkillBoost() {
-        this.logger.WriteInfo("Activating skill boost")
+        this.logger.WriteInfo("Checking Skill Boost")
         result := this.ClickImageByName(2205, 0, 2280, 110, "skillBoost.png")
         if (result.success) {
+            this.logger.WriteInfo("Activating skill boost")
             ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
+        } else {
+            this.logger.WriteInfo("Skill boost not found. It may already be active or unavailable.")
         }
     }
 
@@ -268,7 +279,7 @@ class rockyIdle {
     }
 
     FindImage(x1, y1, x2, y2, imagePath, maxTryCount := 1, throwError := false) {
-        this.logger.WriteInfo("Searching for image by path: " . imagePath)
+        this.logger.WriteDebug("Searching for image by path: " . imagePath)
         this.logger.WriteDebug("Searching area X1: " . x1 . " Y1: " . y1 . " X2: " . x2 . " Y2: " . y2)
 
         outX := unset
@@ -284,7 +295,7 @@ class rockyIdle {
                 success := true
             } else {
                 attemptCount += 1
-                this.logger.WriteWarn("Image not found")
+                this.logger.WriteDebug("Image not found")
             }
 
             Sleep(250)
