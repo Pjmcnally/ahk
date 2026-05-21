@@ -82,8 +82,7 @@ class rockyIdle {
     RunFarm() {
         this.logger.write("AutoFarm process started")
         this.HarvestFarm()
-        this.PlantBushes()
-        this.PlantTrees()
+        this.CheckInactiveFarm()
         this.logger.Write("AutoFarm process complete")
     }
 
@@ -103,20 +102,24 @@ class rockyIdle {
     PlantFarm(type := "") {
         if (type = "") {
             this.logger.Write("Type unknown. Finding active type.")
-            bushPageActive := this.FindImageByName(500, 150, 1430, 250, "bushPageActive.png")
-            treePageActive := this.FindImageByName(500, 150, 1430, 250, "treePageActive.png")
         }
 
-        if (type = "Bush" or bushPageActive.Success) {
+        if (type = "Bush" or this.FindImageByName(500, 150, 1430, 250, "bushPageActive.png").Success) {
             this.PlantBushes()
-        } else if (type = "Tree" or treePageActive.Success) {
+        } else if (type = "Tree" or this.FindImageByName(500, 150, 1430, 250, "treePageActive.png").Success) {
             this.PlantTrees()
         } else {
             this.logger.WriteError("No type specified or found")
         }
     }
 
-    CheckInactiveFarm(type) {
+    CheckInactiveFarm(type := "Both") {
+        if (type = "Both") {
+            this.CheckInactiveFarm("Bush")
+            this.CheckInactiveFarm("Tree")
+            return
+        }
+
         this.logger.Write("Checking sidebar for missing type: " . type)
         findResults := this.FindImageByName(2310, 160, 2550, 1005, type . ".png")
 
