@@ -92,7 +92,7 @@ class rockyIdle {
             readyResults := this.ClickImageByName(2320, 250, 2550, 765, "done.png")
             if (readyResults.Success) {
                 this.logger.Write("Claiming available harvest.")
-                claimResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png")
+                claimResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png", 1500)
 
                 this.plantFarm()
             }
@@ -253,7 +253,7 @@ class rockyIdle {
         this.ActivateSkillBoost()
     }
 
-    ClickImage(x1, y1, x2, y2, imagePath, attemptCount := 1, throwError := false) {
+    ClickImage(x1, y1, x2, y2, imagePath, delay := 100, attemptCount := 1, throwError := false) {
         results := this.FindImage(x1, y1, x2, y2, imagePath, attemptCount, throwError)
         if (results.success) {
             this.logger.Write("Clicking image at X: " . results.x . " Y: " . results.y)
@@ -263,11 +263,11 @@ class rockyIdle {
         return results
     }
 
-    ClickImageByName(x1, y1, x2, y2, imageName, attemptCount := 1, throwError := false) {
+    ClickImageByName(x1, y1, x2, y2, imageName, delay := 100, attemptCount := 1, throwError := false) {
         results := this.FindImageByName(x1, y1, x2, y2, imageName, attemptCount, throwError)
         if (results.success) {
             this.logger.Write("Clicking image at X: " . results.x . " Y: " . results.y)
-            ClickWait(results.x, results.y, 1, 100)
+            ClickWait(results.x, results.y, 1, delay)
         }
 
         return results
