@@ -121,7 +121,7 @@ class rockyIdle {
         }
 
         this.logger.Write("Checking sidebar for missing type: " . type)
-        findResults := this.FindImageByName(2310, 160, 2550, 1005, type . ".png")
+        findResults := this.FindImageByName(2310, 160, 2550, 1005, type . "SidebarActive.png")
 
         this.logger.Write("Type " . type . " not found in sidebar. Planting " . type)
         this.GoToFarmingPage(type)
