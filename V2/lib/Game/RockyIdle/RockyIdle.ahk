@@ -138,10 +138,10 @@ class rockyIdle {
         SendWait("{WheelUp 15}", 1000) ; Scroll to top of screen (otherwise all click positions will be wrong.)
 
         if (type = "bush") {
-            this.logger.WriteLog("Access page for type: " . type)
+            this.logger.Write("Access page for type: " . type)
             clickWait(760, 200, 1, 1000)
         } else if (type = "tree") {
-            this.logger.WriteLog("Access page for type: " . type)
+            this.logger.Write("Access page for type: " . type)
             clickWait(1225, 200, 1, 1000)
         }
     }
