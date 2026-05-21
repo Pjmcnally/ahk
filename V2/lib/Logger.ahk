@@ -1,30 +1,40 @@
 ﻿Class Logger {
-    __New(path) {
+    static logLevels := {TRACE: 1, DEBUG: 2, INFO: 3, WARN: 4, ERROR: 5, FATAL: 6}
+
+    __New(path, logLevel := "INFO") {
         this.Path := path
         this.DateFormat := "yyyy/MM/dd HH:mm:ss"
         this.DefaultLogLevel := "INFO"
+        this.LogLevel := logLevel
         this.FileObject := FileOpen(path, "a", "UTF-8-RAW")
     }
 
     WriteLine(text, level) {
-        timeString := FormatTime(A_Now, this.DateFormat)
-        logLevel := Format("{:-5}", level)
-        output := timeString . " " . logLevel . " " . text . "`r`n"
+        ; Only write to the log if the log level of the message is greater than or equal to the current log level of the logger
+        if (Logger.logLevels[level] >= Logger.logLevels[this.LogLevel]) {
+            timeString := FormatTime(A_Now, this.DateFormat)
+            logLevel := Format("{:-5}", level)
+            output := timeString . " " . logLevel . " " . text . "`r`n"
 
-        this.FileObject.Write(output)
-        this.FileObject.Read(0) ; Flush the file buffer to ensure the log is written to disk immediately
+            this.FileObject.Write(output)
+            this.FileObject.Read(0) ; Flush the file buffer to ensure the log is written to disk immediately
+        }
     }
 
     Write(text) {
         this.WriteLine(text, this.DefaultLogLevel)
     }
 
-    WriteInfo(text) {
-        this.WriteLine(text, "INFO")
+    WriteTrace(text) {
+        this.WriteLine(text, "TRACE")
     }
 
     WriteDebug(text) {
         this.WriteLine(text, "DEBUG")
+    }
+
+    WriteInfo(text) {
+        this.WriteLine(text, "INFO")
     }
 
     WriteWarn(text) {
