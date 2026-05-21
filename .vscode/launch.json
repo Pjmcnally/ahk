@@ -13,12 +13,12 @@
             "runtime":  "C:/Program Files/AutoHotkey/v1.1.37.01/AutoHotkeyU64.exe"
         },
         {
-            "type": "autohotkey",
+            "type": "ahk2",
             "request": "launch",
-            "name": "AhkV1 - Steam VM",
-            "program": "C:/Users/Patrick/Programming/ahk/V1/ahk/ahk_v1_steam_vm.ahk",
+            "name": "AhkV2 - SteamVm",
+            "program": "\\\\desktop-ct1hsnq\\Programming\\ahk\\V2\\SteamVm.ahk",
             "stopOnEntry": false,
-            "runtime":  "C:/Program Files/AutoHotkey/AutoHotkeyU64.exe"
+            "cwd": "\\\\desktop-ct1hsnq\\Programming\\ahk\\V2",
         }
     ]
 }

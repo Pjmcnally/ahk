@@ -8,7 +8,7 @@
 
 autoPlay(taskList) {
     try {
-        static rockyObj := rockyIdle()
+        rockyObj := rockyIdle()
         rockyObj.displayToolTip()
         rockyObj.slayerTaskCount := 0
 
@@ -316,6 +316,9 @@ class rockyIdle {
         if (isobject(this.logger)) {
             this.logger.Dispose()
         }
+
+        this.logger := ""
+        this.Base := ""
     }
 }
 

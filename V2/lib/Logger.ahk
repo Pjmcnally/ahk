@@ -91,5 +91,7 @@
         if (this.FileObject) {
             this.FileObject.Close()
         }
+
+        this.Base := ""
     }
 }
