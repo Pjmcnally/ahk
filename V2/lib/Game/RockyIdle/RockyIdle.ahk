@@ -42,9 +42,9 @@ class rockyIdle {
     __New() {
         try {
             this.logger := Logger("C:\Users\Patrick\Downloads\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log", "INFO")
-        } catch {
-            MsgBox("Failed to initialize logger. Error: " . Error.Message)
-            throw
+        } catch Error as e {
+            MsgBox("Failed to initialize logger. Error: " . e.Message)
+            throw e
         }
 
         this.slayerTaskCount := 0

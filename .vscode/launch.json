@@ -16,9 +16,8 @@
             "type": "ahk2",
             "request": "launch",
             "name": "AhkV2 - SteamVm",
-            "program": "\\\\desktop-ct1hsnq\\Programming\\ahk\\V2\\SteamVm.ahk",
-            "stopOnEntry": false,
-            "cwd": "\\\\desktop-ct1hsnq\\Programming\\ahk\\V2",
+            "program": "${workspaceFolder}/V2/SteamVm.ahk",
+            "stopOnEntry": false
         }
     ]
 }

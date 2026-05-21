@@ -1,5 +1,13 @@
 ﻿Class Logger {
-    static logLevels := {TRACE: 1, DEBUG: 2, INFO: 3, WARN: 4, ERROR: 5, FATAL: 6, OVER: 7}
+    static logLevels := Map(
+        "TRACE", 1,
+        "DEBUG", 2,
+        "INFO",  3,
+        "WARN",  4,
+        "ERROR", 5,
+        "FATAL", 6,
+        "OVER",  7
+    )
 
     __New(path, logLevel := "INFO") {
         this.Path := path
