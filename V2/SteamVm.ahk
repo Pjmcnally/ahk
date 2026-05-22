@@ -46,5 +46,3 @@ FileEncoding "UTF-8-RAW"                ; Set default file encoding to UTF-8 (wi
 ; Debug Section
 ; ==============================================================================
 ; Add any commands you are debugging here. Then Run AutoHotkey.ahk in debug mode.
-
-t::SendWait("Hello World!", 100)
