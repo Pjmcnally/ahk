@@ -134,18 +134,18 @@ class rockyIdle {
 
     GoToFarmingPage(type := "") {
         this.logger.WriteInfo("Activating farming page")
-        ClickWait(55, 545, 1, 1000)     ; Activate farming screen
+        Mouse.ClickWait(55, 545, 1, 1000)     ; Activate farming screen
 
         this.logger.WriteDebug("Scrolling to top of page")
-        ClickWait(1250, 685, 0, 1000)   ; Activate scrollable section of screen
-        SendWait("{WheelUp 15}", 1000) ; Scroll to top of screen (otherwise all click positions will be wrong.)
+        Mouse.ClickWait(1250, 685, 0, 1000)   ; Activate scrollable section of screen
+        Keyboard.SendWait("{WheelUp 15}", 1000) ; Scroll to top of screen (otherwise all click positions will be wrong.)
 
         if (type = "bush") {
             this.logger.WriteDebug("Access page for type: " . type)
-            clickWait(760, 200, 1, 1000)
+            Mouse.ClickWait(760, 200, 1, 1000)
         } else if (type = "tree") {
             this.logger.WriteDebug("Access page for type: " . type)
-            clickWait(1225, 200, 1, 1000)
+            Mouse.ClickWait(1225, 200, 1, 1000)
         }
     }
 
@@ -197,7 +197,7 @@ class rockyIdle {
 
     GetNewSlayerTask(newTaskInfo) {
         this.logger.WriteInfo("Getting new slayer task.")
-        ClickWait(newTaskInfo.x, newTaskInfo.y, 1, 100)
+        Mouse.ClickWait(newTaskInfo.x, newTaskInfo.y, 1, 100)
         this.slayerTaskCount += 1
         this.logger.WriteDebug("Slayer task count: " . this.slayerTaskCount)
         Sleep(1000)
@@ -205,7 +205,7 @@ class rockyIdle {
 
     GoToSlayerPage() {
         this.logger.WriteInfo("Accessing slayer page")
-        ClickWait(100, 675, 1, 100)
+        Mouse.ClickWait(100, 675, 1, 100)
         Sleep(100)
     }
 
@@ -222,7 +222,7 @@ class rockyIdle {
         this.logger.WriteDebug("Clicking 'Get Task'")
         taskX := 765
         taskY := 235
-        ClickWait(taskX, taskY, 1, 100)
+        Mouse.ClickWait(taskX, taskY, 1, 100)
         Sleep(250)
     }
 
@@ -236,7 +236,7 @@ class rockyIdle {
         result := this.ClickImageByName(2205, 0, 2280, 110, "combatBoost.png")
         if (result.success) {
             this.logger.WriteInfo("Activating combat boost")
-            ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
+            Mouse.ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
         } else {
             this.logger.WriteInfo("Combat boost not found. It may already be active or unavailable.")
         }
@@ -247,7 +247,7 @@ class rockyIdle {
         result := this.ClickImageByName(2205, 0, 2280, 110, "skillBoost.png")
         if (result.success) {
             this.logger.WriteInfo("Activating skill boost")
-            ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
+            Mouse.ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
         } else {
             this.logger.WriteInfo("Skill boost not found. It may already be active or unavailable.")
         }
@@ -262,7 +262,7 @@ class rockyIdle {
         results := this.FindImage(x1, y1, x2, y2, imagePath, attemptCount, throwError)
         if (results.success) {
             this.logger.WriteDebug("Clicking image at X: " . results.x . " Y: " . results.y)
-            ClickWait(results.x, results.y, 1, 100)
+            Mouse.ClickWait(results.x, results.y, 1, 100)
         }
 
         return results
@@ -272,7 +272,7 @@ class rockyIdle {
         results := this.FindImageByName(x1, y1, x2, y2, imageName, attemptCount, throwError)
         if (results.success) {
             this.logger.WriteDebug("Clicking image at X: " . results.x . " Y: " . results.y)
-            ClickWait(results.x, results.y, 1, delay)
+            Mouse.ClickWait(results.x, results.y, 1, delay)
         }
 
         return results

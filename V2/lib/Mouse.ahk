@@ -3,19 +3,19 @@ class Mouse {
     /**
      * @description `ClickWait()`
      * Moves the mouse to the specified coordinates and performs the specified number of clicks, then waits for the specified amount of time.
-     * @param {(Number)} x
+     * @param {(Number)} X
      * The x-coordinate to move the mouse to.
-     * @param {(Number)} y
+     * @param {(Number)} Y
      * The y-coordinate to move the mouse to.
-     * @param {(Number)} num
+     * @param {(Number)} Num
      * The number of clicks to perform. 0 will move the mouse without clicking.
-     * @param {(Number)} wait
+     * @param {(Number)} Wait
      * The time to wait after performing the clicks, in milliseconds.
      * @returns {(String)}
      * Empty string is always returned.
      */
-    static ClickWait(x, y, num, wait) {
-        Click(x, y, num)
-        Sleep(wait)
+    static ClickWait(X, Y, Num, Wait) {
+        Click(X, Y, Num)
+        Sleep(Wait)
     }
 }
