@@ -279,7 +279,13 @@ class rockyIdle {
         return results
     }
 
-    FindImage(x1, y1, x2, y2, imagePath, maxTryCount := 1, throwError := false) {
+    FindImage(x1, y1, x2, y2, imagePath, maxTryCount := 1, mustFind := false) {
+        ; Check for valid and existing image path before attempting search
+        if (!FileExist(imagePath)) {
+            this.logger.WriteFatal("Image path does not exist: " . imagePath)
+            throw Error("Image path does not exist: " . imagePath)
+        }
+
         this.logger.WriteDebug("Searching for image by path: " . imagePath)
         this.logger.WriteDebug("Searching area X1: " . x1 . " Y1: " . y1 . " X2: " . x2 . " Y2: " . y2)
 
@@ -288,22 +294,36 @@ class rockyIdle {
         success := false
 
         attemptCount := 1
+        errorRetryCount := 0
         while ((attemptCount <= maxTryCount) and !success) {
             this.logger.WriteDebug("Attempt: " . attemptCount)
 
-            if (ImageSearch(&outX, &outY, x1, y1, x2, y2, "*5 " . imagePath)) {
-                this.logger.WriteDebug("Image found at X: " . outX . " Y: " . outY)
-                success := true
-            } else {
-                attemptCount += 1
-                this.logger.WriteDebug("Image not found")
+            try {
+                if (ImageSearch(&outX, &outY, x1, y1, x2, y2, "*5 " . imagePath)) {
+                    this.logger.WriteDebug("Image found at X: " . outX . " Y: " . outY)
+                    success := true
+                } else {
+                    attemptCount += 1
+                    this.logger.WriteDebug("Image not found")
+                }
+            } catch OSError as e {
+                if (errorRetryCount < 3) {
+                    errorRetryCount += 1
+                    this.logger.WriteDebug("Retrying image search after error. Retry count: " . errorRetryCount)
+                    Sleep(1000 * errorRetryCount) ; Wait before retrying in case of transient error
+                } else {
+                    this.logger.WriteError("Max retry attempts reached for image search. Aborting search for: " . imagePath)
+                    this.logger.WriteError("Final error: " . e.Message, e)
+                    throw e
+                }
             }
 
             Sleep(250)
         }
 
-        if (!success and throwError) {
-            this.logger.WriteError("Image not found after [ " . attemptCount . " ] attempts")
+        if (!success and mustFind) {
+            this.logger.WriteError("Image not found after [" . attemptCount . "] attempts. " . imagePath)
+            throw Error("Image not found after [" . attemptCount . "] attempts. " . imagePath)
         }
 
         return {success: success, x: outX, y: outY}
