@@ -20,8 +20,7 @@ System description: Personal Desktop
 #SingleInstance Force               ; Automatically replaces old script with new if the same script file is rune twice
 #Warn All                           ; Enable warnings to assist with detecting common errors. (More explicit)
 #HotString EndChars `n `t           ; Limits hotstring ending characters to {Enter}{Tab}{Space}
-SetWorkingDir A_ScriptDir           ; Ensures consistent location for all relative references
-FileEncoding "UTF-8-RAW"                ; Set default file encoding to UTF-8 (without BOM)
+FileEncoding "UTF-8-RAW"            ; Set default file encoding to UTF-8 (without BOM)
 
 ; Auto-Execute Section (Any system specific Auto-Execute commands go here)
 ; ==============================================================================
@@ -32,7 +31,7 @@ FileEncoding "UTF-8-RAW"                ; Set default file encoding to UTF-8 (wi
 ; Include Classes
 ; #Include <Logger>
 
-; Include Core Modules (core.ahk must be first for the Auto-Execute to work)
+; Include Core Module(s) (core.ahk must be first for the Auto-Execute to work)
 ; #Include "%A_ScriptDir%\..\core\core.ahk"
 ; #Include "%A_ScriptDir%\..\core\clipboard.ahk"
 ; #Include "%A_ScriptDir%\..\core\files.ahk"
@@ -40,8 +39,11 @@ FileEncoding "UTF-8-RAW"                ; Set default file encoding to UTF-8 (wi
 ; #Include "%A_ScriptDir%\..\core\time.ahk"
 
 
+; Import Game specific Module(s)
+#Include "%A_ScriptDir%\Game\RockyIdle\RockyIdle.ahk"
+
 ; Import Application specific Module(s)
-#Include <Game\RockyIdle\RockyIdle>
+
 
 ; Debug Section
 ; ==============================================================================
