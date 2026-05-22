@@ -1,4 +1,4 @@
-﻿Class Logger {
+﻿class Logger {
     static logLevels := Map(
         "TRACE", 1,
         "DEBUG", 2,
