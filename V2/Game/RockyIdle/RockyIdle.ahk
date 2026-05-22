@@ -3,6 +3,7 @@
 #Include <Keyboard>
 #Include <Logger>
 #Include <Mouse>
+#Include <System>
 
 #HotIf WinActive("ahk_exe Rocky Idle.exe", )
 
@@ -35,7 +36,7 @@ autoPlay(taskList) {
 class rockyIdle {
     __New() {
         try {
-            this.logger := Logger("C:\Users\Patrick\Downloads\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log", "INFO")
+            this.logger := Logger(System.DownloadsPath . "\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log", "INFO")
         } catch Error as e {
             MsgBox("Failed to initialize logger. Error: " . e.Message)
             throw e
@@ -44,7 +45,7 @@ class rockyIdle {
         this.slayerTaskCount := 0
         this.slayerTaskStartTick := 0
         this.slayerTaskTimeout := 2 * 60 * 1000 ; 2 minutes (in milliseconds)
-        this.baseImagePath := A_WorkingDir . "\lib\Game\RockyIdle\Images"
+        this.baseImagePath := A_WorkingDir . "\Game\RockyIdle\Images"
     }
 
     displayToolTip() {
