@@ -5,7 +5,7 @@
 #Include <Mouse>
 #Include <System>
 
-#HotIf WinActive("ahk_exe Rocky Idle.exe", )
+#HotIf WinActive("ahk_exe Rocky Idle.exe")
 
 autoPlay(taskList) {
     try {
@@ -344,7 +344,6 @@ class rockyIdle {
         }
 
         this.logger := ""
-        this.Base := ""
     }
 }
 
