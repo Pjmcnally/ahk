@@ -356,6 +356,5 @@ F1::autoPlay([])
 F2::autoPlay(["Slayer"])
 F3::autoPlay(["Farming"])
 F4::autoPlay(["Slayer", "Farming"])
-F5::autoPlay(["Stop"]) ; Use this hotkey to stop the automation if needed
 
 #HotIf ; Clear HotIf
