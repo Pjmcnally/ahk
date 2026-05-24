@@ -22,7 +22,7 @@ autoPlay(taskList) {
 class rockyIdle {
     __New(taskList) {
         try {
-            this.Logger :=.Logger(System.DownloadsPath . "\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log", "INFO")
+            this.Logger := Logger(System.DownloadsPath . "\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log", "INFO")
         } catch Error as e {
             MsgBox("Failed to initialize.Logger. Error: " . e.Message)
             throw e
