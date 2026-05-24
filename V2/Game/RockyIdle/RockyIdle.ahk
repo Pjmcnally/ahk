@@ -50,7 +50,9 @@ class rockyIdle {
         this.SlayerTaskCount := 0
 
         while WinActive("Rocky Idle") {
-            this.ActivateBoosts()
+            if (this.TaskList.Includes("Boosts")) {
+                this.ActivateBoosts()
+            }
 
             if this.TaskList.Includes("Slayer") {
                 this.RunSlayer()
@@ -352,9 +354,9 @@ class rockyIdle {
     }
 }
 
-F1::autoPlay([])
-F2::autoPlay(["Slayer"])
-F3::autoPlay(["Farming"])
-F4::autoPlay(["Slayer", "Farming"])
+F1::autoPlay(["Boosts"])
+F2::autoPlay(["Boosts", "Slayer"])
+F3::autoPlay(["Boosts", "Farming"])
+F4::autoPlay(["Boosts", "Slayer", "Farming"])
 
 #HotIf ; Clear HotIf
