@@ -32,7 +32,7 @@ FileEncoding "UTF-8-RAW"            ; Set default file encoding to UTF-8 (withou
 ; #Include <Logger>
 
 ; Include Core Module(s) (core.ahk must be first for the Auto-Execute to work)
-; #Include "%A_ScriptDir%\..\core\core.ahk"
+#Include "%A_ScriptDir%\Hotkeys\Universal.ahk"
 ; #Include "%A_ScriptDir%\..\core\clipboard.ahk"
 ; #Include "%A_ScriptDir%\..\core\files.ahk"
 ; #Include "%A_ScriptDir%\..\core\strings.ahk"
