@@ -1,10 +1,12 @@
+; Includes and directives
 #Requires AutoHotkey v2.0
+#Include "%A_LineFile%\..\..\Lib\" ; Include the Lib directory for shared utilities and classes
 
-; Meta control hotkeys
+; Hotkeys
 Hotkey("^!l", (*) => ListHotkeys()) ; Ctrl+Alt+L to list hotkeys
 Hotkey("^!p", (*) => Pause(-1))     ; Ctrl+Alt+P to toggle pause
 Hotkey("^!r", (*) => Reload())      ; Ctrl+Alt+R to reload script
-
+Hotkey("^!s", (*) => Suspend())     ; Ctrl+Alt+S to toggle suspend
 /*
 Idea 1:
 To log all activated hotkeys in AutoHotkey v2, you can use a custom wrapper function that dynamically defines hotkeys, routes them to your handler, and appends the triggered key and timestamp to a log file.The following snippet logs your hotkeys both to the console (OutputDebug) and to a text file.

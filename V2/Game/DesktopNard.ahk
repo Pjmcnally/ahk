@@ -1,9 +1,10 @@
+; Includes and directives
 #Requires AutoHotkey v2.0
+#Include "%A_LineFile%\..\..\Lib\" ; Include the Lib directory for shared utilities and classes
+#Include "Keyboard.ahk"
 
-#Include <Keyboard>
-
+; Hotkeys
 #HotIf WinActive("ahk_exe Desktop Nard.exe")
-
 ; Sell Items
 XButton1::{
     Keyboard.SendWait("{Ctrl Down}{Shift Down}{Click Right Down}", 50)
@@ -19,5 +20,6 @@ XButton2::{
     Keyboard.SendWait("{Click Up}", 100)
     Keyboard.SendWait("{Alt Up}", 100)
 }
-
 #HotIf
+
+; Functions
