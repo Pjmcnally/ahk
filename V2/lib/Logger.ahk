@@ -9,6 +9,9 @@
         "OVER",  7
     )
 
+    ; TODO: Add log rotation to prevent log files from growing indefinitely. This could be based on file size or date. For example, create a new log file each day or when the current log file exceeds a certain size.
+    ; TODO: https://www.autohotkey.com/boards/viewtopic.php?t=59127
+
     __New(path, logLevel := "INFO") {
         this.Path := path
         this.DateFormat := "yyyy/MM/dd HH:mm:ss"
