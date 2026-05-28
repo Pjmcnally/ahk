@@ -34,6 +34,7 @@ RunRockyIdle(taskList) {
 class RockyIdle {
     __New() {
         this.Active := false
+        this.Logger := ""
         this.SlayerTaskCount := 0
         this.SlayerTaskStartTick := 0
         this.SlayerTaskTimeout := 2 * 60 * 1000 ; 2 minutes (in milliseconds)
