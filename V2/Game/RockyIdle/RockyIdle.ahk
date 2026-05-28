@@ -1,10 +1,11 @@
 ﻿; Includes and directives
 #Requires AutoHotkey v2.0
-#Include <Array>
-#Include <Keyboard>
-#Include <Logger>
-#Include <Mouse>
-#Include <System>
+#Include "%A_LineFile%\..\..\..\Lib\" ; Include the Lib directory for shared utilities and classes
+#Include "Array.ahk"
+#Include "Keyboard.ahk"
+#Include "Logger.ahk"
+#Include "Mouse.ahk"
+#Include "System.ahk"
 
 ; Hotkeys
 #HotIf WinActive("ahk_exe Rocky Idle.exe")
@@ -33,6 +34,7 @@ RunRockyIdle(taskList) {
 ; Classes
 class RockyIdle {
     __New() {
+        this.TaskList := []
         this.SlayerTaskCount := 0
         this.SlayerTaskStartTick := 0
         this.SlayerTaskTimeout := 2 * 60 * 1000 ; 2 minutes (in milliseconds)
@@ -40,10 +42,8 @@ class RockyIdle {
     }
 
     Run(TaskList) {
-
-
-            this.Logger.WriteInfo("Initializing Rocky Idle automation with tasks: [" . TaskList.Join(", ") . "]")
-        this.DisplayToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "]")
+        this.TaskList := TaskList
+        GlobalLogger.WriteInfo("Initializing Rocky Idle automation with tasks: [" . TaskList.Join(", ") . "]")
 
         TaskArray := Map(
             "Boosts", this.ActivateBoosts.Bind(this),
@@ -52,21 +52,21 @@ class RockyIdle {
         )
 
         while (WinActive("ahk_exe Rocky Idle.exe")) {
-            for (task in this.TaskList) {
+            for (task in TaskList) {
                 if (TaskArray.Has(task)) {
                     TaskArray[task]()
                 } else {
                     GlobalLogger.WriteWarn("No function mapped for task: " . task)
                 }
             }
-        }
 
-        globalLogger.WriteInfo("Rocky Idle automation cycle complete. Waiting for next run. Delay = [" . this.RunFreq/1000 . " seconds]")
-        this.DisplayToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "] - Paused. Waiting for next run...")
+            this.DisplayToolTip("Paused")
+            Sleep(2000)
+        }
     }
 
-    DisplayToolTip(text) {
-        ToolTip(text, 10, 10)
+    DisplayToolTip(Status) {
+        ToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "]. Current Status: [" . Status . "]", 10, 10)
     }
 
     HideToolTip() {
@@ -92,7 +92,7 @@ class RockyIdle {
     }
 
     RunFarm() {
-        this.DisplayToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "] - Running AutoFarm")
+        this.DisplayToolTip("Running AutoFarm")
         GlobalLogger.WriteInfo("AutoFarm process started")
         this.HarvestFarm()
         this.CheckInactiveFarm()
@@ -182,7 +182,7 @@ class RockyIdle {
 
 
     RunSlayer() {
-        this.DisplayToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "] - Running AutoSlayer")
+        this.DisplayToolTip("Running AutoSlayer")
         GlobalLogger.WriteInfo("Starting AutoSlayer process")
         this.GoToSlayerPage()
 
@@ -274,7 +274,7 @@ class RockyIdle {
     }
 
     ActivateBoosts() {
-        this.DisplayToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "] - Activating Boosts")
+        this.DisplayToolTip("Activating Boosts")
         this.ActivateCombatBoost()
         this.ActivateSkillBoost()
     }
@@ -319,7 +319,7 @@ class RockyIdle {
             GlobalLogger.WriteDebug("Attempt: " . attemptCount)
 
             try {
-                if (ImageSearch(&outX, &outY, x1, y1, x2, y2, "*5 " . imagePath)) {
+                if (ImageSearch(&outX, &outY, x1, y1, x2, y2, "*50 " . imagePath)) {
                     GlobalLogger.WriteDebug("Image found at X: " . outX . " Y: " . outY)
                     success := true
                 } else {
