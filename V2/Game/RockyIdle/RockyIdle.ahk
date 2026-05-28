@@ -40,48 +40,48 @@ class RockyIdle {
         this.BaseImagePath := A_WorkingDir . "\Game\RockyIdle\Images"
     }
 
+    Run(TaskList := [], LogLevel := "INFO") {
+        ; If task list is empty or not provided disable automation and exit.
+        if (TaskList.Length = 0) {
+            this.Active := false
+            this.Dispose()
+        } else {
+            this.Active := true
+            if (!IsObject(this.Logger)) {
+                try {
+                    this.Logger := Logger(System.DownloadsPath . "\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log", LogLevel)
+                } catch Error as e {
+                    MsgBox("Failed to initialize.Logger. Error: " . e.Message)
+                    throw e
+                }
+            }
+
+            this.Logger.WriteInfo("Initializing Rocky Idle automation with tasks: [" . TaskList.Join(", ") . "]")
+            this.DisplayToolTip(TaskList.Join(", "))
+            this.SlayerTaskCount := 0
+
+            while WinActive("Rocky Idle" and this.Active) {
+                if (TaskList.Includes("Boosts")) {
+                    this.ActivateBoosts()
+                }
+
+                if TaskList.Includes("Slayer") {
+                    this.RunSlayer()
+                }
+
+                if TaskList.Includes("Farming") {
+                    this.RunFarm()
+                }
+            }
+        }
+    }
+
     DisplayToolTip(mode:= "") {
         ToolTip("Automation Active in mode(s): [" . mode . "]. See log file for full detail: " . this.Logger.Path, 10, 10)
     }
 
     HideToolTip() {
         ToolTip()
-    }
-
-    Run(TaskList := [], LogLevel := "INFO") {
-        ; If task list is empty or not provided disable automation and exit.
-        if (TaskList.Length = 0) {
-            this.Dispose()
-            return
-        }
-
-        ; If logger is not setup initialize logger.
-        if (!IsObject(this.Logger)) {
-            try {
-                this.Logger := Logger(System.DownloadsPath . "\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log", LogLevel)
-            } catch Error as e {
-                MsgBox("Failed to initialize.Logger. Error: " . e.Message)
-                throw e
-            }
-        }
-
-        this.Logger.WriteInfo("Initializing Rocky Idle automation with tasks: [" . this.TaskList.Join(", ") . "]")
-        this.DisplayToolTip(this.TaskList.Join(", "))
-        this.SlayerTaskCount := 0
-
-        while WinActive("Rocky Idle") {
-            if (TaskList.Includes("Boosts")) {
-                this.ActivateBoosts()
-            }
-
-            if TaskList.Includes("Slayer") {
-                this.RunSlayer()
-            }
-
-            if TaskList.Includes("Farming") {
-                this.RunFarm()
-            }
-        }
     }
 
     GetRandomFile(directoryPath) {
