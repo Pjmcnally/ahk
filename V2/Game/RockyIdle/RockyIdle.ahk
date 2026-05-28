@@ -1,16 +1,26 @@
-﻿#Requires AutoHotkey v2.0
+﻿; Includes and directives
+#Requires AutoHotkey v2.0
 #Include <Array>
 #Include <Keyboard>
 #Include <Logger>
 #Include <Mouse>
 #Include <System>
 
+; Hotkeys
 #HotIf WinActive("ahk_exe Rocky Idle.exe")
+F1::RunRockyIdle(["Boosts"])
+F2::RunRockyIdle(["Boosts", "Slayer"])
+F3::RunRockyIdle(["Boosts", "Farming"])
+F4::RunRockyIdle(["Boosts", "Slayer", "Farming"])
+F5::RunRockyIdle([]) ; Stop all automation
+#HotIf ; Clear HotIf
 
-autoPlay(taskList) {
+; Functions
+RunRockyIdle(taskList) {
+    static rockyObj := RockyIdle()
+
     try {
-        rockyObj := rockyIdle(taskList )
-        rockyObj.Run()
+        rockyObj.Run(taskList)
     } catch Error as e {
         throw e
     } finally {
@@ -20,17 +30,10 @@ autoPlay(taskList) {
     }
 }
 
-class rockyIdle {
-    __New(taskList) {
-        try {
-            this.Logger := Logger(System.DownloadsPath . "\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log", "INFO")
-        } catch Error as e {
-            MsgBox("Failed to initialize.Logger. Error: " . e.Message)
-            throw e
-        }
-
-        this.TaskList := taskList
-        this.Logger.WriteInfo("Initializing Rocky Idle automation with tasks: [" . this.TaskList.Join(", ") . "]")
+; Classes
+class RockyIdle {
+    __New() {
+        this.Active := false
         this.SlayerTaskCount := 0
         this.SlayerTaskStartTick := 0
         this.SlayerTaskTimeout := 2 * 60 * 1000 ; 2 minutes (in milliseconds)
@@ -45,20 +48,37 @@ class rockyIdle {
         ToolTip()
     }
 
-    Run() {
+    Run(TaskList := [], LogLevel := "INFO") {
+        ; If task list is empty or not provided disable automation and exit.
+        if (TaskList.Length = 0) {
+            this.Dispose()
+            return
+        }
+
+        ; If logger is not setup initialize logger.
+        if (!IsObject(this.Logger)) {
+            try {
+                this.Logger := Logger(System.DownloadsPath . "\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log", LogLevel)
+            } catch Error as e {
+                MsgBox("Failed to initialize.Logger. Error: " . e.Message)
+                throw e
+            }
+        }
+
+        this.Logger.WriteInfo("Initializing Rocky Idle automation with tasks: [" . this.TaskList.Join(", ") . "]")
         this.DisplayToolTip(this.TaskList.Join(", "))
         this.SlayerTaskCount := 0
 
         while WinActive("Rocky Idle") {
-            if (this.TaskList.Includes("Boosts")) {
+            if (TaskList.Includes("Boosts")) {
                 this.ActivateBoosts()
             }
 
-            if this.TaskList.Includes("Slayer") {
+            if TaskList.Includes("Slayer") {
                 this.RunSlayer()
             }
 
-            if this.TaskList.Includes("Farming") {
+            if TaskList.Includes("Farming") {
                 this.RunFarm()
             }
         }
@@ -353,10 +373,3 @@ class rockyIdle {
         }
     }
 }
-
-F1::autoPlay(["Boosts"])
-F2::autoPlay(["Boosts", "Slayer"])
-F3::autoPlay(["Boosts", "Farming"])
-F4::autoPlay(["Boosts", "Slayer", "Farming"])
-
-#HotIf ; Clear HotIf
