@@ -13,7 +13,7 @@ F1::RunRockyIdle(["Boosts"])
 F2::RunRockyIdle(["Boosts", "Slayer"])
 F3::RunRockyIdle(["Boosts", "Farming"])
 F4::RunRockyIdle(["Boosts", "Slayer", "Farming"])
-F5::RunRockyIdle([]) ; Stop all automation
+F5::Reload() ; Stop all automation
 #HotIf ; Clear HotIf
 
 ; Functions
