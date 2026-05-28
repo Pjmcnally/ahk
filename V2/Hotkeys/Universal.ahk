@@ -48,14 +48,14 @@ LogHotkey("#c", (hotkey) => ToolTip("You triggered " hotkey))
 
 
 Idea 1A: Get hotkey info:
-Yes, in AutoHotkey v2 you can identify the currently executing function or method using the built-in A_ThisFunc variable. It returns a string containing the name of the function, or the method preceded by its class (e.g., ClassName.MethodName).Basic Exampleautohotkey#Requires AutoHotkey v2.0
+Yes, in AutoHotkey v2 you can identify the currently executing function or method using the built-in A_ThisFunc variable. It returns a string containing the name of the function, or the method preceded by its class (e.g., ClassName.MethodName).Basic Example AutoHotkey#Requires AutoHotkey v2.0
 
 MyMethod()
 
 MyMethod() {
     MsgBox("Currently running method: " . A_ThisFunc)
 }
-Use code with caution.Advanced: Getting the Call StackIf your method calls other helper methods or functions and you want to trace the entire chain of execution, you can throw an Exception and inspect its stack trace.autohotkey#Requires AutoHotkey v2.0
+Use code with caution.Advanced: Getting the Call StackIf your method calls other helper methods or functions and you want to trace the entire chain of execution, you can throw an Exception and inspect its stack trace.AutoHotkey#Requires AutoHotkey v2.0
 
 Level1()
 
