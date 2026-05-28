@@ -33,52 +33,40 @@ RunRockyIdle(taskList) {
 ; Classes
 class RockyIdle {
     __New() {
-        this.Active := false
-        this.Logger := ""
         this.SlayerTaskCount := 0
         this.SlayerTaskStartTick := 0
         this.SlayerTaskTimeout := 2 * 60 * 1000 ; 2 minutes (in milliseconds)
         this.BaseImagePath := A_WorkingDir . "\Game\RockyIdle\Images"
     }
 
-    Run(TaskList := [], LogLevel := "INFO") {
-        ; If task list is empty or not provided disable automation and exit.
-        if (TaskList.Length = 0) {
-            this.Active := false
-            this.Dispose()
-        } else {
-            this.Active := true
-            if (!IsObject(this.Logger)) {
-                try {
-                    this.Logger := Logger(System.DownloadsPath . "\RockyIdle_logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log", LogLevel)
-                } catch Error as e {
-                    MsgBox("Failed to initialize.Logger. Error: " . e.Message)
-                    throw e
-                }
-            }
+    Run(TaskList) {
+
 
             this.Logger.WriteInfo("Initializing Rocky Idle automation with tasks: [" . TaskList.Join(", ") . "]")
-            this.DisplayToolTip(TaskList.Join(", "))
-            this.SlayerTaskCount := 0
+        this.DisplayToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "]")
 
-            while WinActive("Rocky Idle" and this.Active) {
-                if (TaskList.Includes("Boosts")) {
-                    this.ActivateBoosts()
-                }
+        TaskArray := Map(
+            "Boosts", this.ActivateBoosts.Bind(this),
+            "Slayer", this.RunSlayer.Bind(this),
+            "Farming", this.RunFarm.Bind(this)
+        )
 
-                if TaskList.Includes("Slayer") {
-                    this.RunSlayer()
-                }
-
-                if TaskList.Includes("Farming") {
-                    this.RunFarm()
+        while (WinActive("ahk_exe Rocky Idle.exe")) {
+            for (task in this.TaskList) {
+                if (TaskArray.Has(task)) {
+                    TaskArray[task]()
+                } else {
+                    GlobalLogger.WriteWarn("No function mapped for task: " . task)
                 }
             }
         }
+
+        globalLogger.WriteInfo("Rocky Idle automation cycle complete. Waiting for next run. Delay = [" . this.RunFreq/1000 . " seconds]")
+        this.DisplayToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "] - Paused. Waiting for next run...")
     }
 
-    DisplayToolTip(mode:= "") {
-        ToolTip("Automation Active in mode(s): [" . mode . "]. See log file for full detail: " . this.Logger.Path, 10, 10)
+    DisplayToolTip(text) {
+        ToolTip(text, 10, 10)
     }
 
     HideToolTip() {
@@ -86,7 +74,7 @@ class RockyIdle {
     }
 
     GetRandomFile(directoryPath) {
-        this.Logger.WriteDebug("Getting random file from: " . directoryPath)
+        GlobalLogger.WriteDebug("Getting random file from: " . directoryPath)
         fileList := []
         Loop Files, directoryPath "\*.*"
         {
@@ -94,34 +82,35 @@ class RockyIdle {
         }
 
         count := fileList.Length
-        this.Logger.WriteDebug("Total Files Found: " . count)
+        GlobalLogger.WriteDebug("Total Files Found: " . count)
 
         randomIndex := Random(1, count)
         selectedFile := fileList[randomIndex]
-        this.Logger.WriteDebug("Selected file: " . selectedFile)
+        GlobalLogger.WriteDebug("Selected file: " . selectedFile)
 
         return selectedFile
     }
 
     RunFarm() {
-        this.Logger.WriteInfo("AutoFarm process started")
+        this.DisplayToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "] - Running AutoFarm")
+        GlobalLogger.WriteInfo("AutoFarm process started")
         this.HarvestFarm()
         this.CheckInactiveFarm()
-        this.Logger.WriteInfo("AutoFarm process complete")
+        GlobalLogger.WriteInfo("AutoFarm process complete")
     }
 
     HarvestFarm() {
-        this.Logger.WriteInfo("Checking for available harvests.")
+        GlobalLogger.WriteInfo("Checking for available harvests.")
 
         this.GoToFarmingPage("Bush")
-        this.Logger.WriteInfo("Checking for harvestable bushes.")
+        GlobalLogger.WriteInfo("Checking for harvestable bushes.")
         harvestBushesResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png", 1500)
         if (harvestBushesResults.Success) {
             this.PlantFarm("Bush")
         }
 
         this.GoToFarmingPage("Tree")
-        this.Logger.WriteInfo("Checking for harvestable trees.")
+        GlobalLogger.WriteInfo("Checking for harvestable trees.")
         harvestTreesResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png", 1500)
         if (harvestTreesResults.Success) {
             this.PlantFarm("Tree")
@@ -130,7 +119,7 @@ class RockyIdle {
 
     PlantFarm(type := "") {
         if (type = "") {
-            this.Logger.WriteDebug("Type unknown. Finding active type.")
+            GlobalLogger.WriteDebug("Type unknown. Finding active type.")
         }
 
         if (type = "Bush" or this.FindImageByName(500, 150, 1430, 250, "bushPageActive.png").Success) {
@@ -138,7 +127,7 @@ class RockyIdle {
         } else if (type = "Tree" or this.FindImageByName(500, 150, 1430, 250, "treePageActive.png").Success) {
             this.PlantTrees()
         } else {
-            this.Logger.WriteError("No type specified or found")
+            GlobalLogger.WriteError("No type specified or found")
         }
     }
 
@@ -149,13 +138,13 @@ class RockyIdle {
             return
         }
 
-        this.Logger.WriteInfo("Checking sidebar for missing type: " . type)
+        GlobalLogger.WriteInfo("Checking sidebar for missing type: " . type)
         findResults := this.FindImageByName(2310, 160, 2550, 1005, type . "SidebarActive.png")
 
         if (findResults.Success) {
-            this.Logger.WriteInfo("Type " . type . " found in sidebar. No action needed.")
+            GlobalLogger.WriteInfo("Type " . type . " found in sidebar. No action needed.")
         } else {
-            this.Logger.WriteInfo("Type " . type . " not found in sidebar. Planting " . type)
+            GlobalLogger.WriteInfo("Type " . type . " not found in sidebar. Planting " . type)
             this.GoToFarmingPage(type)
             this.PlantFarm(type)
         }
@@ -163,37 +152,38 @@ class RockyIdle {
 
 
     GoToFarmingPage(type := "") {
-        this.Logger.WriteInfo("Activating farming page")
+        GlobalLogger.WriteInfo("Activating farming page")
         Mouse.ClickWait(55, 545, 1, 1000)     ; Activate farming screen
 
-        this.Logger.WriteDebug("Scrolling to top of page")
+        GlobalLogger.WriteDebug("Scrolling to top of page")
         Mouse.ClickWait(1250, 685, 0, 1000)   ; Activate scrollable section of screen
         Keyboard.SendWait("{WheelUp 15}", 1000) ; Scroll to top of screen (otherwise all click positions will be wrong.)
 
         if (type = "bush") {
-            this.Logger.WriteDebug("Access page for type: " . type)
+            GlobalLogger.WriteDebug("Access page for type: " . type)
             Mouse.ClickWait(760, 200, 1, 1000)
         } else if (type = "tree") {
-            this.Logger.WriteDebug("Access page for type: " . type)
+            GlobalLogger.WriteDebug("Access page for type: " . type)
             Mouse.ClickWait(1225, 200, 1, 1000)
         }
     }
 
     PlantBushes() {
-        this.Logger.WriteInfo("Planting Bushes.")
+        GlobalLogger.WriteInfo("Planting Bushes.")
         randomBush := this.GetRandomFile(this.BaseImagePath . "\Bushes\Active")
         this.ClickImage(525, 800, 1425, 1365, randomBush)
     }
 
     PlantTrees() {
-        this.Logger.WriteInfo("Planting Trees.")
+        GlobalLogger.WriteInfo("Planting Trees.")
         randomTree := this.GetRandomFile(this.BaseImagePath . "\Trees\Active")
         this.ClickImage(525, 800, 1425, 1365, randomTree)
     }
 
 
     RunSlayer() {
-        this.Logger.WriteInfo("Starting AutoSlayer process")
+        this.DisplayToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "] - Running AutoSlayer")
+        GlobalLogger.WriteInfo("Starting AutoSlayer process")
         this.GoToSlayerPage()
 
         newTaskInfo := this.NewTaskAvailable()
@@ -205,51 +195,51 @@ class RockyIdle {
             this.CheckForStaleSlayerTask()
         }
         Sleep(2000)
-        this.Logger.WriteInfo("AutoSlayer process complete")
+        GlobalLogger.WriteInfo("AutoSlayer process complete")
     }
 
     CheckForStaleSlayerTask() {
         currentTick := A_TickCount
         currentTaskDuration := A_TickCount - this.SlayerTaskStartTick
 
-        this.Logger.WriteDebug("Checking For Stale Task")
-        this.Logger.WriteDebug("Current tick: " . currentTick)
-        this.Logger.WriteDebug("Slayer task start tick: " . this.SlayerTaskStartTick)
-        this.Logger.WriteDebug("Current task duration: " . currentTaskDuration)
-        this.Logger.WriteDebug("Slayer task timeout: " . this.SlayerTaskTimeout)
+        GlobalLogger.WriteDebug("Checking For Stale Task")
+        GlobalLogger.WriteDebug("Current tick: " . currentTick)
+        GlobalLogger.WriteDebug("Slayer task start tick: " . this.SlayerTaskStartTick)
+        GlobalLogger.WriteDebug("Current task duration: " . currentTaskDuration)
+        GlobalLogger.WriteDebug("Slayer task timeout: " . this.SlayerTaskTimeout)
 
         if (currentTaskDuration > this.SlayerTaskTimeout) {
-            this.Logger.WriteWarn("Current task running longer than timeout. Replacing Stale Minion")
+            GlobalLogger.WriteWarn("Current task running longer than timeout. Replacing Stale Minion")
             this.GoToSlayerPage()
             this.GetSlayerTaskMinion()
         }
     }
 
     GetNewSlayerTask(newTaskInfo) {
-        this.Logger.WriteInfo("Getting new slayer task.")
+        GlobalLogger.WriteInfo("Getting new slayer task.")
         Mouse.ClickWait(newTaskInfo.x, newTaskInfo.y, 1, 100)
         this.SlayerTaskCount += 1
-        this.Logger.WriteDebug("Slayer task count: " . this.SlayerTaskCount)
+        GlobalLogger.WriteDebug("Slayer task count: " . this.SlayerTaskCount)
         Sleep(1000)
     }
 
     GoToSlayerPage() {
-        this.Logger.WriteInfo("Accessing slayer page")
+        GlobalLogger.WriteInfo("Accessing slayer page")
         Mouse.ClickWait(100, 675, 1, 100)
         Sleep(100)
     }
 
     GetSlayerTaskMinion() {
-        this.Logger.WriteInfo("Selecting slayer minion to fight.")
+        GlobalLogger.WriteInfo("Selecting slayer minion to fight.")
         Send("{WheelDown 15}")
         Sleep(1000) ; Wait for scrolling to complete
         this.ClickImageByName(500, 1, 2035, 1360, "fight.png")
         this.SlayerTaskStartTic := A_TickCount
-        this.Logger.WriteDebug("Slayer task started at tick: " . A_TickCount)
+        GlobalLogger.WriteDebug("Slayer task started at tick: " . A_TickCount)
     }
 
     AccessSlayerTask() {
-        this.Logger.WriteDebug("Clicking 'Get Task'")
+        GlobalLogger.WriteDebug("Clicking 'Get Task'")
         taskX := 765
         taskY := 235
         Mouse.ClickWait(taskX, taskY, 1, 100)
@@ -257,33 +247,34 @@ class RockyIdle {
     }
 
     NewTaskAvailable() {
-        this.Logger.WriteInfo("Checking if new slayer task available")
+        GlobalLogger.WriteInfo("Checking if new slayer task available")
         return this.FindImageByName(530, 1250, 840, 1350, "getTask.png")
     }
 
     ActivateCombatBoost() {
-        this.Logger.WriteInfo("Checking Combat Boost")
+        GlobalLogger.WriteInfo("Checking Combat Boost")
         result := this.ClickImageByName(2205, 0, 2280, 110, "combatBoost.png")
         if (result.success) {
-            this.Logger.WriteInfo("Activating combat boost")
+            GlobalLogger.WriteInfo("Activating combat boost")
             Mouse.ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
         } else {
-            this.Logger.WriteInfo("Combat boost not found. It may already be active or unavailable.")
+            GlobalLogger.WriteInfo("Combat boost not found. It may already be active or unavailable.")
         }
     }
 
     ActivateSkillBoost() {
-        this.Logger.WriteInfo("Checking Skill Boost")
+        GlobalLogger.WriteInfo("Checking Skill Boost")
         result := this.ClickImageByName(2205, 0, 2280, 110, "skillBoost.png")
         if (result.success) {
-            this.Logger.WriteInfo("Activating skill boost")
+            GlobalLogger.WriteInfo("Activating skill boost")
             Mouse.ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
         } else {
-            this.Logger.WriteInfo("Skill boost not found. It may already be active or unavailable.")
+            GlobalLogger.WriteInfo("Skill boost not found. It may already be active or unavailable.")
         }
     }
 
     ActivateBoosts() {
+        this.DisplayToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "] - Activating Boosts")
         this.ActivateCombatBoost()
         this.ActivateSkillBoost()
     }
@@ -291,7 +282,7 @@ class RockyIdle {
     ClickImage(x1, y1, x2, y2, imagePath, delay := 100, attemptCount := 1, throwError := false) {
         results := this.FindImage(x1, y1, x2, y2, imagePath, attemptCount, throwError)
         if (results.success) {
-            this.Logger.WriteDebug("Clicking image at X: " . results.x . " Y: " . results.y)
+            GlobalLogger.WriteDebug("Clicking image at X: " . results.x . " Y: " . results.y)
             Mouse.ClickWait(results.x, results.y, 1, 100)
         }
 
@@ -301,7 +292,7 @@ class RockyIdle {
     ClickImageByName(x1, y1, x2, y2, imageName, delay := 100, attemptCount := 1, throwError := false) {
         results := this.FindImageByName(x1, y1, x2, y2, imageName, attemptCount, throwError)
         if (results.success) {
-            this.Logger.WriteDebug("Clicking image at X: " . results.x . " Y: " . results.y)
+            GlobalLogger.WriteDebug("Clicking image at X: " . results.x . " Y: " . results.y)
             Mouse.ClickWait(results.x, results.y, 1, delay)
         }
 
@@ -311,12 +302,12 @@ class RockyIdle {
     FindImage(x1, y1, x2, y2, imagePath, maxTryCount := 1, mustFind := false) {
         ; Check for valid and existing image path before attempting search
         if (!FileExist(imagePath)) {
-            this.Logger.WriteFatal("Image path does not exist: " . imagePath)
+            GlobalLogger.WriteFatal("Image path does not exist: " . imagePath)
             throw Error("Image path does not exist: " . imagePath)
         }
 
-        this.Logger.WriteDebug("Searching for image by path: " . imagePath)
-        this.Logger.WriteDebug("Searching area X1: " . x1 . " Y1: " . y1 . " X2: " . x2 . " Y2: " . y2)
+        GlobalLogger.WriteDebug("Searching for image by path: " . imagePath)
+        GlobalLogger.WriteDebug("Searching area X1: " . x1 . " Y1: " . y1 . " X2: " . x2 . " Y2: " . y2)
 
         outX := unset
         outY := unset
@@ -325,24 +316,24 @@ class RockyIdle {
         attemptCount := 1
         errorRetryCount := 0
         while ((attemptCount <= maxTryCount) and !success) {
-            this.Logger.WriteDebug("Attempt: " . attemptCount)
+            GlobalLogger.WriteDebug("Attempt: " . attemptCount)
 
             try {
                 if (ImageSearch(&outX, &outY, x1, y1, x2, y2, "*5 " . imagePath)) {
-                    this.Logger.WriteDebug("Image found at X: " . outX . " Y: " . outY)
+                    GlobalLogger.WriteDebug("Image found at X: " . outX . " Y: " . outY)
                     success := true
                 } else {
                     attemptCount += 1
-                    this.Logger.WriteDebug("Image not found")
+                    GlobalLogger.WriteDebug("Image not found")
                 }
             } catch OSError as e {
                 if (errorRetryCount < 3) {
                     errorRetryCount += 1
-                    this.Logger.WriteDebug("Retrying image search after error. Retry count: " . errorRetryCount)
+                    GlobalLogger.WriteDebug("Retrying image search after error. Retry count: " . errorRetryCount)
                     Sleep(1000 * errorRetryCount) ; Wait before retrying in case of transient error
                 } else {
-                    this.Logger.WriteError("Max retry attempts reached for image search. Aborting search for: " . imagePath)
-                    this.Logger.WriteError("Final error: " . e.Message, e)
+                    GlobalLogger.WriteError("Max retry attempts reached for image search. Aborting search for: " . imagePath)
+                    GlobalLogger.WriteError("Final error: " . e.Message, e)
                     throw e
                 }
             }
@@ -351,7 +342,7 @@ class RockyIdle {
         }
 
         if (!success and mustFind) {
-            this.Logger.WriteError("Image not found after [" . attemptCount . "] attempts. " . imagePath)
+            GlobalLogger.WriteError("Image not found after [" . attemptCount . "] attempts. " . imagePath)
             throw Error("Image not found after [" . attemptCount . "] attempts. " . imagePath)
         }
 
@@ -359,7 +350,7 @@ class RockyIdle {
     }
 
     FindImageByName(x1, y1, x2, y2, imageName, attemptCount := 1, throwError := false) {
-        this.Logger.WriteDebug("Searching for image by name: " . imageName)
+        GlobalLogger.WriteDebug("Searching for image by name: " . imageName)
         fullImagePath := this.BaseImagePath . "\" . imageName
 
         return this.FindImage(x1, y1, x2, y2, fullImagePath, attemptCount, throwError)
@@ -367,10 +358,5 @@ class RockyIdle {
 
     Dispose() {
         this.HideToolTip()
-
-        if (isobject(this.Logger)) {
-            this.Logger.Dispose()
-            this.Logger := ""
-        }
     }
 }

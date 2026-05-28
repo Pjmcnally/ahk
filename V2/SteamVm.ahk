@@ -22,18 +22,12 @@ System description: Personal Desktop
 #HotString EndChars `n `t           ; Limits hotstring ending characters to {Enter}{Tab}{Space}
 FileEncoding "UTF-8-RAW"            ; Set default file encoding to UTF-8 (without BOM)
 
-; Auto-Execute Section (Any system specific Auto-Execute commands go here)
+; Global Auto-Execute Section
 ; ==============================================================================
-; Create global logger instance for use in any included module. This will create the log file if it doesn't exist and append to it if it does exist.
-GlobalLogger := Logger(System.DownloadsPath . "\Ahk_Logs\" . FormatTime(A_Now, "yyyy-MM-dd") . ".log", "INFO")
+#Include "%A_ScriptDir%\AutoExecute.ahk"
 
-; Register the cleanup function to run on script exit/reload
-OnExit(CleanupScript)
-CleanUpScript(ExitReason, ExitCode) {
-    global GlobalLogger
-    GlobalLogger.Dispose()
-}
-;windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_exe Signal.exe"), New WindowInterface("Microsoft To Do"), New WindowInterface("Pocket Casts Desktop")])
+; System Auto-Execute Section
+; ==============================================================================
 
 ; Include Section
 ; ==============================================================================
@@ -47,12 +41,10 @@ CleanUpScript(ExitReason, ExitCode) {
 ; #Include "%A_ScriptDir%\..\core\strings.ahk"
 ; #Include "%A_ScriptDir%\..\core\time.ahk"
 
-
 ; Import Game specific Module(s)
 #Include "%A_ScriptDir%\Game\RockyIdle\RockyIdle.ahk"
 
 ; Import Application specific Module(s)
-
 
 ; Debug Section
 ; ==============================================================================
