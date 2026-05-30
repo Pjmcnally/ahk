@@ -189,12 +189,10 @@ class RockyIdle {
         newTaskInfo := this.NewTaskAvailable()
         if (newTaskInfo.success) {
             this.GetNewSlayerTask(newTaskInfo)
-            this.AccessSlayerTask()
-            this.GetSlayerTaskMinion()
+            this.StartSlayerTaskCombat()
         } else {
             this.CheckForStaleSlayerTask()
         }
-        Sleep(2000)
         GlobalLogger.WriteInfo("AutoSlayer process complete")
     }
 
@@ -210,34 +208,49 @@ class RockyIdle {
 
         if (currentTaskDuration > this.SlayerTaskTimeout) {
             GlobalLogger.WriteWarn("Current task running longer than timeout. Replacing Stale Minion")
-            this.GoToSlayerPage()
-            this.GetSlayerTaskMinion()
+            ; On way a task can fail is if no combat is active at all. This moves the button necessary to select the correct minion.
+            ; By going to the monster page and starting combat it ensure that the button for the correct task is in the correct place.
+            this.GoToMonsterPage()
+            this.StartCombat()
+            ; Select the correct task minion and start combat.
+            this.StartSlayerTaskCombat()
         }
     }
 
     GetNewSlayerTask(newTaskInfo) {
         GlobalLogger.WriteInfo("Getting new slayer task.")
-        Mouse.ClickWait(newTaskInfo.x, newTaskInfo.y, 1, 100)
+        Mouse.ClickWait(newTaskInfo.x, newTaskInfo.y, 1, 1000)
         this.SlayerTaskCount += 1
         GlobalLogger.WriteDebug("Slayer task count: " . this.SlayerTaskCount)
-        Sleep(1000)
+    }
+
+    GoToMonsterPage() {
+        GlobalLogger.WriteInfo("Accessing monster page")
+        Mouse.ClickWait(100, 675, 1, 1000)
     }
 
     GoToSlayerPage() {
         GlobalLogger.WriteInfo("Accessing slayer page")
-        Mouse.ClickWait(100, 675, 1, 100)
-        Sleep(100)
+        Mouse.ClickWait(250, 750, 1, 1000)
     }
 
-    GetSlayerTaskMinion() {
+    StartCombat() {
         GlobalLogger.WriteInfo("Selecting slayer minion to fight.")
-        Send("{WheelDown 15}")
-        Sleep(1000) ; Wait for scrolling to complete
+        Keyboard.SendWait("{WheelDown 15}", 1000)
         this.ClickImageByName(500, 1, 2035, 1360, "fight.png")
         this.SlayerTaskStartTic := A_TickCount
         GlobalLogger.WriteDebug("Slayer task started at tick: " . A_TickCount)
     }
 
+    StartSlayerTaskCombat() {
+        this.AccessSlayerTaskMinionList()
+        this.StartCombat()
+    }
+
+    AccessSlayerTaskMinionList() {
+        GlobalLogger.WriteDebug("Clicking task type to get list of task minions")
+        taskX := 2525
+        taskY := 185
         Mouse.ClickWait(taskX, taskY, 1, 1000)
     }
 
