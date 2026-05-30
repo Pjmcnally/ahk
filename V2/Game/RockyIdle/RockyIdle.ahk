@@ -333,7 +333,7 @@ class RockyIdle {
                 }
             }
 
-            Sleep(250)
+            Sleep(250 * attemptCount) ; Wait before next attempt, increasing with each try to allow for any transient issues to resolve
         }
 
         if (!success and mustFind) {
