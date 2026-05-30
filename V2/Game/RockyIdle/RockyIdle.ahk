@@ -235,11 +235,23 @@ class RockyIdle {
     }
 
     StartCombat() {
-        GlobalLogger.WriteInfo("Selecting slayer minion to fight.")
-        Keyboard.SendWait("{WheelDown 15}", 1000)
-        this.ClickImageByName(500, 1, 2035, 1360, "fight.png")
-        this.SlayerTaskStartTic := A_TickCount
-        GlobalLogger.WriteDebug("Slayer task started at tick: " . A_TickCount)
+        success := false
+        maxAttempts := 3
+        currentAttempt := 1
+
+        while (!success and currentAttempt <= maxAttempts) {
+            GlobalLogger.WriteInfo("Attempting to start combat. Attempt: " . currentAttempt)
+            Mouse.ClickWait(1275, 985, 0, 1000)  ; Activate scrollable section of screen
+            Keyboard.SendWait("{WheelDown 15}", 1000)
+            this.ClickImageByName(500, 1, 2035, 1360, "fight.png")
+            this.SlayerTaskStartTic := A_TickCount
+            GlobalLogger.WriteDebug("Slayer task started at tick: " . A_TickCount)
+        }
+
+        if (!success) {
+            GlobalLogger.WriteError("Failed to start combat after " . maxAttempts . " attempts.")
+            throw Error("Failed to start combat after " . maxAttempts . " attempts.")
+        }
     }
 
     StartSlayerTaskCombat() {
