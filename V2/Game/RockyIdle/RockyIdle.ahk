@@ -142,9 +142,9 @@ class RockyIdle {
         findResults := this.FindImageByName(2310, 160, 2550, 1005, type . "SidebarActive.png")
 
         if (findResults.Success) {
-            GlobalLogger.WriteInfo("Type " . type . " found in sidebar. No action needed.")
+            GlobalLogger.WriteDebug("Type " . type . " found in sidebar. No action needed.")
         } else {
-            GlobalLogger.WriteInfo("Type " . type . " not found in sidebar. Planting " . type)
+            GlobalLogger.WriteWarn("Type " . type . " not found in sidebar. Planting " . type)
             this.GoToFarmingPage(type)
             this.PlantFarm(type)
         }
@@ -152,7 +152,7 @@ class RockyIdle {
 
 
     GoToFarmingPage(type := "") {
-        GlobalLogger.WriteInfo("Activating farming page")
+        GlobalLogger.WriteDebug("Activating farming page")
         Mouse.ClickWait(55, 545, 1, 1000)     ; Activate farming screen
 
         GlobalLogger.WriteDebug("Scrolling to top of page")
