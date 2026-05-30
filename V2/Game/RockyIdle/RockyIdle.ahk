@@ -200,7 +200,7 @@ class RockyIdle {
         currentTick := A_TickCount
         currentTaskDuration := A_TickCount - this.SlayerTaskStartTick
 
-        GlobalLogger.WriteDebug("Checking For Stale Task")
+        GlobalLogger.WriteInfo("Checking For Stale Slayer Task")
         GlobalLogger.WriteDebug("Current tick: " . currentTick)
         GlobalLogger.WriteDebug("Slayer task start tick: " . this.SlayerTaskStartTick)
         GlobalLogger.WriteDebug("Current task duration: " . currentTaskDuration)
@@ -220,18 +220,22 @@ class RockyIdle {
     GetNewSlayerTask(newTaskInfo) {
         GlobalLogger.WriteInfo("Getting new slayer task.")
         Mouse.ClickWait(newTaskInfo.x, newTaskInfo.y, 1, 1000)
+        if (this.SlayerTaskCount > 0) {
+            durationString := Format("{1:i}", (A_TickCount - this.SlayerTaskStartTick) / 1000)
+            GlobalLogger.WriteInfo("Slayer task completed. Count: [" . this.SlayerTaskCount . "] Completed After: [" . durationString . "] seconds.")
+        }
+
         this.SlayerTaskCount += 1
-        GlobalLogger.WriteDebug("Slayer task count: " . this.SlayerTaskCount)
     }
 
     GoToMonsterPage() {
-        GlobalLogger.WriteInfo("Accessing monster page")
-        Mouse.ClickWait(100, 675, 1, 1000)
+        GlobalLogger.WriteDebug("Accessing monster page")
+        Mouse.ClickWait(250, 750, 1, 1000)
     }
 
     GoToSlayerPage() {
-        GlobalLogger.WriteInfo("Accessing slayer page")
-        Mouse.ClickWait(250, 750, 1, 1000)
+        GlobalLogger.WriteDebug("Accessing slayer page")
+        Mouse.ClickWait(100, 675, 1, 1000)
     }
 
     StartCombat() {
@@ -240,29 +244,36 @@ class RockyIdle {
         currentAttempt := 1
 
         while (!success and currentAttempt <= maxAttempts) {
-            GlobalLogger.WriteInfo("Attempting to start combat. Attempt: " . currentAttempt)
+            GlobalLogger.WriteDebug("Attempting to start combat. Attempt: " . currentAttempt)
             Mouse.ClickWait(1275, 985, 0, 1000)  ; Activate scrollable section of screen
             Keyboard.SendWait("{WheelDown 15}", 1000)
-            this.ClickImageByName(500, 1, 2035, 1360, "fight.png")
-            this.SlayerTaskStartTic := A_TickCount
-            GlobalLogger.WriteDebug("Slayer task started at tick: " . A_TickCount)
+            result := this.ClickImageByName(500, 1, 2035, 1360, "fight.png")
+
+            success := result.success
+            currentAttempt += 1
         }
 
         if (!success) {
             GlobalLogger.WriteError("Failed to start combat after " . maxAttempts . " attempts.")
             throw Error("Failed to start combat after " . maxAttempts . " attempts.")
         }
+
+        return success
     }
 
     StartSlayerTaskCombat() {
+        GlobalLogger.WriteInfo("Starting slayer task combat")
         this.AccessSlayerTaskMinionList()
-        this.StartCombat()
+        if (this.StartCombat()) {
+            this.SlayerTaskStartTick := A_TickCount
+            GlobalLogger.WriteDebug("Slayer task started at tick: " . A_TickCount)
+        }
     }
 
     AccessSlayerTaskMinionList() {
         GlobalLogger.WriteDebug("Clicking task type to get list of task minions")
         taskX := 2525
-        taskY := 185
+        taskY := 205
         Mouse.ClickWait(taskX, taskY, 1, 1000)
     }
 
@@ -272,24 +283,24 @@ class RockyIdle {
     }
 
     ActivateCombatBoost() {
-        GlobalLogger.WriteInfo("Checking Combat Boost")
+        GlobalLogger.WriteInfo("Activating Combat Boost")
         result := this.ClickImageByName(2205, 0, 2280, 110, "combatBoost.png")
         if (result.success) {
-            GlobalLogger.WriteInfo("Activating combat boost")
+            GlobalLogger.WriteDebug("Combat boost available. Activating boost.")
             Mouse.ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
         } else {
-            GlobalLogger.WriteInfo("Combat boost not found. It may already be active or unavailable.")
+            GlobalLogger.WriteDebug("Combat boost not found. It may already be active or unavailable.")
         }
     }
 
     ActivateSkillBoost() {
-        GlobalLogger.WriteInfo("Checking Skill Boost")
+        GlobalLogger.WriteInfo("Activating Skill Boost")
         result := this.ClickImageByName(2205, 0, 2280, 110, "skillBoost.png")
         if (result.success) {
-            GlobalLogger.WriteInfo("Activating skill boost")
+            GlobalLogger.WriteDebug("Skill boost available. Activating boost.")
             Mouse.ClickWait(2185, 30, 1, 1000) ; Move mouse to neutral position to not block next action
         } else {
-            GlobalLogger.WriteInfo("Skill boost not found. It may already be active or unavailable.")
+            GlobalLogger.WriteDebug("Skill boost not found. It may already be active or unavailable.")
         }
     }
 
