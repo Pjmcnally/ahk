@@ -238,12 +238,7 @@ class RockyIdle {
         GlobalLogger.WriteDebug("Slayer task started at tick: " . A_TickCount)
     }
 
-    AccessSlayerTask() {
-        GlobalLogger.WriteDebug("Clicking 'Get Task'")
-        taskX := 765
-        taskY := 235
-        Mouse.ClickWait(taskX, taskY, 1, 100)
-        Sleep(250)
+        Mouse.ClickWait(taskX, taskY, 1, 1000)
     }
 
     NewTaskAvailable() {
