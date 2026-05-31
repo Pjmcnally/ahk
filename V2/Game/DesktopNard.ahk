@@ -1,6 +1,8 @@
-; Includes and directives
+; Directives
 #Requires AutoHotkey v2.0
-#Include "%A_LineFile%\..\..\Lib\" ; Include the Lib directory for shared utilities and classes
+
+; Includes
+#Include "%A_LineFile%\..\..\Lib\Internal"
 #Include "Keyboard.ahk"
 
 ; Hotkeys

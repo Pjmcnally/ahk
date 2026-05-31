@@ -1,4 +1,7 @@
-﻿class Logger {
+﻿; Directives
+#Requires AutoHotkey v2.0
+
+class Logger {
     static logLevels := Map(
         "TRACE", 1,
         "DEBUG", 2,

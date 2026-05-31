@@ -1,11 +1,14 @@
-﻿; Includes and directives
+﻿; Directives
 #Requires AutoHotkey v2.0
-#Include "%A_LineFile%\..\..\..\Lib\" ; Include the Lib directory for shared utilities and classes
-#Include "Array.ahk"
+
+; Includes
+#Include "%A_LineFile%\..\..\..\Lib\Internal"
 #Include "Keyboard.ahk"
 #Include "Logger.ahk"
 #Include "Mouse.ahk"
 #Include "System.ahk"
+#Include "%A_LineFile%\..\..\..\Lib\External"
+#Include "UIA.ahk"
 
 ; Hotkeys
 #HotIf WinActive("ahk_exe Rocky Idle.exe")
@@ -29,6 +32,12 @@ RunRockyIdle(taskList) {
             rockyObj.Dispose()
         }
     }
+}
+
+Hotkey("^!t", (*) => TestNewHotkey()) ; Ctrl+Alt+L to list hotkeys
+
+testNewHotkey() {
+
 }
 
 ; Classes
