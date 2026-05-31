@@ -182,7 +182,7 @@ class RockyIdle {
 
 
     RunSlayer() {
-        this.DisplayToolTip("Running AutoSlayer")
+        this.DisplayToolTip("Running AutoSlayer - Tasks Completed: [" . this.SlayerTaskCount . "]")
         GlobalLogger.WriteInfo("Starting AutoSlayer process")
         this.GoToSlayerPage()
 
