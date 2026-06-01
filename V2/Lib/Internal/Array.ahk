@@ -36,6 +36,22 @@ Array_Includes(this, Value) {
     return false
 }
 
+/**
+ * @description `Random()`
+ * Returns a random element from the array.
+ * @returns {(Any)}
+ * A random element from the array.
+ */
+Array_GetRandom(this) {
+    if (this.Length() = 0) {
+        return ""
+    }
+
+    randomIndex := Random(1, this.Length())
+    return this[randomIndex]
+}
+
 ; Inject the methods into the Array prototype so they can be called on any array instance
 Array.Prototype.DefineProp("Join", {Call: Array_Join})
 Array.Prototype.DefineProp("Includes", {Call: Array_Includes})
+Array.Prototype.DefineProp("GetRandom", {Call: Array_GetRandom})
