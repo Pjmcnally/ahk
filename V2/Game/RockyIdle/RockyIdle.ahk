@@ -185,16 +185,17 @@ class RockyIdle {
     RunSlayer() {
         this.DisplayToolTip("Running AutoSlayer - Tasks Completed: [" . this.SlayerTaskCount . "]")
         GlobalLogger.WriteInfo("Starting AutoSlayer process")
-        this.GoToSlayerPage()
-
-        newTaskInfo := this.NewTaskAvailable()
-        if (newTaskInfo.success) {
-            this.GetNewSlayerTask(newTaskInfo)
-            this.StartSlayerTaskCombat()
-        } else {
+        if (this.CheckSlayerActive()) {
             this.CheckForStaleSlayerTask()
+        } else {
+            this.GetNewSlayerTask()
+            this.StartSlayerTaskCombat()
         }
+
         GlobalLogger.WriteInfo("AutoSlayer process complete")
+        Sleep(3000)
+    }
+
     CheckSlayerActive() {
         GlobalLogger.WriteDebug("Checking if Slayer is active")
         slayerActive := this.UiaElement.ElementExist({Name:"Slayer Monster Category"})
