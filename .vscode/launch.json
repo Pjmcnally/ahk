@@ -7,8 +7,8 @@
         {
             "type": "autohotkey",
             "request": "launch",
-            "name": "AhkV1 - Desktop",
-            "program": "${workspaceFolder}/V1/ahk/ahk_v1_desktop.ahk",
+            "name": "AhkV2 - Desktop",
+            "program": "${workspaceFolder}/V2/Desktop.ahk",
             "stopOnEntry": false
         },
         {
