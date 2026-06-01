@@ -31,12 +31,6 @@ RunRockyIdle(taskList) {
     }
 }
 
-Hotkey("^!t", (*) => TestNewHotkey()) ; Ctrl+Alt+L to list hotkeys
-
-testNewHotkey() {
-
-}
-
 ; Classes
 class RockyIdle {
     __New() {
