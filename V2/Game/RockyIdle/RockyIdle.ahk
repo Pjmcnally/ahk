@@ -3,10 +3,7 @@
 
 ; Includes
 #Include "%A_LineFile%\..\..\..\Lib\Internal"
-#Include "Keyboard.ahk"
-#Include "Logger.ahk"
-#Include "Mouse.ahk"
-#Include "System.ahk"
+#Include "Array.ahk"
 #Include "%A_LineFile%\..\..\..\Lib\External"
 #Include "UIA.ahk"
 
