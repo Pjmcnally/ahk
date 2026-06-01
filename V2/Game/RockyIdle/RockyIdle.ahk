@@ -74,24 +74,6 @@ class RockyIdle {
         ToolTip()
     }
 
-    GetRandomFile(directoryPath) {
-        GlobalLogger.WriteDebug("Getting random file from: " . directoryPath)
-        fileList := []
-        Loop Files, directoryPath "\*.*"
-        {
-            fileList.Push(A_LoopFilePath)
-        }
-
-        count := fileList.Length
-        GlobalLogger.WriteDebug("Total Files Found: " . count)
-
-        randomIndex := Random(1, count)
-        selectedFile := fileList[randomIndex]
-        GlobalLogger.WriteDebug("Selected file: " . selectedFile)
-
-        return selectedFile
-    }
-
     RunFarm() {
         this.DisplayToolTip("Running AutoFarm")
         GlobalLogger.WriteInfo("AutoFarm process started")
