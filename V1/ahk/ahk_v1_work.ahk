@@ -33,7 +33,6 @@ windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_e
 #Include %A_ScriptDir%\..\core\core.ahk
 #Include %A_ScriptDir%\..\core\clipboard.ahk
 #Include %A_ScriptDir%\..\core\files.ahk
-#Include %A_ScriptDir%\..\core\logging.ahk
 #Include %A_ScriptDir%\..\core\strings.ahk
 #Include %A_ScriptDir%\..\core\time.ahk
 
