@@ -1,4 +1,7 @@
-﻿class Logger {
+﻿; Directives
+#Requires AutoHotkey v2.0
+
+class Logger {
     static logLevels := Map(
         "TRACE", 1,
         "DEBUG", 2,
@@ -8,6 +11,9 @@
         "FATAL", 6,
         "OVER",  7
     )
+
+    ; TODO: Add log rotation to prevent log files from growing indefinitely. This could be based on file size or date. For example, create a new log file each day or when the current log file exceeds a certain size.
+    ; TODO: https://www.autohotkey.com/boards/viewtopic.php?t=59127
 
     __New(path, logLevel := "INFO") {
         this.Path := path
@@ -99,7 +105,5 @@
         if (this.FileObject) {
             this.FileObject.Close()
         }
-
-        this.Base := ""
     }
 }
