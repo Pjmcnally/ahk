@@ -26,7 +26,9 @@ class Mouse {
             ToolTip("Clicking")
             MouseGetPos(&currentX, &currentY)
             if (!disableOnMove) {
-                Click()
+                Click("Down")
+                Sleep(25)
+                Click("Up")
                 return
             } else if (abs(currentX - startX) < allowedPositionVariance and abs(currentY - startY) < allowedPositionVariance) {
                 Click()
