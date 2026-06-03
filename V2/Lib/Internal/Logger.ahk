@@ -1,6 +1,9 @@
 ﻿; Directives
 #Requires AutoHotkey v2.0
 
+; TODO: Add log rotation to prevent log files from growing indefinitely. This could be based on file size or date. For example, create a new log file each day or when the current log file exceeds a certain size.
+; TODO: https://www.autohotkey.com/boards/viewtopic.php?t=59127
+
 class Logger {
     static logLevels := Map(
         "TRACE", 1,
