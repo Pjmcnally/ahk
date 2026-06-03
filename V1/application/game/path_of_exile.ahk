@@ -66,8 +66,6 @@ class PoEInterface {
                 clear_and_send("Magic")
             Case "n":
                 clear_and_send("Normal")
-            Case "o":
-                clear_and_send("Tane's Laboratory")
             Case "p":
                 clear_and_send("Prophecy")
             Case "r":
