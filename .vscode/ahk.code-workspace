@@ -1,8 +1,80 @@
 {
-	"folders": [
-		{
-			"path": ".."
-		}
-	],
-	"settings": {}
+    "folders": [
+        {
+            "path": ".."
+        }
+    ],
+    "settings": {
+        // VS Code Application Settings
+        // Editor Settings
+        "editor.tabSize": 4,
+        "editor.rulers": [120],
+
+        // Files
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "files.trimTrailingWhitespace": true,
+
+        // Language Settings
+        // AutoHotKey
+        "AHK++.v1.file": {
+            "interpreterPath": "C:/Program Files/AutoHotkey/v1.1.37.02/AutoHotkeyU64.exe"
+        },
+
+        // CSpell Rules
+        // Spell check settings and dictionaries below.
+        "cSpell.enabledFileTypes": {
+            "*": true
+        },
+        "cSpell.ignoreRegExpList": [
+            "^:.*:.*::", // Ignore HotString Definition in AHK
+        ],
+        "cSpell.words": [
+            "ABBYY",
+            "Baldur",
+            "BHIP",
+            "Brotato",
+            "CCCA",
+            "collectstatic",
+            "cust",
+            "docstrings",
+            "fcdot",
+            "FFFIIN",
+            "FFFINN",
+            "Flexi",
+            "flexicapture",
+            "hexcells",
+            "hhmmssfff",
+            "Hotstring",
+            "hotstrings",
+            "iexplore",
+            "Increlution",
+            "iptools",
+            "JETI",
+            "keybind",
+            "keybinds",
+            "lootfilter",
+            "makemigrations",
+            "Melvor",
+            "milli",
+            "Nally",
+            "noinput",
+            "numlock",
+            "Numpad",
+            "pdfs",
+            "rungameid",
+            "runserver",
+            "Skyrim",
+            "spaceversery",
+            "SSMS",
+            "UPDB",
+            "USPTO",
+            "varchar",
+            "worldox",
+            "Xmit",
+            "yaig",
+            "yyyymmdd",
+            "yyyymmddhh"
+        ],
+    }
 }
