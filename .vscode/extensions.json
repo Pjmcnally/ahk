@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "mark-wiemer.vscode-autohotkey-plus-plus",
+    "streetsidesoftware.code-spell-checker",
+    "zero-plusplus.vscode-autohotkey-debug",
+    //"thqby.vscode-autohotkey2-lsp"
+],
+  "unwantedRecommendations": []
+}

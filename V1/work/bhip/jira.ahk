@@ -16,7 +16,7 @@ JIRA functions, hotstrings, and hotkeys used at BHIP.
 ; Functions
 ; ==============================================================================
 format_db_for_jira() {
-    /* Format content copied out of MSSMS as a table for JIRA and paste results.
+    /* Format content copied out of SSMS as a table for JIRA and paste results.
     */
     res := ""
     CrLf := "`r`n"
