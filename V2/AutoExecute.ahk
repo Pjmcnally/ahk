@@ -7,14 +7,6 @@
 
 ; Auto-Execute Commands
 ; ==============================================================================
-; Setup Logger
-LoggerSettings := Map(
-    "Enabled", true,
-    "FolderPath", A_MyDocuments . "\AutoHotkey\Logs\",
-    "DateFormat", "yyyy/MM/dd HH:mm:ss",
-    "LogLevel", "INFO"
-)
-Logger.Init(LoggerSettings)
-OnExit(Logger.Cleanup)
+Logger.Init(LoggerSettings(true, A_MyDocuments . "\AutoHotkey\Logs\", "yyyy/MM/dd HH:mm:ss", "INFO"))
 
 ;windowManager := New WindowManagerInterface([pandora, New WindowInterface("ahk_exe Signal.exe"), New WindowInterface("Microsoft To Do"), New WindowInterface("Pocket Casts Desktop")])
