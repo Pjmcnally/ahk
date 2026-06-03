@@ -44,7 +44,7 @@ class RockyIdle {
 
     Run(TaskList) {
         this.TaskList := TaskList
-        GlobalLogger.WriteInfo("Initializing Rocky Idle automation with tasks: [" . TaskList.Join(", ") . "]")
+        Logger.WriteInfo("Initializing Rocky Idle automation with tasks: [" . TaskList.Join(", ") . "]")
 
         TaskArray := Map(
             "Boosts", this.ActivateBoosts.Bind(this),
@@ -57,7 +57,7 @@ class RockyIdle {
                 if (TaskArray.Has(task)) {
                     TaskArray[task]()
                 } else {
-                    GlobalLogger.WriteWarn("No function mapped for task: " . task)
+                    Logger.WriteWarn("No function mapped for task: " . task)
                 }
             }
 
@@ -76,7 +76,7 @@ class RockyIdle {
 
     RunFarm() {
         this.DisplayToolTip("Running AutoFarm")
-        GlobalLogger.WriteInfo("AutoFarm process started")
+        Logger.WriteInfo("AutoFarm process started")
 
         while (this.CheckForAvailableHarvest()) {
             this.CycleFarm()
@@ -88,16 +88,16 @@ class RockyIdle {
             this.PlantFarm([farmType])
         }
 
-        GlobalLogger.WriteInfo("AutoFarm process complete")
+        Logger.WriteInfo("AutoFarm process complete")
     }
 
     CheckForAvailableHarvest() {
-        GlobalLogger.WriteInfo("Checking for available harvests.")
+        Logger.WriteInfo("Checking for available harvests.")
         return this.UiaElement.ElementExist({Name:"Done"})
     }
 
     CycleFarm() {
-        GlobalLogger.WriteInfo("Harvesting and replanting farm.")
+        Logger.WriteInfo("Harvesting and replanting farm.")
         this.HarvestFromSideBar()
         this.PlantFarm(["Bush", "Tree"])
     }
@@ -121,16 +121,16 @@ class RockyIdle {
     }
 
     CheckInactiveFarm() {
-        GlobalLogger.WriteInfo("Checking sidebar for missing farming types.")
+        Logger.WriteInfo("Checking sidebar for missing farming types.")
         inactive := []
 
         if (!this.UiaElement.ElementExist({Name: "Bushes", T:20})) {
-            GlobalLogger.WriteWarn("No active bushes found. Adding to inactive list.")
+            Logger.WriteWarn("No active bushes found. Adding to inactive list.")
             inactive.Push("Bush")
         }
 
         if (!this.UiaElement.ElementExist({Name: "Trees", T:20})) {
-            GlobalLogger.WriteWarn("No active trees found. Adding to inactive list.")
+            Logger.WriteWarn("No active trees found. Adding to inactive list.")
             inactive.Push("Tree")
         }
 
@@ -139,11 +139,11 @@ class RockyIdle {
 
 
     GoToFarmingPage(type := "") {
-        GlobalLogger.WriteDebug("Activating farming page")
+        Logger.WriteDebug("Activating farming page")
         this.UiaElement.FindElement({T:26}, {T:26}, {T:5, i:10}).Click()
 
         if (type) {
-            GlobalLogger.WriteDebug("Access page for type: " . type)
+            Logger.WriteDebug("Access page for type: " . type)
         }
 
         if (type = "Bush") {
@@ -165,7 +165,7 @@ class RockyIdle {
         randomBush := activeBushes.GetRandom()
 
         if (this.UiaElement.ElementExist({T:20, I:randomBush})) {
-            GlobalLogger.WriteDebug("Planting bush with ID: " . randomBush)
+            Logger.WriteDebug("Planting bush with ID: " . randomBush)
             this.UiaElement.FindElement({T:20, I:randomBush}).Click()
         }
     }
@@ -182,7 +182,7 @@ class RockyIdle {
         randomTree := activeTrees.GetRandom()
 
         if (this.UiaElement.ElementExist({T:20, I:randomTree})) {
-            GlobalLogger.WriteDebug("Planting tree with ID: " . randomTree)
+            Logger.WriteDebug("Planting tree with ID: " . randomTree)
             this.UiaElement.FindElement({T:20, I:randomTree}).Click()
         }
     }
@@ -190,7 +190,7 @@ class RockyIdle {
 
     RunSlayer() {
         this.DisplayToolTip("Running AutoSlayer - Tasks Completed: [" . this.SlayerTaskCount . "]")
-        GlobalLogger.WriteInfo("Starting AutoSlayer process")
+        Logger.WriteInfo("Starting AutoSlayer process")
         if (this.CheckSlayerActive()) {
             this.CheckForStaleSlayerTask()
         } else {
@@ -198,18 +198,18 @@ class RockyIdle {
             this.StartSlayerTaskCombat()
         }
 
-        GlobalLogger.WriteInfo("AutoSlayer process complete")
+        Logger.WriteInfo("AutoSlayer process complete")
         Sleep(3000)
     }
 
     CheckSlayerActive() {
-        GlobalLogger.WriteDebug("Checking if Slayer is active")
+        Logger.WriteDebug("Checking if Slayer is active")
         slayerActive := this.UiaElement.ElementExist({Name:"Slayer Monster Category"})
 
         if (slayerActive) {
-            GlobalLogger.WriteDebug("Slayer is active.")
+            Logger.WriteDebug("Slayer is active.")
         } else {
-            GlobalLogger.WriteDebug("Slayer is not active.")
+            Logger.WriteDebug("Slayer is not active.")
         }
 
         return slayerActive
@@ -219,14 +219,14 @@ class RockyIdle {
         currentTick := A_TickCount
         currentTaskDuration := A_TickCount - this.SlayerTaskStartTick
 
-        GlobalLogger.WriteInfo("Checking For Stale Slayer Task")
-        GlobalLogger.WriteDebug("Current tick: " . currentTick)
-        GlobalLogger.WriteDebug("Slayer task start tick: " . this.SlayerTaskStartTick)
-        GlobalLogger.WriteDebug("Current task duration: " . currentTaskDuration)
-        GlobalLogger.WriteDebug("Slayer task timeout: " . this.SlayerTaskTimeout)
+        Logger.WriteInfo("Checking For Stale Slayer Task")
+        Logger.WriteDebug("Current tick: " . currentTick)
+        Logger.WriteDebug("Slayer task start tick: " . this.SlayerTaskStartTick)
+        Logger.WriteDebug("Current task duration: " . currentTaskDuration)
+        Logger.WriteDebug("Slayer task timeout: " . this.SlayerTaskTimeout)
 
         if (currentTaskDuration > this.SlayerTaskTimeout) {
-            GlobalLogger.WriteWarn("Current task running longer than timeout. Replacing Stale Minion")
+            Logger.WriteWarn("Current task running longer than timeout. Replacing Stale Minion")
             ; On way a task can fail is if no combat is active at all. This moves the button necessary to select the correct minion.
             ; By going to the monster page and starting combat it ensure that the button for the correct task is in the correct place.
             this.GoToMonsterPage()
@@ -237,13 +237,13 @@ class RockyIdle {
     }
 
     GetNewSlayerTask() {
-        GlobalLogger.WriteInfo("Getting new slayer task.")
+        Logger.WriteInfo("Getting new slayer task.")
         this.GoToSlayerPage()
 
         this.UiaElement.ElementFromPath({T:0, i:43}).Click() ; Click "Get New Task" button.
         if (this.SlayerTaskCount > 0) {
             durationString := Format("{1:i}", (A_TickCount - this.SlayerTaskStartTick) / 1000)
-            GlobalLogger.WriteInfo("Slayer task completed. Count: [" . this.SlayerTaskCount . "] Completed After: [" . durationString . "] seconds.")
+            Logger.WriteInfo("Slayer task completed. Count: [" . this.SlayerTaskCount . "] Completed After: [" . durationString . "] seconds.")
         }
         this.SlayerTaskCount += 1
 
@@ -251,19 +251,19 @@ class RockyIdle {
     }
 
     GoToMonsterPage() {
-        GlobalLogger.WriteDebug("Accessing monster page")
+        Logger.WriteDebug("Accessing monster page")
         this.UiaElement.ElementFromPath({T:20, i:19}).Click()
         Sleep(1000)
     }
 
     GoToSlayerPage() {
-        GlobalLogger.WriteDebug("Accessing slayer page")
+        Logger.WriteDebug("Accessing slayer page")
         this.UiaElement.ElementFromPath({T:26}, {T:26}, {T:5, i:13}).Click()
         Sleep(1000)
     }
 
     StartCombat() {
-        GlobalLogger.WriteDebug("Attempting to start combat.")
+        Logger.WriteDebug("Attempting to start combat.")
         this.UiaElement.FindElement({Name:"Fight"}).Click() ; Find first button with name "Fight" and click it.
         Sleep(1000)
 
@@ -271,37 +271,37 @@ class RockyIdle {
     }
 
     StartSlayerTaskCombat() {
-        GlobalLogger.WriteInfo("Starting slayer task combat")
+        Logger.WriteInfo("Starting slayer task combat")
         this.AccessSlayerTaskMinionList()
         if (this.StartCombat()) {
             this.SlayerTaskStartTick := A_TickCount
-            GlobalLogger.WriteDebug("Slayer task started at tick: " . A_TickCount)
+            Logger.WriteDebug("Slayer task started at tick: " . A_TickCount)
         }
     }
 
     AccessSlayerTaskMinionList() {
-        GlobalLogger.WriteDebug("Clicking task type to get list of task minions")
+        Logger.WriteDebug("Clicking task type to get list of task minions")
         if (this.UiaElement.ElementExist({Name:"Slayer Monster Category"})) {
             this.UiaElement.ElementExist({Name:"Slayer Monster Category"}).Click()
             Sleep(1000)
         } else {
-            GlobalLogger.WriteError("Slayer task type button not found. Unable to continue.")
+            Logger.WriteError("Slayer task type button not found. Unable to continue.")
             throw Error("Slayer task type button not found. Unable to continue.")
         }
     }
 
     NewTaskAvailable() {
-        GlobalLogger.WriteInfo("Checking if new slayer task available")
+        Logger.WriteInfo("Checking if new slayer task available")
         return this.FindImageByName(530, 1250, 840, 1350, "getTask.png")
     }
 
     ActivateSkillBoost() {
-        GlobalLogger.WriteInfo("Activating Skill Boost")
+        Logger.WriteInfo("Activating Skill Boost")
         this.UiaElement.ElementFromPath({T:6, i:10}).Click()
     }
 
     ActivateCombatBoost() {
-        GlobalLogger.WriteInfo("Activating Combat Boost")
+        Logger.WriteInfo("Activating Combat Boost")
         this.UiaElement.ElementFromPath({T:6, i:11}).Click()
     }
 
