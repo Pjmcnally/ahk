@@ -77,90 +77,114 @@ class RockyIdle {
     RunFarm() {
         this.DisplayToolTip("Running AutoFarm")
         GlobalLogger.WriteInfo("AutoFarm process started")
-        this.HarvestFarm()
-        this.CheckInactiveFarm()
+
+        while (this.CheckForAvailableHarvest()) {
+            this.CycleFarm()
+        }
+
+        inactive := this.CheckInactiveFarm()
+        for (farmType in inactive) {
+            this.GoToFarmingPage(farmType)
+            this.PlantFarm([farmType])
+        }
+
         GlobalLogger.WriteInfo("AutoFarm process complete")
     }
 
-    HarvestFarm() {
+    CheckForAvailableHarvest() {
         GlobalLogger.WriteInfo("Checking for available harvests.")
-
-        this.GoToFarmingPage("Bush")
-        GlobalLogger.WriteInfo("Checking for harvestable bushes.")
-        harvestBushesResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png", 1500)
-        if (harvestBushesResults.Success) {
-            this.PlantFarm("Bush")
-        }
-
-        this.GoToFarmingPage("Tree")
-        GlobalLogger.WriteInfo("Checking for harvestable trees.")
-        harvestTreesResults := this.ClickImageByName(775, 550, 1150, 780, "claimAll.png", 1500)
-        if (harvestTreesResults.Success) {
-            this.PlantFarm("Tree")
-        }
+        return this.UiaElement.ElementExist({Name:"Done"})
     }
 
-    PlantFarm(type := "") {
-        if (type = "") {
-            GlobalLogger.WriteDebug("Type unknown. Finding active type.")
-        }
+    CycleFarm() {
+        GlobalLogger.WriteInfo("Harvesting and replanting farm.")
+        this.HarvestFromSideBar()
+        this.PlantFarm(["Bush", "Tree"])
+    }
 
-        if (type = "Bush" or this.FindImageByName(500, 150, 1430, 250, "bushPageActive.png").Success) {
+    HarvestFromSideBar() {
+        this.UiaElement.ElementFromPath({Name:"Done"}).Click()
+        Sleep(1000)
+
+        this.UiaElement.ElementFromPath({Name:"Claim All"}).Click()
+        Sleep(1000)
+    }
+
+    PlantFarm(types) {
+        if (types.Includes("Bush")) {
             this.PlantBushes()
-        } else if (type = "Tree" or this.FindImageByName(500, 150, 1430, 250, "treePageActive.png").Success) {
+        }
+
+        if (types.Includes("Tree")) {
             this.PlantTrees()
-        } else {
-            GlobalLogger.WriteError("No type specified or found")
         }
     }
 
-    CheckInactiveFarm(type := "Both") {
-        if (type = "Both") {
-            this.CheckInactiveFarm("Bush")
-            this.CheckInactiveFarm("Tree")
-            return
+    CheckInactiveFarm() {
+        GlobalLogger.WriteInfo("Checking sidebar for missing farming types.")
+        inactive := []
+
+        if (!this.UiaElement.ElementExist({Name: "Bushes", T:20})) {
+            GlobalLogger.WriteWarn("No active bushes found. Adding to inactive list.")
+            inactive.Push("Bush")
         }
 
-        GlobalLogger.WriteInfo("Checking sidebar for missing type: " . type)
-        findResults := this.FindImageByName(2310, 160, 2550, 1005, type . "SidebarActive.png")
-
-        if (findResults.Success) {
-            GlobalLogger.WriteDebug("Type " . type . " found in sidebar. No action needed.")
-        } else {
-            GlobalLogger.WriteWarn("Type " . type . " not found in sidebar. Planting " . type)
-            this.GoToFarmingPage(type)
-            this.PlantFarm(type)
+        if (!this.UiaElement.ElementExist({Name: "Trees", T:20})) {
+            GlobalLogger.WriteWarn("No active trees found. Adding to inactive list.")
+            inactive.Push("Tree")
         }
+
+        return inactive
     }
 
 
     GoToFarmingPage(type := "") {
         GlobalLogger.WriteDebug("Activating farming page")
-        Mouse.ClickWait(55, 545, 1, 1000)     ; Activate farming screen
+        this.UiaElement.FindElement({T:26}, {T:26}, {T:5, i:10}).Click()
 
-        GlobalLogger.WriteDebug("Scrolling to top of page")
-        Mouse.ClickWait(1250, 685, 0, 1000)   ; Activate scrollable section of screen
-        Keyboard.SendWait("{WheelUp 15}", 1000) ; Scroll to top of screen (otherwise all click positions will be wrong.)
+        if (type) {
+            GlobalLogger.WriteDebug("Access page for type: " . type)
+        }
 
-        if (type = "bush") {
-            GlobalLogger.WriteDebug("Access page for type: " . type)
-            Mouse.ClickWait(760, 200, 1, 1000)
-        } else if (type = "tree") {
-            GlobalLogger.WriteDebug("Access page for type: " . type)
-            Mouse.ClickWait(1225, 200, 1, 1000)
+        if (type = "Bush") {
+            this.UiaElement.FindElement({T:0, i:38}).Click()
+        } else if (type = "Tree") {
+            this.UiaElement.FindElement({T:0, i:39}).Click()
         }
     }
 
     PlantBushes() {
-        GlobalLogger.WriteInfo("Planting Bushes.")
-        randomBush := this.GetRandomFile(this.BaseImagePath . "\Bushes\Active")
-        this.ClickImage(525, 800, 1425, 1365, randomBush)
+        activeBushes := [
+            76, ; Gooseberry
+            84, ; Blueberry
+            92, ; Strawberry
+            100, ; Blackberry
+            108 ; Salmonberry
+        ]
+
+        randomBush := activeBushes.GetRandom()
+
+        if (this.UiaElement.ElementExist({T:20, I:randomBush})) {
+            GlobalLogger.WriteDebug("Planting bush with ID: " . randomBush)
+            this.UiaElement.FindElement({T:20, I:randomBush}).Click()
+        }
     }
 
     PlantTrees() {
-        GlobalLogger.WriteInfo("Planting Trees.")
-        randomTree := this.GetRandomFile(this.BaseImagePath . "\Trees\Active")
-        this.ClickImage(525, 800, 1425, 1365, randomTree)
+        activeTrees := [
+            56, ; Pine
+            66, ; Ebony
+            76, ; Eucalyptus
+            86, ; Baobab
+            96 ; Canary
+        ]
+
+        randomTree := activeTrees.GetRandom()
+
+        if (this.UiaElement.ElementExist({T:20, I:randomTree})) {
+            GlobalLogger.WriteDebug("Planting tree with ID: " . randomTree)
+            this.UiaElement.FindElement({T:20, I:randomTree}).Click()
+        }
     }
 
 
