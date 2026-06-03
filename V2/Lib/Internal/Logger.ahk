@@ -256,7 +256,7 @@ class Logger {
         this.WriteLog(text, "FATAL")
 
         if (e) {
-            this.WriteErrorDetail(e)
+            this._WriteErrorDetail(e)
         }
     }
     ;#endRegion
