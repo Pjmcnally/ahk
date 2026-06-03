@@ -75,6 +75,7 @@ class RockyIdle {
         ToolTip()
     }
 
+    ;#region Farming
     RunFarm() {
         this.DisplayToolTip("Running AutoFarm")
         Logger.WriteInfo("AutoFarm process started")
@@ -187,8 +188,9 @@ class RockyIdle {
             this.UiaElement.FindElement({T:20, I:randomTree}).Click()
         }
     }
+    ;#endregion Farming
 
-
+    ;#region Slayer
     RunSlayer() {
         this.DisplayToolTip("Running AutoSlayer - Tasks Completed: [" . this.SlayerTaskCount . "]")
         Logger.WriteInfo("Starting AutoSlayer process")
@@ -290,12 +292,9 @@ class RockyIdle {
             throw Error("Slayer task type button not found. Unable to continue.")
         }
     }
+    ;#endregion Slayer
 
-    NewTaskAvailable() {
-        Logger.WriteInfo("Checking if new slayer task available")
-        return this.FindImageByName(530, 1250, 840, 1350, "getTask.png")
-    }
-
+    ;#region Boosts
     ActivateSkillBoost() {
         Logger.WriteInfo("Activating Skill Boost")
         this.UiaElement.ElementFromPath({T:6, i:10}).Click()
@@ -312,6 +311,7 @@ class RockyIdle {
         this.ActivateSkillBoost()
         Sleep(3000)
     }
+    ;#endregion
 
     Dispose() {
         this.HideToolTip()
