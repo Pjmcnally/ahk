@@ -1,11 +1,18 @@
 ; Directives
 #Requires AutoHotkey v2.0
 
+; Includes
+#Include "%A_LineFile%\..\..\Lib\Internal"
+#Include "Mouse.ahk"
+#Include "%A_LineFile%\..\..\Lib\External\"
+#Include "Uia.ahk"
+
 ; Hotkeys
 Hotkey("^!l", (*) => ListHotkeys()) ; Ctrl+Alt+L to list hotkeys
 Hotkey("^!p", (*) => Pause(-1))     ; Ctrl+Alt+P to toggle pause
 Hotkey("^!r", (*) => Reload())      ; Ctrl+Alt+R to reload script
 Hotkey("^!s", (*) => Suspend())     ; Ctrl+Alt+S to toggle suspend
+Hotkey("^!v", (*) => Uia.Viewer())     ; Ctrl+Alt+V to open UIA viewer
 Hotkey("XButton1", (*) => Mouse.ToggleFastClick(100)) ; Ctrl+Alt+F to toggle fast click
 /*
 Idea 1:
