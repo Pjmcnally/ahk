@@ -1,4 +1,11 @@
-﻿; Directives
+﻿/* Status: This currently doesn't work. It is in the middle of a refactor from image based search to UIA integration.
+
+At this time mods have been released for the game which do what I am trying to do here but better. I am abandoning this
+project for now. However, I want to keep this code as a way to remember how to use UIA as I may wish to use it for
+other projects.
+*/
+
+; Directives
 #Requires AutoHotkey v2.0
 
 ; Includes
