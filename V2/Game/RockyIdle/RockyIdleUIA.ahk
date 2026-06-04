@@ -9,10 +9,10 @@ other projects.
 #Requires AutoHotkey v2.0
 
 ; Includes
-#Include "%A_LineFile%\..\..\Lib\Internal"
+#Include "%A_LineFile%\..\..\..\Lib\Internal"
 #Include "Array.ahk"
 #Include "Logger.ahk"
-#Include "%A_LineFile%\..\..\Lib\External"
+#Include "%A_LineFile%\..\..\..\Lib\External"
 #Include "UIA.ahk"
 
 ; Hotkeys

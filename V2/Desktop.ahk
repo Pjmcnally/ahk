@@ -42,7 +42,6 @@ FileEncoding "UTF-8-RAW"            ; Set default file encoding to UTF-8 (withou
 ; #Include "%A_ScriptDir%\..\core\time.ahk"
 
 ; Import Game specific Module(s)
-#Include "%A_ScriptDir%\Game\RockyIdle.ahk"
 
 ; Import Application specific Module(s)
 
