@@ -20,10 +20,10 @@ class System {
      * @Example
      * GetRandomFile("C:\Users\ahk\Desktop")
      * @Example
-     * GetRandomFile("C:\Users\ahk\Desktop", "temp")
+     * GetRandomFile(A_Desktop, "temp")
      * @Example
-     * GetRandomFile("C:\Users\ahk\Desktop", "temp_*", "txt")
-     */
+     * GetRandomFile(A_Desktop, "temp_*", "txt")
+    */
     static GetRandomFile(directoryPath, nameFilter := "*", extension := "*") {
         fileList := []
         Loop Files, directoryPath "\" . nameFilter . "." . extension
@@ -34,7 +34,7 @@ class System {
         return fileList.GetRandomItem()
     }
 
-        /**
+    /**
      * @description `GetRandomFiles()`
      * Gets an array of random files from a folder.
      * @param {(String)} directoryPath
@@ -53,12 +53,12 @@ class System {
      * @Example
      * GetRandomFiles("C:\Users\ahk\Desktop")
      * @Example
-     * GetRandomFiles("C:\Users\ahk\Desktop", "temp")
+     * GetRandomFiles(A_Desktop, "temp")
      * @Example
-     * GetRandomFiles("C:\Users\ahk\Desktop", "temp_*", "txt")
+     * GetRandomFiles(A_Desktop, "temp_*", "txt")
      * @Example
-     * GetRandomFiles("C:\Users\ahk\Desktop", "temp_*", "txt", 5)
-     */
+     * GetRandomFiles(A_Desktop, "temp_*", "txt", 5)
+    */
     static GetRandomFiles(directoryPath, nameFilter := "*", extension := "*", count := 1) {
         fileList := []
         Loop Files, directoryPath "\" . nameFilter . "." . extension
