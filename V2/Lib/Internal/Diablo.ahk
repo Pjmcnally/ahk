@@ -1,7 +1,7 @@
-class DiabloInterface {
+﻿class Diablo {
     __New(window) {
         this.Window := window
-        this.Skills := {}
+        this.Skills := Map()
     }
 
     DisableAll() {
@@ -9,13 +9,13 @@ class DiabloInterface {
             val.Disable()
         }
 
-        Send {Numpad0 Up}
+        ; Send("{Numpad0 Up}")
     }
 
     GetSkill(key, preReqKey:="") {
         ; If skill isn't found initialize it
-        if (!(this.Skills.hasKey(key))) {
-            this.Skills[key] := new DiabloSkill(key, this.Window, preReqKey)
+        if (!(this.Skills.Has(key))) {
+            this.Skills[key] := DiabloSkill(key, this.Window, preReqKey)
         }
 
         return this.Skills[key]
@@ -36,7 +36,7 @@ class DiabloSkill {
         (this.Active) ? this.Disable() : this.Enable(freq)
     }
 
-    Enable(freq:="") {
+    Enable(freq := "") {
         if (!this.Active) {
             this.Active := True
             this.UseSkill()  ; Trigger immediately
@@ -48,7 +48,7 @@ class DiabloSkill {
 
             ; Activate timer
             timer := this.Timer  ; Not sure why this line is necessary but it is.
-            SetTimer, % timer, % freq,
+            SetTimer(timer,freq)
         }
     }
 
@@ -58,14 +58,14 @@ class DiabloSkill {
 
             ; Deactivate time
             timer := this.Timer
-            setTimer, % timer, OFF
+            SetTimer(timer,0)
         }
     }
 
     UseSkill() {
         if (WinActive(this.Window)) {
             if (!this.PreReqKey || GetKeyState(this.PreReqKey)) {
-                Send, % this.Key
+                Send(this.Key)
             }
 
         }

@@ -18,7 +18,7 @@ System description: Personal Desktop
 ; ==============================================================================
 #Requires AutoHotkey v2.0
 #SingleInstance Force               ; Automatically replaces old script with new if the same script file is rune twice
-#Warn All                           ; Enable warnings to assist with detecting common errors. (More explicit)
+#Warn All, MsgBox                   ; Enable warnings to assist with detecting common errors. (More explicit)
 #HotString EndChars `n `t           ; Limits hotstring ending characters to {Enter}{Tab}{Space}
 FileEncoding "UTF-8-RAW"            ; Set default file encoding to UTF-8 (without BOM)
 
@@ -42,6 +42,8 @@ FileEncoding "UTF-8-RAW"            ; Set default file encoding to UTF-8 (withou
 ; #Include "%A_ScriptDir%\..\core\time.ahk"
 
 ; Import Game specific Module(s)
+#Include "%A_ScriptDir%\Game\Diablo3.ahk"
+#Include "%A_ScriptDir%\Game\Diablo4.ahk"
 
 ; Import Application specific Module(s)
 
