@@ -171,7 +171,7 @@ class RockyIdle {
             108 ; Salmonberry
         ]
 
-        randomBush := activeBushes.GetRandom()
+        randomBush := activeBushes.GetRandomItem()
 
         if (this.UiaElement.ElementExist({T:20, I:randomBush})) {
             Logger.WriteDebug("Planting bush with ID: " . randomBush)
@@ -188,7 +188,7 @@ class RockyIdle {
             96 ; Canary
         ]
 
-        randomTree := activeTrees.GetRandom()
+        randomTree := activeTrees.GetRandomItem()
 
         if (this.UiaElement.ElementExist({T:20, I:randomTree})) {
             Logger.WriteDebug("Planting tree with ID: " . randomTree)
