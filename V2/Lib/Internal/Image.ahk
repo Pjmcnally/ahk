@@ -39,7 +39,7 @@ class image {
         results := this.Find(x1, y1, x2, y2, imagePath, maxTryCount, mustFind)
         if (results.success) {
             GlobalLogger.WriteDebug("Clicking image at X: " . results.x . " Y: " . results.y)
-            Mouse.ClickWait(results.x, results.y, 1, 100)
+            Mouse.ClickWait(results.x, results.y, 1, delay)
         }
 
         return results
