@@ -62,7 +62,6 @@ class Logger {
         throw Error("This class is static and cannot be instantiated.", -1)
     }
 
-    ;#region Init()
     /**
      * @description `Init()`
      * Static method to initialize the logger with the specified settings. See {@link LoggerSettings} for the settings that can be used to configure the Logger.
@@ -79,9 +78,7 @@ class Logger {
 
         OnExit(Logger.Cleanup)
     }
-    ;#endregion
 
-    ;#region _ReadSettings()
     /**
      * @description `_ReadSettings()`
      * Static internal method to read the settings for the logger. See {@link LoggerSettings} for the settings that can be used to configure the Logger.
@@ -95,9 +92,7 @@ class Logger {
         this.LogFolderPath := settings.HasProp("FolderPath") ? settings.FolderPath : ""
         this.MinimumLogLevel := settings.HasProp("MinimumLogLevel") ? settings.MinimumLogLevel : ""
     }
-    ;#endregion
 
-    ;#region _CreateLogFile()
     /**
      * @description `_CreateLogFile`
      * Static internal method to create a new log file and any required directories for the provided path. If the log file already exists new data will be appended.
@@ -114,9 +109,7 @@ class Logger {
         this.FileObject := FileOpen(this.logFullPath, "a", "UTF-8-RAW")
         this._WriteLine("Log started. Minimum Log level=[" . this.MinimumLogLevel . "]. Log Location=[" . this.logFullPath . "]", "OVER")
     }
-    ;#endregion
 
-    ;#region _RollLogFile()
     /**
      * @description `_RollLogFile`
      * Static internal method to roll over log file in the date has changed since the last entry.
@@ -130,9 +123,7 @@ class Logger {
         }
         this._CreateLogFile()
     }
-    ;#endregion
 
-    ;#region _WriteLine()
     /**
      * @description `_WriteLine`
      * Static internal method to add a line to the log file. This is only used internally. For public use try {@link Logger.WriteLog}.
@@ -151,9 +142,7 @@ class Logger {
         this.FileObject.Write(output)
         this.FileObject.Read(0) ; Flush the file buffer to ensure the log is written to disk immediately
     }
-    ;#endregion
 
-    ;#region WriteLog()
     /**
      * @description `WriteLog`
      * Writes data to the log file.
@@ -169,9 +158,7 @@ class Logger {
             this._WriteLine(text, level)
         }
     }
-    ;#endregion
 
-    ;#region WriteTrace()
     /**
      * @description `WriteTrace`
      * Writes data to the log file with an log level of "TRACE".
@@ -183,9 +170,7 @@ class Logger {
     static WriteTrace(text) {
         this.WriteLog(text, "TRACE")
     }
-    ;#endregion
 
-    ;#region WriteDebug()
     /**
      * @description `WriteDebug`
      * Writes data to the log file with an log level of "DEBUG".
@@ -197,9 +182,7 @@ class Logger {
     static WriteDebug(text) {
         this.WriteLog(text, "DEBUG")
     }
-    ;#endRegion
 
-    ;#region WriteInfo()
     /**
      * @description `WriteInfo`
      * Writes data to the log file with an log level of "INFO".
@@ -211,9 +194,7 @@ class Logger {
     static WriteInfo(text) {
         this.WriteLog(text, "INFO")
     }
-    ;#endRegion
 
-    ;#region WriteWarn()
     /**
      * @description `WriteWarn`
      * Writes data to the log file with an log level of "WARN".
@@ -226,9 +207,7 @@ class Logger {
     static WriteWarn(text) {
         this.WriteLog(text, "WARN")
     }
-    ;#endRegion
 
-    ;#region WriteError()
     /**
      * @description `WriteError`
      * Writes data to the log file with an log level of "ERROR".
@@ -241,9 +220,7 @@ class Logger {
     static WriteError(text, e := "") {
         this.WriteLog(text, "ERROR")
     }
-    ;#endRegion
 
-    ;#region WriteFatal()
     /**
      * @description `WriteFatal`
      * Writes data to the log file with an log level of "FATAL".
@@ -259,9 +236,7 @@ class Logger {
             this._WriteErrorDetail(e)
         }
     }
-    ;#endRegion
 
-    ;#region WriteOver()
     /**
      * @description `WriteOver`
      * Writes data to the log file with an log level of "OVER".
@@ -272,9 +247,7 @@ class Logger {
     static WriteOver(text) {
         this.WriteLog(text, "OVER")
     }
-    ;#endRegion
 
-    ;#region _WriteErrorDetail()
     /**
      * @description `_WriteErrorDetail`
      * Internal static function that writes AutoHotkey errors (with all internal parts) to the log file.
@@ -295,9 +268,7 @@ class Logger {
             this._WriteLine(e.File . " " . e.Line, "ERROR")
         }
     }
-    ;#endRegion
 
-    ;#region Cleanup()
     /**
      * @description `Cleanup`
      * Static method to release the file handler from the logger class. This is typically called as a Callback to the OnExit function.
@@ -309,5 +280,4 @@ class Logger {
             ; If we fail to close the file, there's not much we can do about it at this point since we're already exiting. Just swallow the error to prevent any unhandled exceptions during script exit.
         }
     }
-    ;#endregion
 }
