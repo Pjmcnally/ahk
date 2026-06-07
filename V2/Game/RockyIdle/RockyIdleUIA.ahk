@@ -25,6 +25,14 @@ F5::Reload() ; Stop all automation
 #HotIf ; Clear HotIf
 
 ; Functions
+/**
+ * @description `RunRockyIdle`
+ * Runs the Rocky Idle automation with the specified tasks.
+ * @param {(Array)} taskList
+ * The list of tasks to run.
+ * @returns {(String)}
+ * Always returns an empty string.
+ */
 RunRockyIdle(taskList) {
     static rockyObj := RockyIdle()
 
@@ -40,6 +48,10 @@ RunRockyIdle(taskList) {
 }
 
 ; Classes
+/**
+ * @class RockyIdle
+ * This class is responsible for running the Rocky Idle automation.
+ */
 class RockyIdle {
     __New() {
         this.UiaElement := UIA.ElementFromChromium("ahk_exe Rocky Idle.exe")
@@ -50,6 +62,14 @@ class RockyIdle {
         this.BaseImagePath := A_WorkingDir . "\Game\RockyIdle\Images"
     }
 
+    /**
+     * @description `Run`
+     * Runs the Rocky Idle automation with the specified tasks.
+     * @param {(Array)} taskList
+     * The list of tasks to run.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     Run(TaskList) {
         this.TaskList := TaskList
         Logger.WriteInfo("Initializing Rocky Idle automation with tasks: [" . TaskList.Join(", ") . "]")
@@ -74,15 +94,34 @@ class RockyIdle {
         }
     }
 
+    /**
+     * @description `DisplayToolTip`
+     * Displays a tooltip with the current status of the automation.
+     * @param {(String)} Status
+     * The current status of the automation.
+     * @returns {(Void)}
+     */
     DisplayToolTip(Status) {
         ToolTip("Automation Active with mode(s): [" . this.TaskList.Join(", ") . "]. Current Status: [" . Status . "]", 10, 10)
     }
 
+    /**
+     * @description `HideToolTip`
+     * Hides the tooltip.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     HideToolTip() {
         ToolTip()
     }
 
     ;#region Farming
+    /**
+     * @description `RunFarm`
+     * Runs the farming automation.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     RunFarm() {
         this.DisplayToolTip("Running AutoFarm")
         Logger.WriteInfo("AutoFarm process started")
@@ -100,17 +139,35 @@ class RockyIdle {
         Logger.WriteInfo("AutoFarm process complete")
     }
 
+    /**
+     * @description `CheckForAvailableHarvest`
+     * Checks if there are any available harvests.
+     * @returns {(Boolean)}
+     * Returns true if there are available harvests, false otherwise.
+     */
     CheckForAvailableHarvest() {
         Logger.WriteInfo("Checking for available harvests.")
         return this.UiaElement.ElementExist({Name:"Done"})
     }
 
+    /**
+     * @description `CycleFarm`
+     * Cycles the farm by harvesting and replanting.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     CycleFarm() {
         Logger.WriteInfo("Harvesting and replanting farm.")
         this.HarvestFromSideBar()
         this.PlantFarm(["Bush", "Tree"])
     }
 
+    /**
+     * @description `HarvestFromSideBar`
+     * Harvests all available harvests from the side bar.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     HarvestFromSideBar() {
         this.UiaElement.ElementFromPath({Name:"Done"}).Click()
         Sleep(1000)
@@ -119,6 +176,14 @@ class RockyIdle {
         Sleep(1000)
     }
 
+    /**
+     * @description `PlantFarm`
+     * Plants the specified types of farm.
+     * @param {(Array)} types
+     * The types of farm to plant. Allowed values are "Bush" and "Tree".
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     PlantFarm(types) {
         if (types.Includes("Bush")) {
             this.PlantBushes()
@@ -129,6 +194,12 @@ class RockyIdle {
         }
     }
 
+    /**
+     * @description `CheckInactiveFarm`
+     * Checks the sidebar for any inactive farming types.
+     * @returns {(Array)}
+     * Returns an array of inactive farming types. If no inactive types are found, an empty array is returned.
+     */
     CheckInactiveFarm() {
         Logger.WriteInfo("Checking sidebar for missing farming types.")
         inactive := []
@@ -146,7 +217,14 @@ class RockyIdle {
         return inactive
     }
 
-
+    /**
+     * @description `GoToFarmingPage`
+     * Goes to the farming page.
+     * @param {(String)} type
+     * The type of farming to access. If not specified, the default farming page is accessed.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     GoToFarmingPage(type := "") {
         Logger.WriteDebug("Activating farming page")
         this.UiaElement.FindElement({T:26}, {T:26}, {T:5, i:10}).Click()
@@ -162,6 +240,12 @@ class RockyIdle {
         }
     }
 
+    /**
+     * @description `PlantBushes`
+     * Plants bushes. The planted bushes are randomly selected from a list of active bushes.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     PlantBushes() {
         activeBushes := [
             76, ; Gooseberry
@@ -179,6 +263,12 @@ class RockyIdle {
         }
     }
 
+    /**
+     * @description `PlantTrees`
+     * Plants trees. The planted trees are randomly selected from a list of active trees.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     PlantTrees() {
         activeTrees := [
             56, ; Pine
@@ -198,6 +288,12 @@ class RockyIdle {
     ;#endregion Farming
 
     ;#region Slayer
+    /**
+     * @description `RunSlayer`
+     * Runs the slayer automation.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     RunSlayer() {
         this.DisplayToolTip("Running AutoSlayer - Tasks Completed: [" . this.SlayerTaskCount . "]")
         Logger.WriteInfo("Starting AutoSlayer process")
@@ -212,6 +308,12 @@ class RockyIdle {
         Sleep(3000)
     }
 
+    /**
+     * @description `CheckSlayerActive`
+     * Checks if there is an active slayer task.
+     * @returns {(Boolean)}
+     * Returns true if an active slayer task is found, false otherwise.
+     */
     CheckSlayerActive() {
         Logger.WriteDebug("Checking if Slayer is active")
         slayerActive := this.UiaElement.ElementExist({Name:"Slayer Monster Category"})
@@ -225,6 +327,12 @@ class RockyIdle {
         return slayerActive
     }
 
+    /**
+     * @description `CheckForStaleSlayerTask`
+     * Checks if there is a stale slayer task. A task is considered stale if it has been running for longer than the timeout.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     CheckForStaleSlayerTask() {
         currentTick := A_TickCount
         currentTaskDuration := A_TickCount - this.SlayerTaskStartTick
@@ -246,6 +354,12 @@ class RockyIdle {
         }
     }
 
+    /**
+     * @description `GetNewSlayerTask`
+     * Gets a new slayer task.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     GetNewSlayerTask() {
         Logger.WriteInfo("Getting new slayer task.")
         this.GoToSlayerPage()
@@ -260,18 +374,36 @@ class RockyIdle {
         Sleep(1000)
     }
 
+    /**
+     * @description `GoToMonsterPage`
+     * Goes to the monster page.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     GoToMonsterPage() {
         Logger.WriteDebug("Accessing monster page")
         this.UiaElement.ElementFromPath({T:20, i:19}).Click()
         Sleep(1000)
     }
 
+    /**
+     * @description `GoToSlayerPage`
+     * Goes to the slayer page.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     GoToSlayerPage() {
         Logger.WriteDebug("Accessing slayer page")
         this.UiaElement.ElementFromPath({T:26}, {T:26}, {T:5, i:13}).Click()
         Sleep(1000)
     }
 
+    /**
+     * @description `StartCombat`
+     * Starts combat.
+     * @returns {(Boolean)}
+     * Returns true if combat is started, false otherwise.
+     */
     StartCombat() {
         Logger.WriteDebug("Attempting to start combat.")
         this.UiaElement.FindElement({Name:"Fight"}).Click() ; Find first button with name "Fight" and click it.
@@ -280,6 +412,12 @@ class RockyIdle {
         return true
     }
 
+    /**
+     * @description `StartSlayerTaskCombat`
+     * Starts the slayer task combat.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     StartSlayerTaskCombat() {
         Logger.WriteInfo("Starting slayer task combat")
         this.AccessSlayerTaskMinionList()
@@ -289,6 +427,12 @@ class RockyIdle {
         }
     }
 
+    /**
+     * @description `AccessSlayerTaskMinionList`
+     * Accesses the slayer task minion list.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     AccessSlayerTaskMinionList() {
         Logger.WriteDebug("Clicking task type to get list of task minions")
         if (this.UiaElement.ElementExist({Name:"Slayer Monster Category"})) {
@@ -302,16 +446,34 @@ class RockyIdle {
     ;#endregion Slayer
 
     ;#region Boosts
+    /**
+     * @description `ActivateSkillBoost`
+     * Activates the skill boost.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     ActivateSkillBoost() {
         Logger.WriteInfo("Activating Skill Boost")
         this.UiaElement.ElementFromPath({T:6, i:10}).Click()
     }
 
+    /**
+     * @description `ActivateCombatBoost`
+     * Activates the combat boost.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     ActivateCombatBoost() {
         Logger.WriteInfo("Activating Combat Boost")
         this.UiaElement.ElementFromPath({T:6, i:11}).Click()
     }
 
+    /**
+     * @description `ActivateBoosts`
+     * Activates both the skill and combat boosts.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     ActivateBoosts() {
         this.DisplayToolTip("Activating Boosts")
         this.ActivateCombatBoost()
@@ -320,6 +482,12 @@ class RockyIdle {
     }
     ;#endregion
 
+    /**
+     * @description `Dispose`
+     * Disposes of the Rocky Idle automation.
+     * @returns {(String)}
+     * Always returns an empty string.
+     */
     Dispose() {
         this.HideToolTip()
     }
