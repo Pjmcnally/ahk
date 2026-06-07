@@ -6,9 +6,37 @@
 #Include "Mouse.ahk"
 #Include "Keyboard.ahk"
 
+/**
+ * @description
+ * A class for searching for images on the screen.
+ * This class is static and should not be instantiated. All methods and properties are static and can be accessed directly from the class.
+ */
 class image {
-    static Click(x1, y1, x2, y2, imagePath, delay := 100, attemptCount := 1, throwError := false) {
-        results := this.Find(x1, y1, x2, y2, imagePath, attemptCount, throwError)
+    /**
+     * @description `Click`
+     * Clicks on an image on the screen.
+     * @param {(Number)} x1
+     * The x coordinate of the top left corner area to search for the image.
+     * @param {(Number)} y1
+     * The y coordinate of the top left corner area to search for the image.
+     * @param {(Number)} x2
+     * The x coordinate of the bottom right corner area to search for the image.
+     * @param {(Number)} y2
+     * The y coordinate of the bottom right corner area to search for the image.
+     * @param {(String)} imagePath
+     * The path to the image to search for.
+     * @param {(Number)} delay
+     * The delay in milliseconds to wait after clicking the image.
+     * @param {(Number)} maxTryCount
+     * The number of times to attempt to find the image before giving up.
+     * Default = 1
+     * @param {(Boolean)} mustFind
+     * Whether to throw an error if the image is not found.
+     * @return {(Object)}
+     * An object containing a boolean success property and the x and y coordinates of the image if found.
+     */
+    static Click(x1, y1, x2, y2, imagePath, delay := 100, maxTryCount := 1, mustFind := false) {
+        results := this.Find(x1, y1, x2, y2, imagePath, maxTryCount, mustFind)
         if (results.success) {
             GlobalLogger.WriteDebug("Clicking image at X: " . results.x . " Y: " . results.y)
             Mouse.ClickWait(results.x, results.y, 1, 100)
@@ -17,6 +45,27 @@ class image {
         return results
     }
 
+    /**
+     * @description `Find`
+     * Finds an image on the screen.
+     * @param {(Number)} x1
+     * The x coordinate of the top left corner area to search for the image.
+     * @param {(Number)} y1
+     * The y coordinate of the top left corner area to search for the image.
+     * @param {(Number)} x2
+     * The x coordinate of the bottom right corner area to search for the image.
+     * @param {(Number)} y2
+     * The y coordinate of the bottom right corner area to search for the image.
+     * @param {(String)} imagePath
+     * The path to the image to search for.
+     * @param {(Number)} maxTryCount
+     * The maximum number of times to attempt to find the image before giving up.
+     * Default = 1
+     * @param {(Boolean)} mustFind
+     * Whether to throw an error if the image is not found.
+     * @return {(Object)}
+     * An object containing a boolean success property and the x and y coordinates of the image if found.
+     */
     static Find(x1, y1, x2, y2, imagePath, maxTryCount := 1, mustFind := false) {
         ; Check for valid and existing image path before attempting search
         if (!FileExist(imagePath)) {
