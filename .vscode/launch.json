@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "autohotkey",
             "request": "launch",
@@ -16,6 +17,13 @@
             "request": "launch",
             "name": "AhkV2 - SteamVm",
             "program": "${workspaceFolder}/V2/SteamVm.ahk",
+            "stopOnEntry": false
+        },
+        {
+            "type": "ahk2",
+            "request": "launch",
+            "name": "AhkV2 - CurrentFile",
+            "program": "${file}",
             "stopOnEntry": false
         }
     ]
