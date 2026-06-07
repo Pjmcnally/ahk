@@ -203,7 +203,6 @@ class Logger {
      * @param {(String)} text
      * The text to add to the log file
      */
-
     static WriteWarn(text) {
         this.WriteLog(text, "WARN")
     }
@@ -216,7 +215,6 @@ class Logger {
      * @param {(String)} text
      * The text to add to the log file
      */
-
     static WriteError(text, e := "") {
         this.WriteLog(text, "ERROR")
     }
