@@ -16,8 +16,8 @@ class Mouse {
      * @returns {(String)}
      * Empty string is always returned.
      */
-    static ClickWait(X, Y, Num, Wait) {
-        Click(X, Y, Num)
+    static ClickWait(X, Y, Num, Wait, Options := "") {
+        Click(X, Y, Num, Options)
         Sleep(Wait)
     }
 

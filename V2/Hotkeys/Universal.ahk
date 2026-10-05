@@ -7,6 +7,8 @@
 #Include "%A_LineFile%\..\..\Lib\External\"
 #Include "Uia.ahk"
 
+HotIf() ; Clear any potential HotIf restrictions. The hotkeys belows are designed to work in any context.
+
 ; Hotkeys
 Hotkey("^!l", (*) => ListHotkeys()) ; Ctrl+Alt+L to list hotkeys
 Hotkey("^!p", (*) => Pause(-1))     ; Ctrl+Alt+P to toggle pause
@@ -14,6 +16,22 @@ Hotkey("^!r", (*) => Reload())      ; Ctrl+Alt+R to reload script
 Hotkey("^!s", (*) => Suspend())     ; Ctrl+Alt+S to toggle suspend
 Hotkey("^!v", (*) => Uia.Viewer())     ; Ctrl+Alt+V to open UIA viewer
 Hotkey("XButton1", (*) => Mouse.ToggleFastClick(100)) ; Ctrl+Alt+F to toggle fast click
+
+/* TO DO:
+The #HotIf directive and the HotIf function in AutoHotkey v2 both create context-sensitive hotkeys and hotstrings, but they operate at different times and serve distinct structural purposes.
+#HotIf
+    Directive: Evaluated and applied at loadtime (when the script starts up).
+    Positional: It affects all physical hotkeys and hotstrings written beneath it in the script until a new #HotIf appears (an empty #HotIf closes the context).
+    Optimized: Built-in simple expressions like WinActive() or WinExist() are pre-compiled and optimized to prevent input lag.
+HotIf
+    Function: Evaluated and applied dynamically at runtime. Used in conjunction with the dynamic Hotkey() function to create, modify, or turn off hotkeys conditionally while the script is actively running.
+    Positional: It affects all dynamic hotkeys and hotstrings written beneath it in the script until a new HotIf appears (an empty HotIf closes the context).
+    Unoptimized: Runs in realtime without significant optimizations.
+        While this is unoptimized and technically ~1000 times slower it still executes in 10 to 500 microseconds (.01 to .5 milliseconds)
+        This can become a problem if there are a significant amount of HotIf functions as they all need to be evaluated in sequence to identify the right one.
+*/
+
+
 /*
 Idea 1:
 To log all activated hotkeys in AutoHotkey v2, you can use a custom wrapper function that dynamically defines hotkeys, routes them to your handler, and appends the triggered key and timestamp to a log file.The following snippet logs your hotkeys both to the console (OutputDebug) and to a text file.
