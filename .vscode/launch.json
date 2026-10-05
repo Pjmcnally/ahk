@@ -6,25 +6,40 @@
     "configurations": [
 
         {
+            "name": "AhkV1 - CurrentFile",
             "type": "autohotkey",
             "request": "launch",
+            "program": "${file}",
+            "stopOnEntry": false,
+            "runtime": "C:\\Program Files\\AutoHotkey\\v1.1.37.02\\AutoHotkeyU64.exe"
+        },
+        {
             "name": "AhkV2 - Desktop",
+            "type": "ahk2",
+            "request": "launch",
             "program": "${workspaceFolder}/V2/Desktop.ahk",
             "stopOnEntry": false
         },
         {
+            "name": "AhkV2 - SteamVm",
             "type": "ahk2",
             "request": "launch",
-            "name": "AhkV2 - SteamVm",
             "program": "${workspaceFolder}/V2/SteamVm.ahk",
             "stopOnEntry": false
         },
         {
+            "name": "AhkV2 - CurrentFile",
             "type": "ahk2",
             "request": "launch",
-            "name": "AhkV2 - CurrentFile",
             "program": "${file}",
             "stopOnEntry": false
+        },
+        {
+            "name": "Powershell Launch Current File",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${file}",
+            "args": []
         }
     ]
 }
