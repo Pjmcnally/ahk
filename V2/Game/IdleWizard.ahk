@@ -1,5 +1,9 @@
 #Requires AutoHotkey v2.0
 
+; Includes
+#Include "%A_LineFile%\..\..\Lib\Internal"
+#Include "Keyboard.ahk"
+
 ; TODO: Document and clean up this file
 ;@region Hotkeys
 #HotIf WinActive("ahk_exe IdleWizard.exe")
