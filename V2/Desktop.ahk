@@ -36,6 +36,7 @@ FileEncoding "UTF-8-RAW"            ; Set default file encoding to UTF-8 (withou
 
 ; Include Core Module(s) (core.ahk must be first for the Auto-Execute to work)
 #Include "%A_ScriptDir%\Hotkeys\Universal.ahk"
+#Include "%A_ScriptDir%\Application\Pandora\Pandora.ahk"
 ; #Include "%A_ScriptDir%\..\core\clipboard.ahk"
 ; #Include "%A_ScriptDir%\..\core\files.ahk"
 ; #Include "%A_ScriptDir%\..\core\strings.ahk"
@@ -43,7 +44,8 @@ FileEncoding "UTF-8-RAW"            ; Set default file encoding to UTF-8 (withou
 
 ; Import Game specific Module(s)
 #Include "%A_ScriptDir%\Game\Diablo3.ahk"
-#Include "%A_ScriptDir%\Game\Diablo4.ahk"
+#Include "%A_ScriptDir%\Game\IdleWizard.ahk"
+#Include "%A_ScriptDir%\Game\Trimps.ahk"
 
 ; Import Application specific Module(s)
 

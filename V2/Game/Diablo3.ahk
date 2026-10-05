@@ -6,30 +6,27 @@
 #Include "Diablo.ahk"
 
 ; Hotkeys
+HotIfWinActive("Diablo III")
 #HotIf WinActive("Diablo III")
 ; Basic hotkeys
-c::Send("{Enter}")
+Hotkey("XButton1", (*) => D3EnableAll("UeDh"))
+Hotkey("XButton2", (*) => D3Skill("DisableAll"))
 
-; Skill base hotkeys - Change timings as necessary depending on current class.
-; Toggle individual skill
-7::D3Skill("Toggle", "q", 1000)
-8::D3Skill("Toggle", "w", 1000)
-9::D3Skill("Toggle", "e", 5000)
-0::D3Skill("Toggle", "r", 1000)
-
-; Enable all
--:: {
-    D3Skill("Enable", "{Numpad1}", 1000)  ; Q
-    D3Skill("Enable", "{Numpad2}", 1000)  ; W
-    D3Skill("Enable", "{Numpad3}", 5000)  ; E
-    D3Skill("Enable", "{Numpad4}", 1000)   ; R
-}
-
-; Disable all
+; Disable all - PassThru mode to allow actual buttons to register in game.
+~Escape::D3Skill("DisableAll")
 ~Space::D3Skill("DisableAll")
 ~m::D3Skill("DisableAll")
 ~b::D3Skill("DisableAll")
+
+; Misc hotkeys
+n::Send('{Enter}')
+
+; Below section is disabled as it only applies to Monk (which I am not playing this season).
+; ; HotIf for D3 and Right Click held down to use left click to dash.
+; #HotIf WinActive("Diablo III") && GetKeyState("RButton", "P")
+; LButton::Send("e")
 #HotIf ; End #IfWinActive for Diablo 3
+HotIfWinActive() ; End HotIfWinActive for Diablo 3
 
 ; Functions
 /**
@@ -53,4 +50,24 @@ D3Skill(mode, skill := "*", delay := 1000) {
         case "disableAll": D3.DisableAll()
         default: throw("Invalid mode specified.")
     }
+}
+
+D3EnableAll(build) {
+    Send("{Space 3}")  ; Clear any onscreen messages
+    switch build, 0 {
+        case "wwBarb":
+            D3Skill("Enable", "w", 30000) ; W
+            D3Skill("Enable", "e", 1000)  ; E
+            D3Skill("Enable", "r", 1000)  ; R
+        case "pojMonk":
+            Send("q")                     ; Activate Sweeping Wind
+            D3Skill("Enable", "r", 1000)  ; R - toggle on
+        case "UeDh":
+            D3Skill("Enable", "w", 5000)  ; Cast "Shadow Power" every 5 seconds
+            D3Skill("Enable", "e", 1000)  ; Cast "Smoke Screen" on CD
+            D3Skill("Enable", "r", 1000)  ; Cast "Vengeance" on CD
+        default: throw("Invalid class specified")
+    }
+
+    D3Skill("Enable", "1", 1000)  ; Use Potion on CD (For "Mother" buff)
 }
