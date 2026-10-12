@@ -276,15 +276,209 @@ AutoRefineLoop(refineDelay := 0, wait := 250) {
 }
 ;@endregion
 
+;@region Tarot
+ActivateTarot() {
+    wait := 500
+    Mouse.ClickWait(1925, 1300, 1, wait)
+}
+
+GetTarotLocation(cardInfo) {
+    xBase := 145
+    yBase := 495
+
+    xStep := 225
+    yStep := 335
+
+    xRowMax := 7
+
+    xLocation := xBase + (Mod(cardInfo.Number, 7) * xStep)
+    yLocation := yBase + (Floor(cardInfo.Number / 7) * yStep)
+
+    return {x: xLocation, y: yLocation}
+}
+
+SelectTarot(cardInfo) {
+    wait := 500
+
+    location := GetTarotLocation(cardInfo)
+    Mouse.ClickWait(location.x, location.y, 1, wait)
+}
+
+AutomateTarot() {
+    cardInfo := [
+        {
+            Name: "The Fool",
+            Active: true,
+            Number: 0,
+            Note: "Use on CD - Essential",
+            Priority: 1
+        },
+        {
+            Name: "The Magician",
+            Active: true,
+            Number: 1,
+            Note: "Use after 'The Star' to push Water element levels",
+            Priority: 2
+        },
+        {
+            Name: "The High Priestess",
+            Active: true,
+            Number: 2,
+            Note: "Use on CD - minor buff",
+            Priority: 3
+        },
+        {
+            Name: "The Empress",
+            Active: true,
+            Number: 3,
+            Note: "Irrelevant",
+            Priority: 4
+        },
+        {
+            Name: "The Emperor",
+            Active: true,
+            Number: 4,
+            Note: "Irrelevant",
+            Priority: 5
+        },
+        {
+            Name: "The Heirophant",
+            Active: false,
+            Number: 5,
+            Note: "Best used after a long RFP run paired with 'Death'",
+            Priority: 6
+        },
+        {
+            Name: "The Lovers",
+            Active: true,
+            Number: 6,
+            Note: "Best used as part of long RFP run to boost Merge Levels",
+            Priority: 7
+        },
+        {
+            Name: "The Chariot",
+            Active: true,
+            Number: 7,
+            Note: "Use on CD - Essential",
+            Priority: 8
+        },
+        {
+            Name: "Justice",
+            Active: false,
+            Number: 8,
+            Note: 'Irrelevant except for achievement to get SPM > 10000',
+            Priority: 9
+        },
+        {
+            Name: "The Hermit",
+            Active: true,
+            Number: 9,
+            Note: "Boosts all other arcana. Best used before other big combos",
+            Priority: 0 ; Use first to boost all subsequent cards
+        },
+        {
+            Name: "Wheel of Fortune",
+            Active: false,
+            Number: 10,
+            Note: "Irrelevant - Coin flip gambling with no edge for profit",
+            Priority: 10
+        },
+        {
+            Name: "Strength",
+            Active: true,
+            Number: 11,
+            Note: "Best used with long push runs to boost attack",
+            Priority: 11
+        },
+        {
+            Name: "The Hanged Man",
+            Active: true,
+            Number: 12,
+            Note: "Best used with long push runs for a small speed boost",
+            Priority: 12
+        },
+        {
+            Name: "Death",
+            Active: true,
+            Number: 13,
+            Note: "Best used after a long push run with 'Heirophant'",
+            Priority: 13
+        },
+        {
+            Name: "Temperance",
+            Active: false,
+            Number: 14,
+            Note: "Best used with Star to print 'Pieces' zodiac",
+            Priority: 14
+        },
+        {
+            Name: "The Devil",
+            Active: true,
+            Number: 15,
+            Note: "Use on CD - Essential (bonus builds up very slowly but compounds over time)",
+            Priority: 21 ; Use last in case it gets the "Block Arcana" penalty
+        },
+        {
+            Name: "The Tower",
+            Active: false,
+            Number: 16,
+            Note: "Actively bad unless you are setup for it",
+            Priority: 15
+        },
+        {
+            Name: "The Star",
+            Active: false,
+            Number: 17,
+            Note: "Used to push Water element with 'Magician'",
+            Priority: 16
+        },
+        {
+            Name: "The Moon",
+            Active: true,
+            Number: 18,
+            Note: "Use on CD - very small buff",
+            Priority: 17
+        },
+        {
+            Name: "The Sun",
+            Active: true,
+            Number: 19,
+            Note: "Use on CD - Essential",
+            Priority: 18
+        },
+        {
+            Name: "Judgement",
+            Active: false,
+            Number: 20,
+            Note: "Actively bad unless you are setup for it",
+            Priority: 19
+        },
+        {
+            Name: "The World",
+            Active: false,
+            Number: 21,
+            Note: "Very good. Use after using other arcana to re-cast them instantly",
+            Priority: 20
+        }
+    ]
+
+    cardInfo.SortObjects("Priority")
+    for i, card in cardInfo {
+        if (card.Active) {
+            SelectTarot(card)
+            ActivateTarot()
+        }
+    }
+}
+
+;@endregion
+
 ;@region Hotkeys
 #HotIf WinActive("ahk_exe Revolution Idle.exe")
 
-; space::AutoRefineLoop()
-space::RefineZodiac()
-; space::RefineZodiacLoop(100)
 ; F2::ToggleFunc(() => UpgradeDilation([1, 2]), "Upgrade Dilation (1 & 2)", 250)
 
-F1::SendEvent("SM") ; Reset Macro.
+F1::ToggleFunc(AutomateTarot, "Automated Tarot", 15000)
 
 #HotIf
 ;@endRegion
