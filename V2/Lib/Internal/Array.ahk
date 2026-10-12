@@ -115,6 +115,48 @@ Array_Swap(this, i, j) {
         this[j] := temp
 }
 
+/**
+ * Sorts an array of objects or maps using the Insertion Sort algorithm.
+ * @param {Array} this
+ * The array to sort (modified in place).
+ * @param {String} prop
+ * The property name (for objects) or key name (for Maps).
+ * @param {Boolean} ascending
+ * True for A-Z/0-9, False for Z-A/9-0.
+ * @returns {(String)}
+ * Always returns an empty string
+ */
+; TO DO: Generalize this so it can sort objects as well as simple ints and strings.
+Array_SortObjects(this, prop, ascending := true) {
+    if (this.Length <= 1)
+        return
+
+    loop this.Length - 1 {
+        i := A_Index + 1
+        currentElement := this[i]
+
+        ; Extract the comparison value for the current element
+        currentVal := HasMethod(currentElement, "Has") && currentElement.Has(prop) ? currentElement[prop] : (HasProp(currentElement, prop) ? currentElement.%prop% : "")
+
+        j := i - 1
+        while (j >= 1) {
+            ; Extract the comparison value for the element being shifted
+            compareVal := HasMethod(this[j], "Has") && this[j].Has(prop) ? this[j][prop] : (HasProp(this[j], prop) ? this[j].%prop% : "")
+
+            ; Determine if we should shift based on direction
+            shouldShift := ascending ? (compareVal > currentVal) : (compareVal < currentVal)
+
+            if !shouldShift
+                break
+
+            this[j + 1] := this[j]
+            j--
+        }
+        this[j + 1] := currentElement
+    }
+}
+
+
 ; Inject the methods into the Array prototype so they can be called on any array instance
 Array.Prototype.DefineProp("Join", {Call: Array_Join})
 Array.Prototype.DefineProp("Includes", {Call: Array_Includes})
@@ -122,3 +164,4 @@ Array.Prototype.DefineProp("GetRandomItem", {Call: Array_GetRandomItem})
 Array.Prototype.DefineProp("GetRandomSample", {Call: Array_GetRandomSample})
 Array.Prototype.DefineProp("Shuffle", {Call: Array_Shuffle})
 Array.Prototype.DefineProp("Swap", {Call: Array_Swap})
+Array.Prototype.DefineProp("SortObjects", {Call: Array_SortObjects})
