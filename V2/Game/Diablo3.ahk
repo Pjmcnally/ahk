@@ -10,6 +10,7 @@ HotIfWinActive("Diablo III")
 #HotIf WinActive("Diablo III")
 ; Basic hotkeys
 Hotkey("XButton1", (*) => D3EnableAll("UeDh"))
+; Hotkey("XButton1", (*) => D3EnableAll("UeDhPush"))
 Hotkey("XButton2", (*) => D3Skill("DisableAll"))
 
 ; Disable all - PassThru mode to allow actual buttons to register in game.
@@ -63,9 +64,15 @@ D3EnableAll(build) {
             Send("q")                     ; Activate Sweeping Wind
             D3Skill("Enable", "r", 1000)  ; R - toggle on
         case "UeDh":
+            D3Skill("Enable", "q", 1000)  ; Cast "Preparation" on CD
             D3Skill("Enable", "w", 5000)  ; Cast "Shadow Power" every 5 seconds
             D3Skill("Enable", "e", 1000)  ; Cast "Smoke Screen" on CD
             D3Skill("Enable", "r", 1000)  ; Cast "Vengeance" on CD
+        case "UeDhPush":
+            ; D3Skill("Enable", "q", 1000)  ; Cast "Preparation" on CD
+            ; D3Skill("Enable", "w", 5000)  ; Cast "Shadow Power" every 5 seconds
+            D3Skill("Enable", "e", 1000)  ; Cast "Smoke Screen" on CD
+            ; D3Skill("Enable", "r", 1000)  ; Cast "Vengeance" on CD
         default: throw("Invalid class specified")
     }
 
