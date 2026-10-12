@@ -32,6 +32,7 @@ FileEncoding "UTF-8-RAW"            ; Set default file encoding to UTF-8 (withou
 ; Include Section
 ; ==============================================================================
 ; Include Classes
+#Include %A_ScriptDir%\Lib\Internal\Array.ahk
 ; #Include <Logger>
 
 ; Include Core Module(s) (core.ahk must be first for the Auto-Execute to work)
@@ -45,6 +46,7 @@ FileEncoding "UTF-8-RAW"            ; Set default file encoding to UTF-8 (withou
 ; Import Game specific Module(s)
 #Include "%A_ScriptDir%\Game\Diablo3.ahk"
 #Include "%A_ScriptDir%\Game\IdleWizard.ahk"
+#Include "%A_ScriptDir%\Game\RevolutionIdle.ahk"
 #Include "%A_ScriptDir%\Game\Trimps.ahk"
 
 ; Import Application specific Module(s)
