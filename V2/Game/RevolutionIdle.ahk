@@ -448,7 +448,7 @@ AutomateTarot() {
         },
         {
             Name: "Judgement",
-            Active: false,
+            Active: true,
             Number: 20,
             Note: "Actively bad unless you are setup for it",
             Priority: 19
@@ -477,8 +477,7 @@ AutomateTarot() {
 #HotIf WinActive("ahk_exe Revolution Idle.exe")
 
 ; F2::ToggleFunc(() => UpgradeDilation([1, 2]), "Upgrade Dilation (1 & 2)", 250)
-
-F1::ToggleFunc(AutomateTarot, "Automated Tarot", 15000)
+; F1::ToggleFunc(AutomateTarot, "Automated Tarot", 15000)
 
 #HotIf
 ;@endRegion
